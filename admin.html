@@ -3,161 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Admin Pro | App</title>
-
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#00f2ff">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/906/906334.png">
-
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <title>Admin Escuela</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #05070a; --accent: #00f2ff; --accent-2: #7000ff; --text: #ffffff; --danger: #ff007a; }
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--text); padding: 20px; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
-        .container { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 20px; border-radius: 20px; width: 100%; max-width: 400px; backdrop-filter: blur(10px); }
-        h1 { font-size: 1.5rem; margin-bottom: 20px; color: var(--accent); text-align: center; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-size: 0.8rem; color: #94a3b8; }
-        select, input { width: 100%; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); padding: 12px; border-radius: 10px; color: white; font-family: inherit; outline: none; }
-        select:focus, input:focus { border-color: var(--accent); }
-        .main-btn { background: linear-gradient(90deg, var(--accent), var(--accent-2)); border: none; padding: 15px; border-radius: 12px; color: white; font-weight: 800; width: 100%; margin-top: 10px; cursor: pointer; }
-        .main-btn:disabled { filter: grayscale(1); opacity: 0.5; }
-        .task-card { background: rgba(255,255,255,0.02); padding: 15px; margin-top: 15px; border-radius: 15px; border-left: 4px solid var(--accent-2); width: 100%; max-width: 400px; }
-        .img-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(65px, 1fr)); gap: 8px; margin-top: 10px; }
-        .img-mini { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); }
-        .delete-btn { color: var(--danger); font-size: 0.75rem; margin-top: 15px; text-align: right; font-weight: 600; cursor: pointer; padding: 5px; }
-        .back-link { margin-top: 20px; color: #94a3b8; text-decoration: none; font-size: 0.8rem; }
+        :root { --bg: #05070a; --accent: #00f2ff; --accent-2: #7000ff; --text: #ffffff; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
+        body { background: var(--bg); color: var(--text); padding: 15px; display: flex; flex-direction: column; align-items: center; }
+        .container { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 20px; border-radius: 20px; width: 100%; max-width: 450px; }
+        input, select { width: 100%; background: #1a1c20; border: 1px solid #333; padding: 12px; border-radius: 10px; color: white; margin-bottom: 10px; outline: none; }
+        .btn-g { background: linear-gradient(90deg, var(--accent), var(--accent-2)); border: none; padding: 15px; border-radius: 12px; color: white; font-weight: 800; width: 100%; cursor: pointer; }
+        .btn-reset { background: #ff007a; border: none; padding: 8px; border-radius: 8px; color: white; font-size: 0.7rem; margin-top: 15px; cursor: pointer; opacity: 0.7; }
+        #status { font-size: 0.8rem; color: var(--accent); margin-top: 10px; text-align: center; }
+        .card { background: #111; padding: 15px; border-radius: 15px; margin-top: 15px; width: 100%; position: relative; border-left: 4px solid var(--accent); }
+        .grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; margin-top: 10px; }
+        .mini { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 5px; }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>Nueva Tarea</h1>
-        <div class="form-group">
-            <label>Materia</label>
-            <select id="materia">
-                <option>CÁLCULO INTEGRAL</option>
-                <option>LEGISLACIÓN LABORAL</option>
-                <option>DINÁMICA SOCIAL</option>
-                <option>TALLER DE ÉTICA</option>
-                <option>SOFTWARE APLICADO</option>
-                <option>CONTABILIDAD</option>
-            </select>
-        </div>
-        <div class="form-group"><label>Descripción</label><input type="text" id="nombre" placeholder="¿Qué hay que hacer?"></div>
-        <div class="form-group"><label>Fecha de Entrega</label><input type="text" id="fecha" placeholder="Ej: Lunes 25"></div>
-        <div class="form-group"><label>Evidencias</label><input type="file" id="imagenes" accept="image/*" multiple></div>
-        <button class="main-btn" id="btn" onclick="guardar()">GUARDAR TAREA</button>
+        <h2 style="text-align:center; margin-bottom:15px">Nueva Tarea</h2>
+        <select id="mat"><option>CÁLCULO INTEGRAL</option><option>LEGISLACIÓN</option><option>DINÁMICA SOCIAL</option></select>
+        <input type="text" id="nom" placeholder="¿Qué tarea es?">
+        <input type="text" id="fec" placeholder="Fecha de entrega">
+        <input type="file" id="imgs" accept="image/*" multiple>
+        <button class="btn-g" id="btn" onclick="guardar()">GUARDAR TAREA</button>
+        <div id="status"></div>
+        <button class="btn-reset" onclick="resetDB()">BORRAR TODAS LAS TAREAS (LIMPIAR MEMORIA)</button>
     </div>
 
-    <a href="index.html" class="back-link">← Volver al Inicio</a>
-
-    <div id="lista" style="width: 100%; display: flex; flex-direction: column; align-items: center; margin-bottom: 50px;"></div>
+    <div id="lista" style="width:100%; max-width:450px;"></div>
 
     <script>
-        // --- REGISTRO DE SERVICE WORKER PARA PWA ---
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('./sw.js').catch(err => console.log("SW no registrado", err));
-        }
-
-        // --- LÓGICA DE BASE DE DATOS ---
         let db;
-        const request = indexedDB.open("TareasDB", 1);
-        request.onupgradeneeded = (e) => {
-            e.target.result.createObjectStore("tareas", { keyPath: "id", autoIncrement: true });
+        // Subimos a versión 5 para forzar limpieza de errores previos
+        const req = indexedDB.open("TareasDB", 5);
+        req.onupgradeneeded = (e) => {
+            let d = e.target.result;
+            if (d.objectStoreNames.contains("tareas")) d.deleteObjectStore("tareas");
+            d.createObjectStore("tareas", { keyPath: "id", autoIncrement: true });
         };
-        request.onsuccess = (e) => { db = e.target.result; mostrar(); };
+        req.onsuccess = (e) => { db = e.target.result; mostrar(); };
 
-        // --- COMPRESIÓN PARA EVITAR ERRORES DE MEMORIA ---
-        async function reducirImagen(file) {
-            return new Promise((resolve) => {
-                const img = new Image();
-                img.src = URL.createObjectURL(file);
-                img.onload = () => {
-                    const canvas = document.createElement('canvas');
-                    // Reducimos a 600px para máxima estabilidad en móviles
-                    const scale = Math.min(600 / img.width, 600 / img.height, 1);
-                    canvas.width = img.width * scale;
-                    canvas.height = img.height * scale;
-                    const ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                    URL.revokeObjectURL(img.src); // Liberar RAM inmediatamente
-                    resolve(canvas.toDataURL('image/jpeg', 0.5)); // Calidad 50%
+        async function comprimir(file) {
+            return new Promise((res) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.src = e.target.result;
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        // Reducción masiva a 400px para asegurar que quepan 10 fotos
+                        const max = 400;
+                        let w = img.width, h = img.height;
+                        if (w > h && w > max) { h *= max / w; w = max; }
+                        else if (h > max) { w *= max / h; h = max; }
+                        canvas.width = w; canvas.height = h;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, w, h);
+                        res(canvas.toDataURL('image/jpeg', 0.1)); // Calidad 10% (ultra ligero)
+                    };
                 };
             });
         }
 
         async function guardar() {
             const btn = document.getElementById('btn');
-            const nombre = document.getElementById('nombre').value;
-            const fecha = document.getElementById('fecha').value;
-            const files = document.getElementById('imagenes').files;
-
-            if(!nombre || !fecha) return alert("Por favor, llena los campos");
-
+            const st = document.getElementById('status');
+            const files = document.getElementById('imgs').files;
+            if(files.length === 0) return alert("Sube fotos");
+            
             btn.disabled = true;
-            btn.innerText = "PROCESANDO...";
-
+            const fotos = [];
             try {
-                const fotos = [];
-                for(let f of files) {
-                    const res = await reducirImagen(f);
-                    fotos.push(res);
+                for(let i=0; i<files.length; i++) {
+                    st.innerText = `Achicando foto ${i+1}...`;
+                    fotos.push(await comprimir(files[i]));
                 }
-
-                const trans = db.transaction("tareas", "readwrite");
-                const store = trans.objectStore("tareas");
-                store.add({
-                    materia: document.getElementById('materia').value,
-                    nombre: nombre,
-                    fecha: fecha,
-                    fotos: fotos,
-                    time: Date.now()
-                });
-
-                trans.oncomplete = () => {
-                    btn.disabled = false;
-                    btn.innerText = "GUARDAR TAREA";
-                    // Limpiar formulario
-                    document.getElementById('nombre').value = "";
-                    document.getElementById('fecha').value = "";
-                    document.getElementById('imagenes').value = "";
-                    mostrar();
+                const tx = db.transaction("tareas", "readwrite");
+                const store = tx.objectStore("tareas");
+                const tarea = { mat: document.getElementById('mat').value, nom: document.getElementById('nom').value, fec: document.getElementById('fec').value, fotos, t: Date.now() };
+                
+                store.add(tarea).onsuccess = () => {
+                    st.innerText = "¡LOGRADO!";
+                    setTimeout(() => location.reload(), 500);
                 };
-            } catch(e) {
-                alert("Error al guardar. Intenta con menos fotos.");
+            } catch (err) {
+                alert("Error de memoria. Dale al botón rosa de abajo para limpiar.");
                 btn.disabled = false;
-                btn.innerText = "GUARDAR TAREA";
             }
         }
 
         function mostrar() {
             const lista = document.getElementById('lista');
-            lista.innerHTML = '<p style="color:#94a3b8; margin: 25px 0; font-size:0.7rem; letter-spacing:2px;">MIS TAREAS ACTIVAS</p>';
-
-            const store = db.transaction("tareas").objectStore("tareas");
-            store.getAll().onsuccess = (e) => {
-                const tareas = e.target.result;
-                tareas.sort((a,b) => b.time - a.time).forEach(t => {
+            lista.innerHTML = "";
+            db.transaction("tareas", "readonly").objectStore("tareas").getAll().onsuccess = (e) => {
+                e.target.result.reverse().forEach(t => {
                     const div = document.createElement('div');
-                    div.className = 'task-card';
-                    div.innerHTML = `
-                        <small style="color:var(--accent); font-weight:800;">${t.materia}</small>
-                        <h3 style="margin:5px 0; font-size:1.1rem;">${t.nombre}</h3>
-                        <p style="font-size:0.8rem; color:#94a3b8">📅 Entrega: ${t.fecha}</p>
-                        <div class="img-grid">${t.fotos.map(f => `<img src="${f}" class="img-mini" onclick="window.open('${f}')">`).join('')}</div>
-                        <div class="delete-btn" onclick="borrar(${t.id})">ELIMINAR TAREA</div>
-                    `;
+                    div.className = 'card';
+                    div.innerHTML = `<h3>${t.nom}</h3><p>${t.mat} - ${t.fec}</p><div class="grid">${t.fotos.map(f => `<img src="${f}" class="mini">`).join('')}</div>`;
                     lista.appendChild(div);
                 });
             };
         }
 
-        function borrar(id) {
-            if(confirm("¿Eliminar esta tarea y sus fotos?")) {
-                db.transaction("tareas", "readwrite").objectStore("tareas").delete(id).onsuccess = () => mostrar();
+        function resetDB() {
+            if(confirm("¿Borrar todo para liberar espacio?")) {
+                db.transaction("tareas", "readwrite").objectStore("tareas").clear().onsuccess = () => location.reload();
             }
         }
     </script>
