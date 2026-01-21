@@ -3,63 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Admin Pro | Escuela</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <title>Admin Escuela</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #05070a; --accent: #00f2ff; --accent-2: #7000ff; --text: #ffffff; --danger: #ff007a; }
+        :root { --bg: #05070a; --accent: #00f2ff; --accent-2: #7000ff; --text: #ffffff; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
         body { background: var(--bg); color: var(--text); padding: 15px; display: flex; flex-direction: column; align-items: center; }
         .container { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 20px; border-radius: 20px; width: 100%; max-width: 450px; }
-        h1 { color: var(--accent); text-align: center; margin-bottom: 20px; font-weight: 800; }
-        .form-group { margin-bottom: 12px; }
-        label { display: block; font-size: 0.75rem; color: #94a3b8; margin-bottom: 4px; }
-        select, input { width: 100%; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); padding: 10px; border-radius: 10px; color: white; outline: none; }
-        .main-btn { background: linear-gradient(90deg, var(--accent), var(--accent-2)); border: none; padding: 16px; border-radius: 12px; color: white; font-weight: 800; width: 100%; cursor: pointer; margin-top: 10px; }
-        .main-btn:disabled { opacity: 0.3; }
-        #status { font-size: 0.7rem; color: var(--accent); text-align: center; margin-top: 10px; }
-        .task-card { background: rgba(255,255,255,0.02); padding: 15px; margin-top: 15px; border-radius: 15px; border-left: 4px solid var(--accent-2); width: 100%; max-width: 450px; position: relative; }
-        .img-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; margin-top: 10px; }
-        .img-mini { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 4px; }
-        .del-btn { position: absolute; top: 12px; right: 12px; color: var(--danger); font-size: 0.65rem; font-weight: 800; cursor: pointer; }
+        input, select { width: 100%; background: #1a1c20; border: 1px solid #333; padding: 12px; border-radius: 10px; color: white; margin-bottom: 10px; outline: none; }
+        .btn-g { background: linear-gradient(90deg, var(--accent), var(--accent-2)); border: none; padding: 15px; border-radius: 12px; color: white; font-weight: 800; width: 100%; cursor: pointer; }
+        .btn-reset { background: #ff007a; border: none; padding: 8px; border-radius: 8px; color: white; font-size: 0.7rem; margin-top: 15px; cursor: pointer; opacity: 0.7; }
+        #status { font-size: 0.8rem; color: var(--accent); margin-top: 10px; text-align: center; }
+        .card { background: #111; padding: 15px; border-radius: 15px; margin-top: 15px; width: 100%; position: relative; border-left: 4px solid var(--accent); }
+        .grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; margin-top: 10px; }
+        .mini { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 5px; }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>Nueva Tarea</h1>
-        <div class="form-group">
-            <label>Materia</label>
-            <select id="materia">
-                <option>CÁLCULO INTEGRAL</option>
-                <option>LEGISLACIÓN LABORAL</option>
-                <option>DINÁMICA SOCIAL</option>
-                <option>SOFTWARE APLICADO</option>
-                <option>CONTABILIDAD</option>
-            </select>
-        </div>
-        <div class="form-group"><label>Tarea</label><input type="text" id="nombre" placeholder="Ej: Ejercicios"></div>
-        <div class="form-group"><label>Fecha</label><input type="text" id="fecha" placeholder="Ej: Mañana"></div>
-        <div class="form-group"><label>Fotos (Máx 10)</label><input type="file" id="imagenes" accept="image/*" multiple></div>
-        
-        <button class="main-btn" id="btn" onclick="guardarSeguro()">GUARDAR TAREA</button>
+        <h2 style="text-align:center; margin-bottom:15px">Nueva Tarea</h2>
+        <select id="mat"><option>CÁLCULO INTEGRAL</option><option>LEGISLACIÓN</option><option>DINÁMICA SOCIAL</option></select>
+        <input type="text" id="nom" placeholder="¿Qué tarea es?">
+        <input type="text" id="fec" placeholder="Fecha de entrega">
+        <input type="file" id="imgs" accept="image/*" multiple>
+        <button class="btn-g" id="btn" onclick="guardar()">GUARDAR TAREA</button>
         <div id="status"></div>
+        <button class="btn-reset" onclick="resetDB()">BORRAR TODAS LAS TAREAS (LIMPIAR MEMORIA)</button>
     </div>
 
-    <div id="lista" style="width: 100%; display: flex; flex-direction: column; align-items: center; margin-bottom: 50px;"></div>
+    <div id="lista" style="width:100%; max-width:450px;"></div>
 
     <script>
         let db;
-        // Subimos la versión para limpiar cualquier error previo
-        const request = indexedDB.open("TareasDB", 3);
-        request.onupgradeneeded = (e) => {
-            let dbRef = e.target.result;
-            if (dbRef.objectStoreNames.contains("tareas")) { dbRef.deleteObjectStore("tareas"); }
-            dbRef.createObjectStore("tareas", { keyPath: "id", autoIncrement: true });
+        // Subimos a versión 5 para forzar limpieza de errores previos
+        const req = indexedDB.open("TareasDB", 5);
+        req.onupgradeneeded = (e) => {
+            let d = e.target.result;
+            if (d.objectStoreNames.contains("tareas")) d.deleteObjectStore("tareas");
+            d.createObjectStore("tareas", { keyPath: "id", autoIncrement: true });
         };
-        request.onsuccess = (e) => { db = e.target.result; mostrar(); };
+        req.onsuccess = (e) => { db = e.target.result; mostrar(); };
 
-        async function comprimirExtremo(file) {
-            return new Promise((resolve) => {
+        async function comprimir(file) {
+            return new Promise((res) => {
                 const reader = new FileReader();
                 reader.readAsDataURL(file);
                 reader.onload = (e) => {
@@ -67,56 +54,43 @@
                     img.src = e.target.result;
                     img.onload = () => {
                         const canvas = document.createElement('canvas');
-                        // Bajamos a 450px: tamaño ideal para que 10 fotos NO pesen nada
-                        const max = 450;
+                        // Reducción masiva a 400px para asegurar que quepan 10 fotos
+                        const max = 400;
                         let w = img.width, h = img.height;
                         if (w > h && w > max) { h *= max / w; w = max; }
                         else if (h > max) { w *= max / h; h = max; }
                         canvas.width = w; canvas.height = h;
                         const ctx = canvas.getContext('2d');
                         ctx.drawImage(img, 0, 0, w, h);
-                        // Calidad al 0.2 (Muy baja pero el texto de libretas se sigue leyendo)
-                        resolve(canvas.toDataURL('image/jpeg', 0.2));
+                        res(canvas.toDataURL('image/jpeg', 0.1)); // Calidad 10% (ultra ligero)
                     };
                 };
             });
         }
 
-        async function guardarSeguro() {
+        async function guardar() {
             const btn = document.getElementById('btn');
-            const status = document.getElementById('status');
-            const files = document.getElementById('imagenes').files;
-            
-            if(files.length === 0) return alert("Sube al menos una foto");
+            const st = document.getElementById('status');
+            const files = document.getElementById('imgs').files;
+            if(files.length === 0) return alert("Sube fotos");
             
             btn.disabled = true;
-            const listaFotos = [];
-
+            const fotos = [];
             try {
-                for(let i = 0; i < files.length; i++) {
-                    status.innerText = `Comprimiendo ${i+1}/${files.length}...`;
-                    const fotoMini = await comprimirExtremo(files[i]);
-                    listaFotos.push(fotoMini);
+                for(let i=0; i<files.length; i++) {
+                    st.innerText = `Achicando foto ${i+1}...`;
+                    fotos.push(await comprimir(files[i]));
                 }
-
-                status.innerText = "Guardando...";
                 const tx = db.transaction("tareas", "readwrite");
                 const store = tx.objectStore("tareas");
+                const tarea = { mat: document.getElementById('mat').value, nom: document.getElementById('nom').value, fec: document.getElementById('fec').value, fotos, t: Date.now() };
                 
-                const item = {
-                    materia: document.getElementById('materia').value,
-                    nombre: document.getElementById('nombre').value || "Tarea sin nombre",
-                    fecha: document.getElementById('fecha').value || "Pendiente",
-                    fotos: listaFotos,
-                    time: Date.now()
-                };
-
-                store.add(item).onsuccess = () => {
-                    status.innerText = "¡Guardado con éxito!";
+                store.add(tarea).onsuccess = () => {
+                    st.innerText = "¡LOGRADO!";
                     setTimeout(() => location.reload(), 500);
                 };
             } catch (err) {
-                alert("Error de memoria. Prueba con 5 fotos en lugar de 10.");
+                alert("Error de memoria. Dale al botón rosa de abajo para limpiar.");
                 btn.disabled = false;
             }
         }
@@ -127,27 +101,18 @@
             db.transaction("tareas", "readonly").objectStore("tareas").getAll().onsuccess = (e) => {
                 e.target.result.reverse().forEach(t => {
                     const div = document.createElement('div');
-                    div.className = 'task-card';
-                    div.innerHTML = `
-                        <div class="del-btn" onclick="borrar(${t.id})">BORRAR</div>
-                        <small style="color:var(--accent);">${t.materia}</small>
-                        <h3>${t.nombre}</h3>
-                        <p style="font-size:0.75rem; color:#94a3b8">📅 ${t.fecha}</p>
-                        <div class="img-grid">${t.fotos.map(f => `<img src="${f}" class="img-mini">`).join('')}</div>
-                    `;
+                    div.className = 'card';
+                    div.innerHTML = `<h3>${t.nom}</h3><p>${t.mat} - ${t.fec}</p><div class="grid">${t.fotos.map(f => `<img src="${f}" class="mini">`).join('')}</div>`;
                     lista.appendChild(div);
                 });
             };
         }
 
-        function borrar(id) {
-            if(confirm("¿Eliminar tarea?")) {
-                db.transaction("tareas", "readwrite").objectStore("tareas").delete(id).onsuccess = () => mostrar();
+        function resetDB() {
+            if(confirm("¿Borrar todo para liberar espacio?")) {
+                db.transaction("tareas", "readwrite").objectStore("tareas").clear().onsuccess = () => location.reload();
             }
         }
     </script>
 </body>
 </html>
-       
-            
-         
