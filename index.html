@@ -14,7 +14,7 @@
         .form-group { margin-bottom: 12px; }
         label { display: block; font-size: 0.75rem; color: #94a3b8; margin-bottom: 4px; }
         select, input { width: 100%; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); padding: 10px; border-radius: 10px; color: white; outline: none; font-size: 0.9rem; }
-        .main-btn { background: linear-gradient(90deg, var(--accent), var(--accent-2)); border: none; padding: 16px; border-radius: 12px; color: white; font-weight: 800; width: 100%; cursor: pointer; margin-top: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        .main-btn { background: linear-gradient(90deg, var(--accent), var(--accent-2)); border: none; padding: 16px; border-radius: 12px; color: white; font-weight: 800; width: 100%; cursor: pointer; margin-top: 10px; }
         .main-btn:disabled { opacity: 0.4; filter: grayscale(1); }
         #status { font-size: 0.7rem; color: var(--accent); text-align: center; margin-top: 10px; font-weight: 600; text-transform: uppercase; }
         .task-card { background: rgba(255,255,255,0.02); padding: 15px; margin-top: 15px; border-radius: 15px; border-left: 4px solid var(--accent-2); width: 100%; max-width: 450px; position: relative; }
@@ -49,7 +49,7 @@
 
     <script>
         let db;
-        const request = indexedDB.open("TareasDB", 2); // Subimos versión para refrescar base de datos
+        const request = indexedDB.open("TareasDB", 2);
         request.onupgradeneeded = (e) => {
             let dbRef = e.target.result;
             if (!dbRef.objectStoreNames.contains("tareas")) {
@@ -58,7 +58,7 @@
         };
         request.onsuccess = (e) => { db = e.target.result; mostrar(); };
 
-        // COMPRESOR ULTRA-RÁPIDO
+        // COMPRESIÓN AGRESIVA PARA SOPORTAR 10 FOTOS
         async function comprimir(file) {
             return new Promise((resolve) => {
                 const reader = new FileReader();
@@ -69,15 +69,15 @@
                     img.onload = () => {
                         const canvas = document.createElement('canvas');
                         const ctx = canvas.getContext('2d');
-                        // Bajamos a 700px para que 10 fotos no pesen nada
-                        const max = 700;
+                        // Reducimos a 650px de ancho máximo
+                        const max = 650;
                         let w = img.width, h = img.height;
                         if (w > h && w > max) { h *= max / w; w = max; }
                         else if (h > max) { w *= max / h; h = max; }
                         canvas.width = w; canvas.height = h;
                         ctx.drawImage(img, 0, 0, w, h);
-                        // Calidad 0.4 (40%) es ideal para que no falle el navegador
-                        resolve(canvas.toDataURL('image/jpeg', 0.4));
+                        // Calidad al 30% para que 10 fotos quepan sin error
+                        resolve(canvas.toDataURL('image/jpeg', 0.3));
                     };
                 };
             });
@@ -97,12 +97,11 @@
 
             try {
                 for(let i = 0; i < files.length; i++) {
-                    status.innerText = `Optimizando ${i+1}/${files.length}...`;
+                    status.innerText = `Procesando ${i+1}/${files.length}...`;
                     const fotoMini = await comprimir(files[i]);
                     listaFotos.push(fotoMini);
                 }
 
-                status.innerText = "Escribiendo en memoria...";
                 const tx = db.transaction("tareas", "readwrite");
                 const store = tx.objectStore("tareas");
                 
@@ -114,15 +113,15 @@
                 const add = store.add(item);
                 add.onsuccess = () => {
                     status.innerText = "¡LISTO!";
-                    setTimeout(() => location.reload(), 800);
+                    setTimeout(() => location.reload(), 500);
                 };
                 add.onerror = () => {
-                    alert("Error de espacio. Prueba borrando tareas viejas.");
+                    alert("Error crítico: Fotos demasiado pesadas.");
                     btn.disabled = false;
                 };
 
             } catch (err) {
-                alert("El celular se quedó sin RAM. Intenta con menos fotos.");
+                alert("Error de memoria en el celular.");
                 btn.disabled = false;
             }
         }
@@ -136,7 +135,7 @@
                     const div = document.createElement('div');
                     div.className = 'task-card';
                     div.innerHTML = `
-                        <div class="del-btn" onclick="borrar(${t.id})">BORRAR</div>
+                        <div class="del-btn" onclick="borrar(${t.id})">ELIMINAR</div>
                         <p style="color:var(--accent); font-weight:800; font-size:0.65rem;">${t.materia}</p>
                         <h3 style="margin:3px 0; font-size:1rem;">${t.nombre}</h3>
                         <p style="font-size:0.75rem; color:#94a3b8">📅 ${t.fecha}</p>
@@ -155,5 +154,5 @@
     </script>
 </body>
 </html>
-           
-    
+         
+          
