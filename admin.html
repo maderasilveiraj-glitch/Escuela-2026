@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Admin Pro | App</title>
+
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#00f2ff">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/906/906334.png">
+
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg: #05070a; --accent: #00f2ff; --accent-2: #7000ff; --text: #ffffff; --danger: #ff007a; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--text); padding: 20px; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+        .container { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 20px; border-radius: 20px; width: 100%; max-width: 400px; backdrop-filter: blur(10px); }
+        h1 { font-size: 1.5rem; margin-bottom: 20px; color: var(--accent); text-align: center; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-size: 0.8rem; color: #94a3b8; }
+        select, input { width: 100%; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); padding: 12px; border-radius: 10px; color: white; font-family: inherit; outline: none; }
+        select:focus, input:focus { border-color: var(--accent); }
+        .main-btn { background: linear-gradient(90deg, var(--accent), var(--accent-2)); border: none; padding: 15px; border-radius: 12px; color: white; font-weight: 800; width: 100%; margin-top: 10px; cursor: pointer; }
+        .main-btn:disabled { filter: grayscale(1); opacity: 0.5; }
+        .task-card { background: rgba(255,255,255,0.02); padding: 15px; margin-top: 15px; border-radius: 15px; border-left: 4px solid var(--accent-2); width: 100%; max-width: 400px; }
+        .img-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(65px, 1fr)); gap: 8px; margin-top: 10px; }
+        .img-mini { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); }
+        .delete-btn { color: var(--danger); font-size: 0.75rem; margin-top: 15px; text-align: right; font-weight: 600; cursor: pointer; padding: 5px; }
+        .back-link { margin-top: 20px; color: #94a3b8; text-decoration: none; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Nueva Tarea</h1>
+        <div class="form-group">
+            <label>Materia</label>
+            <select id="materia">
+                <option>CÁLCULO INTEGRAL</option>
+                <option>LEGISLACIÓN LABORAL</option>
+                <option>DINÁMICA SOCIAL</option>
+                <option>TALLER DE ÉTICA</option>
+                <option>SOFTWARE APLICADO</option>
+                <option>CONTABILIDAD</option>
+            </select>
+        </div>
+        <div class="form-group"><label>Descripción</label><input type="text" id="nombre" placeholder="¿Qué hay que hacer?"></div>
+        <div class="form-group"><label>Fecha de Entrega</label><input type="text" id="fecha" placeholder="Ej: Lunes 25"></div>
+        <div class="form-group"><label>Evidencias</label><input type="file" id="imagenes" accept="image/*" multiple></div>
+        <button class="main-btn" id="btn" onclick="guardar()">GUARDAR TAREA</button>
+    </div>
+
+    <a href="index.html" class="back-link">← Volver al Inicio</a>
+
+    <div id="lista" style="width: 100%; display: flex; flex-direction: column; align-items: center; margin-bottom: 50px;"></div>
+
+    <script>
+        // --- REGISTRO DE SERVICE WORKER PARA PWA ---
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./sw.js').catch(err => console.log("SW no registrado", err));
+        }
+
+        // --- LÓGICA DE BASE DE DATOS ---
+        let db;
+        const request = indexedDB.open("TareasDB", 1);
+        request.onupgradeneeded = (e) => {
+            e.target.result.createObjectStore("tareas", { keyPath: "id", autoIncrement: true });
+        };
+        request.onsuccess = (e) => { db = e.target.result; mostrar(); };
+
+        // --- COMPRESIÓN PARA EVITAR ERRORES DE MEMORIA ---
+        async function reducirImagen(file) {
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.src = URL.createObjectURL(file);
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    // Reducimos a 600px para máxima estabilidad en móviles
+                    const scale = Math.min(600 / img.width, 600 / img.height, 1);
+                    canvas.width = img.width * scale;
+                    canvas.height = img.height * scale;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    URL.revokeObjectURL(img.src); // Liberar RAM inmediatamente
+                    resolve(canvas.toDataURL('image/jpeg', 0.5)); // Calidad 50%
+                };
+            });
+        }
+
+        async function guardar() {
+            const btn = document.getElementById('btn');
+            const nombre = document.getElementById('nombre').value;
+            const fecha = document.getElementById('fecha').value;
+            const files = document.getElementById('imagenes').files;
+
+            if(!nombre || !fecha) return alert("Por favor, llena los campos");
+
+            btn.disabled = true;
+            btn.innerText = "PROCESANDO...";
+
+            try {
+                const fotos = [];
+                for(let f of files) {
+                    const res = await reducirImagen(f);
+                    fotos.push(res);
+                }
+
+                const trans = db.transaction("tareas", "readwrite");
+                const store = trans.objectStore("tareas");
+                store.add({
+                    materia: document.getElementById('materia').value,
+                    nombre: nombre,
+                    fecha: fecha,
+                    fotos: fotos,
+                    time: Date.now()
+                });
+
+                trans.oncomplete = () => {
+                    btn.disabled = false;
+                    btn.innerText = "GUARDAR TAREA";
+                    // Limpiar formulario
+                    document.getElementById('nombre').value = "";
+                    document.getElementById('fecha').value = "";
+                    document.getElementById('imagenes').value = "";
+                    mostrar();
+                };
+            } catch(e) {
+                alert("Error al guardar. Intenta con menos fotos.");
+                btn.disabled = false;
+                btn.innerText = "GUARDAR TAREA";
+            }
+        }
+
+        function mostrar() {
+            const lista = document.getElementById('lista');
+            lista.innerHTML = '<p style="color:#94a3b8; margin: 25px 0; font-size:0.7rem; letter-spacing:2px;">MIS TAREAS ACTIVAS</p>';
+
+            const store = db.transaction("tareas").objectStore("tareas");
+            store.getAll().onsuccess = (e) => {
+                const tareas = e.target.result;
+                tareas.sort((a,b) => b.time - a.time).forEach(t => {
+                    const div = document.createElement('div');
+                    div.className = 'task-card';
+                    div.innerHTML = `
+                        <small style="color:var(--accent); font-weight:800;">${t.materia}</small>
+                        <h3 style="margin:5px 0; font-size:1.1rem;">${t.nombre}</h3>
+                        <p style="font-size:0.8rem; color:#94a3b8">📅 Entrega: ${t.fecha}</p>
+                        <div class="img-grid">${t.fotos.map(f => `<img src="${f}" class="img-mini" onclick="window.open('${f}')">`).join('')}</div>
+                        <div class="delete-btn" onclick="borrar(${t.id})">ELIMINAR TAREA</div>
+                    `;
+                    lista.appendChild(div);
+                });
+            };
+        }
+
+        function borrar(id) {
+            if(confirm("¿Eliminar esta tarea y sus fotos?")) {
+                db.transaction("tareas", "readwrite").objectStore("tareas").delete(id).onsuccess = () => mostrar();
+            }
+        }
+    </script>
+</body>
+</html>

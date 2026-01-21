@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Horario Ultra | 2026</title>
+
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#00f2ff">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/906/906334.png">
+
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #030508;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --accent: #00f2ff;
+            --accent-2: #7000ff;
+            --text: #ffffff;
+            --danger: #ff007a;
+            --success: #39ff14;
+        }
+
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            background-image:
+                radial-gradient(circle at top right, rgba(112, 0, 255, 0.15), transparent 300px),
+                radial-gradient(circle at bottom left, rgba(0, 242, 255, 0.1), transparent 300px);
+            color: var(--text);
+            min-height: 100vh;
+            padding-bottom: 40px;
+            overflow-x: hidden;
+        }
+
+        /* HEADER */
+        .header {
+            padding: 30px 20px;
+            text-align: left;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            line-height: 1;
+            background: linear-gradient(to right, #fff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .admin-btn {
+            position: absolute;
+            top: 30px;
+            right: 20px;
+            width: 45px;
+            height: 45px;
+            background: var(--glass);
+            border: 1px solid var(--accent);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 1.2rem;
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
+        }
+
+        /* PROGRESO */
+        .progress-section {
+            margin: 0 20px 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 8px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            margin: 12px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-2), var(--accent));
+            box-shadow: 0 0 20px var(--accent);
+            transition: width 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* CONTENEDOR DE DÍAS */
+        .schedule-container {
+            display: flex;
+            overflow-x: auto;
+            padding: 0 20px 20px;
+            gap: 15px;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+        }
+        .schedule-container::-webkit-scrollbar { display: none; }
+
+        .day-column {
+            min-width: 85vw;
+            scroll-snap-align: center;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 28px;
+            padding: 20px;
+            height: fit-content;
+        }
+
+        .day-name {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* TARJETAS */
+        .class-card {
+            background: rgba(255,255,255,0.03);
+            border-radius: 20px;
+            padding: 18px;
+            margin-bottom: 12px;
+            border: 1px solid var(--glass-border);
+            position: relative;
+        }
+
+        .class-card::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 20%; bottom: 20%;
+            width: 4px;
+            border-radius: 0 4px 4px 0;
+            background: var(--accent-color);
+        }
+
+        .task-count-badge {
+            position: absolute;
+            top: -5px; right: -5px;
+            background: var(--danger);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 800;
+            padding: 4px 8px;
+            border-radius: 10px;
+        }
+
+        .subject { font-size: 1rem; font-weight: 700; margin-bottom: 4px; color: #fff; }
+        .teacher { font-size: 0.75rem; color: #94a3b8; }
+
+        /* MODAL */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            z-index: 1000;
+            align-items: flex-end;
+        }
+        .modal-overlay.active { display: flex; }
+
+        .modal-content {
+            width: 100%;
+            background: #0a0c10;
+            padding: 25px;
+            border-radius: 30px 30px 0 0;
+            max-height: 85vh;
+            overflow-y: auto;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            border-top: 1px solid var(--glass-border);
+        }
+        .modal-overlay.active .modal-content { transform: translateY(0); }
+
+        .modal-task-gallery {
+            display: flex;
+            overflow-x: auto;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .modal-img {
+            min-width: 100px; height: 100px;
+            border-radius: 12px;
+            object-fit: cover;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* COLORES */
+        .color-1 { --accent-color: #00f2ff; }
+        .color-2 { --accent-color: #7000ff; }
+        .color-3 { --accent-color: #ff007a; }
+        .color-4 { --accent-color: #39ff14; }
+
+        .scroll-hint { text-align: center; font-size: 0.7rem; color: #444; margin-top: 10px; letter-spacing: 2px; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <p style="color: var(--accent); font-weight: 600; font-size: 0.8rem;">GESTIÓN ESCOLAR</p>
+        <h1>Mi Horario<br>Premium</h1>
+        <a href="admin.html" class="admin-btn">⚙️</a>
+    </div>
+
+    <div class="progress-section">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-size: 0.7rem; opacity: 0.7;">LOGRO ACADÉMICO</span>
+            <span id="progress-percentage" style="font-weight:800; color:var(--accent);">0%</span>
+        </div>
+        <div class="progress-bar-bg">
+            <div id="progress-fill" class="progress-fill"></div>
+        </div>
+        <p id="progress-stats" style="font-size: 0.7rem; color: #64748b;"></p>
+    </div>
+
+    <div class="schedule-container">
+        <div class="day-column">
+            <div class="day-name">Lunes <span>⚡</span></div>
+            <div class="class-card color-1" onclick="showTasks('CÁLCULO INTEGRAL')">
+                <span style="font-size:0.7rem; opacity:0.6;">12:00 - 14:00</span>
+                <div class="subject">CÁLCULO INTEGRAL</div>
+                <div class="teacher">Alejandro Herrera Martín</div>
+            </div>
+        </div>
+
+        <div class="day-column">
+            <div class="day-name">Martes <span>🔥</span></div>
+            <div class="class-card color-4" onclick="showTasks('LEGISLACIÓN LABORAL')">
+                <span style="font-size:0.7rem; opacity:0.6;">07:00 - 09:00</span>
+                <div class="subject">LEGISLACIÓN LABORAL</div>
+                <div class="teacher">Carmen María Rodríguez</div>
+            </div>
+            <div class="class-card color-3" onclick="showTasks('DINÁMICA SOCIAL')">
+                <span style="font-size:0.7rem; opacity:0.6;">09:00 - 11:00</span>
+                <div class="subject">DINÁMICA SOCIAL</div>
+                <div class="teacher">Drisdel Mariela Pat Reyes</div>
+            </div>
+        </div>
+
+        <div class="day-column">
+            <div class="day-name">Miércoles <span>💎</span></div>
+            <div class="class-card color-4" onclick="showTasks('LEGISLACIÓN LABORAL')">
+                <span style="font-size:0.7rem; opacity:0.6;">07:00 - 09:00</span>
+                <div class="subject">LEGISLACIÓN LABORAL</div>
+                <div class="teacher">Carmen María Rodríguez</div>
+            </div>
+            <div class="class-card color-1" onclick="showTasks('CÁLCULO INTEGRAL')">
+                <span style="font-size:0.7rem; opacity:0.6;">11:00 - 14:00</span>
+                <div class="subject">CÁLCULO INTEGRAL</div>
+                <div class="teacher">Alejandro Herrera Martín</div>
+            </div>
+        </div>
+
+        <div class="day-column">
+            <div class="day-name">Jueves <span>🎯</span></div>
+            <div class="class-card color-2" onclick="showTasks('CONTABILIDAD')">
+                <span style="font-size:0.7rem; opacity:0.6;">09:00 - 12:00</span>
+                <div class="subject">CONTABILIDAD</div>
+                <div class="teacher">Mario Alberto Castro Cortés</div>
+            </div>
+        </div>
+
+        <div class="day-column">
+            <div class="day-name">Viernes <span>🎉</span></div>
+            <div class="class-card color-2" onclick="showTasks('CONTABILIDAD')">
+                <span style="font-size:0.7rem; opacity:0.6;">12:00 - 14:00</span>
+                <div class="subject">CONTABILIDAD</div>
+                <div class="teacher">Mario Alberto Castro Cortés</div>
+            </div>
+        </div>
+    </div>
+
+    <p class="scroll-hint">Desliza para ver más días ⮕</p>
+
+    <div class="modal-overlay" id="modalOverlay" onclick="if(event.target==this) closeModal()">
+        <div class="modal-content">
+            <div style="width: 40px; height: 4px; background: rgba(255,255,255,0.2); border-radius: 10px; margin: 0 auto 20px;"></div>
+            <h2 id="modalTitle" style="color: var(--accent); font-size: 1.4rem;">Materia</h2>
+            <div id="taskList" style="margin-top: 20px;"></div>
+        </div>
+    </div>
+
+    <script>
+        // REGISTRO DE PWA
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./sw.js').catch(err => console.log(err));
+        }
+
+        const dbName = "TareasDB";
+        let db;
+
+        const request = indexedDB.open(dbName, 1);
+        request.onsuccess = (e) => {
+            db = e.target.result;
+            actualizarDashboard();
+        };
+
+        function actualizarDashboard() {
+            const transaction = db.transaction(["tareas"], "readonly");
+            const store = transaction.objectStore("tareas");
+            const conteoPendientes = {};
+            let total = 0, entregadas = 0;
+
+            store.openCursor().onsuccess = (e) => {
+                const cursor = e.target.result;
+                if (cursor) {
+                    total++;
+                    if (cursor.value.entregada) entregadas++;
+                    else {
+                        const mat = cursor.value.materia;
+                        conteoPendientes[mat] = (conteoPendientes[mat] || 0) + 1;
+                    }
+                    cursor.continue();
+                } else {
+                    document.querySelectorAll('.class-card').forEach(card => {
+                        const m = card.querySelector('.subject').innerText.trim();
+                        let b = card.querySelector('.task-count-badge');
+                        if (conteoPendientes[m]) {
+                            if (!b) {
+                                b = document.createElement('span');
+                                b.className='task-count-badge';
+                                card.appendChild(b);
+                            }
+                            b.innerText = conteoPendientes[m];
+                            b.style.display = 'block';
+                        } else if (b) b.style.display = 'none';
+                    });
+
+                    let porc = total > 0 ? Math.round((entregadas/total)*100) : 0;
+                    document.getElementById('progress-fill').style.width = porc + '%';
+                    document.getElementById('progress-percentage').innerText = porc + '%';
+                    document.getElementById('progress-stats').innerText = `${entregadas}/${total} Tareas completadas`;
+                }
+            };
+        }
+
+        function showTasks(materia) {
+            const modal = document.getElementById('modalOverlay');
+            modal.classList.add('active');
+            document.getElementById('modalTitle').innerText = materia;
+            const list = document.getElementById('taskList');
+            list.innerHTML = '<p style="color:#94a3b8">Buscando tareas...</p>';
+
+            const transaction = db.transaction(["tareas"], "readonly");
+            const store = transaction.objectStore("tareas");
+            const res = [];
+
+            store.openCursor().onsuccess = (e) => {
+                const cursor = e.target.result;
+                if (cursor) {
+                    if (cursor.value.materia === materia) res.push(cursor.value);
+                    cursor.continue();
+                } else {
+                    list.innerHTML = res.length ? '' : '<p style="color:#444">Sin tareas pendientes.</p>';
+                    res.sort((a,b) => b.time - a.time).forEach(t => {
+                        let fotos = '<div class="modal-task-gallery">';
+                        t.fotos.forEach(img => fotos += `<img src="${img}" class="modal-img" onclick="window.open('${img}')">`);
+                        fotos += '</div>';
+
+                        list.innerHTML += `
+                            <div style="background:rgba(255,255,255,0.03); padding:15px; border-radius:18px; margin-bottom:12px; border:1px solid rgba(255,255,255,0.05)">
+                                <div style="display:flex; justify-content:space-between;">
+                                    <span style="font-weight:700; color:#fff;">${t.nombre}</span>
+                                    <span style="font-size:0.6rem; padding:4px 8px; border-radius:6px; background:${t.entregada ? 'var(--success)':'var(--danger)'}; color:#000; font-weight:800;">
+                                        ${t.entregada ? 'LISTO':'PENDIENTE'}
+                                    </span>
+                                </div>
+                                <p style="font-size:0.7rem; color:#94a3b8; margin-top:4px;">Entrega: ${t.fecha}</p>
+                                ${t.fotos.length ? fotos : ''}
+                            </div>`;
+                    });
+                }
+            };
+        }
+
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('active');
+        }
+    </script>
+</body>
+</html>
