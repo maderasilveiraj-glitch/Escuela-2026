@@ -6,74 +6,55 @@
     <title>Admin Pro | Escuela 2026</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #05070a; --accent: #00f2ff; --accent-2: #7000ff; --text: #ffffff; --danger: #ff007a; --success: #39ff14; }
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--text); padding: 20px; min-height: 100vh; }
-        .container { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 20px; border-radius: 20px; width: 100%; max-width: 450px; margin: 0 auto; backdrop-filter: blur(10px); }
-        h1 { font-size: 1.5rem; margin-bottom: 20px; color: var(--accent); text-align: center; font-weight: 800; }
+        :root { --bg: #05070a; --accent: #00f2ff; --accent-2: #7000ff; --text: #ffffff; --danger: #ff007a; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
+        body { background: var(--bg); color: var(--text); padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        .container { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 20px; border-radius: 20px; width: 100%; max-width: 450px; backdrop-filter: blur(10px); }
+        h1 { color: var(--accent); text-align: center; margin-bottom: 20px; font-weight: 800; }
         .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-size: 0.8rem; color: #94a3b8; font-weight: 600; }
-        select, input { width: 100%; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); padding: 12px; border-radius: 12px; color: white; outline: none; font-family: inherit; }
-        .main-btn { background: linear-gradient(90deg, var(--accent), var(--accent-2)); border: none; padding: 18px; border-radius: 15px; color: white; font-weight: 800; width: 100%; margin-top: 10px; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(0, 242, 255, 0.2); }
-        .main-btn:disabled { background: #222; color: #555; box-shadow: none; transform: scale(0.98); }
-        .status-msg { font-size: 0.75rem; text-align: center; margin-top: 10px; color: var(--accent); font-weight: 600; min-height: 1em; }
-        .task-card { background: rgba(255,255,255,0.02); padding: 20px; margin: 20px auto; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); width: 100%; max-width: 450px; position: relative; }
-        .img-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; margin-top: 12px; }
-        .img-mini { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1); }
-        .delete-btn { position: absolute; top: 15px; right: 15px; background: rgba(255, 0, 122, 0.1); color: var(--danger); padding: 5px 10px; border-radius: 8px; font-size: 0.7rem; font-weight: 800; border: 1px solid var(--danger); }
-        .back-btn { display: block; text-align: center; margin: 20px auto; color: #94a3b8; text-decoration: none; font-size: 0.8rem; font-weight: 600; }
+        label { display: block; font-size: 0.8rem; color: #94a3b8; margin-bottom: 5px; }
+        select, input { width: 100%; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); padding: 12px; border-radius: 12px; color: white; outline: none; }
+        .main-btn { background: linear-gradient(90deg, var(--accent), var(--accent-2)); border: none; padding: 18px; border-radius: 15px; color: white; font-weight: 800; width: 100%; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        .main-btn:disabled { filter: grayscale(1); opacity: 0.5; cursor: wait; }
+        #status { font-size: 0.75rem; color: var(--accent); text-align: center; margin-top: 10px; font-weight: 600; }
+        .task-card { background: rgba(255,255,255,0.02); padding: 20px; margin-top: 20px; border-radius: 20px; border-left: 5px solid var(--accent-2); width: 100%; max-width: 450px; position: relative; }
+        .img-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; margin-top: 10px; }
+        .img-mini { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 5px; border: 1px solid rgba(255,255,255,0.1); }
+        .del-btn { position: absolute; top: 15px; right: 15px; color: var(--danger); font-size: 0.7rem; font-weight: 800; cursor: pointer; border: 1px solid var(--danger); padding: 4px 8px; border-radius: 6px; }
     </style>
 </head>
 <body>
 
     <div class="container">
         <h1>Nueva Tarea</h1>
-        
         <div class="form-group">
-            <label>Selecciona Materia</label>
+            <label>Materia</label>
             <select id="materia">
                 <option>CÁLCULO INTEGRAL</option>
                 <option>LEGISLACIÓN LABORAL</option>
                 <option>DINÁMICA SOCIAL</option>
-                <option>CONTABILIDAD</option>
                 <option>SOFTWARE APLICADO</option>
+                <option>CONTABILIDAD</option>
             </select>
         </div>
-
-        <div class="form-group">
-            <label>Descripción de la Tarea</label>
-            <input type="text" id="nombre" placeholder="Ej: Investigar leyes laborales">
-        </div>
-
-        <div class="form-group">
-            <label>Fecha de Entrega</label>
-            <input type="text" id="fecha" placeholder="Ej: Viernes 23 de Enero">
-        </div>
-
-        <div class="form-group">
-            <label>Fotos (Máx 10)</label>
-            <input type="file" id="imagenes" accept="image/*" multiple>
-        </div>
-
-        <button class="main-btn" id="btn" onclick="procesarYGuardar()">GUARDAR TAREA</button>
-        <p class="status-msg" id="status"></p>
+        <div class="form-group"><label>Descripción</label><input type="text" id="nombre" placeholder="Ej: 25 ejercicios"></div>
+        <div class="form-group"><label>Fecha</label><input type="text" id="fecha" placeholder="Ej: Lunes 25"></div>
+        <div class="form-group"><label>Evidencias (Máx 10 fotos)</label><input type="file" id="imagenes" accept="image/*" multiple></div>
+        
+        <button class="main-btn" id="btn" onclick="guardarTodo()">GUARDAR TAREA</button>
+        <div id="status"></div>
     </div>
 
-    <a href="index.html" class="back-btn">← Volver al Horario</a>
-
-    <div id="lista"></div>
+    <div id="lista" style="width: 100%; display: flex; flex-direction: column; align-items: center; margin-bottom: 50px;"></div>
 
     <script>
         let db;
         const request = indexedDB.open("TareasDB", 1);
-        request.onsuccess = (e) => { db = e.target.result; mostrarTareas(); };
-        request.onupgradeneeded = (e) => {
-            let dbRef = e.target.result;
-            dbRef.createObjectStore("tareas", { keyPath: "id", autoIncrement: true });
-        };
+        request.onupgradeneeded = (e) => { e.target.result.createObjectStore("tareas", { keyPath: "id", autoIncrement: true }); };
+        request.onsuccess = (e) => { db = e.target.result; mostrar(); };
 
-        // FUNCIÓN CLAVE: Procesa fotos pesadas sin que el cel se muera
-        async function optimizarFoto(file) {
+        // Función para procesar imagen por imagen
+        async function procesarImagen(file) {
             return new Promise((resolve) => {
                 const reader = new FileReader();
                 reader.readAsDataURL(file);
@@ -82,101 +63,87 @@
                     img.src = e.target.result;
                     img.onload = () => {
                         const canvas = document.createElement('canvas');
-                        // Bajamos resolución a 800px (suficiente para leer texto)
-                        const maxSide = 800;
+                        // Reducimos dimensiones para que el navegador no colapse
+                        const maxDim = 1000; 
                         let w = img.width, h = img.height;
-                        if (w > h && w > maxSide) { h *= maxSide / w; w = maxSide; }
-                        else if (h > maxSide) { w *= maxSide / h; h = maxSide; }
+                        if (w > h && w > maxDim) { h *= maxDim / w; w = maxDim; }
+                        else if (h > maxDim) { w *= maxDim / h; h = maxDim; }
                         
                         canvas.width = w; canvas.height = h;
                         const ctx = canvas.getContext('2d');
                         ctx.drawImage(img, 0, 0, w, h);
-                        // Comprimimos a calidad 0.6 para que pesen muy poco
-                        resolve(canvas.toDataURL('image/jpeg', 0.6));
+                        // Calidad 0.5 es el balance perfecto para fotos pesadas
+                        resolve(canvas.toDataURL('image/jpeg', 0.5));
                     };
                 };
             });
         }
 
-        async function procesarYGuardar() {
+        async function guardarTodo() {
             const btn = document.getElementById('btn');
             const status = document.getElementById('status');
+            const files = document.getElementById('imagenes').files;
             const nombre = document.getElementById('nombre').value;
             const fecha = document.getElementById('fecha').value;
-            const files = document.getElementById('imagenes').files;
 
-            if (!nombre || !fecha) return alert("Por favor completa los campos");
-            if (files.length > 10) return alert("Máximo 10 fotos por tarea");
+            if(!nombre || !fecha || files.length === 0) return alert("Completa todos los datos");
+            if(files.length > 10) return alert("Máximo 10 fotos");
 
             btn.disabled = true;
-            const fotosOptimizadas = [];
+            const fotosFinales = [];
 
-            for (let i = 0; i < files.length; i++) {
-                status.innerText = `Procesando foto ${i + 1} de ${files.length}...`;
-                const fotoCompresa = await optimizarFoto(files[i]);
-                fotosOptimizadas.push(fotoCompresa);
-            }
+            try {
+                for(let i = 0; i < files.length; i++) {
+                    status.innerText = `Procesando foto ${i+1} de ${files.length}...`;
+                    const res = await procesarImagen(files[i]);
+                    fotosFinales.push(res);
+                }
 
-            status.innerText = "Guardando en base de datos...";
+                status.innerText = "Guardando en memoria...";
+                const trans = db.transaction("tareas", "readwrite");
+                const store = trans.objectStore("tareas");
+                
+                const data = {
+                    materia: document.getElementById('materia').value,
+                    nombre, fecha, fotos: fotosFinales, time: Date.now()
+                };
 
-            const trans = db.transaction("tareas", "readwrite");
-            const store = trans.objectStore("tareas");
-            
-            const tarea = {
-                materia: document.getElementById('materia').value,
-                nombre,
-                fecha,
-                fotos: fotosOptimizadas,
-                entregada: false,
-                timestamp: Date.now()
-            };
-
-            const addReq = store.add(tarea);
-            addReq.onsuccess = () => {
-                status.innerText = "✅ Tarea guardada con éxito!";
-                setTimeout(() => {
-                    status.innerText = "";
-                    btn.disabled = false;
-                    document.getElementById('nombre').value = "";
-                    document.getElementById('fecha').value = "";
-                    document.getElementById('imagenes').value = "";
-                    mostrarTareas();
-                }, 1500);
-            };
-            
-            addReq.onerror = () => {
-                alert("Error de memoria. Intenta con menos fotos o fotos menos pesadas.");
+                store.add(data).onsuccess = () => {
+                    status.innerText = "¡Tarea guardada!";
+                    setTimeout(() => {
+                        status.innerText = "";
+                        btn.disabled = false;
+                        document.location.reload(); 
+                    }, 1000);
+                };
+            } catch (e) {
+                alert("Error de memoria. Prueba con menos fotos.");
                 btn.disabled = false;
                 status.innerText = "";
-            };
+            }
         }
 
-        function mostrarTareas() {
+        function mostrar() {
             const lista = document.getElementById('lista');
             lista.innerHTML = "";
-            const store = db.transaction("tareas", "readonly").objectStore("tareas");
-            store.getAll().onsuccess = (e) => {
-                const tareas = e.target.result;
-                tareas.sort((a,b) => b.timestamp - a.timestamp).forEach(t => {
-                    const card = document.createElement('div');
-                    card.className = "task-card";
-                    card.innerHTML = `
-                        <div class="delete-btn" onclick="eliminar(${t.id})">BORRAR</div>
-                        <p style="color:var(--accent); font-weight:800; font-size:0.7rem;">${t.materia}</p>
+            db.transaction("tareas", "readonly").objectStore("tareas").getAll().onsuccess = (e) => {
+                e.target.result.reverse().forEach(t => {
+                    const div = document.createElement('div');
+                    div.className = 'task-card';
+                    div.innerHTML = `
+                        <div class="del-btn" onclick="borrar(${t.id})">ELIMINAR</div>
+                        <small style="color:var(--accent); font-weight:800;">${t.materia}</small>
                         <h3 style="margin:5px 0;">${t.nombre}</h3>
-                        <p style="font-size:0.8rem; color:#94a3b8;">📅 Entrega: ${t.fecha}</p>
+                        <p style="font-size:0.8rem; color:#94a3b8">📅 ${t.fecha}</p>
                         <div class="img-grid">${t.fotos.map(f => `<img src="${f}" class="img-mini" onclick="window.open('${f}')">`).join('')}</div>
                     `;
-                    lista.appendChild(card);
+                    lista.appendChild(div);
                 });
             };
         }
 
-        function eliminar(id) {
-            if (confirm("¿Seguro que quieres eliminar esta tarea?")) {
-                db.transaction("tareas", "readwrite").objectStore("tareas").delete(id).onsuccess = () => mostrarTareas();
-            }
-        }
+        function borrar(id) { if(confirm("¿Borrar?")) db.transaction("tareas", "readwrite").objectStore("tareas").delete(id).onsuccess = () => mostrar(); }
     </script>
 </body>
 </html>
+
