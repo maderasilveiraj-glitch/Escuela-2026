@@ -8,19 +8,19 @@
     <style>
         :root { --bg: #05070a; --accent: #00f2ff; --accent-2: #7000ff; --text: #ffffff; --danger: #ff007a; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
-        body { background: var(--bg); color: var(--text); padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        body { background: var(--bg); color: var(--text); padding: 15px; display: flex; flex-direction: column; align-items: center; }
         .container { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 20px; border-radius: 20px; width: 100%; max-width: 450px; backdrop-filter: blur(10px); }
-        h1 { color: var(--accent); text-align: center; margin-bottom: 20px; font-weight: 800; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; font-size: 0.8rem; color: #94a3b8; margin-bottom: 5px; }
-        select, input { width: 100%; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); padding: 12px; border-radius: 12px; color: white; outline: none; }
-        .main-btn { background: linear-gradient(90deg, var(--accent), var(--accent-2)); border: none; padding: 18px; border-radius: 15px; color: white; font-weight: 800; width: 100%; cursor: pointer; transition: 0.3s; margin-top: 10px; }
-        .main-btn:disabled { filter: grayscale(1); opacity: 0.5; cursor: wait; }
-        #status { font-size: 0.75rem; color: var(--accent); text-align: center; margin-top: 10px; font-weight: 600; }
-        .task-card { background: rgba(255,255,255,0.02); padding: 20px; margin-top: 20px; border-radius: 20px; border-left: 5px solid var(--accent-2); width: 100%; max-width: 450px; position: relative; }
-        .img-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; margin-top: 10px; }
-        .img-mini { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 5px; border: 1px solid rgba(255,255,255,0.1); }
-        .del-btn { position: absolute; top: 15px; right: 15px; color: var(--danger); font-size: 0.7rem; font-weight: 800; cursor: pointer; border: 1px solid var(--danger); padding: 4px 8px; border-radius: 6px; }
+        h1 { color: var(--accent); text-align: center; margin-bottom: 20px; font-weight: 800; font-size: 1.4rem; }
+        .form-group { margin-bottom: 12px; }
+        label { display: block; font-size: 0.75rem; color: #94a3b8; margin-bottom: 4px; }
+        select, input { width: 100%; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); padding: 10px; border-radius: 10px; color: white; outline: none; font-size: 0.9rem; }
+        .main-btn { background: linear-gradient(90deg, var(--accent), var(--accent-2)); border: none; padding: 16px; border-radius: 12px; color: white; font-weight: 800; width: 100%; cursor: pointer; margin-top: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        .main-btn:disabled { opacity: 0.4; filter: grayscale(1); }
+        #status { font-size: 0.7rem; color: var(--accent); text-align: center; margin-top: 10px; font-weight: 600; text-transform: uppercase; }
+        .task-card { background: rgba(255,255,255,0.02); padding: 15px; margin-top: 15px; border-radius: 15px; border-left: 4px solid var(--accent-2); width: 100%; max-width: 450px; position: relative; }
+        .img-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; margin-top: 10px; }
+        .img-mini { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 4px; border: 1px solid rgba(255,255,255,0.1); }
+        .del-btn { position: absolute; top: 12px; right: 12px; color: var(--danger); font-size: 0.65rem; font-weight: 800; cursor: pointer; border: 1px solid var(--danger); padding: 3px 6px; border-radius: 5px; }
     </style>
 </head>
 <body>
@@ -37,11 +37,11 @@
                 <option>CONTABILIDAD</option>
             </select>
         </div>
-        <div class="form-group"><label>Descripción</label><input type="text" id="nombre" placeholder="Ej: 25 ejercicios"></div>
-        <div class="form-group"><label>Fecha</label><input type="text" id="fecha" placeholder="Ej: Lunes 25"></div>
-        <div class="form-group"><label>Evidencias (Máx 10 fotos)</label><input type="file" id="imagenes" accept="image/*" multiple></div>
+        <div class="form-group"><label>Tarea</label><input type="text" id="nombre" placeholder="Ej: Ejercicios pág 40"></div>
+        <div class="form-group"><label>Fecha</label><input type="text" id="fecha" placeholder="Ej: Mañana"></div>
+        <div class="form-group"><label>Fotos (Hasta 10)</label><input type="file" id="imagenes" accept="image/*" multiple></div>
         
-        <button class="main-btn" id="btn" onclick="guardarTodo()">GUARDAR TAREA</button>
+        <button class="main-btn" id="btn" onclick="iniciarGuardado()">GUARDAR TAREA</button>
         <div id="status"></div>
     </div>
 
@@ -49,12 +49,17 @@
 
     <script>
         let db;
-        const request = indexedDB.open("TareasDB", 1);
-        request.onupgradeneeded = (e) => { e.target.result.createObjectStore("tareas", { keyPath: "id", autoIncrement: true }); };
+        const request = indexedDB.open("TareasDB", 2); // Subimos versión para refrescar base de datos
+        request.onupgradeneeded = (e) => {
+            let dbRef = e.target.result;
+            if (!dbRef.objectStoreNames.contains("tareas")) {
+                dbRef.createObjectStore("tareas", { keyPath: "id", autoIncrement: true });
+            }
+        };
         request.onsuccess = (e) => { db = e.target.result; mostrar(); };
 
-        // Función para procesar imagen por imagen
-        async function procesarImagen(file) {
+        // COMPRESOR ULTRA-RÁPIDO
+        async function comprimir(file) {
             return new Promise((resolve) => {
                 const reader = new FileReader();
                 reader.readAsDataURL(file);
@@ -63,78 +68,78 @@
                     img.src = e.target.result;
                     img.onload = () => {
                         const canvas = document.createElement('canvas');
-                        // Reducimos dimensiones para que el navegador no colapse
-                        const maxDim = 1000; 
-                        let w = img.width, h = img.height;
-                        if (w > h && w > maxDim) { h *= maxDim / w; w = maxDim; }
-                        else if (h > maxDim) { w *= maxDim / h; h = maxDim; }
-                        
-                        canvas.width = w; canvas.height = h;
                         const ctx = canvas.getContext('2d');
+                        // Bajamos a 700px para que 10 fotos no pesen nada
+                        const max = 700;
+                        let w = img.width, h = img.height;
+                        if (w > h && w > max) { h *= max / w; w = max; }
+                        else if (h > max) { w *= max / h; h = max; }
+                        canvas.width = w; canvas.height = h;
                         ctx.drawImage(img, 0, 0, w, h);
-                        // Calidad 0.5 es el balance perfecto para fotos pesadas
-                        resolve(canvas.toDataURL('image/jpeg', 0.5));
+                        // Calidad 0.4 (40%) es ideal para que no falle el navegador
+                        resolve(canvas.toDataURL('image/jpeg', 0.4));
                     };
                 };
             });
         }
 
-        async function guardarTodo() {
+        async function iniciarGuardado() {
             const btn = document.getElementById('btn');
             const status = document.getElementById('status');
             const files = document.getElementById('imagenes').files;
             const nombre = document.getElementById('nombre').value;
             const fecha = document.getElementById('fecha').value;
 
-            if(!nombre || !fecha || files.length === 0) return alert("Completa todos los datos");
-            if(files.length > 10) return alert("Máximo 10 fotos");
-
+            if(!nombre || !fecha || files.length === 0) return alert("Faltan datos o fotos");
+            
             btn.disabled = true;
-            const fotosFinales = [];
+            const listaFotos = [];
 
             try {
                 for(let i = 0; i < files.length; i++) {
-                    status.innerText = `Procesando foto ${i+1} de ${files.length}...`;
-                    const res = await procesarImagen(files[i]);
-                    fotosFinales.push(res);
+                    status.innerText = `Optimizando ${i+1}/${files.length}...`;
+                    const fotoMini = await comprimir(files[i]);
+                    listaFotos.push(fotoMini);
                 }
 
-                status.innerText = "Guardando en memoria...";
-                const trans = db.transaction("tareas", "readwrite");
-                const store = trans.objectStore("tareas");
+                status.innerText = "Escribiendo en memoria...";
+                const tx = db.transaction("tareas", "readwrite");
+                const store = tx.objectStore("tareas");
                 
-                const data = {
+                const item = {
                     materia: document.getElementById('materia').value,
-                    nombre, fecha, fotos: fotosFinales, time: Date.now()
+                    nombre, fecha, fotos: listaFotos, time: Date.now()
                 };
 
-                store.add(data).onsuccess = () => {
-                    status.innerText = "¡Tarea guardada!";
-                    setTimeout(() => {
-                        status.innerText = "";
-                        btn.disabled = false;
-                        document.location.reload(); 
-                    }, 1000);
+                const add = store.add(item);
+                add.onsuccess = () => {
+                    status.innerText = "¡LISTO!";
+                    setTimeout(() => location.reload(), 800);
                 };
-            } catch (e) {
-                alert("Error de memoria. Prueba con menos fotos.");
+                add.onerror = () => {
+                    alert("Error de espacio. Prueba borrando tareas viejas.");
+                    btn.disabled = false;
+                };
+
+            } catch (err) {
+                alert("El celular se quedó sin RAM. Intenta con menos fotos.");
                 btn.disabled = false;
-                status.innerText = "";
             }
         }
 
         function mostrar() {
             const lista = document.getElementById('lista');
             lista.innerHTML = "";
-            db.transaction("tareas", "readonly").objectStore("tareas").getAll().onsuccess = (e) => {
+            const store = db.transaction("tareas", "readonly").objectStore("tareas");
+            store.getAll().onsuccess = (e) => {
                 e.target.result.reverse().forEach(t => {
                     const div = document.createElement('div');
                     div.className = 'task-card';
                     div.innerHTML = `
-                        <div class="del-btn" onclick="borrar(${t.id})">ELIMINAR</div>
-                        <small style="color:var(--accent); font-weight:800;">${t.materia}</small>
-                        <h3 style="margin:5px 0;">${t.nombre}</h3>
-                        <p style="font-size:0.8rem; color:#94a3b8">📅 ${t.fecha}</p>
+                        <div class="del-btn" onclick="borrar(${t.id})">BORRAR</div>
+                        <p style="color:var(--accent); font-weight:800; font-size:0.65rem;">${t.materia}</p>
+                        <h3 style="margin:3px 0; font-size:1rem;">${t.nombre}</h3>
+                        <p style="font-size:0.75rem; color:#94a3b8">📅 ${t.fecha}</p>
                         <div class="img-grid">${t.fotos.map(f => `<img src="${f}" class="img-mini" onclick="window.open('${f}')">`).join('')}</div>
                     `;
                     lista.appendChild(div);
@@ -142,8 +147,13 @@
             };
         }
 
-        function borrar(id) { if(confirm("¿Borrar?")) db.transaction("tareas", "readwrite").objectStore("tareas").delete(id).onsuccess = () => mostrar(); }
+        function borrar(id) {
+            if(confirm("¿Eliminar?")) {
+                db.transaction("tareas", "readwrite").objectStore("tareas").delete(id).onsuccess = () => mostrar();
+            }
+        }
     </script>
 </body>
 </html>
-
+           
+    
