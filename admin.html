@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -70,20 +70,30 @@
             border-radius: 5px;
         }
 
-        .btn-save {
-            width: 100%;
+        .button-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .btn-save, .btn-delete {
             padding: 15px;
-            background: var(--accent-cyber);
             color: #fff;
             border: none;
             border-radius: 10px;
             font-family: 'Orbitron';
             cursor: pointer;
-            margin-top: 20px;
             transition: 0.3s;
+            text-transform: uppercase;
+            font-size: 0.8rem;
         }
 
+        .btn-save { background: var(--accent-cyber); }
         .btn-save:hover { background: #8a2be2; box-shadow: 0 0 20px var(--accent-cyber); }
+
+        .btn-delete { background: transparent; border: 1px solid var(--danger); color: var(--danger); }
+        .btn-delete:hover { background: var(--danger); color: white; box-shadow: 0 0 20px var(--danger); }
 
         /* Estilo de la Lista */
         .task-display-card {
@@ -92,10 +102,23 @@
             padding: 20px;
             margin-bottom: 25px;
             border-radius: 0 15px 15px 0;
-            transition: 0.3s;
+            position: relative;
         }
 
-        .task-display-card:hover { background: rgba(255, 255, 255, 0.06); }
+        .delete-icon {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: var(--danger);
+            cursor: pointer;
+            border: 1px solid var(--danger);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.7rem;
+            font-family: 'Orbitron';
+        }
+
+        .delete-icon:hover { background: var(--danger); color: white; }
 
         .task-display-header {
             display: flex;
@@ -103,6 +126,7 @@
             border-bottom: 1px solid #333;
             padding-bottom: 10px;
             margin-bottom: 15px;
+            width: 90%;
         }
 
         .notes-text {
@@ -127,12 +151,9 @@
             border-radius: 8px;
             cursor: zoom-in;
             border: 1px solid #444;
-            transition: 0.3s;
         }
 
-        .gallery img:hover { border-color: var(--text-dim); transform: translateY(-3px); }
-
-        /* VISOR DE IMAGEN (FULLSCREEN) */
+        /* VISOR DE IMAGEN */
         #imgModal {
             display: none;
             position: fixed;
@@ -141,7 +162,6 @@
             z-index: 1000;
             justify-content: center;
             align-items: center;
-            cursor: zoom-out;
         }
 
         #imgModal img { max-width: 90%; max-height: 90%; border: 2px solid var(--text-dim); }
@@ -166,7 +186,7 @@
     <h1>ADMIN_PANEL_SYSTEM</h1>
 
     <div class="admin-card">
-        <label>SELECCIONAR TAREA EXISTENTE</label>
+        <label>SELECCIONAR TAREA PARA EDITAR/BORRAR</label>
         <select id="taskSelector"></select>
 
         <label>APUNTES Y NOTAS</label>
@@ -176,12 +196,15 @@
         <input type="file" id="imageInput" accept="image/*" multiple>
         <div class="img-grid" id="previewGrid"></div>
 
-        <button class="btn-save" onclick="updateTask()">GUARDAR CAMBIOS</button>
+        <div class="button-group">
+            <button class="btn-save" onclick="updateTask()">Guardar Cambios</button>
+            <button class="btn-delete" onclick="deleteCurrentTask()">Eliminar Tarea</button>
+        </div>
         <div id="status" class="status-msg"></div>
     </div>
 
     <div id="tasksContainer">
-        <h2 style="font-size: 1.2rem;">CARGANDO ARCHIVOS DEL NÚCLEO...</h2>
+        <h2 style="font-size: 1.2rem;">Sincronizando con la DB...</h2>
     </div>
 </div>
 
@@ -189,7 +212,6 @@
     let db;
     let selectedImages = [];
     
-    // Abrir Base de Datos
     const request = indexedDB.open("CyberDB", 1);
     request.onsuccess = (e) => {
         db = e.target.result;
@@ -206,23 +228,32 @@
         store.getAll().onsuccess = (e) => {
             const tareas = e.target.result;
             const selector = document.getElementById('taskSelector');
+            
+            if(tareas.length === 0) {
+                selector.innerHTML = '<option value="">Sin tareas</option>';
+                return;
+            }
+
             selector.innerHTML = tareas.map(t => `<option value="${t.id}">${t.materia} - ${t.nombre}</option>`).join('');
-            if(tareas.length > 0) loadTaskDetails(tareas[0].id);
+            loadTaskDetails(parseInt(selector.value));
         };
     }
 
-    document.getElementById('taskSelector').onchange = (e) => loadTaskDetails(parseInt(e.target.value));
+    document.getElementById('taskSelector').onchange = (e) => {
+        if(e.target.value) loadTaskDetails(parseInt(e.target.value));
+    };
 
     function loadTaskDetails(id) {
         db.transaction("tareas", "readonly").objectStore("tareas").get(id).onsuccess = (e) => {
             const t = e.target.result;
-            document.getElementById('taskNotes').value = t.notas || "";
-            selectedImages = t.imagenes || [];
-            renderSmallPreviews();
+            if(t) {
+                document.getElementById('taskNotes').value = t.notas || "";
+                selectedImages = t.imagenes || [];
+                renderSmallPreviews();
+            }
         };
     }
 
-    // Procesar imágenes pesadas
     document.getElementById('imageInput').onchange = (e) => {
         const files = Array.from(e.target.files).slice(0, 4);
         selectedImages = [];
@@ -242,6 +273,8 @@
 
     function updateTask() {
         const id = parseInt(document.getElementById('taskSelector').value);
+        if(!id) return;
+
         const transaction = db.transaction("tareas", "readwrite");
         const store = transaction.objectStore("tareas");
 
@@ -250,24 +283,56 @@
             data.notas = document.getElementById('taskNotes').value;
             data.imagenes = selectedImages;
             store.put(data).onsuccess = () => {
-                showMsg("ACTUALIZADO", "var(--success)");
+                showMsg("CAMBIOS GUARDADOS", "var(--success)");
                 renderAllTasks();
             };
         };
+    }
+
+    // FUNCIÓN PARA ELIMINAR TAREA
+    function deleteCurrentTask() {
+        const id = parseInt(document.getElementById('taskSelector').value);
+        if(!id) return;
+
+        if(confirm("¿ESTÁS SEGURO? Esta acción borrará la tarea y sus fotos permanentemente del sistema.")) {
+            const transaction = db.transaction("tareas", "readwrite");
+            const store = transaction.objectStore("tareas");
+            
+            store.delete(id).onsuccess = () => {
+                showMsg("TAREA ELIMINADA", "var(--danger)");
+                document.getElementById('taskNotes').value = "";
+                selectedImages = [];
+                renderSmallPreviews();
+                refreshUI();
+            };
+        }
+    }
+
+    // ELIMINAR DESDE LA TARJETA DIRECTAMENTE
+    function quickDelete(id) {
+        if(confirm("¿Eliminar esta tarea de la lista?")) {
+            const transaction = db.transaction("tareas", "readwrite");
+            transaction.objectStore("tareas").delete(id).onsuccess = () => refreshUI();
+        }
     }
 
     function renderAllTasks() {
         const container = document.getElementById('tasksContainer');
         db.transaction("tareas", "readonly").objectStore("tareas").getAll().onsuccess = (e) => {
             const tareas = e.target.result;
-            container.innerHTML = '<h2>TAREAS ALMACENADAS</h2>' + tareas.map(t => `
+            if(tareas.length === 0) {
+                container.innerHTML = '<h2>SISTEMA VACÍO</h2>';
+                return;
+            }
+            container.innerHTML = '<h2>REPORTE DE TAREAS</h2>' + tareas.map(t => `
                 <div class="task-display-card">
+                    <div class="delete-icon" onclick="quickDelete(${t.id})">BORRAR</div>
                     <div class="task-display-header">
                         <span style="color:var(--success); font-family:'Orbitron';">${t.materia}</span>
                         <span style="color:#666; font-size:0.8rem;">${t.fecha}</span>
                     </div>
                     <div style="margin-bottom:10px; font-weight:700;">${t.nombre}</div>
-                    <div class="notes-text">${t.notas || "Sin notas adicionales..."}</div>
+                    <div class="notes-text">${t.notas || "Sin notas..."}</div>
                     <div class="gallery">
                         ${(t.imagenes || []).map(img => `<img src="${img}" onclick="openImg('${img}')">`).join('')}
                     </div>
@@ -292,3 +357,4 @@
 
 </body>
 </html>
+
