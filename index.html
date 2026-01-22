@@ -1,4 +1,4 @@
-   <!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -100,8 +100,11 @@
         .btn-add { width: 100%; background: var(--accent-cyber); color: #fff; border: none; padding: 15px; font-family: 'Orbitron'; border-radius: 12px; cursor: pointer; margin-top: 15px; }
         .fab { position: fixed; bottom: 30px; right: 30px; width: 65px; height: 65px; background: var(--accent-cyber); border: none; border-radius: 50%; color: #fff; font-size: 2rem; box-shadow: 0 0 20px rgba(112, 0, 255, 0.8); z-index: 100; }
 
-        .task-item { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .task-item { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+        .task-info { flex-grow: 1; }
+        .btn-toggle { padding: 8px 12px; border: none; border-radius: 8px; font-family: 'Orbitron'; cursor: pointer; font-size: 0.7rem; }
         .btn-toggle.completed { background: var(--success); color: #000; font-weight: 700; }
+        .btn-delete { background: var(--danger); color: #fff; border: none; padding: 8px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .completed-text { text-decoration: line-through; opacity: 0.5; color: var(--success) !important; }
         .pin-input { text-align: center; font-size: 2rem; letter-spacing: 15px; color: var(--accent-cyber); }
     </style>
@@ -136,7 +139,7 @@
 
     <div class="modal-overlay" id="pinModal">
         <div class="modal-content">
-            <h2 style="color: var(--danger); font-family: 'Orbitron'; text-align: center;">SEGURIDAD</h2>
+            <h2 id="pinModalTitle" style="color: var(--danger); font-family: 'Orbitron'; text-align: center;">SEGURIDAD</h2>
             <input type="password" id="pinCode" class="pin-input" maxlength="4" placeholder="****">
             <div style="display: flex; gap: 10px;">
                 <button class="btn-add" style="background: #30363d;" onclick="closePinModal()">CANCELAR</button>
@@ -192,7 +195,6 @@
             ]}
         ];
 
-        // Mapa de clases de texto para el neón
         const textClassMap = {
             "CÁLCULO INTEGRAL": "txt-calculo", "LEGISLACIÓN LABORAL": "txt-legislacion",
             "DINÁMICA SOCIAL": "txt-dinamica", "CONT. ORIENTADA NEG.": "txt-contabilidad",
@@ -200,7 +202,7 @@
         };
 
         let db;
-        let pendingToggle = null;
+        let pendingAction = null;
 
         const request = indexedDB.open("CyberDB", 1);
         request.onupgradeneeded = (e) => {
@@ -232,26 +234,51 @@
         function openAddModal() { document.getElementById('addModal').classList.add('active'); }
         function closeAddModal() { document.getElementById('addModal').classList.remove('active'); }
         function closeModal() { document.getElementById('modalOverlay').classList.remove('active'); }
-        function closePinModal() { document.getElementById('pinModal').classList.remove('active'); document.getElementById('pinCode').value = ''; }
+        function closePinModal() { 
+            document.getElementById('pinModal').classList.remove('active'); 
+            document.getElementById('pinCode').value = ''; 
+            pendingAction = null;
+        }
 
         function toggleTarea(id, materia) {
-            pendingToggle = { id, materia };
+            pendingAction = { type: 'TOGGLE', id, materia };
+            document.getElementById('pinModalTitle').innerText = "SEGURIDAD";
+            document.getElementById('pinModal').classList.add('active');
+            document.getElementById('pinCode').focus();
+        }
+
+        function eliminarTarea(id, materia) {
+            pendingAction = { type: 'DELETE', id, materia };
+            document.getElementById('pinModalTitle').innerText = "BORRAR TAREA";
             document.getElementById('pinModal').classList.add('active');
             document.getElementById('pinCode').focus();
         }
 
         function validatePin() {
             if (document.getElementById('pinCode').value === "9114") {
-                const { id, materia } = pendingToggle;
+                const { type, id, materia } = pendingAction;
                 const transaction = db.transaction(["tareas"], "readwrite");
                 const store = transaction.objectStore("tareas");
-                store.get(id).onsuccess = (e) => {
-                    const data = e.target.result;
-                    data.entregada = !data.entregada;
-                    store.put(data);
+
+                if (type === 'TOGGLE') {
+                    store.get(id).onsuccess = (e) => {
+                        const data = e.target.result;
+                        data.entregada = !data.entregada;
+                        store.put(data);
+                    };
+                } else if (type === 'DELETE') {
+                    store.delete(id);
+                }
+
+                transaction.oncomplete = () => { 
+                    actualizarDashboard(); 
+                    showTasks(materia); 
+                    closePinModal(); 
                 };
-                transaction.oncomplete = () => { actualizarDashboard(); showTasks(materia); closePinModal(); };
-            } else { alert("CÓDIGO INCORRECTO"); document.getElementById('pinCode').value = ''; }
+            } else { 
+                alert("CÓDIGO INCORRECTO"); 
+                document.getElementById('pinCode').value = ''; 
+            }
         }
 
         function saveTask() {
@@ -310,12 +337,15 @@
                     res.forEach(t => {
                         list.innerHTML += `
                             <div class="task-item">
-                                <div class="${t.entregada ? 'completed-text' : ''}">
+                                <div class="task-info ${t.entregada ? 'completed-text' : ''}">
                                     <div style="font-weight:700; color: #fff;">${t.nombre}</div>
                                     <div style="font-size:0.7rem; color: var(--text-dim);">LÍMITE: ${t.fecha}</div>
                                 </div>
                                 <button class="btn-toggle ${t.entregada ? 'completed' : ''}" style="background:#0d1117; color:#fff;" onclick="toggleTarea(${t.id}, '${materia}')">
                                     ${t.entregada ? 'REVISADO' : 'PENDIENTE'}
+                                </button>
+                                <button class="btn-delete" onclick="eliminarTarea(${t.id}, '${materia}')">
+                                    🗑️
                                 </button>
                             </div>`;
                     });
@@ -325,5 +355,4 @@
     </script>
 </body>
 </html>
-
-                        
+                      
