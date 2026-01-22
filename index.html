@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>NEURAL SCHEDULE | 2026</title>
+    <title>Enero-Junio| 2026</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
@@ -32,7 +32,6 @@
             padding-bottom: 100px;
         }
 
-        /* HEADER CYBERPUNK */
         .header { 
             padding: 40px 25px 20px; 
             border-bottom: 2px solid var(--accent);
@@ -48,7 +47,6 @@
             text-shadow: 0 0 15px var(--accent);
         }
 
-        /* DASHBOARD DE PROGRESO */
         .progress-section {
             margin: 20px; padding: 20px;
             background: var(--panel);
@@ -67,7 +65,6 @@
             transition: width 0.8s cubic-bezier(0.17, 0.67, 0.83, 0.67);
         }
 
-        /* CONTENEDOR DE DÍAS */
         .schedule-container { 
             display: flex; overflow-x: auto; padding: 10px 20px; gap: 20px; 
             scroll-snap-type: x mandatory; scrollbar-width: none;
@@ -86,14 +83,12 @@
             display: flex; justify-content: space-between;
         }
 
-        /* TARJETAS DE CLASE */
         .class-card { 
             background: rgba(255,255,255,0.03); 
             margin-bottom: 15px; padding: 15px;
             border: 1px solid rgba(0, 242, 255, 0.1);
             position: relative; transition: 0.3s;
         }
-        .class-card:active { background: rgba(0, 242, 255, 0.1); }
         .class-card::after {
             content: ''; position: absolute; bottom: 0; right: 0;
             width: 10px; height: 10px; background: var(--accent);
@@ -116,7 +111,6 @@
             border-radius: 4px; box-shadow: 0 0 10px var(--danger);
         }
 
-        /* MODALES ESTILO TERMINAL */
         .modal-overlay { 
             position: fixed; inset: 0; background: rgba(0,0,0,0.9); 
             display: none; z-index: 1000; align-items: center; justify-content: center;
@@ -129,14 +123,12 @@
             box-shadow: 0 0 30px rgba(0, 242, 255, 0.2);
         }
 
-        /* BOTONES Y FORM */
         .input-group { margin-bottom: 20px; }
         .input-group label { color: var(--accent); font-size: 0.8rem; letter-spacing: 2px; }
         .input-group input, .input-group select { 
             width: 100%; background: #1a1a25; border: 1px solid #333; 
             padding: 12px; color: #fff; font-family: 'Rajdhani'; outline: none;
         }
-        .input-group input:focus { border-color: var(--accent); box-shadow: var(--border-glow); }
 
         .btn-add { 
             width: 100%; background: var(--accent); color: #000; 
@@ -151,7 +143,6 @@
             box-shadow: 0 0 20px var(--accent-2); z-index: 100;
         }
 
-        /* LISTA DE TAREAS */
         .task-item {
             background: rgba(255,255,255,0.02); padding: 15px;
             border-left: 2px solid var(--accent); margin-bottom: 10px;
@@ -164,17 +155,29 @@
         }
         .btn-toggle.completed {
             background: var(--success); color: #000; border-color: var(--success);
-            box-shadow: 0 0 10px var(--success);
         }
-
         .completed-text { text-decoration: line-through; opacity: 0.4; }
+
+        /* KEYPAD STYLES */
+        .keypad-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 20px; }
+        .key-btn { 
+            background: rgba(255,255,255,0.05); color: var(--accent); 
+            border: 1px solid #333; padding: 15px; font-family: 'Orbitron'; 
+            font-size: 1.2rem; cursor: pointer; transition: 0.2s;
+        }
+        .key-btn:active { background: var(--accent); color: #000; }
+        .pin-display { 
+            background: #000; padding: 15px; text-align: center; font-size: 2rem; 
+            letter-spacing: 10px; color: var(--danger); border: 1px solid #333; 
+            margin-bottom: 20px; height: 75px; display: flex; align-items: center; justify-content: center;
+        }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <p style="color: var(--accent-2); font-weight: 700; font-size: 0.7rem; letter-spacing: 5px;">SYSTEM STATUS: ONLINE</p>
-        <h1>NEURAL_HORARIO v2.6</h1>
+        <p style="color: var(--accent-2); font-weight: 700; font-size: 0.7rem; letter-spacing: 5px;">Ingeniería En Gestión Empresarial</p>
+        <h1>2do Semestre_HORARIO</h1>
     </div>
 
     <div class="progress-section">
@@ -188,8 +191,7 @@
         <p id="progress-stats" style="font-size: 0.7rem; color: #555; text-transform: uppercase;"></p>
     </div>
 
-    <div class="schedule-container" id="schedule-render">
-        </div>
+    <div class="schedule-container" id="schedule-render"></div>
 
     <button class="fab" onclick="openAddModal()">+</button>
 
@@ -209,178 +211,4 @@
                 <input type="text" id="taskName" placeholder="...">
             </div>
             <div class="input-group">
-                <label>MODULO</label>
-                <select id="taskSubject">
-                    <option>CÁLCULO INTEGRAL</option>
-                    <option>LEGISLACIÓN LABORAL</option>
-                    <option>DINÁMICA SOCIAL</option>
-                    <option>CONTABILIDAD</option>
-                </select>
-            </div>
-            <div class="input-group">
-                <label>DEADLINE</label>
-                <input type="date" id="taskDate">
-            </div>
-            <button class="btn-add" onclick="saveTask()">EJECUTAR_GUARDADO</button>
-        </div>
-    </div>
-
-    <script>
-        const materiasData = [
-            { dia: "Lunes", emoji: "⚡", clases: [{h: "12:00 - 14:00", n: "CÁLCULO INTEGRAL", t: "A. Herrera"}] },
-            { dia: "Martes", emoji: "🔥", clases: [{h: "07:00 - 09:00", n: "LEGISLACIÓN LABORAL", t: "C. Rodríguez"}, {h: "09:00 - 11:00", n: "DINÁMICA SOCIAL", t: "D. Pat Reyes"}] },
-            { dia: "Miércoles", emoji: "💎", clases: [{h: "07:00 - 09:00", n: "LEGISLACIÓN LABORAL", t: "C. Rodríguez"}, {h: "11:00 - 14:00", n: "CÁLCULO INTEGRAL", t: "A. Herrera"}] },
-            { dia: "Jueves", emoji: "🎯", clases: [{h: "09:00 - 12:00", n: "CONTABILIDAD", t: "M. Castro"}] },
-            { dia: "Viernes", emoji: "🎉", clases: [{h: "12:00 - 14:00", n: "CONTABILIDAD", t: "M. Castro"}] }
-        ];
-
-        const iconMap = {
-            "CÁLCULO INTEGRAL": "∫",
-            "LEGISLACIÓN LABORAL": "⚖️",
-            "DINÁMICA SOCIAL": "🌐",
-            "CONTABILIDAD": "💰"
-        };
-
-        let db;
-        const request = indexedDB.open("CyberDB", 1);
-        
-        request.onupgradeneeded = (e) => {
-            db = e.target.result;
-            db.createObjectStore("tareas", { keyPath: "id", autoIncrement: true });
-        };
-
-        request.onsuccess = (e) => {
-            db = e.target.result;
-            renderSchedule();
-            actualizarDashboard();
-        };
-
-        function renderSchedule() {
-            const container = document.getElementById('schedule-render');
-            container.innerHTML = materiasData.map(d => `
-                <div class="day-column">
-                    <div class="day-name">${d.dia} <span>${d.emoji}</span></div>
-                    ${d.clases.map(c => `
-                        <div class="class-card" onclick="showTasks('${c.n}')">
-                            <div class="subject-box">
-                                <div class="subject-icon">${iconMap[c.n] || '📑'}</div>
-                                <div>
-                                    <div class="subject">${c.n}</div>
-                                    <div class="teacher">${c.h} | ${c.t}</div>
-                                </div>
-                            </div>
-                        </div>
-                    `).join('')}
-                </div>
-            `).join('');
-        }
-
-        function openAddModal() { document.getElementById('addModal').classList.add('active'); }
-        function closeAddModal() { document.getElementById('addModal').classList.remove('active'); }
-        function closeModal() { document.getElementById('modalOverlay').classList.remove('active'); }
-
-        function saveTask() {
-            const nombre = document.getElementById('taskName').value;
-            const materia = document.getElementById('taskSubject').value;
-            const fecha = document.getElementById('taskDate').value;
-
-            if(!nombre || !fecha) return;
-
-            const transaction = db.transaction(["tareas"], "readwrite");
-            transaction.objectStore("tareas").add({ nombre, materia, fecha, entregada: false, time: Date.now() });
-            
-            transaction.oncomplete = () => {
-                closeAddModal();
-                actualizarDashboard();
-            };
-        }
-
-        // FUNCIÓN CLAVE: TOGGLE (CAMBIAR ESTADO)
-        function toggleTarea(id, currentMateria) {
-            const transaction = db.transaction(["tareas"], "readwrite");
-            const store = transaction.objectStore("tareas");
-            
-            store.get(id).onsuccess = (e) => {
-                const data = e.target.result;
-                data.entregada = !data.entregada; // Invierte el estado
-                store.put(data);
-            };
-
-            transaction.oncomplete = () => {
-                actualizarDashboard();
-                showTasks(currentMateria); // Refresca la lista sin cerrar el modal
-            };
-        }
-
-        function actualizarDashboard() {
-            const transaction = db.transaction(["tareas"], "readonly");
-            const store = transaction.objectStore("tareas");
-            const pendientes = {};
-            let total = 0, done = 0;
-
-            store.openCursor().onsuccess = (e) => {
-                const cursor = e.target.result;
-                if (cursor) {
-                    total++;
-                    if (cursor.value.entregada) done++;
-                    else {
-                        const m = cursor.value.materia;
-                        pendientes[m] = (pendientes[m] || 0) + 1;
-                    }
-                    cursor.continue();
-                } else {
-                    document.querySelectorAll('.class-card').forEach(card => {
-                        const m = card.querySelector('.subject').innerText;
-                        let b = card.querySelector('.task-count-badge');
-                        if (pendientes[m]) {
-                            if (!b) {
-                                b = document.createElement('span');
-                                b.className = 'task-count-badge';
-                                card.appendChild(b);
-                            }
-                            b.innerText = pendientes[m];
-                        } else if (b) b.remove();
-                    });
-
-                    const porc = total > 0 ? Math.round((done/total)*100) : 0;
-                    document.getElementById('progress-fill').style.width = porc + '%';
-                    document.getElementById('progress-percentage').innerText = porc + '%';
-                    document.getElementById('progress-stats').innerText = `${done} / ${total} NODOS COMPLETADOS`;
-                }
-            };
-        }
-
-        function showTasks(materia) {
-            const modal = document.getElementById('modalOverlay');
-            modal.classList.add('active');
-            document.getElementById('modalTitle').innerText = materia;
-            const list = document.getElementById('taskList');
-            
-            const transaction = db.transaction(["tareas"], "readonly");
-            const res = [];
-            transaction.objectStore("tareas").openCursor().onsuccess = (e) => {
-                const cursor = e.target.result;
-                if (cursor) {
-                    if (cursor.value.materia === materia) res.push(cursor.value);
-                    cursor.continue();
-                } else {
-                    list.innerHTML = res.length ? '' : '<p style="text-align:center; opacity:0.3; padding:20px;">[ SIN DATOS ]</p>';
-                    res.sort((a,b) => b.time - a.time).forEach(t => {
-                        list.innerHTML += `
-                            <div class="task-item">
-                                <div class="${t.entregada ? 'completed-text' : ''}">
-                                    <div style="font-weight:700;">${t.nombre}</div>
-                                    <div style="font-size:0.7rem; color:var(--accent-2);">LIMIT: ${t.fecha}</div>
-                                </div>
-                                <button class="btn-toggle ${t.entregada ? 'completed' : ''}" 
-                                        onclick="toggleTarea(${t.id}, '${materia}')">
-                                    ${t.entregada ? 'REVERSAR' : 'LISTO'}
-                                </button>
-                            </div>`;
-                    });
-                }
-            };
-        }
-    </script>
-</body>
-</html>
+                <label>MODULO</
