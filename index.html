@@ -6,15 +6,16 @@
     <title>Enero-Junio_HORARIO</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <style>
         :root {
-            --bg-overlay: rgba(11, 14, 20, 0.85);
-            --card-bg: rgba(22, 27, 34, 0.9);
+            /* Colores base más profundos para resaltar el neón */
+            --bg-deep: #050505;
+            --card-bg: rgba(13, 17, 23, 0.7);
             --text-main: #fff;
             --text-dim: #00f3ff;
             --accent-cyber: #7000ff;
             
-            /* Paleta Neón para Textos */
             --neon-calculo: #b388ff;
             --neon-legislacion: #ff5252;
             --neon-dinamica: #81c784;
@@ -29,50 +30,70 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body { 
-            background: linear-gradient(var(--bg-overlay), var(--bg-overlay)), 
-                        url('https://images.unsplash.com/photo-1614850523296-d8c1af93d400?q=80&w=2070&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            background-color: var(--bg-deep);
             color: var(--text-main); 
             font-family: 'Rajdhani', sans-serif; 
             overflow-x: hidden;
             min-height: 100vh;
         }
 
-        /* Efecto Neón Global */
+        /* Contenedor del Fondo Animado */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle at 50% 50%, #1a0b2e 0%, #050505 100%);
+            z-index: -1;
+        }
+
+        /* Capa de rejilla (Grid) para estilo retro-futurista */
+        .grid-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(112, 0, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(112, 0, 255, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -1;
+            pointer-events: none;
+        }
+
         body, h1, h2, p, span, div, input, select, button {
             text-shadow: 0 0 8px currentColor;
         }
 
         .header { 
             padding: 30px 20px; text-align: center; 
-            background: rgba(13, 17, 23, 0.8); 
-            border-bottom: 1px solid rgba(112, 0, 255, 0.3);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            background: rgba(5, 5, 5, 0.6); 
+            border-bottom: 2px solid var(--accent-cyber);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 0 30px rgba(112, 0, 255, 0.4);
         }
-        h1 { font-family: 'Orbitron'; font-size: 1.4rem; letter-spacing: 2px; color: #fff; text-shadow: 0 0 15px var(--accent-cyber); }
+        h1 { font-family: 'Orbitron'; font-size: 1.6rem; letter-spacing: 4px; color: #fff; text-shadow: 0 0 20px var(--accent-cyber); }
 
         .progress-section { 
             padding: 20px; background: var(--card-bg); margin: 15px; 
-            border-radius: 15px; border: 1px solid rgba(255,255,255,0.1);
-            backdrop-filter: blur(5px);
+            border-radius: 15px; border: 1px solid rgba(112, 0, 255, 0.2);
+            backdrop-filter: blur(10px);
+            box-shadow: inset 0 0 15px rgba(112, 0, 255, 0.1);
         }
-        .progress-bar-bg { width: 100%; height: 8px; background: #21262d; margin: 10px 0; border-radius: 10px; overflow: hidden; }
-        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent-cyber), #00d4ff); width: 0%; transition: 1s; box-shadow: 0 0 15px rgba(112, 0, 255, 0.6); }
+        .progress-bar-bg { width: 100%; height: 10px; background: #000; margin: 10px 0; border-radius: 10px; overflow: hidden; border: 1px solid #333; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent-cyber), #00d4ff, var(--success)); width: 0%; transition: 1.5s cubic-bezier(0.22, 1, 0.36, 1); box-shadow: 0 0 20px var(--accent-cyber); }
 
-        .schedule-container { display: flex; overflow-x: auto; gap: 15px; padding: 20px; }
-        .day-column { min-width: 280px; background: var(--card-bg); border-radius: 20px; padding: 20px; border: 1px solid rgba(255,255,255,0.05); }
-        .day-name { font-family: 'Orbitron'; font-size: 1.1rem; color: var(--accent-cyber); display: flex; justify-content: space-between; }
+        .schedule-container { display: flex; overflow-x: auto; gap: 20px; padding: 25px; scrollbar-width: none; }
+        .day-column { min-width: 300px; background: rgba(13, 17, 23, 0.5); border-radius: 25px; padding: 20px; border: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(5px); }
+        .day-name { font-family: 'Orbitron'; font-size: 1.3rem; color: var(--text-dim); display: flex; justify-content: space-between; border-bottom: 1px solid rgba(0, 243, 255, 0.2); padding-bottom: 10px; }
 
         .class-card { 
-            margin-top: 15px; padding: 15px; border-radius: 15px;
-            position: relative; transition: 0.3s;
-            cursor: pointer; border: 1px solid rgba(255,255,255,0.1);
-            background: rgba(0,0,0,0.2);
+            margin-top: 15px; padding: 18px; border-radius: 18px;
+            position: relative; transition: all 0.4s ease;
+            cursor: pointer; border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255, 255, 255, 0.03);
+            overflow: hidden;
         }
-        
+        .class-card:hover { transform: translateY(-5px) scale(1.02); background: rgba(255, 255, 255, 0.07); box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+
+        /* Colores Neón */
         .txt-calculo { color: var(--neon-calculo) !important; }
         .txt-legislacion { color: var(--neon-legislacion) !important; }
         .txt-dinamica { color: var(--neon-dinamica) !important; }
@@ -80,57 +101,54 @@
         .txt-soft { color: var(--neon-soft) !important; }
         .txt-etica { color: var(--neon-etica) !important; }
 
-        .time-tag { font-size: 0.75rem; background: rgba(255,255,255,0.1); padding: 3px 8px; border-radius: 20px; color: #fff; margin-bottom: 5px; display: inline-block; }
-        .subject { font-weight: 700; font-size: 1.1rem; display: flex; align-items: center; gap: 8px; }
-        .teacher { font-size: 0.85rem; opacity: 0.9; margin-top: 4px; font-weight: 500; }
+        .time-tag { font-size: 0.8rem; background: rgba(112, 0, 255, 0.2); padding: 4px 12px; border-radius: 20px; color: #fff; margin-bottom: 8px; display: inline-block; border: 1px solid var(--accent-cyber); }
+        .subject { font-weight: 700; font-size: 1.2rem; display: flex; align-items: center; gap: 10px; }
+        .teacher { font-size: 0.9rem; opacity: 0.8; margin-top: 6px; font-weight: 500; }
 
         .task-count-badge {
-            position: absolute; top: 12px; right: 12px;
-            background: #fff; color: #000; width: 22px; height: 22px;
-            display: grid; place-items: center; font-size: 0.75rem; font-weight: 900; border-radius: 50%;
-            box-shadow: 0 0 10px #fff;
+            position: absolute; top: 15px; right: 15px;
+            background: var(--accent-cyber); color: #fff; width: 25px; height: 25px;
+            display: grid; place-items: center; font-size: 0.8rem; font-weight: 900; border-radius: 50%;
+            box-shadow: 0 0 15px var(--accent-cyber);
         }
 
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: none; z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(20px); }
         .modal-overlay.active { display: flex; }
-        .modal-content { width: 90%; max-width: 400px; background: #161b22; border-radius: 25px; padding: 30px; border: 1px solid var(--accent-cyber); }
+        .modal-content { width: 90%; max-width: 450px; background: #0d1117; border-radius: 30px; padding: 35px; border: 2px solid var(--accent-cyber); box-shadow: 0 0 50px rgba(112, 0, 255, 0.5); }
 
-        input, select { width: 100%; background: #0d1117; border: 1px solid #30363d; color: var(--text-dim); padding: 12px; border-radius: 8px; margin-top: 10px; }
+        input, select { width: 100%; background: #000; border: 1px solid var(--accent-cyber); color: var(--text-dim); padding: 14px; border-radius: 12px; margin-top: 15px; font-family: 'Rajdhani'; }
 
-        .btn-add { width: 100%; background: var(--accent-cyber); color: #fff; border: none; padding: 15px; font-family: 'Orbitron'; border-radius: 12px; cursor: pointer; margin-top: 15px; }
-        .fab { position: fixed; bottom: 30px; right: 30px; width: 65px; height: 65px; background: var(--accent-cyber); border: none; border-radius: 50%; color: #fff; font-size: 2rem; box-shadow: 0 0 20px rgba(112, 0, 255, 0.8); z-index: 100; }
+        .btn-add { width: 100%; background: linear-gradient(45deg, var(--accent-cyber), #450099); color: #fff; border: none; padding: 18px; font-family: 'Orbitron'; border-radius: 15px; cursor: pointer; margin-top: 20px; font-weight: 700; transition: 0.3s; }
+        .btn-add:hover { letter-spacing: 2px; box-shadow: 0 0 20px var(--accent-cyber); }
 
-        .task-item { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; gap: 10px; position: relative; overflow: hidden; }
-        .task-info { flex-grow: 1; }
-        .btn-toggle { padding: 8px 12px; border: none; border-radius: 8px; font-family: 'Orbitron'; cursor: pointer; font-size: 0.7rem; z-index: 2; }
-        .btn-toggle.completed { background: var(--success); color: #000; font-weight: 700; box-shadow: 0 0 15px var(--success); }
-        .btn-delete { background: var(--danger); color: #fff; border: none; padding: 8px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 2; }
-        .completed-text { text-decoration: line-through; opacity: 0.5; color: var(--success) !important; }
-        .pin-input { text-align: center; font-size: 2rem; letter-spacing: 15px; color: var(--accent-cyber); }
+        .fab { position: fixed; bottom: 35px; right: 35px; width: 70px; height: 70px; background: var(--accent-cyber); border: none; border-radius: 22px; color: #fff; font-size: 2.5rem; box-shadow: 0 0 25px rgba(112, 0, 255, 0.8); z-index: 100; cursor: pointer; transition: 0.4s; }
+        .fab:hover { transform: rotate(90deg) scale(1.1); }
 
-        /* Animación de destello para el éxito */
-        @keyframes successFlash {
-            0% { background: rgba(0, 255, 136, 0); }
-            50% { background: rgba(0, 255, 136, 0.3); }
-            100% { background: rgba(0, 255, 136, 0); }
-        }
-        .success-animate { animation: successFlash 0.6s ease-out; }
+        .task-item { background: rgba(255,255,255,0.03); padding: 18px; border-radius: 15px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; border: 1px solid rgba(255,255,255,0.05); }
+        .btn-toggle { padding: 10px 15px; border: none; border-radius: 10px; font-family: 'Orbitron'; cursor: pointer; font-size: 0.75rem; transition: 0.3s; }
+        .btn-toggle.completed { background: var(--success); color: #000; font-weight: 900; }
+        .btn-delete { background: var(--danger); color: #fff; border: none; padding: 10px; border-radius: 10px; cursor: pointer; }
+        .completed-text { text-decoration: line-through; opacity: 0.4; color: var(--success) !important; }
+        .pin-input { text-align: center; font-size: 2.5rem; letter-spacing: 15px; color: var(--accent-cyber); border-bottom: 2px solid var(--accent-cyber); }
     </style>
 </head>
 <body>
 
+    <div id="particles-js"></div>
+    <div class="grid-overlay"></div>
+
     <div class="header">
-        <p style="color: var(--accent-cyber); font-weight: 700; font-size: 0.6rem; letter-spacing: 3px; margin-bottom: 5px;">Ingeniería En Gestión Empresarial</p>
-        <h1>MI HORARIO (Alejandro_Madera)</h1>
+        <p style="color: var(--accent-cyber); font-weight: 700; font-size: 0.7rem; letter-spacing: 4px; margin-bottom: 5px; text-transform: uppercase;">División Ingeniería Gestión Empresarial</p>
+        <h1>SYSTEM_HORARIO // ALEJANDRO_MADERA</h1>
     </div>
 
     <div class="progress-section">
         <div style="display:flex; justify-content:space-between; align-items:baseline;">
-            <span style="font-size: 0.8rem; font-weight: 700; color: var(--text-dim);">PROGRESO TOTAL</span>
-            <span id="progress-percentage" style="font-family: 'Orbitron'; color: var(--success);">0%</span>
+            <span style="font-size: 0.9rem; font-weight: 700; color: var(--text-dim); letter-spacing: 1px;">CORE_TASK_PROGRESS</span>
+            <span id="progress-percentage" style="font-family: 'Orbitron'; color: var(--success); font-size: 1.2rem;">0%</span>
         </div>
         <div class="progress-bar-bg"><div id="progress-fill" class="progress-fill"></div></div>
-        <p id="progress-stats" style="font-size: 0.7rem; color: var(--text-dim);"></p>
+        <p id="progress-stats" style="font-size: 0.75rem; color: var(--text-dim); opacity: 0.7;"></p>
     </div>
 
     <div class="schedule-container" id="schedule-render"></div>
@@ -139,27 +157,28 @@
 
     <div class="modal-overlay" id="modalOverlay" onclick="if(event.target==this) closeModal()">
         <div class="modal-content">
-            <h2 id="modalTitle" style="color: var(--accent-cyber); font-family: 'Orbitron'; margin-bottom: 20px; font-size: 1.2rem;">MATERIA</h2>
+            <h2 id="modalTitle" style="color: var(--accent-cyber); font-family: 'Orbitron'; margin-bottom: 20px; font-size: 1.3rem; text-align: center; border-bottom: 1px solid var(--accent-cyber); padding-bottom: 10px;">DATOS_MATERIA</h2>
             <div id="taskList"></div>
-            <button class="btn-add" style="background: #30363d;" onclick="closeModal()">CERRAR</button>
+            <button class="btn-add" style="background: #1a1a1a;" onclick="closeModal()">REGRESAR</button>
         </div>
     </div>
 
     <div class="modal-overlay" id="pinModal">
         <div class="modal-content">
-            <h2 id="pinModalTitle" style="color: var(--danger); font-family: 'Orbitron'; text-align: center;">SEGURIDAD</h2>
+            <h2 id="pinModalTitle" style="color: var(--danger); font-family: 'Orbitron'; text-align: center; letter-spacing: 2px;">AUTHORIZATION_REQUIRED</h2>
+            <p style="text-align: center; font-size: 0.8rem; margin-top: 10px; opacity: 0.6;">INGRESE PIN DE ACCESO</p>
             <input type="password" id="pinCode" class="pin-input" maxlength="4" placeholder="****">
-            <div style="display: flex; gap: 10px;">
-                <button class="btn-add" style="background: #30363d;" onclick="closePinModal()">CANCELAR</button>
-                <button class="btn-add" onclick="validatePin()">CONFIRMAR</button>
+            <div style="display: flex; gap: 15px;">
+                <button class="btn-add" style="background: #1a1a1a;" onclick="closePinModal()">ABORT</button>
+                <button class="btn-add" onclick="validatePin()">CONFIRM</button>
             </div>
         </div>
     </div>
 
     <div class="modal-overlay" id="addModal" onclick="if(event.target==this) closeAddModal()">
         <div class="modal-content">
-            <h2 style="color: var(--accent-cyber); font-family: 'Orbitron';">NUEVA TAREA</h2>
-            <input type="text" id="taskName" placeholder="Nombre de la tarea...">
+            <h2 style="color: var(--accent-cyber); font-family: 'Orbitron'; text-align: center;">NEW_ASSIGNMENT</h2>
+            <input type="text" id="taskName" placeholder="Identificador de la tarea...">
             <select id="taskSubject">
                 <option value="CÁLCULO INTEGRAL">📐 CÁLCULO INTEGRAL</option>
                 <option value="LEGISLACIÓN LABORAL">⚖️ LEGISLACIÓN LABORAL</option>
@@ -169,11 +188,31 @@
                 <option value="TALLER DE ÉTICA">🧠 TALLER DE ÉTICA</option>
             </select>
             <input type="date" id="taskDate">
-            <button class="btn-add" onclick="saveTask()">GUARDAR TAREA</button>
+            <button class="btn-add" onclick="saveTask()">DEPLOY_TASK</button>
         </div>
     </div>
 
     <script>
+        // Inicialización de Partículas
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#7000ff" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.5, "random": false },
+                "size": { "value": 3, "random": true },
+                "line_linked": { "enable": true, "distance": 150, "color": "#7000ff", "opacity": 0.2, "width": 1 },
+                "move": { "enable": true, "speed": 2, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" }, "resize": true },
+                "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 1 } }, "push": { "particles_nb": 4 } }
+            },
+            "retina_detect": true
+        });
+
+        // --- Lógica de la App (Se mantiene funcional igual que tu código anterior) ---
         const subjectEmojis = {
             "CÁLCULO INTEGRAL": "📐", "LEGISLACIÓN LABORAL": "⚖️",
             "DINÁMICA SOCIAL": "👥", "CONT. ORIENTADA NEG.": "💼",
@@ -242,11 +281,9 @@
         function launchCelebration() {
             const count = 200;
             const defaults = { origin: { y: 0.7 }, zIndex: 2000 };
-
             function fire(particleRatio, opts) {
                 confetti({ ...defaults, ...opts, particleCount: Math.floor(count * particleRatio) });
             }
-
             fire(0.25, { spread: 26, startVelocity: 55 });
             fire(0.2, { spread: 60 });
             fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
@@ -265,14 +302,14 @@
 
         function toggleTarea(id, materia) {
             pendingAction = { type: 'TOGGLE', id, materia };
-            document.getElementById('pinModalTitle').innerText = "SEGURIDAD";
+            document.getElementById('pinModalTitle').innerText = "AUTHORIZATION";
             document.getElementById('pinModal').classList.add('active');
             document.getElementById('pinCode').focus();
         }
 
         function eliminarTarea(id, materia) {
             pendingAction = { type: 'DELETE', id, materia };
-            document.getElementById('pinModalTitle').innerText = "BORRAR TAREA";
+            document.getElementById('pinModalTitle').innerText = "DELETE_TASK";
             document.getElementById('pinModal').classList.add('active');
             document.getElementById('pinCode').focus();
         }
@@ -282,32 +319,19 @@
                 const { type, id, materia } = pendingAction;
                 const transaction = db.transaction(["tareas"], "readwrite");
                 const store = transaction.objectStore("tareas");
-
                 if (type === 'TOGGLE') {
                     store.get(id).onsuccess = (e) => {
                         const data = e.target.result;
                         const wasEntregada = data.entregada;
                         data.entregada = !data.entregada;
                         store.put(data);
-                        
-                        // Si se acaba de marcar como entregada, disparar animación
-                        if (!wasEntregada) {
-                            launchCelebration();
-                        }
+                        if (!wasEntregada) launchCelebration();
                     };
                 } else if (type === 'DELETE') {
                     store.delete(id);
                 }
-
-                transaction.oncomplete = () => { 
-                    actualizarDashboard(); 
-                    showTasks(materia); 
-                    closePinModal(); 
-                };
-            } else { 
-                alert("CÓDIGO INCORRECTO"); 
-                document.getElementById('pinCode').value = ''; 
-            }
+                transaction.oncomplete = () => { actualizarDashboard(); showTasks(materia); closePinModal(); };
+            } else { alert("ERROR: PIN_INVALID"); document.getElementById('pinCode').value = ''; }
         }
 
         function saveTask() {
@@ -325,7 +349,6 @@
             const store = transaction.objectStore("tareas");
             const pendientes = {};
             let total = 0, done = 0;
-
             store.openCursor().onsuccess = (e) => {
                 const cursor = e.target.result;
                 if (cursor) {
@@ -345,7 +368,7 @@
                     const porc = total > 0 ? Math.round((done/total)*100) : 0;
                     document.getElementById('progress-fill').style.width = porc + '%';
                     document.getElementById('progress-percentage').innerText = porc + '%';
-                    document.getElementById('progress-stats').innerText = `${done} / ${total} TAREAS COMPLETADAS`;
+                    document.getElementById('progress-stats').innerText = `${done} / ${total} TASKS_COMPLETED`;
                 }
             };
         }
@@ -362,10 +385,10 @@
                     if (cursor.value.materia === materia) res.push(cursor.value);
                     cursor.continue();
                 } else {
-                    list.innerHTML = res.length ? '' : '<p style="text-align:center; opacity:0.3; padding:20px;">TODO LIMPIO</p>';
+                    list.innerHTML = res.length ? '' : '<p style="text-align:center; opacity:0.3; padding:20px;">NO_DATA_FOUND</p>';
                     res.forEach(t => {
                         list.innerHTML += `
-                            <div class="task-item ${t.entregada ? 'success-animate' : ''}">
+                            <div class="task-item">
                                 <div class="task-info ${t.entregada ? 'completed-text' : ''}">
                                     <div style="font-weight:700; color: #fff;">${t.nombre}</div>
                                     <div style="font-size:0.7rem; color: var(--text-dim);">LÍMITE: ${t.fecha}</div>
@@ -373,9 +396,7 @@
                                 <button class="btn-toggle ${t.entregada ? 'completed' : ''}" style="background:#0d1117; color:#fff;" onclick="toggleTarea(${t.id}, '${materia}')">
                                     ${t.entregada ? 'REVISADO' : 'PENDIENTE'}
                                 </button>
-                                <button class="btn-delete" onclick="eliminarTarea(${t.id}, '${materia}')">
-                                    🗑️
-                                </button>
+                                <button class="btn-delete" onclick="eliminarTarea(${t.id}, '${materia}')">🗑️</button>
                             </div>`;
                     });
                 }
@@ -384,4 +405,6 @@
     </script>
 </body>
 </html>
-                 
+
+
+                
