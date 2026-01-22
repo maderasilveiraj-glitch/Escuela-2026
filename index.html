@@ -1,152 +1,177 @@
-<!DOCTYPE html>
+     <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enero-Junio_HORARIO</title>
+    <title>NEON_HORARIO_2026</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-overlay: rgba(11, 14, 20, 0.85);
-            --card-bg: rgba(22, 27, 34, 0.9);
-            --text-main: #ffffff;
-            --text-dim: #a0a0a0;
-            --accent-cyber: #7000ff;
-            --color-calculo: #b388ff;
-            --color-etica: #ffd54f;
-            --color-soft: #4fc3f7;
-            --color-dinamica: #81c784;
-            --color-contabilidad: #ff8a65;
-            --color-legislacion: #ff5252;
-            --success: #00ff88;
-            --danger: #ff0055;
+            /* Paleta de colores NEÓN */
+            --bg-pure: #050505;
+            --card-bg: rgba(10, 10, 10, 0.95);
+            --neon-purple: #bc13fe;
+            --neon-blue: #00f3ff;
+            --neon-green: #39ff14;
+            --neon-pink: #ff0055;
+            --neon-yellow: #fefe33;
+            
+            /* Asignación de colores neón a materias */
+            --color-calculo: var(--neon-purple);
+            --color-etica: var(--neon-yellow);
+            --color-soft: var(--neon-blue);
+            --color-dinamica: var(--neon-green);
+            --color-contabilidad: #ff8a00; /* Naranja Neón */
+            --color-legislacion: var(--neon-pink);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body { 
-            background: linear-gradient(var(--bg-overlay), var(--bg-overlay)), 
-                        url('https://images.unsplash.com/photo-1614850523296-d8c1af93d400?q=80&w=2070&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            color: var(--text-main); 
+            background-color: var(--bg-pure);
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(188, 19, 254, 0.05) 0%, transparent 80%);
+            color: #fff; 
             font-family: 'Rajdhani', sans-serif; 
             overflow-x: hidden;
             min-height: 100vh;
         }
 
+        /* TEXTO NEÓN GENERAL */
+        h1, h2, .day-name, .subject, .btn-add, .btn-toggle {
+            text-shadow: 0 0 5px currentColor, 0 0 10px currentColor;
+        }
+
+        /* HEADER */
         .header { 
-            padding: 30px 20px; text-align: center; 
-            background: rgba(13, 17, 23, 0.8); 
-            border-bottom: 1px solid rgba(112, 0, 255, 0.3);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            padding: 35px 20px; text-align: center; 
+            background: #000; 
+            border-bottom: 2px solid var(--neon-purple);
+            box-shadow: 0 0 20px rgba(188, 19, 254, 0.4);
         }
-        h1 { font-family: 'Orbitron'; font-size: 1.4rem; letter-spacing: 2px; color: #fff; text-shadow: 0 0 15px var(--accent-cyber); }
+        h1 { 
+            font-family: 'Orbitron'; 
+            font-size: 1.6rem; 
+            letter-spacing: 4px; 
+            color: var(--neon-blue);
+        }
 
+        /* DASHBOARD */
         .progress-section { 
-            padding: 20px; background: var(--card-bg); margin: 15px; 
-            border-radius: 15px; border: 1px solid rgba(255,255,255,0.1);
-            backdrop-filter: blur(5px);
+            padding: 20px; background: var(--card-bg); margin: 20px; 
+            border-radius: 5px; border: 1px solid var(--neon-purple);
+            box-shadow: inset 0 0 10px rgba(188, 19, 254, 0.2);
         }
-        .progress-bar-bg { width: 100%; height: 8px; background: #21262d; margin: 10px 0; border-radius: 10px; overflow: hidden; }
+        #progress-percentage { color: var(--neon-green); }
+        .progress-bar-bg { width: 100%; height: 4px; background: #1a1a1a; margin: 15px 0; border-radius: 2px; }
         .progress-fill { 
-            height: 100%; background: linear-gradient(90deg, var(--accent-cyber), #00d4ff); 
-            width: 0%; transition: 1s cubic-bezier(0.17, 0.67, 0.83, 0.67); 
-            box-shadow: 0 0 15px rgba(112, 0, 255, 0.6);
+            height: 100%; background: var(--neon-blue); 
+            box-shadow: 0 0 15px var(--neon-blue);
+            width: 0%; transition: 1.5s ease-in-out;
         }
 
-        .schedule-container { display: flex; overflow-x: auto; gap: 15px; padding: 20px; }
+        /* CONTENEDOR DE HORARIO */
+        .schedule-container { display: flex; overflow-x: auto; gap: 20px; padding: 20px; }
         .day-column { 
-            min-width: 280px; background: var(--card-bg); border-radius: 20px; padding: 20px;
-            border: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(10px);
+            min-width: 300px; background: #000; border-radius: 10px; padding: 20px;
+            border: 1px solid #222; position: relative;
         }
-        .day-name { font-family: 'Orbitron'; font-size: 1.1rem; color: var(--accent-cyber); display: flex; justify-content: space-between; }
+        .day-column:hover { border-color: var(--neon-blue); }
+        .day-name { 
+            font-family: 'Orbitron'; font-size: 1.2rem; color: var(--neon-purple); 
+            margin-bottom: 15px; border-bottom: 1px solid #222; padding-bottom: 10px;
+        }
 
+        /* TARJETAS DE MATERIA */
         .class-card { 
-            margin-top: 15px; padding: 15px; border-radius: 15px;
-            color: #fff; position: relative; transition: 0.3s;
-            cursor: pointer; border: 1px solid rgba(255,255,255,0.1);
+            margin-top: 15px; padding: 15px; border-radius: 4px;
+            background: transparent; position: relative; transition: 0.3s;
+            cursor: pointer; border: 1px solid #333;
         }
-        .class-card:hover { transform: translateY(-5px); filter: brightness(1.2); }
         
-        .bg-calculo { background: linear-gradient(135deg, var(--color-calculo), #7e57c2); }
-        .bg-legislacion { background: linear-gradient(135deg, var(--color-legislacion), #d32f2f); }
-        .bg-dinamica { background: linear-gradient(135deg, var(--color-dinamica), #388e3c); }
-        .bg-contabilidad { background: linear-gradient(135deg, var(--color-contabilidad), #e64a19); }
-        .bg-soft { background: linear-gradient(135deg, var(--color-soft), #0288d1); }
-        .bg-etica { background: linear-gradient(135deg, var(--color-etica), #fbc02d); color: #000 !important; }
+        /* Bordes de colores neón según clase */
+        .bg-calculo { border-left: 4px solid var(--color-calculo); color: var(--color-calculo); }
+        .bg-legislacion { border-left: 4px solid var(--color-legislacion); color: var(--color-legislacion); }
+        .bg-dinamica { border-left: 4px solid var(--color-dinamica); color: var(--color-dinamica); }
+        .bg-contabilidad { border-left: 4px solid var(--color-contabilidad); color: var(--color-contabilidad); }
+        .bg-soft { border-left: 4px solid var(--color-soft); color: var(--color-soft); }
+        .bg-etica { border-left: 4px solid var(--color-etica); color: var(--color-etica); }
 
-        .time-tag { font-size: 0.75rem; background: rgba(0,0,0,0.3); padding: 3px 8px; border-radius: 20px; }
-        .subject { font-weight: 700; margin-top: 5px; display: flex; align-items: center; gap: 8px; }
-        .teacher { font-size: 0.8rem; opacity: 0.8; }
+        .class-card:hover { 
+            background: rgba(255,255,255,0.03);
+            box-shadow: 0 0 15px currentColor;
+        }
+
+        .time-tag { font-size: 0.8rem; opacity: 0.8; font-weight: bold; margin-bottom: 5px; display: block;}
+        .subject { font-weight: 700; font-size: 1.1rem; display: flex; align-items: center; gap: 10px; color: inherit; }
+        .teacher { font-size: 0.8rem; opacity: 0.6; margin-top: 5px; color: #fff; text-shadow: none; }
 
         .task-count-badge {
             position: absolute; top: 12px; right: 12px;
-            background: #fff; color: #000; width: 22px; height: 22px;
-            display: grid; place-items: center; font-size: 0.75rem; font-weight: 900; border-radius: 50%;
+            background: transparent; color: var(--neon-pink); border: 1px solid var(--neon-pink);
+            width: 24px; height: 24px; display: grid; place-items: center;
+            font-size: 0.8rem; font-weight: 900; border-radius: 50%;
+            box-shadow: 0 0 8px var(--neon-pink);
         }
 
-        .modal-overlay { 
-            position: fixed; inset: 0; background: rgba(0,0,0,0.85); 
-            display: none; z-index: 1000; align-items: center; justify-content: center;
-            backdrop-filter: blur(10px);
-        }
-        .modal-overlay.active { display: flex; }
+        /* MODALES */
         .modal-content { 
-            width: 90%; max-width: 400px; background: #161b22; 
-            border-radius: 25px; padding: 30px; border: 1px solid var(--accent-cyber);
+            background: #000; border: 2px solid var(--neon-blue);
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.3);
         }
 
         input, select { 
-            width: 100%; background: #0d1117; border: 1px solid #30363d; color: #fff; 
-            padding: 12px; border-radius: 8px; font-family: 'Rajdhani'; margin-top: 10px;
+            background: #000; border: 1px solid #444; color: var(--neon-blue); 
+            padding: 12px; border-radius: 0; font-family: 'Rajdhani';
         }
+        input:focus { border-color: var(--neon-blue); outline: none; box-shadow: 0 0 10px var(--neon-blue); }
 
         .btn-add { 
-            width: 100%; background: var(--accent-cyber); color: #fff; 
-            border: none; padding: 15px; font-family: 'Orbitron'; font-weight: 700;
-            border-radius: 12px; cursor: pointer; margin-top: 15px;
+            background: transparent; border: 1px solid var(--neon-blue); color: var(--neon-blue);
+            padding: 15px; font-family: 'Orbitron'; font-weight: 700; cursor: pointer;
         }
+        .btn-add:hover { background: var(--neon-blue); color: #000; }
+
         .fab { 
             position: fixed; bottom: 30px; right: 30px; 
-            width: 65px; height: 65px; background: var(--accent-cyber); 
-            border: none; border-radius: 50%; color: #fff; font-size: 2rem;
-            box-shadow: 0 0 20px rgba(112, 0, 255, 0.5); z-index: 100;
+            width: 60px; height: 60px; background: #000; 
+            border: 2px solid var(--neon-green); color: var(--neon-green);
+            border-radius: 50%; font-size: 2rem; cursor: pointer;
+            box-shadow: 0 0 15px var(--neon-green); z-index: 100;
         }
 
         .task-item {
-            background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px;
-            margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid #222; padding: 15px 0;
+            display: flex; justify-content: space-between; align-items: center;
         }
-        .btn-toggle { padding: 8px 12px; border: none; border-radius: 8px; font-family: 'Orbitron'; cursor: pointer; }
-        .btn-toggle.completed { background: var(--success); color: #000; font-weight: 700; }
-        .completed-text { text-decoration: line-through; opacity: 0.3; }
+        .btn-toggle { background: transparent; border: 1px solid currentColor; padding: 5px 10px; }
+        .btn-toggle.completed { color: var(--neon-green) !important; }
+        .completed-text { color: #444 !important; text-shadow: none !important; }
 
-        /* Estilo PIN */
+        /* PIN SEGURIDAD */
         .pin-input {
-            text-align: center; font-size: 2rem; letter-spacing: 15px; font-family: 'Orbitron';
-            border-color: var(--accent-cyber);
+            border: 1px solid var(--neon-pink) !important;
+            color: var(--neon-pink) !important;
+            text-shadow: 0 0 10px var(--neon-pink);
         }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <p style="color: var(--accent-cyber); font-weight: 700; font-size: 0.6rem; letter-spacing: 3px; margin-bottom: 5px;">Ingeniería En Gestión Empresarial</p>
-        <h1>MI HORARIO (Alejandro_Madera)</h1>
+        <p style="color: var(--neon-purple); font-weight: 700; font-size: 0.7rem; letter-spacing: 5px; margin-bottom: 10px; text-shadow: 0 0 5px var(--neon-purple);">GESTOR EMPRESARIAL</p>
+        <h1>ALEX_MADERA.SYS</h1>
     </div>
 
     <div class="progress-section">
         <div style="display:flex; justify-content:space-between; align-items:baseline;">
-            <span style="font-size: 0.8rem; font-weight: 700; color: var(--text-dim);">PROGRESO TOTAL</span>
-            <span id="progress-percentage" style="font-family: 'Orbitron'; color: var(--success);">0%</span>
+            <span style="font-size: 0.9rem; font-weight: 700; color: var(--neon-blue); text-shadow: 0 0 5px var(--neon-blue);">SISTEMA_PROGRESO</span>
+            <span id="progress-percentage" style="font-family: 'Orbitron';">0%</span>
         </div>
         <div class="progress-bar-bg">
             <div id="progress-fill" class="progress-fill"></div>
         </div>
-        <p id="progress-stats" style="font-size: 0.7rem; color: var(--text-dim);"></p>
+        <p id="progress-stats" style="font-size: 0.8rem; color: #666; font-family: 'Orbitron';"></p>
     </div>
 
     <div class="schedule-container" id="schedule-render"></div>
@@ -155,28 +180,28 @@
 
     <div class="modal-overlay" id="modalOverlay" onclick="if(event.target==this) closeModal()">
         <div class="modal-content">
-            <h2 id="modalTitle" style="color: var(--accent-cyber); font-family: 'Orbitron'; margin-bottom: 20px; font-size: 1.2rem;">MATERIA</h2>
+            <h2 id="modalTitle" style="color: var(--neon-blue); font-family: 'Orbitron'; margin-bottom: 20px; font-size: 1.2rem;">MATERIA</h2>
             <div id="taskList"></div>
-            <button class="btn-add" style="background: #30363d;" onclick="closeModal()">CERRAR</button>
+            <button class="btn-add" style="margin-top:20px; width:100%;" onclick="closeModal()">REGRESAR</button>
         </div>
     </div>
 
     <div class="modal-overlay" id="pinModal">
         <div class="modal-content">
-            <h2 style="color: var(--danger); font-family: 'Orbitron'; text-align: center;">SEGURIDAD</h2>
-            <p style="text-align: center; font-size: 0.8rem; margin-top: 10px;">Introduce el código de acceso</p>
-            <input type="password" id="pinCode" class="pin-input" maxlength="4" placeholder="****">
-            <div style="display: flex; gap: 10px;">
-                <button class="btn-add" style="background: #30363d;" onclick="closePinModal()">CANCELAR</button>
-                <button class="btn-add" onclick="validatePin()">CONFIRMAR</button>
+            <h2 style="color: var(--neon-pink); font-family: 'Orbitron'; text-align: center;">ACCESO_RESTRINGIDO</h2>
+            <p style="text-align: center; font-size: 0.8rem; margin: 15px 0; color: #fff;">PIN REQUERIDO PARA MODIFICAR STATUS</p>
+            <input type="password" id="pinCode" class="pin-input" maxlength="4" placeholder="****" style="text-align:center; font-size: 2rem; letter-spacing: 10px; width: 100%;">
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button class="btn-add" style="border-color: #444; color: #444; flex:1;" onclick="closePinModal()">ABORTAR</button>
+                <button class="btn-add" style="border-color: var(--neon-green); color: var(--neon-green); flex:1;" onclick="validatePin()">ACCEDER</button>
             </div>
         </div>
     </div>
 
     <div class="modal-overlay" id="addModal" onclick="if(event.target==this) closeAddModal()">
         <div class="modal-content">
-            <h2 style="color: var(--accent-cyber); font-family: 'Orbitron';">NUEVA TAREA</h2>
-            <input type="text" id="taskName" placeholder="Nombre de la tarea...">
+            <h2 style="color: var(--neon-green); font-family: 'Orbitron';">REGISTRAR_DATOS</h2>
+            <input type="text" id="taskName" placeholder="NOMBRE TAREA...">
             <select id="taskSubject">
                 <option value="CÁLCULO INTEGRAL">📐 CÁLCULO INTEGRAL</option>
                 <option value="LEGISLACIÓN LABORAL">⚖️ LEGISLACIÓN LABORAL</option>
@@ -186,11 +211,12 @@
                 <option value="TALLER DE ÉTICA">🧠 TALLER DE ÉTICA</option>
             </select>
             <input type="date" id="taskDate">
-            <button class="btn-add" onclick="saveTask()">GUARDAR TAREA</button>
+            <button class="btn-add" style="border-color: var(--neon-green); color: var(--neon-green); width:100%;" onclick="saveTask()">SINCRONIZAR</button>
         </div>
     </div>
 
     <script>
+        // Los datos y la lógica de JS se mantienen igual para asegurar el funcionamiento
         const subjectEmojis = {
             "CÁLCULO INTEGRAL": "📐", "LEGISLACIÓN LABORAL": "⚖️",
             "DINÁMICA SOCIAL": "👥", "CONT. ORIENTADA NEG.": "💼",
@@ -227,7 +253,7 @@
         };
 
         let db;
-        let pendingToggle = null; // Guardar acción pendiente de validación
+        let pendingToggle = null;
 
         const request = indexedDB.open("CyberDB", 1);
         request.onupgradeneeded = (e) => {
@@ -246,9 +272,9 @@
                 <div class="day-column">
                     <div class="day-name">${d.dia} <span>${d.emoji}</span></div>
                     ${d.clases.map(c => `
-                        <div class="class-card ${colorMap[c.n] || 'bg-default'}" onclick="showTasks('${c.n}')">
-                            <div class="time-tag">${c.h}</div>
-                            <div class="subject"><span>${subjectEmojis[c.n] || '📚'}</span> ${c.n}</div>
+                        <div class="class-card ${colorMap[c.n]}" onclick="showTasks('${c.n}')">
+                            <span class="time-tag">${c.h}</span>
+                            <div class="subject"><span>${subjectEmojis[c.n]}</span> ${c.n}</div>
                             <div class="teacher">${c.t}</div>
                         </div>
                     `).join('')}
@@ -256,7 +282,6 @@
             `).join('');
         }
 
-        // FUNCIONES MODALES
         function openAddModal() { document.getElementById('addModal').classList.add('active'); }
         function closeAddModal() { document.getElementById('addModal').classList.remove('active'); }
         function closeModal() { document.getElementById('modalOverlay').classList.remove('active'); }
@@ -266,7 +291,6 @@
             pendingToggle = null;
         }
 
-        // LÓGICA DE PIN
         function toggleTarea(id, materia) {
             pendingToggle = { id, materia };
             document.getElementById('pinModal').classList.add('active');
@@ -290,7 +314,7 @@
                     closePinModal();
                 };
             } else {
-                alert("CÓDIGO INCORRECTO");
+                alert("ERROR: PIN INCORRECTO");
                 document.getElementById('pinCode').value = '';
             }
         }
@@ -337,7 +361,7 @@
                     const porc = total > 0 ? Math.round((done/total)*100) : 0;
                     document.getElementById('progress-fill').style.width = porc + '%';
                     document.getElementById('progress-percentage').innerText = porc + '%';
-                    document.getElementById('progress-stats').innerText = `${done} / ${total} TAREAS COMPLETADAS`;
+                    document.getElementById('progress-stats').innerText = `${done} / ${total} TAREAS EJECUTADAS`;
                 }
             };
         }
@@ -354,16 +378,18 @@
                     if (cursor.value.materia === materia) res.push(cursor.value);
                     cursor.continue();
                 } else {
-                    list.innerHTML = res.length ? '' : '<p style="text-align:center; opacity:0.3; padding:20px;">TODO LIMPIO</p>';
+                    list.innerHTML = res.length ? '' : '<p style="text-align:center; opacity:0.3; padding:20px;">MODULOS_LIMPIOS</p>';
                     res.forEach(t => {
                         list.innerHTML += `
                             <div class="task-item">
-                                <div class="${t.entregada ? 'completed-text' : ''}">
-                                    <div style="font-weight:700; color: #fff;">${t.nombre}</div>
-                                    <div style="font-size:0.7rem; color: var(--text-dim);">LÍMITE: ${t.fecha}</div>
+                                <div class="${t.entregada ? 'completed-text' : ''}" style="color: #fff;">
+                                    <div style="font-weight:700;">${t.nombre}</div>
+                                    <div style="font-size:0.7rem; color: #444;">DATE: ${t.fecha}</div>
                                 </div>
-                                <button class="btn-toggle ${t.entregada ? 'completed' : ''}" style="background:#0d1117; color:#fff;" onclick="toggleTarea(${t.id}, '${materia}')">
-                                    ${t.entregada ? 'REVISADO' : 'PENDIENTE'}
+                                <button class="btn-toggle ${t.entregada ? 'completed' : ''}" 
+                                        style="color: ${t.entregada ? 'var(--neon-green)' : 'var(--neon-pink)'}" 
+                                        onclick="toggleTarea(${t.id}, '${materia}')">
+                                    ${t.entregada ? '✓' : '×'}
                                 </button>
                             </div>`;
                     });
@@ -373,6 +399,4 @@
     </script>
 </body>
 </html>
-
-    
-
+           
