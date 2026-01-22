@@ -11,7 +11,8 @@
             --accent-cyber: #7000ff;
             --text-dim: #00f3ff;
             --danger: #ff0055;
-            --card-bg: rgba(13, 17, 23, 0.8);
+            --card-bg: rgba(13, 17, 23, 0.9);
+            --success: #00ff88;
         }
 
         body {
@@ -20,27 +21,29 @@
             font-family: 'Rajdhani', sans-serif;
             margin: 0;
             padding: 20px;
+            background-image: radial-gradient(circle at 50% 50%, #110022 0%, #050505 100%);
         }
 
-        .container { max-width: 800px; margin: 0 auto; }
+        .container { max-width: 900px; margin: 0 auto; }
 
-        h1 {
+        h1, h2 {
             font-family: 'Orbitron';
             color: var(--text-dim);
             text-align: center;
             text-shadow: 0 0 10px var(--text-dim);
-            margin-bottom: 30px;
         }
 
+        /* Estilo Formulario */
         .admin-card {
             background: var(--card-bg);
             border: 1px solid var(--accent-cyber);
-            padding: 20px;
+            padding: 25px;
             border-radius: 15px;
-            margin-bottom: 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 0 20px rgba(112, 0, 255, 0.2);
         }
 
-        label { display: block; margin-top: 15px; color: var(--text-dim); font-weight: bold; }
+        label { display: block; margin-top: 15px; color: var(--text-dim); font-weight: bold; font-size: 0.9rem; letter-spacing: 1px; }
 
         select, textarea, input {
             width: 100%;
@@ -51,21 +54,23 @@
             border-radius: 8px;
             margin-top: 5px;
             box-sizing: border-box;
+            font-family: 'Rajdhani';
         }
 
+        /* Grid de Previsualización (Formulario) */
         .img-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 10px;
             margin-top: 15px;
         }
 
         .img-preview {
             width: 100%;
-            height: 150px;
+            height: 100px;
             object-fit: cover;
-            border: 1px dashed var(--accent-cyber);
-            border-radius: 8px;
+            border: 1px solid var(--accent-cyber);
+            border-radius: 5px;
         }
 
         .btn-save {
@@ -79,9 +84,63 @@
             cursor: pointer;
             margin-top: 20px;
             transition: 0.3s;
+            letter-spacing: 2px;
         }
 
         .btn-save:hover { background: #8a2be2; box-shadow: 0 0 20px var(--accent-cyber); }
+
+        /* Estilo Lista de Tareas Guardadas */
+        .display-section {
+            margin-top: 50px;
+            border-top: 2px solid #222;
+            padding-top: 30px;
+        }
+
+        .task-display-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 4px solid var(--accent-cyber);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 0 15px 15px 0;
+        }
+
+        .task-display-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .task-display-title { color: var(--success); font-family: 'Orbitron'; font-size: 1.1rem; }
+        
+        .notes-text {
+            background: rgba(0,0,0,0.3);
+            padding: 10px;
+            border-radius: 5px;
+            font-style: italic;
+            color: #ccc;
+            white-space: pre-wrap;
+            margin-bottom: 15px;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .gallery img:hover { transform: scale(1.05); }
 
         .back-link {
             display: inline-block;
@@ -90,6 +149,9 @@
             text-decoration: none;
             font-family: 'Orbitron';
             font-size: 0.8rem;
+            border: 1px solid var(--text-dim);
+            padding: 5px 15px;
+            border-radius: 5px;
         }
 
         .status-msg {
@@ -98,6 +160,7 @@
             margin-top: 10px;
             border-radius: 5px;
             display: none;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -108,22 +171,29 @@
     <h1>ADMIN_PANEL_SYSTEM</h1>
 
     <div class="admin-card">
+        <h2 style="font-size: 1rem; text-align: left; margin-bottom: 20px;">> EDITAR_CONTENIDO</h2>
+        
         <label>1. SELECCIONA LA TAREA</label>
         <select id="taskSelector">
             <option value="">Cargando tareas...</option>
         </select>
 
         <label>2. NOTAS ADICIONALES</label>
-        <textarea id="taskNotes" rows="5" placeholder="Escribe detalles, links o apuntes aquí..."></textarea>
+        <textarea id="taskNotes" rows="4" placeholder="Escribe instrucciones, links o apuntes..."></textarea>
 
-        <label>3. EVIDENCIAS / IMÁGENES (MÁX. 4)</label>
+        <label>3. SUBIR EVIDENCIAS (MÁX. 4)</label>
         <input type="file" id="imageInput" accept="image/*" multiple>
-        <p style="font-size: 0.7rem; color: #888;">* Si seleccionas más de 4, solo se guardarán las primeras.</p>
         
         <div class="img-grid" id="previewGrid"></div>
 
-        <button class="btn-save" onclick="updateTask()">ACTUALIZAR TAREA</button>
+        <button class="btn-save" onclick="updateTask()">GUARDAR CAMBIOS Y REFRESCAR</button>
         <div id="status" class="status-msg"></div>
+    </div>
+
+    <div class="display-section">
+        <h2>REPORTE_DE_TAREAS_ACTIVAS</h2>
+        <div id="tasksContainer">
+            </div>
     </div>
 </div>
 
@@ -133,16 +203,16 @@
     const taskSelector = document.getElementById('taskSelector');
     const imageInput = document.getElementById('imageInput');
     const previewGrid = document.getElementById('previewGrid');
+    const tasksContainer = document.getElementById('tasksContainer');
 
-    // Conexión a la base de datos existente
     const request = indexedDB.open("CyberDB", 1);
 
     request.onsuccess = (e) => {
         db = e.target.result;
         loadTasks();
+        renderAllTasks(); // Visualizar tareas al cargar
     };
 
-    // Cargar tareas existentes para el dropdown
     function loadTasks() {
         const transaction = db.transaction(["tareas"], "readonly");
         const store = transaction.objectStore("tareas");
@@ -151,19 +221,17 @@
         request.onsuccess = () => {
             const tareas = request.result;
             if (tareas.length === 0) {
-                taskSelector.innerHTML = '<option>No hay tareas creadas</option>';
+                taskSelector.innerHTML = '<option value="">No hay tareas en la DB</option>';
                 return;
             }
             taskSelector.innerHTML = tareas.map(t => 
-                `<option value="${t.id}">${t.materia} - ${t.nombre}</option>`
+                `<option value="${t.id}">${t.materia.toUpperCase()} - ${t.nombre}</option>`
             ).join('');
             
-            // Cargar datos de la primera tarea por defecto
             loadTaskDetails(tareas[0].id);
         };
     }
 
-    // Detectar cambio de tarea
     taskSelector.addEventListener('change', (e) => {
         if(e.target.value) loadTaskDetails(parseInt(e.target.value));
     });
@@ -179,16 +247,17 @@
         };
     }
 
-    // Manejo de Imágenes
     imageInput.addEventListener('change', (e) => {
-        const files = Array.from(e.target.files).slice(0, 4); // Limitar a 4
+        const files = Array.from(e.target.files).slice(0, 4);
         selectedImages = [];
+        let loaded = 0;
         
         files.forEach(file => {
             const reader = new FileReader();
             reader.onload = (event) => {
                 selectedImages.push(event.target.result);
-                renderPreviews();
+                loaded++;
+                if(loaded === files.length) renderPreviews();
             };
             reader.readAsDataURL(file);
         });
@@ -200,7 +269,6 @@
         ).join('');
     }
 
-    // Guardar cambios
     function updateTask() {
         const id = parseInt(taskSelector.value);
         if(!id) return;
@@ -211,18 +279,53 @@
         store.get(id).onsuccess = (e) => {
             const data = e.target.result;
             data.notas = document.getElementById('taskNotes').value;
-            data.imagenes = selectedImages; // Guardamos el array de base64
+            data.imagenes = selectedImages;
 
             store.put(data).onsuccess = () => {
-                const status = document.getElementById('status');
-                status.style.display = 'block';
-                status.style.backgroundColor = 'rgba(0, 255, 136, 0.2)';
-                status.innerText = "SISTEMA ACTUALIZADO CORRECTAMENTE";
-                setTimeout(() => status.style.display = 'none', 3000);
+                showStatus("DATOS GUARDADOS EN NUCLEO", "var(--success)");
+                renderAllTasks(); // Refrescar la visualización
             };
         };
+    }
+
+    // NUEVA FUNCIÓN: Visualiza todas las tareas con sus fotos y notas
+    function renderAllTasks() {
+        const transaction = db.transaction(["tareas"], "readonly");
+        const store = transaction.objectStore("tareas");
+        const request = store.getAll();
+
+        request.onsuccess = () => {
+            const tareas = request.result;
+            if (tareas.length === 0) {
+                tasksContainer.innerHTML = '<p style="text-align:center; opacity:0.5;">Esperando datos de tareas...</p>';
+                return;
+            }
+
+            tasksContainer.innerHTML = tareas.map(t => `
+                <div class="task-display-card">
+                    <div class="task-display-header">
+                        <div class="task-display-title">${t.materia}</div>
+                        <div style="font-size:0.8rem; color:#888;">ID: ${t.id} | ${t.fecha}</div>
+                    </div>
+                    <div style="font-weight:bold; margin-bottom:10px;">Tarea: ${t.nombre}</div>
+                    <div class="notes-text">${t.notas || "Sin notas adicionales."}</div>
+                    <div class="gallery">
+                        ${(t.imagenes || []).map(img => `<img src="${img}" onclick="window.open(this.src)">`).join('')}
+                    </div>
+                </div>
+            `).join('');
+        };
+    }
+
+    function showStatus(text, color) {
+        const status = document.getElementById('status');
+        status.style.display = 'block';
+        status.style.color = color;
+        status.innerText = text;
+        setTimeout(() => status.style.display = 'none', 3000);
     }
 </script>
 
 </body>
 </html>
+
