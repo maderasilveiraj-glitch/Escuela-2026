@@ -10,84 +10,25 @@
     <style>
         :root { --bg: #05070a; --accent: #00f2ff; --accent-2: #7000ff; --text: #ffffff; --danger: #ff007a; }
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { 
-            font-family: 'Outfit', sans-serif; 
-            background: var(--bg); 
-            color: var(--text); 
-            padding: 20px; 
-            min-height: 100vh; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-        }
-        .container { 
-            background: rgba(255,255,255,0.03); 
-            border: 1px solid rgba(255,255,255,0.1); 
-            padding: 20px; 
-            border-radius: 20px; 
-            width: 100%; 
-            max-width: 400px; 
-            backdrop-filter: blur(10px); 
-        }
+        body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--text); padding: 20px; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+        .container { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 20px; border-radius: 20px; width: 100%; max-width: 400px; backdrop-filter: blur(10px); }
         h1 { font-size: 1.5rem; margin-bottom: 20px; color: var(--accent); text-align: center; }
         .form-group { margin-bottom: 15px; }
         label { display: block; margin-bottom: 5px; font-size: 0.8rem; color: #94a3b8; }
-        select, input { 
-            width: 100%; 
-            background: rgba(255,255,255,0.07); 
-            border: 1px solid rgba(255,255,255,0.1); 
-            padding: 12px; 
-            border-radius: 10px; 
-            color: white; 
-            outline: none;
-            font-size: 16px; /* Evita zoom automático en iOS */
-        }
-        .main-btn { 
-            background: linear-gradient(90deg, var(--accent), var(--accent-2)); 
-            border: none; 
-            padding: 15px; 
-            border-radius: 12px; 
-            color: white; 
-            font-weight: 800; 
-            width: 100%; 
-            margin-top: 10px; 
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-        .main-btn:active { transform: scale(0.98); }
-        .main-btn:disabled { filter: grayscale(1); opacity: 0.5; cursor: not-allowed; }
+        select, input { width: 100%; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); padding: 12px; border-radius: 10px; color: white; outline: none; font-size: 16px; }
         
-        .task-card { 
-            background: rgba(255,255,255,0.02); 
-            padding: 15px; 
-            margin-top: 15px; 
-            border-radius: 15px; 
-            border-left: 4px solid var(--accent-2); 
-            width: 100%; 
-            max-width: 400px; 
-        }
-        .img-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); 
-            gap: 8px; 
-            margin-top: 10px; 
-        }
-        .img-mini { 
-            width: 100%; 
-            height: 80px; 
-            object-fit: cover; 
-            border-radius: 8px; 
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        .delete-btn { 
-            color: var(--danger); 
-            font-size: 0.75rem; 
-            margin-top: 15px; 
-            text-align: right; 
-            cursor: pointer; 
-            font-weight: 600; 
-            padding: 5px;
-        }
+        /* Estilos de Barra de Progreso */
+        .progress-container { width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 10px; margin: 10px 0; display: none; overflow: hidden; }
+        .progress-bar { width: 0%; height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transition: width 0.3s; }
+
+        .main-btn { background: linear-gradient(90deg, var(--accent), var(--accent-2)); border: none; padding: 15px; border-radius: 12px; color: white; font-weight: 800; width: 100%; margin-top: 10px; cursor: pointer; transition: transform 0.2s; }
+        .main-btn:active { transform: scale(0.98); }
+        .main-btn:disabled { filter: grayscale(1); opacity: 0.5; }
+        
+        .task-card { background: rgba(255,255,255,0.02); padding: 15px; margin-top: 15px; border-radius: 15px; border-left: 4px solid var(--accent-2); width: 100%; max-width: 400px; }
+        .img-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 8px; margin-top: 10px; }
+        .img-mini { width: 100%; height: 80px; object-fit: cover; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); cursor: pointer; }
+        .delete-btn { color: var(--danger); font-size: 0.75rem; margin-top: 15px; text-align: right; cursor: pointer; font-weight: 600; padding: 5px; }
         .back-link { margin-top: 20px; color: #94a3b8; text-decoration: none; font-size: 0.8rem; }
     </style>
 </head>
@@ -108,7 +49,15 @@
         </div>
         <div class="form-group"><label>Descripción</label><input type="text" id="nombre" placeholder="Ej: 25 ejercicios"></div>
         <div class="form-group"><label>Fecha de Entrega</label><input type="text" id="fecha" placeholder="Ej: Lunes 25"></div>
-        <div class="form-group"><label>Evidencias</label><input type="file" id="imagenes" accept="image/*" multiple></div>
+        <div class="form-group">
+            <label>Evidencias (Máx 8 fotos)</label>
+            <input type="file" id="imagenes" accept="image/*" multiple>
+        </div>
+
+        <div class="progress-container" id="pContainer">
+            <div class="progress-bar" id="pBar"></div>
+        </div>
+
         <button class="main-btn" id="btn" onclick="guardar()">GUARDAR TAREA</button>
     </div>
 
@@ -117,7 +66,6 @@
 
     <script>
         let db;
-        // Inicialización de Base de Datos
         const request = indexedDB.open("TareasDB", 1);
         
         request.onupgradeneeded = (e) => {
@@ -127,16 +75,12 @@
             }
         };
 
-        request.onsuccess = (e) => { 
-            db = e.target.result; 
-            mostrar(); 
-        };
+        request.onsuccess = (e) => { db = e.target.result; mostrar(); };
+        request.onerror = () => alert("Error al abrir la base de datos.");
 
-        request.onerror = () => alert("Error al abrir la base de datos local.");
-
-        // Función de compresión optimizada
+        // Función de compresión ultra-optimizada
         async function reducirImagen(file) {
-            return new Promise((resolve) => {
+            return new Promise((resolve, reject) => {
                 const reader = new FileReader();
                 reader.readAsDataURL(file);
                 reader.onload = (event) => {
@@ -144,7 +88,7 @@
                     img.src = event.target.result;
                     img.onload = () => {
                         const canvas = document.createElement('canvas');
-                        const maxWidth = 800; // Calidad suficiente para leer texto
+                        const maxWidth = 700; // Suficiente para tareas legibles
                         const scale = Math.min(maxWidth / img.width, 1);
                         
                         canvas.width = img.width * scale;
@@ -153,34 +97,49 @@
                         const ctx = canvas.getContext('2d');
                         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
                         
-                        // JPG a 0.5 es el balance perfecto entre peso y legibilidad
-                        resolve(canvas.toDataURL('image/jpeg', 0.5));
+                        // Calidad 0.4 para balancear peso y legibilidad
+                        const result = canvas.toDataURL('image/jpeg', 0.4);
+                        
+                        // Limpieza de memoria
+                        img.src = ""; 
+                        resolve(result);
                     };
+                    img.onerror = reject;
                 };
+                reader.onerror = reject;
             });
         }
 
         async function guardar() {
-            if (!db) return alert("Espera a que la app cargue por completo.");
+            if (!db) return alert("Cargando base de datos...");
             
             const btn = document.getElementById('btn');
+            const pBar = document.getElementById('pBar');
+            const pContainer = document.getElementById('pContainer');
             const nombre = document.getElementById('nombre').value.trim();
             const fecha = document.getElementById('fecha').value.trim();
             const materia = document.getElementById('materia').value;
             const files = document.getElementById('imagenes').files;
 
-            if(!nombre || !fecha) return alert("Por favor, escribe el nombre y la fecha.");
+            if(!nombre || !fecha) return alert("Escribe descripción y fecha.");
+            if(files.length > 8) return alert("Máximo 8 fotos por tarea.");
 
             btn.disabled = true;
-            btn.innerText = "COMPRIMIENDO...";
+            pContainer.style.display = "block";
+            btn.innerText = "PROCESANDO...";
 
             try {
                 const fotos = [];
-                for(let f of files) {
-                    // Procesamos secuencialmente para no agotar la RAM del celular
-                    const res = await reducirImagen(f);
+                for(let i = 0; i < files.length; i++) {
+                    // Actualizar barra de progreso
+                    const percent = ((i / files.length) * 100);
+                    pBar.style.width = percent + "%";
+                    
+                    const res = await reducirImagen(files[i]);
                     fotos.push(res);
                 }
+                
+                pBar.style.width = "100%";
 
                 const transaction = db.transaction(["tareas"], "readwrite");
                 const store = transaction.objectStore("tareas");
@@ -204,13 +163,16 @@
 
                 transaction.oncomplete = () => {
                     btn.disabled = false;
+                    pContainer.style.display = "none";
+                    pBar.style.width = "0%";
                     btn.innerText = "GUARDAR TAREA";
                 };
 
             } catch(e) {
                 console.error(e);
-                alert("Error al guardar. Intenta con menos fotos.");
+                alert("Error de memoria. Intenta con menos fotos.");
                 btn.disabled = false;
+                pContainer.style.display = "none";
                 btn.innerText = "GUARDAR TAREA";
             }
         }
@@ -221,16 +183,11 @@
             lista.innerHTML = '<p style="color:#94a3b8; margin: 25px 0; font-size:0.7rem; letter-spacing:2px; font-weight:800;">MIS TAREAS ACTIVAS</p>';
 
             const store = db.transaction("tareas", "readonly").objectStore("tareas");
-            const cursorRequest = store.getAll();
-
-            cursorRequest.onsuccess = (e) => {
+            store.getAll().onsuccess = (e) => {
                 const tareas = e.target.result;
-                // Ordenar por fecha de creación (más reciente arriba)
                 tareas.sort((a,b) => b.time - a.time).forEach(t => {
                     const div = document.createElement('div');
                     div.className = 'task-card';
-                    
-                    // Generar HTML de imágenes de forma segura
                     const fotosHtml = t.fotos.map(f => `
                         <img src="${f}" class="img-mini" onclick="abrirFoto('${f}')">
                     `).join('');
@@ -248,12 +205,12 @@
         }
 
         function abrirFoto(src) {
-            const nuevaVentana = window.open();
-            nuevaVentana.document.write(`<body style="margin:0; background:#000; display:flex; align-items:center; justify-content:center;"><img src="${src}" style="max-width:100%;"></body>`);
+            const nv = window.open("");
+            nv.document.write(`<body style="margin:0; background:#000; display:flex; align-items:center; justify-content:center;"><img src="${src}" style="max-width:100%; max-height:100%;"></body>`);
         }
 
         function borrar(id) {
-            if(confirm("¿Estás seguro de eliminar esta tarea?")) {
+            if(confirm("¿Eliminar esta tarea?")) {
                 const transaction = db.transaction(["tareas"], "readwrite");
                 transaction.objectStore("tareas").delete(id);
                 transaction.oncomplete = () => mostrar();
@@ -262,3 +219,4 @@
     </script>
 </body>
 </html>
+
