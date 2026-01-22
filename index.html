@@ -10,7 +10,7 @@
     <style>
         :root {
             --bg-deep: #050505;
-            --card-bg: rgba(13, 17, 23, 0.85);
+            --card-bg: rgba(13, 17, 23, 0.6);
             --text-main: #fff;
             --text-dim: #00f3ff;
             --accent-cyber: #7000ff;
@@ -22,19 +22,6 @@
             --neon-etica: #ffd54f;
             --success: #00ff88;
             --danger: #ff0055;
-            --gradient-angle: 0deg; /* Para el borde rotatorio */
-        }
-
-        /* Registro de propiedad para animación de ángulo */
-        @property --gradient-angle {
-            syntax: "<angle>";
-            initial-value: 0deg;
-            inherits: false;
-        }
-
-        @keyframes rotateGradient {
-            0% { --gradient-angle: 0deg; }
-            100% { --gradient-angle: 360deg; }
         }
 
         @keyframes rgbBody {
@@ -42,11 +29,6 @@
             33% { background-color: #050a05; }
             66% { background-color: #05050a; }
             100% { background-color: #050505; }
-        }
-
-        @keyframes neonFlow {
-            0% { filter: hue-rotate(0deg); }
-            100% { filter: hue-rotate(360deg); }
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -62,10 +44,8 @@
 
         #particles-js {
             position: fixed;
-            width: 100%;
-            height: 100%;
+            width: 100%; height: 100%;
             z-index: -1;
-            background: transparent;
         }
 
         .grid-overlay {
@@ -82,78 +62,66 @@
         .header { 
             padding: 30px 20px; text-align: center; 
             background: rgba(5, 5, 5, 0.8); 
-            border-bottom: 2px solid transparent;
-            border-image: linear-gradient(90deg, #7000ff, #00f3ff, #00ff88, #7000ff) 1;
+            border-bottom: 2px solid var(--accent-cyber);
             backdrop-filter: blur(15px);
-            animation: neonFlow 6s infinite linear;
             box-shadow: 0 0 30px rgba(112, 0, 255, 0.2);
         }
 
+        /* --- CLASES DE BORDES DE COLOR --- */
+        .border-calculo { border: 2px solid var(--neon-calculo) !important; box-shadow: inset 0 0 10px rgba(179, 136, 255, 0.2), 0 0 15px rgba(179, 136, 255, 0.1); }
+        .border-legislacion { border: 2px solid var(--neon-legislacion) !important; box-shadow: inset 0 0 10px rgba(255, 82, 82, 0.2), 0 0 15px rgba(255, 82, 82, 0.1); }
+        .border-dinamica { border: 2px solid var(--neon-dinamica) !important; box-shadow: inset 0 0 10px rgba(129, 199, 132, 0.2), 0 0 15px rgba(129, 199, 132, 0.1); }
+        .border-contabilidad { border: 2px solid var(--neon-contabilidad) !important; box-shadow: inset 0 0 10px rgba(255, 138, 101, 0.2), 0 0 15px rgba(255, 138, 101, 0.1); }
+        .border-soft { border: 2px solid var(--neon-soft) !important; box-shadow: inset 0 0 10px rgba(79, 195, 247, 0.2), 0 0 15px rgba(79, 195, 247, 0.1); }
+        .border-etica { border: 2px solid var(--neon-etica) !important; box-shadow: inset 0 0 10px rgba(255, 213, 79, 0.2), 0 0 15px rgba(255, 213, 79, 0.1); }
+
         .class-card { 
-            margin-top: 15px; padding: 18px; border-radius: 18px;
-            position: relative; transition: all 0.4s ease;
+            margin-top: 15px; padding: 18px; border-radius: 12px;
+            position: relative; transition: all 0.3s ease;
             cursor: pointer; 
             background: var(--card-bg);
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.05);
-            z-index: 1;
+            border: 2px solid rgba(255,255,255,0.1); /* Borde por defecto */
         }
 
-        /* Pseudo-elemento para el borde RGB rotatorio */
-        .class-card::before {
-            content: "";
-            position: absolute;
-            inset: -2px;
-            z-index: -1;
-            background: conic-gradient(
-                from var(--gradient-angle),
-                #7000ff, #00f3ff, #00ff88, #ffd54f, #ff0055, #7000ff
-            );
-            animation: rotateGradient 4s linear infinite;
-            opacity: 0.3;
-            transition: opacity 0.3s;
+        .class-card:hover { 
+            transform: translateY(-5px); 
+            filter: brightness(1.2);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
         }
 
-        .class-card:hover::before {
-            opacity: 1;
-        }
+        /* Resto de estilos funcionales */
+        h1 { font-family: 'Orbitron'; font-size: 1.6rem; letter-spacing: 4px; color: #fff; }
+        .progress-section { padding: 20px; background: var(--card-bg); margin: 15px; border-radius: 15px; border: 1px solid rgba(112, 0, 255, 0.2); }
+        .progress-bar-bg { width: 100%; height: 10px; background: #000; margin: 10px 0; border-radius: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent-cyber), var(--success)); width: 0%; transition: 1.5s ease; }
+        .schedule-container { display: flex; overflow-x: auto; gap: 20px; padding: 25px; }
+        .day-column { min-width: 300px; background: rgba(13, 17, 23, 0.4); border-radius: 20px; padding: 20px; border: 1px solid rgba(255,255,255,0.05); }
+        .day-name { font-family: 'Orbitron'; font-size: 1.3rem; color: var(--text-dim); display: flex; justify-content: space-between; margin-bottom: 15px; }
+        .time-tag { font-size: 0.8rem; opacity: 0.7; margin-bottom: 5px; }
+        .subject { font-weight: 700; font-size: 1.1rem; }
+        .teacher { font-size: 0.85rem; opacity: 0.6; margin-top: 4px; }
+        
+        .txt-calculo { color: var(--neon-calculo); }
+        .txt-legislacion { color: var(--neon-legislacion); }
+        .txt-dinamica { color: var(--neon-dinamica); }
+        .txt-contabilidad { color: var(--neon-contabilidad); }
+        .txt-soft { color: var(--neon-soft); }
+        .txt-etica { color: var(--neon-etica); }
 
-        .class-card:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
-
-        /* Estilos base que ya tenías */
-        h1 { font-family: 'Orbitron'; font-size: 1.6rem; letter-spacing: 4px; color: #fff; text-shadow: 0 0 20px var(--accent-cyber); }
-        .progress-section { 
-            padding: 20px; background: var(--card-bg); margin: 15px; 
-            border-radius: 15px; border: 1px solid rgba(112, 0, 255, 0.2);
-            backdrop-filter: blur(10px);
-        }
-        .progress-bar-bg { width: 100%; height: 10px; background: #000; margin: 10px 0; border-radius: 10px; overflow: hidden; border: 1px solid #333; }
-        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent-cyber), #00d4ff, var(--success)); width: 0%; transition: 1.5s cubic-bezier(0.22, 1, 0.36, 1); }
-        .schedule-container { display: flex; overflow-x: auto; gap: 20px; padding: 25px; scrollbar-width: none; }
-        .day-column { min-width: 300px; background: rgba(13, 17, 23, 0.5); border-radius: 25px; padding: 20px; border: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(5px); }
-        .day-name { font-family: 'Orbitron'; font-size: 1.3rem; color: var(--text-dim); display: flex; justify-content: space-between; border-bottom: 1px solid rgba(0, 243, 255, 0.2); padding-bottom: 10px; }
-        .time-tag { font-size: 0.8rem; background: rgba(112, 0, 255, 0.2); padding: 4px 12px; border-radius: 20px; color: #fff; margin-bottom: 8px; display: inline-block; border: 1px solid var(--accent-cyber); }
-        .subject { font-weight: 700; font-size: 1.2rem; display: flex; align-items: center; gap: 10px; }
-        .teacher { font-size: 0.9rem; opacity: 0.8; margin-top: 6px; font-weight: 500; }
-        .txt-calculo { color: var(--neon-calculo) !important; }
-        .txt-legislacion { color: var(--neon-legislacion) !important; }
-        .txt-dinamica { color: var(--neon-dinamica) !important; }
-        .txt-contabilidad { color: var(--neon-contabilidad) !important; }
-        .txt-soft { color: var(--neon-soft) !important; }
-        .txt-etica { color: var(--neon-etica) !important; }
         .task-count-badge {
-            position: absolute; top: 15px; right: 15px;
-            background: var(--accent-cyber); color: #fff; width: 25px; height: 25px;
-            display: grid; place-items: center; font-size: 0.8rem; font-weight: 900; border-radius: 50%;
-            box-shadow: 0 0 15px var(--accent-cyber);
+            position: absolute; top: -10px; right: -10px;
+            background: var(--danger); color: #fff; width: 22px; height: 22px;
+            display: grid; place-items: center; font-size: 0.7rem; font-weight: 900; border-radius: 50%;
+            box-shadow: 0 0 10px var(--danger);
         }
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(20px); }
+
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(15px); }
         .modal-overlay.active { display: flex; }
-        .modal-content { width: 90%; max-width: 450px; background: #0d1117; border-radius: 30px; padding: 35px; border: 2px solid var(--accent-cyber); }
-        .btn-add { width: 100%; background: linear-gradient(45deg, var(--accent-cyber), #450099); color: #fff; border: none; padding: 18px; font-family: 'Orbitron'; border-radius: 15px; cursor: pointer; margin-top: 20px; font-weight: 700; transition: 0.3s; }
-        .fab { position: fixed; bottom: 35px; right: 35px; width: 70px; height: 70px; background: var(--accent-cyber); border: none; border-radius: 22px; color: #fff; font-size: 2.5rem; box-shadow: 0 0 25px rgba(112, 0, 255, 0.8); z-index: 100; cursor: pointer; }
-        .task-item { background: rgba(255,255,255,0.03); padding: 18px; border-radius: 15px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
-        input, select { width: 100%; background: #000; border: 1px solid var(--accent-cyber); color: var(--text-dim); padding: 14px; border-radius: 12px; margin-top: 15px; }
+        .modal-content { width: 90%; max-width: 400px; background: #0d1117; border-radius: 20px; padding: 30px; border: 1px solid var(--accent-cyber); }
+        .fab { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: var(--accent-cyber); border: none; border-radius: 50%; color: #fff; font-size: 2rem; cursor: pointer; box-shadow: 0 0 20px var(--accent-cyber); }
+        .task-item { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        input, select { width: 100%; background: #000; border: 1px solid #333; color: #fff; padding: 12px; border-radius: 8px; margin-top: 10px; }
+        .btn-add { width: 100%; padding: 15px; margin-top: 20px; background: var(--accent-cyber); color: #fff; border: none; border-radius: 10px; font-family: 'Orbitron'; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -162,17 +130,17 @@
     <div class="grid-overlay"></div>
 
     <div class="header">
-        <p style="color: var(--accent-cyber); font-weight: 700; font-size: 0.7rem; letter-spacing: 4px; margin-bottom: 5px; text-transform: uppercase;">División Ingeniería Gestión Empresarial</p>
+        <p style="color: var(--accent-cyber); font-weight: 700; font-size: 0.7rem; letter-spacing: 3px; margin-bottom: 5px;">DIVISIÓN INGENIERÍA GESTIÓN EMPRESARIAL</p>
         <h1>HORARIO ALEJANDRO_MADERA</h1>
     </div>
 
     <div class="progress-section">
-        <div style="display:flex; justify-content:space-between; align-items:baseline;">
-            <span style="font-size: 0.9rem; font-weight: 700; color: var(--text-dim); letter-spacing: 1px;">CORE_TASK_PROGRESS</span>
-            <span id="progress-percentage" style="font-family: 'Orbitron'; color: var(--success); font-size: 1.2rem;">0%</span>
+        <div style="display:flex; justify-content:space-between;">
+            <span style="font-size: 0.8rem; font-weight: 700; color: var(--text-dim);">SYSTEM_PROGRESS</span>
+            <span id="progress-percentage" style="font-family: 'Orbitron'; color: var(--success);">0%</span>
         </div>
         <div class="progress-bar-bg"><div id="progress-fill" class="progress-fill"></div></div>
-        <p id="progress-stats" style="font-size: 0.75rem; color: var(--text-dim); opacity: 0.7;"></p>
+        <p id="progress-stats" style="font-size: 0.7rem; opacity: 0.5;"></p>
     </div>
 
     <div class="schedule-container" id="schedule-render"></div>
@@ -181,63 +149,70 @@
 
     <div class="modal-overlay" id="modalOverlay" onclick="if(event.target==this) closeModal()">
         <div class="modal-content">
-            <h2 id="modalTitle" style="color: var(--accent-cyber); font-family: 'Orbitron'; margin-bottom: 20px; font-size: 1.3rem; text-align: center; border-bottom: 1px solid var(--accent-cyber); padding-bottom: 10px;">DATOS_MATERIA</h2>
+            <h2 id="modalTitle" style="color: var(--accent-cyber); font-family: 'Orbitron'; margin-bottom: 20px; font-size: 1.1rem; text-align: center;"></h2>
             <div id="taskList"></div>
             <button class="btn-add" style="background: #1a1a1a;" onclick="closeModal()">REGRESAR</button>
         </div>
     </div>
 
     <div class="modal-overlay" id="pinModal">
-        <div class="modal-content">
-            <h2 id="pinModalTitle" style="color: var(--danger); font-family: 'Orbitron'; text-align: center; letter-spacing: 2px;">AUTHORIZATION_REQUIRED</h2>
-            <input type="password" id="pinCode" style="text-align: center; font-size: 2rem;" maxlength="4" placeholder="****">
-            <div style="display: flex; gap: 15px;">
-                <button class="btn-add" style="background: #1a1a1a;" onclick="closePinModal()">ABORT</button>
-                <button class="btn-add" onclick="validatePin()">CONFIRM</button>
+        <div class="modal-content" style="text-align:center;">
+            <h2 style="color: var(--danger); font-family: 'Orbitron'; margin-bottom:15px;">PIN_REQUIRED</h2>
+            <input type="password" id="pinCode" style="text-align: center; font-size: 1.5rem;" maxlength="4" placeholder="****">
+            <div style="display: flex; gap: 10px;">
+                <button class="btn-add" style="background: #1a1a1a;" onclick="closePinModal()">CANCEL</button>
+                <button class="btn-add" onclick="validatePin()">ACCESS</button>
             </div>
         </div>
     </div>
 
     <div class="modal-overlay" id="addModal" onclick="if(event.target==this) closeAddModal()">
         <div class="modal-content">
-            <h2 style="color: var(--accent-cyber); font-family: 'Orbitron'; text-align: center;">NEW_ASSIGNMENT</h2>
-            <input type="text" id="taskName" placeholder="Identificador de la tarea...">
+            <h2 style="font-family: 'Orbitron'; text-align: center;">NUEVA_TAREA</h2>
+            <input type="text" id="taskName" placeholder="Nombre de la tarea...">
             <select id="taskSubject">
-                <option value="CÁLCULO INTEGRAL">📐 CÁLCULO INTEGRAL</option>
-                <option value="LEGISLACIÓN LABORAL">⚖️ LEGISLACIÓN LABORAL</option>
-                <option value="DINÁMICA SOCIAL">👥 DINÁMICA SOCIAL</option>
-                <option value="CONT. ORIENTADA NEG.">💼 CONT. ORIENTADA NEG.</option>
-                <option value="SOFT. APLIC. EJEC.">💻 SOFT. APLIC. EJEC.</option>
-                <option value="TALLER DE ÉTICA">🧠 TALLER DE ÉTICA</option>
+                <option value="CÁLCULO INTEGRAL">CÁLCULO INTEGRAL</option>
+                <option value="LEGISLACIÓN LABORAL">LEGISLACIÓN LABORAL</option>
+                <option value="DINÁMICA SOCIAL">DINÁMICA SOCIAL</option>
+                <option value="CONT. ORIENTADA NEG.">CONT. ORIENTADA NEG.</option>
+                <option value="SOFT. APLIC. EJEC.">SOFT. APLIC. EJEC.</option>
+                <option value="TALLER DE ÉTICA">TALLER DE ÉTICA</option>
             </select>
             <input type="date" id="taskDate">
-            <button class="btn-add" onclick="saveTask()">DEPLOY_TASK</button>
+            <button class="btn-add" onclick="saveTask()">GUARDAR</button>
         </div>
     </div>
 
     <script>
-        // Configuración de Partículas RGB
         particlesJS("particles-js", {
             "particles": {
-                "number": { "value": 70, "density": { "enable": true, "value_area": 800 } },
-                "color": { "value": ["#7000ff", "#00f3ff", "#00ff88", "#ff0055"] },
+                "number": { "value": 50 },
+                "color": { "value": "#7000ff" },
                 "shape": { "type": "circle" },
-                "opacity": { "value": 0.5 },
-                "size": { "value": 3, "random": true },
-                "line_linked": { "enable": true, "distance": 150, "color": "#7000ff", "opacity": 0.2, "width": 1 },
-                "move": { "enable": true, "speed": 2 }
-            },
-            "interactivity": {
-                "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" } }
-            },
-            "retina_detect": true
+                "opacity": { "value": 0.3 },
+                "size": { "value": 2 },
+                "line_linked": { "enable": true, "distance": 150, "color": "#7000ff", "opacity": 0.1, "width": 1 },
+                "move": { "enable": true, "speed": 1 }
+            }
         });
 
-        // --- LÓGICA DE DATOS (Mantenida de tu código) ---
         const subjectEmojis = {
             "CÁLCULO INTEGRAL": "📐", "LEGISLACIÓN LABORAL": "⚖️",
             "DINÁMICA SOCIAL": "👥", "CONT. ORIENTADA NEG.": "💼",
             "SOFT. APLIC. EJEC.": "💻", "TALLER DE ÉTICA": "🧠"
+        };
+
+        // Mapeo de clases CSS para los bordes
+        const borderClassMap = {
+            "CÁLCULO INTEGRAL": "border-calculo", "LEGISLACIÓN LABORAL": "border-legislacion",
+            "DINÁMICA SOCIAL": "border-dinamica", "CONT. ORIENTADA NEG.": "border-contabilidad",
+            "SOFT. APLIC. EJEC.": "border-soft", "TALLER DE ÉTICA": "border-etica"
+        };
+
+        const textClassMap = {
+            "CÁLCULO INTEGRAL": "txt-calculo", "LEGISLACIÓN LABORAL": "txt-legislacion",
+            "DINÁMICA SOCIAL": "txt-dinamica", "CONT. ORIENTADA NEG.": "txt-contabilidad",
+            "SOFT. APLIC. EJEC.": "txt-soft", "TALLER DE ÉTICA": "txt-etica"
         };
 
         const materiasData = [
@@ -263,12 +238,6 @@
             ]}
         ];
 
-        const textClassMap = {
-            "CÁLCULO INTEGRAL": "txt-calculo", "LEGISLACIÓN LABORAL": "txt-legislacion",
-            "DINÁMICA SOCIAL": "txt-dinamica", "CONT. ORIENTADA NEG.": "txt-contabilidad",
-            "SOFT. APLIC. EJEC.": "txt-soft", "TALLER DE ÉTICA": "txt-etica"
-        };
-
         let db;
         let pendingAction = null;
 
@@ -289,10 +258,10 @@
                 <div class="day-column">
                     <div class="day-name">${d.dia} <span>${d.emoji}</span></div>
                     ${d.clases.map(c => `
-                        <div class="class-card" onclick="showTasks('${c.n}')">
+                        <div class="class-card ${borderClassMap[c.n] || ''}" onclick="showTasks('${c.n}')">
                             <div class="time-tag">${c.h}</div>
-                            <div class="subject ${textClassMap[c.n] || ''}"><span>${subjectEmojis[c.n] || '📚'}</span> ${c.n}</div>
-                            <div class="teacher ${textClassMap[c.n] || ''}">${c.t}</div>
+                            <div class="subject ${textClassMap[c.n]}"><span>${subjectEmojis[c.n]}</span> ${c.n}</div>
+                            <div class="teacher">${c.t}</div>
                         </div>
                     `).join('')}
                 </div>
@@ -304,6 +273,7 @@
             const store = transaction.objectStore("tareas");
             const pendientes = {};
             let total = 0, done = 0;
+
             store.openCursor().onsuccess = (e) => {
                 const cursor = e.target.result;
                 if (cursor) {
@@ -323,12 +293,11 @@
                     const porc = total > 0 ? Math.round((done/total)*100) : 0;
                     document.getElementById('progress-fill').style.width = porc + '%';
                     document.getElementById('progress-percentage').innerText = porc + '%';
-                    document.getElementById('progress-stats').innerText = `${done} / ${total} TASKS_COMPLETED`;
+                    document.getElementById('progress-stats').innerText = `${done} / ${total} TAREAS FINALIZADAS`;
                 }
             };
         }
 
-        // --- Funciones de Modal y Tareas ---
         function openAddModal() { document.getElementById('addModal').classList.add('active'); }
         function closeAddModal() { document.getElementById('addModal').classList.remove('active'); }
         function closeModal() { document.getElementById('modalOverlay').classList.remove('active'); }
@@ -346,16 +315,16 @@
                     if (cursor.value.materia === materia) res.push(cursor.value);
                     cursor.continue();
                 } else {
-                    list.innerHTML = res.length ? '' : '<p style="text-align:center; opacity:0.3; padding:20px;">NO_DATA_FOUND</p>';
+                    list.innerHTML = res.length ? '' : '<p style="text-align:center; opacity:0.3; padding:20px;">SIN TAREAS</p>';
                     res.forEach(t => {
                         list.innerHTML += `
                             <div class="task-item">
-                                <div class="${t.entregada ? 'completed-text' : ''}">
+                                <div style="${t.entregada ? 'text-decoration:line-through; opacity:0.5;' : ''}">
                                     <div style="font-weight:700;">${t.nombre}</div>
                                     <div style="font-size:0.7rem; color:var(--text-dim)">${t.fecha}</div>
                                 </div>
-                                <button class="btn-toggle ${t.entregada ? 'completed' : ''}" onclick="toggleTarea(${t.id}, '${materia}')">
-                                    ${t.entregada ? 'REVISADO' : 'PENDIENTE'}
+                                <button style="background:${t.entregada ? 'var(--success)' : '#333'}; color:white; border:none; padding:5px 10px; border-radius:5px; font-size:0.7rem; cursor:pointer;" onclick="toggleTarea(${t.id}, '${materia}')">
+                                    ${t.entregada ? 'LISTO' : 'MARCAR'}
                                 </button>
                             </div>`;
                     });
