@@ -2,221 +2,227 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Admin Pro | App</title>
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#00f2ff">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADMIN_PANEL - Gestión de Tareas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #05070a; --accent: #00f2ff; --accent-2: #7000ff; --text: #ffffff; --danger: #ff007a; }
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--text); padding: 20px; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
-        .container { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 20px; border-radius: 20px; width: 100%; max-width: 400px; backdrop-filter: blur(10px); }
-        h1 { font-size: 1.5rem; margin-bottom: 20px; color: var(--accent); text-align: center; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-size: 0.8rem; color: #94a3b8; }
-        select, input { width: 100%; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); padding: 12px; border-radius: 10px; color: white; outline: none; font-size: 16px; }
-        
-        /* Estilos de Barra de Progreso */
-        .progress-container { width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 10px; margin: 10px 0; display: none; overflow: hidden; }
-        .progress-bar { width: 0%; height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transition: width 0.3s; }
+        :root {
+            --bg-deep: #050505;
+            --accent-cyber: #7000ff;
+            --text-dim: #00f3ff;
+            --danger: #ff0055;
+            --card-bg: rgba(13, 17, 23, 0.8);
+        }
 
-        .main-btn { background: linear-gradient(90deg, var(--accent), var(--accent-2)); border: none; padding: 15px; border-radius: 12px; color: white; font-weight: 800; width: 100%; margin-top: 10px; cursor: pointer; transition: transform 0.2s; }
-        .main-btn:active { transform: scale(0.98); }
-        .main-btn:disabled { filter: grayscale(1); opacity: 0.5; }
-        
-        .task-card { background: rgba(255,255,255,0.02); padding: 15px; margin-top: 15px; border-radius: 15px; border-left: 4px solid var(--accent-2); width: 100%; max-width: 400px; }
-        .img-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 8px; margin-top: 10px; }
-        .img-mini { width: 100%; height: 80px; object-fit: cover; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); cursor: pointer; }
-        .delete-btn { color: var(--danger); font-size: 0.75rem; margin-top: 15px; text-align: right; cursor: pointer; font-weight: 600; padding: 5px; }
-        .back-link { margin-top: 20px; color: #94a3b8; text-decoration: none; font-size: 0.8rem; }
+        body {
+            background-color: var(--bg-deep);
+            color: #fff;
+            font-family: 'Rajdhani', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container { max-width: 800px; margin: 0 auto; }
+
+        h1 {
+            font-family: 'Orbitron';
+            color: var(--text-dim);
+            text-align: center;
+            text-shadow: 0 0 10px var(--text-dim);
+            margin-bottom: 30px;
+        }
+
+        .admin-card {
+            background: var(--card-bg);
+            border: 1px solid var(--accent-cyber);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        label { display: block; margin-top: 15px; color: var(--text-dim); font-weight: bold; }
+
+        select, textarea, input {
+            width: 100%;
+            background: #000;
+            border: 1px solid #333;
+            color: #fff;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+
+        .img-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .img-preview {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border: 1px dashed var(--accent-cyber);
+            border-radius: 8px;
+        }
+
+        .btn-save {
+            width: 100%;
+            padding: 15px;
+            background: var(--accent-cyber);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Orbitron';
+            cursor: pointer;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+
+        .btn-save:hover { background: #8a2be2; box-shadow: 0 0 20px var(--accent-cyber); }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--text-dim);
+            text-decoration: none;
+            font-family: 'Orbitron';
+            font-size: 0.8rem;
+        }
+
+        .status-msg {
+            text-align: center;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            display: none;
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Nueva Tarea</h1>
-        <div class="form-group">
-            <label>Materia</label>
-            <select id="materia">
-                <option>CÁLCULO INTEGRAL</option>
-                <option>LEGISLACIÓN LABORAL</option>
-                <option>DINÁMICA SOCIAL</option>
-                <option>TALLER DE ÉTICA</option>
-                <option>SOFTWARE APLICADO</option>
-                <option>CONTABILIDAD</option>
-            </select>
-        </div>
-        <div class="form-group"><label>Descripción</label><input type="text" id="nombre" placeholder="Ej: 25 ejercicios"></div>
-        <div class="form-group"><label>Fecha de Entrega</label><input type="text" id="fecha" placeholder="Ej: Lunes 25"></div>
-        <div class="form-group">
-            <label>Evidencias (Máx 8 fotos)</label>
-            <input type="file" id="imagenes" accept="image/*" multiple>
-        </div>
+<div class="container">
+    <a href="index.html" class="back-link"> < REGRESAR AL HORARIO</a>
+    <h1>ADMIN_PANEL_SYSTEM</h1>
 
-        <div class="progress-container" id="pContainer">
-            <div class="progress-bar" id="pBar"></div>
-        </div>
+    <div class="admin-card">
+        <label>1. SELECCIONA LA TAREA</label>
+        <select id="taskSelector">
+            <option value="">Cargando tareas...</option>
+        </select>
 
-        <button class="main-btn" id="btn" onclick="guardar()">GUARDAR TAREA</button>
-    </div>
+        <label>2. NOTAS ADICIONALES</label>
+        <textarea id="taskNotes" rows="5" placeholder="Escribe detalles, links o apuntes aquí..."></textarea>
 
-    <a href="index.html" class="back-link">← Volver al Horario</a>
-    <div id="lista" style="width: 100%; display: flex; flex-direction: column; align-items: center; margin-bottom: 50px;"></div>
-
-    <script>
-        let db;
-        const request = indexedDB.open("TareasDB", 1);
+        <label>3. EVIDENCIAS / IMÁGENES (MÁX. 4)</label>
+        <input type="file" id="imageInput" accept="image/*" multiple>
+        <p style="font-size: 0.7rem; color: #888;">* Si seleccionas más de 4, solo se guardarán las primeras.</p>
         
-        request.onupgradeneeded = (e) => {
-            const dbRef = e.target.result;
-            if (!dbRef.objectStoreNames.contains("tareas")) {
-                dbRef.createObjectStore("tareas", { keyPath: "id", autoIncrement: true });
+        <div class="img-grid" id="previewGrid"></div>
+
+        <button class="btn-save" onclick="updateTask()">ACTUALIZAR TAREA</button>
+        <div id="status" class="status-msg"></div>
+    </div>
+</div>
+
+<script>
+    let db;
+    let selectedImages = [];
+    const taskSelector = document.getElementById('taskSelector');
+    const imageInput = document.getElementById('imageInput');
+    const previewGrid = document.getElementById('previewGrid');
+
+    // Conexión a la base de datos existente
+    const request = indexedDB.open("CyberDB", 1);
+
+    request.onsuccess = (e) => {
+        db = e.target.result;
+        loadTasks();
+    };
+
+    // Cargar tareas existentes para el dropdown
+    function loadTasks() {
+        const transaction = db.transaction(["tareas"], "readonly");
+        const store = transaction.objectStore("tareas");
+        const request = store.getAll();
+
+        request.onsuccess = () => {
+            const tareas = request.result;
+            if (tareas.length === 0) {
+                taskSelector.innerHTML = '<option>No hay tareas creadas</option>';
+                return;
             }
-        };
-
-        request.onsuccess = (e) => { db = e.target.result; mostrar(); };
-        request.onerror = () => alert("Error al abrir la base de datos.");
-
-        // Función de compresión ultra-optimizada
-        async function reducirImagen(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = (event) => {
-                    const img = new Image();
-                    img.src = event.target.result;
-                    img.onload = () => {
-                        const canvas = document.createElement('canvas');
-                        const maxWidth = 700; // Suficiente para tareas legibles
-                        const scale = Math.min(maxWidth / img.width, 1);
-                        
-                        canvas.width = img.width * scale;
-                        canvas.height = img.height * scale;
-                        
-                        const ctx = canvas.getContext('2d');
-                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                        
-                        // Calidad 0.4 para balancear peso y legibilidad
-                        const result = canvas.toDataURL('image/jpeg', 0.4);
-                        
-                        // Limpieza de memoria
-                        img.src = ""; 
-                        resolve(result);
-                    };
-                    img.onerror = reject;
-                };
-                reader.onerror = reject;
-            });
-        }
-
-        async function guardar() {
-            if (!db) return alert("Cargando base de datos...");
+            taskSelector.innerHTML = tareas.map(t => 
+                `<option value="${t.id}">${t.materia} - ${t.nombre}</option>`
+            ).join('');
             
-            const btn = document.getElementById('btn');
-            const pBar = document.getElementById('pBar');
-            const pContainer = document.getElementById('pContainer');
-            const nombre = document.getElementById('nombre').value.trim();
-            const fecha = document.getElementById('fecha').value.trim();
-            const materia = document.getElementById('materia').value;
-            const files = document.getElementById('imagenes').files;
+            // Cargar datos de la primera tarea por defecto
+            loadTaskDetails(tareas[0].id);
+        };
+    }
 
-            if(!nombre || !fecha) return alert("Escribe descripción y fecha.");
-            if(files.length > 8) return alert("Máximo 8 fotos por tarea.");
+    // Detectar cambio de tarea
+    taskSelector.addEventListener('change', (e) => {
+        if(e.target.value) loadTaskDetails(parseInt(e.target.value));
+    });
 
-            btn.disabled = true;
-            pContainer.style.display = "block";
-            btn.innerText = "PROCESANDO...";
+    function loadTaskDetails(id) {
+        const transaction = db.transaction(["tareas"], "readonly");
+        const store = transaction.objectStore("tareas");
+        store.get(id).onsuccess = (e) => {
+            const tarea = e.target.result;
+            document.getElementById('taskNotes').value = tarea.notas || "";
+            selectedImages = tarea.imagenes || [];
+            renderPreviews();
+        };
+    }
 
-            try {
-                const fotos = [];
-                for(let i = 0; i < files.length; i++) {
-                    // Actualizar barra de progreso
-                    const percent = ((i / files.length) * 100);
-                    pBar.style.width = percent + "%";
-                    
-                    const res = await reducirImagen(files[i]);
-                    fotos.push(res);
-                }
-                
-                pBar.style.width = "100%";
-
-                const transaction = db.transaction(["tareas"], "readwrite");
-                const store = transaction.objectStore("tareas");
-
-                const nuevaTarea = {
-                    materia: materia,
-                    nombre: nombre,
-                    fecha: fecha,
-                    fotos: fotos,
-                    time: Date.now()
-                };
-
-                const requestAdd = store.add(nuevaTarea);
-                
-                requestAdd.onsuccess = () => {
-                    document.getElementById('nombre').value = "";
-                    document.getElementById('fecha').value = "";
-                    document.getElementById('imagenes').value = "";
-                    mostrar();
-                };
-
-                transaction.oncomplete = () => {
-                    btn.disabled = false;
-                    pContainer.style.display = "none";
-                    pBar.style.width = "0%";
-                    btn.innerText = "GUARDAR TAREA";
-                };
-
-            } catch(e) {
-                console.error(e);
-                alert("Error de memoria. Intenta con menos fotos.");
-                btn.disabled = false;
-                pContainer.style.display = "none";
-                btn.innerText = "GUARDAR TAREA";
-            }
-        }
-
-        function mostrar() {
-            if (!db) return;
-            const lista = document.getElementById('lista');
-            lista.innerHTML = '<p style="color:#94a3b8; margin: 25px 0; font-size:0.7rem; letter-spacing:2px; font-weight:800;">MIS TAREAS ACTIVAS</p>';
-
-            const store = db.transaction("tareas", "readonly").objectStore("tareas");
-            store.getAll().onsuccess = (e) => {
-                const tareas = e.target.result;
-                tareas.sort((a,b) => b.time - a.time).forEach(t => {
-                    const div = document.createElement('div');
-                    div.className = 'task-card';
-                    const fotosHtml = t.fotos.map(f => `
-                        <img src="${f}" class="img-mini" onclick="abrirFoto('${f}')">
-                    `).join('');
-
-                    div.innerHTML = `
-                        <small style="color:var(--accent); font-weight:800;">${t.materia}</small>
-                        <h3 style="margin:5px 0; font-size:1.1rem; color:white;">${t.nombre}</h3>
-                        <p style="font-size:0.8rem; color:#94a3b8">📅 Entrega: ${t.fecha}</p>
-                        <div class="img-grid">${fotosHtml}</div>
-                        <div class="delete-btn" onclick="borrar(${t.id})">ELIMINAR TAREA</div>
-                    `;
-                    lista.appendChild(div);
-                });
+    // Manejo de Imágenes
+    imageInput.addEventListener('change', (e) => {
+        const files = Array.from(e.target.files).slice(0, 4); // Limitar a 4
+        selectedImages = [];
+        
+        files.forEach(file => {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                selectedImages.push(event.target.result);
+                renderPreviews();
             };
-        }
+            reader.readAsDataURL(file);
+        });
+    });
 
-        function abrirFoto(src) {
-            const nv = window.open("");
-            nv.document.write(`<body style="margin:0; background:#000; display:flex; align-items:center; justify-content:center;"><img src="${src}" style="max-width:100%; max-height:100%;"></body>`);
-        }
+    function renderPreviews() {
+        previewGrid.innerHTML = selectedImages.map(src => 
+            `<img src="${src}" class="img-preview">`
+        ).join('');
+    }
 
-        function borrar(id) {
-            if(confirm("¿Eliminar esta tarea?")) {
-                const transaction = db.transaction(["tareas"], "readwrite");
-                transaction.objectStore("tareas").delete(id);
-                transaction.oncomplete = () => mostrar();
-            }
-        }
-    </script>
+    // Guardar cambios
+    function updateTask() {
+        const id = parseInt(taskSelector.value);
+        if(!id) return;
+
+        const transaction = db.transaction(["tareas"], "readwrite");
+        const store = transaction.objectStore("tareas");
+
+        store.get(id).onsuccess = (e) => {
+            const data = e.target.result;
+            data.notas = document.getElementById('taskNotes').value;
+            data.imagenes = selectedImages; // Guardamos el array de base64
+
+            store.put(data).onsuccess = () => {
+                const status = document.getElementById('status');
+                status.style.display = 'block';
+                status.style.backgroundColor = 'rgba(0, 255, 136, 0.2)';
+                status.innerText = "SISTEMA ACTUALIZADO CORRECTAMENTE";
+                setTimeout(() => status.style.display = 'none', 3000);
+            };
+        };
+    }
+</script>
+
 </body>
 </html>
-
