@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enero-Junio_HORARIO </title>
+    <title>Enero-Junio_HORARIO</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -14,7 +14,7 @@
             --text-dim: #a0a0a0;
             --accent-cyber: #7000ff;
             
-            /* Colores de las materias (se mantienen originales) */
+            /* Colores de las materias */
             --color-calculo: #b388ff;
             --color-etica: #ffd54f;
             --color-soft: #4fc3f7;
@@ -70,7 +70,7 @@
             display: flex; justify-content: space-between; align-items: center;
         }
 
-        /* TARJETAS DE MATERIA (Colores resaltados) */
+        /* TARJETAS DE MATERIA */
         .class-card { 
             margin-bottom: 15px; padding: 15px; border-radius: 15px;
             color: #fff; position: relative; transition: all 0.3s ease;
@@ -90,7 +90,7 @@
             font-size: 0.75rem; background: rgba(0,0,0,0.25); 
             padding: 3px 8px; border-radius: 20px; margin-bottom: 8px; display: inline-block;
         }
-        .subject { font-weight: 700; font-size: 1.05rem; }
+        .subject { font-weight: 700; font-size: 1.05rem; display: flex; align-items: center; gap: 8px; }
         .teacher { font-size: 0.8rem; opacity: 0.85; margin-top: 5px; }
 
         .task-count-badge {
@@ -178,12 +178,12 @@
             <div style="display: flex; flex-direction: column; gap: 15px;">
                 <input type="text" id="taskName" placeholder="Nombre de la tarea...">
                 <select id="taskSubject">
-                    <option>CÁLCULO INTEGRAL</option>
-                    <option>LEGISLACIÓN LABORAL</option>
-                    <option>DINÁMICA SOCIAL</option>
-                    <option>CONT. ORIENTADA NEG.</option>
-                    <option>SOFT. APLIC. EJEC.</option>
-                    <option>TALLER DE ÉTICA</option>
+                    <option value="CÁLCULO INTEGRAL">📐 CÁLCULO INTEGRAL</option>
+                    <option value="LEGISLACIÓN LABORAL">⚖️ LEGISLACIÓN LABORAL</option>
+                    <option value="DINÁMICA SOCIAL">👥 DINÁMICA SOCIAL</option>
+                    <option value="CONT. ORIENTADA NEG.">💼 CONT. ORIENTADA NEG.</option>
+                    <option value="SOFT. APLIC. EJEC.">💻 SOFT. APLIC. EJEC.</option>
+                    <option value="TALLER DE ÉTICA">🧠 TALLER DE ÉTICA</option>
                 </select>
                 <input type="date" id="taskDate">
                 <button class="btn-add" onclick="saveTask()">GUARDAR TAREA</button>
@@ -192,6 +192,16 @@
     </div>
 
     <script>
+        // Mapeo de emojis por materia
+        const subjectEmojis = {
+            "CÁLCULO INTEGRAL": "📐",
+            "LEGISLACIÓN LABORAL": "⚖️",
+            "DINÁMICA SOCIAL": "👥",
+            "CONT. ORIENTADA NEG.": "💼",
+            "SOFT. APLIC. EJEC.": "💻",
+            "TALLER DE ÉTICA": "🧠"
+        };
+
         const materiasData = [
             { dia: "Lunes", emoji: "⚡", clases: [{h: "12:00-14:00", n: "CÁLCULO INTEGRAL", t: "Alejandro Herrera Martín"}] },
             { dia: "Martes", emoji: "🔥", clases: [
@@ -208,7 +218,7 @@
             { dia: "Jueves", emoji: "🎯", clases: [
                 {h: "09:00-12:00", n: "CONT. ORIENTADA NEG.", t: "Mario Alberto Castro Cortés"},
                 {h: "12:00-14:00", n: "TALLER DE ÉTICA", t: "Germán Jesús León Lara"},
-                {h: "16:00-18:00", n: "SOFT. APLIC. EJEC.", t: "Yolanda del Socorro Parede"}
+                {h: "16:00-18:00", n: "SOFT. APLIC. EJEC.", t: "Yolanda del Socorro Paredes"}
             ]},
             { dia: "Viernes", emoji: "🎉", clases: [
                 {h: "12:00-14:00", n: "CONT. ORIENTADA NEG.", t: "Mario Alberto Castro Cortés"}
@@ -244,7 +254,7 @@
                     ${d.clases.map(c => `
                         <div class="class-card ${colorMap[c.n] || 'bg-default'}" onclick="showTasks('${c.n}')">
                             <div class="time-tag">${c.h}</div>
-                            <div class="subject">${c.n}</div>
+                            <div class="subject"><span>${subjectEmojis[c.n] || '📚'}</span> ${c.n}</div>
                             <div class="teacher">${c.t}</div>
                         </div>
                     `).join('')}
@@ -284,15 +294,18 @@
                     cursor.continue();
                 } else {
                     document.querySelectorAll('.class-card').forEach(card => {
-                        const m = card.querySelector('.subject').innerText;
+                        const m = card.querySelector('.subject').innerText.replace(/[^\x00-\x7F]/g, "").trim(); 
+                        // El regex anterior limpia el emoji para comparar el texto puro
+                        const subjectText = Object.keys(subjectEmojis).find(key => card.querySelector('.subject').innerText.includes(key));
+                        
                         let b = card.querySelector('.task-count-badge');
-                        if (pendientes[m]) {
+                        if (pendientes[subjectText]) {
                             if (!b) {
                                 b = document.createElement('span');
                                 b.className = 'task-count-badge';
                                 card.appendChild(b);
                             }
-                            b.innerText = pendientes[m];
+                            b.innerText = pendientes[subjectText];
                         } else if (b) b.remove();
                     });
                     const porc = total > 0 ? Math.round((done/total)*100) : 0;
@@ -305,7 +318,7 @@
 
         function showTasks(materia) {
             document.getElementById('modalOverlay').classList.add('active');
-            document.getElementById('modalTitle').innerText = materia;
+            document.getElementById('modalTitle').innerText = subjectEmojis[materia] + " " + materia;
             const list = document.getElementById('taskList');
             const transaction = db.transaction(["tareas"], "readonly");
             const res = [];
@@ -345,5 +358,3 @@
     </script>
 </body>
 </html>
-
-
