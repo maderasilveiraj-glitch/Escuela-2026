@@ -3,14 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEURAL_HORARIO v3.0</title>
+    <title>NEURAL_HORARIO v3.0 Dark</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #f4f7f9;
-            --text-dark: #1a1a2e;
+            /* Fondo Dark Profundo */
+            --bg: #0b0e14; 
+            --card-bg: #161b22;
+            --text-main: #ffffff;
+            --text-dim: #a0a0a0;
             --accent-cyber: #7000ff;
-            /* Colores de las materias */
+            
+            /* Colores de las materias (se mantienen originales) */
             --color-calculo: #b388ff;
             --color-etica: #ffd54f;
             --color-soft: #4fc3f7;
@@ -23,35 +27,42 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
-            background: var(--bg); color: var(--text-dark); 
+            background: var(--bg); color: var(--text-main); 
             font-family: 'Rajdhani', sans-serif; overflow-x: hidden;
         }
 
-        /* HEADER MODERNO */
+        /* HEADER DARK */
         .header { 
             padding: 30px 20px; text-align: center; 
-            background: #fff; border-bottom: 2px solid #e0e0e0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            background: #0d1117; border-bottom: 1px solid #30363d;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
         }
-        h1 { font-family: 'Orbitron'; font-size: 1.4rem; letter-spacing: 2px; color: var(--text-dark); }
+        h1 { font-family: 'Orbitron'; font-size: 1.4rem; letter-spacing: 2px; color: #fff; text-shadow: 0 0 10px rgba(112, 0, 255, 0.5); }
 
-        /* DASHBOARD DE PROGRESO */
-        .progress-section { padding: 20px; background: #fff; margin: 15px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-        .progress-bar-bg { width: 100%; height: 8px; background: #eee; margin: 10px 0; border-radius: 10px; overflow: hidden; }
-        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent-cyber), var(--color-soft)); width: 0%; transition: 1s cubic-bezier(0.17, 0.67, 0.83, 0.67); }
+        /* DASHBOARD DARK */
+        .progress-section { 
+            padding: 20px; background: var(--card-bg); margin: 15px; 
+            border-radius: 15px; border: 1px solid #30363d;
+        }
+        .progress-bar-bg { width: 100%; height: 8px; background: #21262d; margin: 10px 0; border-radius: 10px; overflow: hidden; }
+        .progress-fill { 
+            height: 100%; background: linear-gradient(90deg, var(--accent-cyber), #00d4ff); 
+            width: 0%; transition: 1s cubic-bezier(0.17, 0.67, 0.83, 0.67); 
+            box-shadow: 0 0 15px rgba(112, 0, 255, 0.6);
+        }
 
         /* CONTENEDOR DE HORARIO */
         .schedule-container { 
             display: flex; overflow-x: auto; gap: 15px; padding: 20px; 
-            scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+            scroll-snap-type: x mandatory;
         }
-        .schedule-container::-webkit-scrollbar { height: 5px; }
-        .schedule-container::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+        .schedule-container::-webkit-scrollbar { height: 4px; }
+        .schedule-container::-webkit-scrollbar-thumb { background: #30363d; border-radius: 10px; }
 
         .day-column { 
             min-width: 280px; scroll-snap-align: center; 
-            background: #fff; border-radius: 20px; padding: 20px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.04);
+            background: var(--card-bg); border-radius: 20px; padding: 20px;
+            border: 1px solid #30363d;
         }
         .day-name { 
             font-family: 'Orbitron'; font-size: 1.1rem; font-weight: 900;
@@ -59,89 +70,94 @@
             display: flex; justify-content: space-between; align-items: center;
         }
 
-        /* TARJETAS COLORIDAS */
+        /* TARJETAS DE MATERIA (Colores resaltados) */
         .class-card { 
             margin-bottom: 15px; padding: 15px; border-radius: 15px;
             color: #fff; position: relative; transition: all 0.3s ease;
-            cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            overflow: hidden;
+            cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
-        .class-card:hover { transform: translateY(-5px); box-shadow: 0 8px 15px rgba(0,0,0,0.15); }
+        .class-card:hover { transform: scale(1.02); filter: brightness(1.1); }
         
-        /* Clases de color */
         .bg-calculo { background-color: var(--color-calculo); }
         .bg-legislacion { background-color: var(--color-legislacion); }
         .bg-dinamica { background-color: var(--color-dinamica); }
         .bg-contabilidad { background-color: var(--color-contabilidad); }
         .bg-soft { background-color: var(--color-soft); }
-        .bg-etica { background-color: var(--color-etica); color: #1a1a2e !important; }
-        .bg-default { background-color: #90a4ae; }
+        .bg-etica { background-color: var(--color-etica); color: #000 !important; }
+        .bg-default { background-color: #30363d; }
 
         .time-tag { 
-            font-size: 0.75rem; background: rgba(0,0,0,0.15); 
+            font-size: 0.75rem; background: rgba(0,0,0,0.25); 
             padding: 3px 8px; border-radius: 20px; margin-bottom: 8px; display: inline-block;
         }
-        .subject { font-weight: 700; font-size: 1.05rem; letter-spacing: 0.5px; }
-        .teacher { font-size: 0.8rem; opacity: 0.9; margin-top: 5px; font-weight: 500; }
+        .subject { font-weight: 700; font-size: 1.05rem; }
+        .teacher { font-size: 0.8rem; opacity: 0.85; margin-top: 5px; }
 
         .task-count-badge {
             position: absolute; top: 12px; right: 12px;
-            background: #fff; color: var(--danger);
+            background: #fff; color: #000;
             width: 22px; height: 22px; display: grid; place-items: center;
             font-size: 0.75rem; font-weight: 900; border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255,255,255,0.3);
         }
 
-        /* MODALES */
+        /* MODALES DARK */
         .modal-overlay { 
-            position: fixed; inset: 0; background: rgba(0,0,0,0.6); 
+            position: fixed; inset: 0; background: rgba(0,0,0,0.85); 
             display: none; z-index: 1000; align-items: center; justify-content: center;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(8px);
         }
         .modal-overlay.active { display: flex; }
         .modal-content { 
-            width: 90%; max-width: 400px; background: #fff; 
-            border-radius: 25px; padding: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            width: 90%; max-width: 400px; background: #161b22; 
+            border-radius: 25px; padding: 30px; border: 1px solid var(--accent-cyber);
+            box-shadow: 0 0 30px rgba(112, 0, 255, 0.2);
+        }
+
+        input, select { 
+            background: #0d1117; border: 1px solid #30363d; color: #fff; 
+            padding: 12px; border-radius: 8px; font-family: 'Rajdhani';
         }
 
         /* BOTONES */
         .btn-add { 
             width: 100%; background: var(--accent-cyber); color: #fff; 
             border: none; padding: 15px; font-family: 'Orbitron'; font-weight: 700;
-            border-radius: 12px; cursor: pointer; transition: 0.3s;
+            border-radius: 12px; cursor: pointer;
         }
         .fab { 
             position: fixed; bottom: 30px; right: 30px; 
             width: 65px; height: 65px; background: var(--accent-cyber); 
             border: none; border-radius: 50%; color: #fff; font-size: 2rem;
-            box-shadow: 0 10px 20px rgba(112, 0, 255, 0.3); z-index: 100;
+            box-shadow: 0 0 20px rgba(112, 0, 255, 0.5); z-index: 100;
         }
 
-        /* LISTA TAREAS */
+        /* LISTA TAREAS DARK */
         .task-item {
-            background: #f9f9f9; padding: 15px; border-radius: 12px;
+            background: #21262d; padding: 15px; border-radius: 12px;
             margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;
         }
-        .btn-toggle { padding: 8px 12px; border: none; border-radius: 8px; font-family: 'Orbitron'; font-size: 0.6rem; cursor: pointer; }
-        .btn-toggle.completed { background: var(--success); color: #fff; }
-        .completed-text { text-decoration: line-through; opacity: 0.4; }
+        .btn-toggle { padding: 8px 12px; border: none; border-radius: 8px; font-family: 'Orbitron'; cursor: pointer; }
+        .btn-toggle.completed { background: var(--success); color: #000; font-weight: 700; }
+        .completed-text { text-decoration: line-through; opacity: 0.3; }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <p style="color: var(--accent-cyber); font-weight: 700; font-size: 0.6rem; letter-spacing: 3px; margin-bottom: 5px;">STATUS: CONNECTED</p>
+        <p style="color: var(--accent-cyber); font-weight: 700; font-size: 0.6rem; letter-spacing: 3px; margin-bottom: 5px;">SYSTEM STATUS: DARK_MODE</p>
         <h1>MI HORARIO</h1>
     </div>
 
     <div class="progress-section">
         <div style="display:flex; justify-content:space-between; align-items:baseline;">
-            <span style="font-size: 0.8rem; font-weight: 700;">PROGRESO SEMESTRAL</span>
-            <span id="progress-percentage" style="font-family: 'Orbitron'; color: var(--accent-cyber);">0%</span>
+            <span style="font-size: 0.8rem; font-weight: 700; color: var(--text-dim);">PROGRESO TOTAL</span>
+            <span id="progress-percentage" style="font-family: 'Orbitron'; color: var(--success);">0%</span>
         </div>
         <div class="progress-bar-bg">
             <div id="progress-fill" class="progress-fill"></div>
         </div>
-        <p id="progress-stats" style="font-size: 0.7rem; color: #888;"></p>
+        <p id="progress-stats" style="font-size: 0.7rem; color: var(--text-dim);"></p>
     </div>
 
     <div class="schedule-container" id="schedule-render"></div>
@@ -152,7 +168,7 @@
         <div class="modal-content">
             <h2 id="modalTitle" style="color: var(--accent-cyber); font-family: 'Orbitron'; margin-bottom: 20px; font-size: 1.2rem;">MATERIA</h2>
             <div id="taskList"></div>
-            <button class="btn-add" style="margin-top:20px; background: #eee; color: #333;" onclick="closeModal()">CERRAR</button>
+            <button class="btn-add" style="margin-top:20px; background: #30363d; color: #fff;" onclick="closeModal()">CERRAR</button>
         </div>
     </div>
 
@@ -160,8 +176,8 @@
         <div class="modal-content">
             <h2 style="color: var(--accent-cyber); font-family: 'Orbitron'; margin-bottom: 20px;">NUEVA TAREA</h2>
             <div style="display: flex; flex-direction: column; gap: 15px;">
-                <input type="text" id="taskName" placeholder="Nombre de la tarea..." style="padding:12px; border-radius:8px; border:1px solid #ddd;">
-                <select id="taskSubject" style="padding:12px; border-radius:8px; border:1px solid #ddd;">
+                <input type="text" id="taskName" placeholder="Nombre de la tarea...">
+                <select id="taskSubject">
                     <option>CÁLCULO INTEGRAL</option>
                     <option>LEGISLACIÓN LABORAL</option>
                     <option>DINÁMICA SOCIAL</option>
@@ -169,7 +185,7 @@
                     <option>SOFT. APLIC. EJEC.</option>
                     <option>TALLER DE ÉTICA</option>
                 </select>
-                <input type="date" id="taskDate" style="padding:12px; border-radius:8px; border:1px solid #ddd;">
+                <input type="date" id="taskDate">
                 <button class="btn-add" onclick="saveTask()">GUARDAR TAREA</button>
             </div>
         </div>
@@ -236,7 +252,6 @@
             `).join('');
         }
 
-        // Funciones de Modal y Tareas
         function openAddModal() { document.getElementById('addModal').classList.add('active'); }
         function closeAddModal() { document.getElementById('addModal').classList.remove('active'); }
         function closeModal() { document.getElementById('modalOverlay').classList.remove('active'); }
@@ -246,13 +261,9 @@
             const materia = document.getElementById('taskSubject').value;
             const fecha = document.getElementById('taskDate').value;
             if(!nombre || !fecha) return;
-
             const transaction = db.transaction(["tareas"], "readwrite");
             transaction.objectStore("tareas").add({ nombre, materia, fecha, entregada: false, time: Date.now() });
-            transaction.oncomplete = () => {
-                closeAddModal();
-                actualizarDashboard();
-            };
+            transaction.oncomplete = () => { closeAddModal(); actualizarDashboard(); };
         }
 
         function actualizarDashboard() {
@@ -284,7 +295,6 @@
                             b.innerText = pendientes[m];
                         } else if (b) b.remove();
                     });
-
                     const porc = total > 0 ? Math.round((done/total)*100) : 0;
                     document.getElementById('progress-fill').style.width = porc + '%';
                     document.getElementById('progress-percentage').innerText = porc + '%';
@@ -294,11 +304,9 @@
         }
 
         function showTasks(materia) {
-            const modal = document.getElementById('modalOverlay');
-            modal.classList.add('active');
+            document.getElementById('modalOverlay').classList.add('active');
             document.getElementById('modalTitle').innerText = materia;
             const list = document.getElementById('taskList');
-            
             const transaction = db.transaction(["tareas"], "readonly");
             const res = [];
             transaction.objectStore("tareas").openCursor().onsuccess = (e) => {
@@ -307,16 +315,16 @@
                     if (cursor.value.materia === materia) res.push(cursor.value);
                     cursor.continue();
                 } else {
-                    list.innerHTML = res.length ? '' : '<p style="text-align:center; opacity:0.3; padding:20px;">SIN TAREAS PENDIENTES</p>';
+                    list.innerHTML = res.length ? '' : '<p style="text-align:center; opacity:0.3; padding:20px;">TODO LIMPIO</p>';
                     res.forEach(t => {
                         list.innerHTML += `
                             <div class="task-item">
                                 <div class="${t.entregada ? 'completed-text' : ''}">
-                                    <div style="font-weight:700;">${t.nombre}</div>
-                                    <div style="font-size:0.7rem; color:#888;">FECHA: ${t.fecha}</div>
+                                    <div style="font-weight:700; color: #fff;">${t.nombre}</div>
+                                    <div style="font-size:0.7rem; color: var(--text-dim);">LÍMITE: ${t.fecha}</div>
                                 </div>
-                                <button class="btn-toggle ${t.entregada ? 'completed' : ''}" onclick="toggleTarea(${t.id}, '${materia}')">
-                                    ${t.entregada ? 'OK' : 'LISTO'}
+                                <button class="btn-toggle ${t.entregada ? 'completed' : ''}" style="background:#0d1117; color:#fff;" onclick="toggleTarea(${t.id}, '${materia}')">
+                                    ${t.entregada ? 'REVISADO' : 'PENDIENTE'}
                                 </button>
                             </div>`;
                     });
@@ -332,12 +340,8 @@
                 data.entregada = !data.entregada;
                 store.put(data);
             };
-            transaction.oncomplete = () => {
-                actualizarDashboard();
-                showTasks(currentMateria);
-            };
+            transaction.oncomplete = () => { actualizarDashboard(); showTasks(currentMateria); };
         }
     </script>
 </body>
 </html>
-
