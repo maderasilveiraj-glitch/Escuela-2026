@@ -3,32 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enero-Junio_HORARIO</title>
+    <title>Chroma_HORARIO_RGB</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <style>
         :root {
-            --bg-deep: #050505;
-            --card-bg: rgba(13, 17, 23, 0.6);
+            --bg-deep: #020202;
+            --accent-cyber: #7000ff;
             --text-main: #fff;
             --text-dim: #00f3ff;
-            --accent-cyber: #7000ff;
-            --neon-calculo: #b388ff;
-            --neon-legislacion: #ff5252;
-            --neon-dinamica: #81c784;
-            --neon-contabilidad: #ff8a65;
-            --neon-soft: #4fc3f7;
-            --neon-etica: #ffd54f;
-            --success: #00ff88;
-            --danger: #ff0055;
         }
 
-        @keyframes rgbBody {
-            0% { background-color: #050505; }
-            33% { background-color: #050a05; }
-            66% { background-color: #05050a; }
-            100% { background-color: #050505; }
+        /* --- ANIMACIÓN CHROMA GAMER --- */
+        @keyframes chromaBorders {
+            0% { border-color: #ff0000; box-shadow: 0 0 10px #ff0000; }
+            20% { border-color: #fbff00; box-shadow: 0 0 10px #fbff00; }
+            40% { border-color: #00ff11; box-shadow: 0 0 10px #00ff11; }
+            60% { border-color: #00f3ff; box-shadow: 0 0 10px #00f3ff; }
+            80% { border-color: #7000ff; box-shadow: 0 0 10px #7000ff; }
+            100% { border-color: #ff0000; box-shadow: 0 0 10px #ff0000; }
+        }
+
+        @keyframes chromaText {
+            0% { color: #ff0000; text-shadow: 0 0 5px #ff0000; }
+            20% { color: #fbff00; text-shadow: 0 0 5px #fbff00; }
+            40% { color: #00ff11; text-shadow: 0 0 5px #00ff11; }
+            60% { color: #00f3ff; text-shadow: 0 0 5px #00f3ff; }
+            80% { color: #7000ff; text-shadow: 0 0 5px #7000ff; }
+            100% { color: #ff0000; text-shadow: 0 0 5px #ff0000; }
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -39,108 +42,114 @@
             font-family: 'Rajdhani', sans-serif; 
             overflow-x: hidden;
             min-height: 100vh;
-            animation: rgbBody 15s infinite alternate linear;
         }
 
-        #particles-js {
-            position: fixed;
-            width: 100%; height: 100%;
-            z-index: -1;
-        }
-
-        .grid-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: 
-                linear-gradient(rgba(112, 0, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(112, 0, 255, 0.05) 1px, transparent 1px);
-            background-size: 40px 40px;
-            z-index: -1;
-            pointer-events: none;
-        }
+        #particles-js { position: fixed; width: 100%; height: 100%; z-index: -1; }
 
         .header { 
-            padding: 30px 20px; text-align: center; 
-            background: rgba(5, 5, 5, 0.8); 
-            border-bottom: 2px solid var(--accent-cyber);
-            backdrop-filter: blur(15px);
-            box-shadow: 0 0 30px rgba(112, 0, 255, 0.2);
+            padding: 40px 20px; text-align: center; 
+            background: rgba(0, 0, 0, 0.9); 
+            border-bottom: 2px solid transparent;
+            animation: chromaBorders 5s infinite linear;
         }
 
-        /* --- CLASES DE BORDES DE COLOR --- */
-        .border-calculo { border: 2px solid var(--neon-calculo) !important; box-shadow: inset 0 0 10px rgba(179, 136, 255, 0.2), 0 0 15px rgba(179, 136, 255, 0.1); }
-        .border-legislacion { border: 2px solid var(--neon-legislacion) !important; box-shadow: inset 0 0 10px rgba(255, 82, 82, 0.2), 0 0 15px rgba(255, 82, 82, 0.1); }
-        .border-dinamica { border: 2px solid var(--neon-dinamica) !important; box-shadow: inset 0 0 10px rgba(129, 199, 132, 0.2), 0 0 15px rgba(129, 199, 132, 0.1); }
-        .border-contabilidad { border: 2px solid var(--neon-contabilidad) !important; box-shadow: inset 0 0 10px rgba(255, 138, 101, 0.2), 0 0 15px rgba(255, 138, 101, 0.1); }
-        .border-soft { border: 2px solid var(--neon-soft) !important; box-shadow: inset 0 0 10px rgba(79, 195, 247, 0.2), 0 0 15px rgba(79, 195, 247, 0.1); }
-        .border-etica { border: 2px solid var(--neon-etica) !important; box-shadow: inset 0 0 10px rgba(255, 213, 79, 0.2), 0 0 15px rgba(255, 213, 79, 0.1); }
+        h1 { font-family: 'Orbitron'; font-size: 1.8rem; letter-spacing: 5px; animation: chromaText 5s infinite linear; }
 
-        .class-card { 
-            margin-top: 15px; padding: 18px; border-radius: 12px;
-            position: relative; transition: all 0.3s ease;
-            cursor: pointer; 
-            background: var(--card-bg);
-            border: 2px solid rgba(255,255,255,0.1); /* Borde por defecto */
-        }
-
-        .class-card:hover { 
-            transform: translateY(-5px); 
-            filter: brightness(1.2);
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
-        }
-
-        /* Resto de estilos funcionales */
-        h1 { font-family: 'Orbitron'; font-size: 1.6rem; letter-spacing: 4px; color: #fff; }
-        .progress-section { padding: 20px; background: var(--card-bg); margin: 15px; border-radius: 15px; border: 1px solid rgba(112, 0, 255, 0.2); }
-        .progress-bar-bg { width: 100%; height: 10px; background: #000; margin: 10px 0; border-radius: 10px; overflow: hidden; }
-        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent-cyber), var(--success)); width: 0%; transition: 1.5s ease; }
-        .schedule-container { display: flex; overflow-x: auto; gap: 20px; padding: 25px; }
-        .day-column { min-width: 300px; background: rgba(13, 17, 23, 0.4); border-radius: 20px; padding: 20px; border: 1px solid rgba(255,255,255,0.05); }
-        .day-name { font-family: 'Orbitron'; font-size: 1.3rem; color: var(--text-dim); display: flex; justify-content: space-between; margin-bottom: 15px; }
-        .time-tag { font-size: 0.8rem; opacity: 0.7; margin-bottom: 5px; }
-        .subject { font-weight: 700; font-size: 1.1rem; }
-        .teacher { font-size: 0.85rem; opacity: 0.6; margin-top: 4px; }
+        .schedule-container { display: flex; overflow-x: auto; gap: 20px; padding: 30px; }
         
-        .txt-calculo { color: var(--neon-calculo); }
-        .txt-legislacion { color: var(--neon-legislacion); }
-        .txt-dinamica { color: var(--neon-dinamica); }
-        .txt-contabilidad { color: var(--neon-contabilidad); }
-        .txt-soft { color: var(--neon-soft); }
-        .txt-etica { color: var(--neon-etica); }
+        .day-column { 
+            min-width: 320px; 
+            background: rgba(10, 10, 10, 0.6); 
+            border-radius: 20px; 
+            padding: 20px; 
+            border: 1px solid rgba(255,255,255,0.05);
+            backdrop-filter: blur(5px);
+        }
 
+        .day-name { 
+            font-family: 'Orbitron'; font-size: 1.4rem; color: #fff; 
+            margin-bottom: 20px; text-align: center; border-bottom: 1px solid #333; padding-bottom: 10px;
+        }
+
+        /* --- CUADROS SOLO BORDES (GAMER STYLE) --- */
+        .class-card { 
+            margin-bottom: 20px; padding: 20px; border-radius: 12px;
+            position: relative; transition: 0.3s;
+            background: transparent; /* Sin fondo sólido */
+            border: 2px solid #fff; /* Base para la animación */
+            animation: chromaBorders 6s infinite linear;
+            cursor: pointer;
+        }
+
+        .class-card:hover {
+            transform: scale(1.03);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .subject { 
+            font-family: 'Orbitron'; font-weight: 900; font-size: 1.1rem; 
+            animation: chromaText 6s infinite linear; 
+        }
+
+        .teacher { 
+            font-size: 0.9rem; margin-top: 8px; font-weight: 500;
+            animation: chromaText 6s infinite linear; 
+            opacity: 0.9;
+        }
+
+        .time-tag { 
+            font-size: 0.75rem; color: #aaa; margin-bottom: 8px; 
+            display: inline-block; letter-spacing: 1px;
+        }
+
+        /* Dashboard de Progreso */
+        .progress-section { 
+            padding: 20px; background: rgba(0,0,0,0.5); margin: 20px; 
+            border-radius: 15px; border: 1px solid #222; 
+        }
+        .progress-bar-bg { width: 100%; height: 12px; background: #111; border-radius: 6px; overflow: hidden; margin-top: 10px; border: 1px solid #333; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #ff0000, #fbff00, #00ff11, #00f3ff, #7000ff); background-size: 200%; width: 0%; transition: 1s ease; }
+
+        /* Botón Flotante */
+        .fab { 
+            position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; 
+            background: #000; border-radius: 15px; color: #fff; font-size: 2rem; 
+            cursor: pointer; border: 2px solid #fff; animation: chromaBorders 4s infinite linear;
+        }
+
+        /* Badges de tareas */
         .task-count-badge {
             position: absolute; top: -10px; right: -10px;
-            background: var(--danger); color: #fff; width: 22px; height: 22px;
-            display: grid; place-items: center; font-size: 0.7rem; font-weight: 900; border-radius: 50%;
-            box-shadow: 0 0 10px var(--danger);
+            background: #000; color: #fff; width: 25px; height: 25px;
+            display: grid; place-items: center; font-size: 0.8rem; border-radius: 5px;
+            border: 1px solid #fff; animation: chromaBorders 3s infinite linear;
         }
 
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(15px); }
+        /* Estilos de Modales */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: none; z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
         .modal-overlay.active { display: flex; }
-        .modal-content { width: 90%; max-width: 400px; background: #0d1117; border-radius: 20px; padding: 30px; border: 1px solid var(--accent-cyber); }
-        .fab { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: var(--accent-cyber); border: none; border-radius: 50%; color: #fff; font-size: 2rem; cursor: pointer; box-shadow: 0 0 20px var(--accent-cyber); }
-        .task-item { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-        input, select { width: 100%; background: #000; border: 1px solid #333; color: #fff; padding: 12px; border-radius: 8px; margin-top: 10px; }
-        .btn-add { width: 100%; padding: 15px; margin-top: 20px; background: var(--accent-cyber); color: #fff; border: none; border-radius: 10px; font-family: 'Orbitron'; cursor: pointer; }
+        .modal-content { width: 90%; max-width: 400px; background: #000; border-radius: 15px; padding: 30px; border: 2px solid #fff; animation: chromaBorders 5s infinite linear; }
+        .task-item { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; border-left: 3px solid #7000ff; }
+        input, select { width: 100%; background: #111; border: 1px solid #444; color: #fff; padding: 12px; border-radius: 8px; margin-top: 10px; }
+        .btn-add { width: 100%; padding: 15px; margin-top: 20px; background: transparent; border: 2px solid #fff; color: #fff; font-family: 'Orbitron'; cursor: pointer; animation: chromaBorders 5s infinite linear; }
+
     </style>
 </head>
 <body>
 
     <div id="particles-js"></div>
-    <div class="grid-overlay"></div>
 
     <div class="header">
-        <p style="color: var(--accent-cyber); font-weight: 700; font-size: 0.7rem; letter-spacing: 3px; margin-bottom: 5px;">DIVISIÓN INGENIERÍA GESTIÓN EMPRESARIAL</p>
+        <p style="color: #666; font-weight: 700; font-size: 0.7rem; letter-spacing: 4px; margin-bottom: 5px;">DIVISIÓN INGENIERÍA GESTIÓN EMPRESARIAL</p>
         <h1>HORARIO ALEJANDRO_MADERA</h1>
     </div>
 
     <div class="progress-section">
-        <div style="display:flex; justify-content:space-between;">
-            <span style="font-size: 0.8rem; font-weight: 700; color: var(--text-dim);">SYSTEM_PROGRESS</span>
-            <span id="progress-percentage" style="font-family: 'Orbitron'; color: var(--success);">0%</span>
+        <div style="display:flex; justify-content:space-between; align-items: center;">
+            <span style="font-size: 0.9rem; font-weight: 700; letter-spacing: 2px;">CPU_WORKLOAD_PROGRESS</span>
+            <span id="progress-percentage" style="font-family: 'Orbitron'; font-size: 1.2rem;">0%</span>
         </div>
         <div class="progress-bar-bg"><div id="progress-fill" class="progress-fill"></div></div>
-        <p id="progress-stats" style="font-size: 0.7rem; opacity: 0.5;"></p>
     </div>
 
     <div class="schedule-container" id="schedule-render"></div>
@@ -149,18 +158,18 @@
 
     <div class="modal-overlay" id="modalOverlay" onclick="if(event.target==this) closeModal()">
         <div class="modal-content">
-            <h2 id="modalTitle" style="color: var(--accent-cyber); font-family: 'Orbitron'; margin-bottom: 20px; font-size: 1.1rem; text-align: center;"></h2>
+            <h2 id="modalTitle" style="font-family: 'Orbitron'; margin-bottom: 20px; text-align: center;"></h2>
             <div id="taskList"></div>
-            <button class="btn-add" style="background: #1a1a1a;" onclick="closeModal()">REGRESAR</button>
+            <button class="btn-add" onclick="closeModal()">CERRAR_SESIÓN</button>
         </div>
     </div>
 
     <div class="modal-overlay" id="pinModal">
         <div class="modal-content" style="text-align:center;">
-            <h2 style="color: var(--danger); font-family: 'Orbitron'; margin-bottom:15px;">PIN_REQUIRED</h2>
-            <input type="password" id="pinCode" style="text-align: center; font-size: 1.5rem;" maxlength="4" placeholder="****">
+            <h2 style="font-family: 'Orbitron'; margin-bottom:15px; color: #ff0000;">AUTH_CODE</h2>
+            <input type="password" id="pinCode" style="text-align: center; font-size: 2rem;" maxlength="4" placeholder="****">
             <div style="display: flex; gap: 10px;">
-                <button class="btn-add" style="background: #1a1a1a;" onclick="closePinModal()">CANCEL</button>
+                <button class="btn-add" style="border-color:#444" onclick="closePinModal()">ABORT</button>
                 <button class="btn-add" onclick="validatePin()">ACCESS</button>
             </div>
         </div>
@@ -168,8 +177,8 @@
 
     <div class="modal-overlay" id="addModal" onclick="if(event.target==this) closeAddModal()">
         <div class="modal-content">
-            <h2 style="font-family: 'Orbitron'; text-align: center;">NUEVA_TAREA</h2>
-            <input type="text" id="taskName" placeholder="Nombre de la tarea...">
+            <h2 style="font-family: 'Orbitron'; text-align: center;">INJECT_DATA</h2>
+            <input type="text" id="taskName" placeholder="Identificador de la tarea...">
             <select id="taskSubject">
                 <option value="CÁLCULO INTEGRAL">CÁLCULO INTEGRAL</option>
                 <option value="LEGISLACIÓN LABORAL">LEGISLACIÓN LABORAL</option>
@@ -179,61 +188,41 @@
                 <option value="TALLER DE ÉTICA">TALLER DE ÉTICA</option>
             </select>
             <input type="date" id="taskDate">
-            <button class="btn-add" onclick="saveTask()">GUARDAR</button>
+            <button class="btn-add" onclick="saveTask()">DEPLOY</button>
         </div>
     </div>
 
     <script>
         particlesJS("particles-js", {
             "particles": {
-                "number": { "value": 50 },
-                "color": { "value": "#7000ff" },
-                "shape": { "type": "circle" },
-                "opacity": { "value": 0.3 },
+                "number": { "value": 80 },
+                "color": { "value": ["#ff0000", "#00ff00", "#0000ff", "#ffff00", "#ff00ff"] },
+                "opacity": { "value": 0.5 },
                 "size": { "value": 2 },
-                "line_linked": { "enable": true, "distance": 150, "color": "#7000ff", "opacity": 0.1, "width": 1 },
-                "move": { "enable": true, "speed": 1 }
+                "line_linked": { "enable": true, "distance": 120, "color": "#ffffff", "opacity": 0.1, "width": 1 },
+                "move": { "enable": true, "speed": 3 }
             }
         });
 
-        const subjectEmojis = {
-            "CÁLCULO INTEGRAL": "📐", "LEGISLACIÓN LABORAL": "⚖️",
-            "DINÁMICA SOCIAL": "👥", "CONT. ORIENTADA NEG.": "💼",
-            "SOFT. APLIC. EJEC.": "💻", "TALLER DE ÉTICA": "🧠"
-        };
-
-        // Mapeo de clases CSS para los bordes
-        const borderClassMap = {
-            "CÁLCULO INTEGRAL": "border-calculo", "LEGISLACIÓN LABORAL": "border-legislacion",
-            "DINÁMICA SOCIAL": "border-dinamica", "CONT. ORIENTADA NEG.": "border-contabilidad",
-            "SOFT. APLIC. EJEC.": "border-soft", "TALLER DE ÉTICA": "border-etica"
-        };
-
-        const textClassMap = {
-            "CÁLCULO INTEGRAL": "txt-calculo", "LEGISLACIÓN LABORAL": "txt-legislacion",
-            "DINÁMICA SOCIAL": "txt-dinamica", "CONT. ORIENTADA NEG.": "txt-contabilidad",
-            "SOFT. APLIC. EJEC.": "txt-soft", "TALLER DE ÉTICA": "txt-etica"
-        };
-
         const materiasData = [
-            { dia: "Lunes", emoji: "⚡", clases: [{h: "12:00-14:00", n: "CÁLCULO INTEGRAL", t: "Alejandro Herrera Martín"}] },
-            { dia: "Martes", emoji: "🔥", clases: [
+            { dia: "Lunes", emoji: "⌨️", clases: [{h: "12:00-14:00", n: "CÁLCULO INTEGRAL", t: "Alejandro Herrera Martín"}] },
+            { dia: "Martes", emoji: "🖱️", clases: [
                 {h: "07:00-09:00", n: "LEGISLACIÓN LABORAL", t: "Carmen María Rodríguez Carrillo"},
                 {h: "09:00-11:00", n: "DINÁMICA SOCIAL", t: "Drisdel Mariela Pat Reyes"},
                 {h: "11:00-13:00", n: "TALLER DE ÉTICA", t: "Germán Jesús León Lara"},
                 {h: "14:00-17:00", n: "SOFT. APLIC. EJEC.", t: "Yolanda del Socorro Paredes"}
             ]},
-            { dia: "Miércoles", emoji: "💎", clases: [
+            { dia: "Miércoles", emoji: "🎧", clases: [
                 {h: "07:00-09:00", n: "LEGISLACIÓN LABORAL", t: "Carmen María Rodríguez Carrillo"},
                 {h: "09:00-11:00", n: "DINÁMICA SOCIAL", t: "Drisdel Mariela Pat Reyes"},
                 {h: "11:00-14:00", n: "CÁLCULO INTEGRAL", t:"Alejandro Herrera Martín "}
             ]},
-            { dia: "Jueves", emoji: "🎯", clases: [
+            { dia: "Jueves", emoji: "🎮", clases: [
                 {h: "09:00-12:00", n: "CONT. ORIENTADA NEG.", t: "Mario Alberto Castro Cortés"},
                 {h: "12:00-14:00", n: "TALLER DE ÉTICA", t: "Germán Jesús León Lara"},
                 {h: "16:00-18:00", n: "SOFT. APLIC. EJEC.", t: "Yolanda del Socorro Paredes"}
             ]},
-            { dia: "Viernes", emoji: "🎉", clases: [
+            { dia: "Viernes", emoji: "🔋", clases: [
                 {h: "12:00-14:00", n: "CONT. ORIENTADA NEG.", t: "Mario Alberto Castro Cortés"}
             ]}
         ];
@@ -241,7 +230,7 @@
         let db;
         let pendingAction = null;
 
-        const request = indexedDB.open("CyberDB", 1);
+        const request = indexedDB.open("GamerDB", 1);
         request.onupgradeneeded = (e) => {
             db = e.target.result;
             db.createObjectStore("tareas", { keyPath: "id", autoIncrement: true });
@@ -256,11 +245,11 @@
             const container = document.getElementById('schedule-render');
             container.innerHTML = materiasData.map(d => `
                 <div class="day-column">
-                    <div class="day-name">${d.dia} <span>${d.emoji}</span></div>
+                    <div class="day-name">${d.dia} ${d.emoji}</div>
                     ${d.clases.map(c => `
-                        <div class="class-card ${borderClassMap[c.n] || ''}" onclick="showTasks('${c.n}')">
-                            <div class="time-tag">${c.h}</div>
-                            <div class="subject ${textClassMap[c.n]}"><span>${subjectEmojis[c.n]}</span> ${c.n}</div>
+                        <div class="class-card" onclick="showTasks('${c.n}')">
+                            <div class="time-tag">TIME_SLOT: ${c.h}</div>
+                            <div class="subject">${c.n}</div>
                             <div class="teacher">${c.t}</div>
                         </div>
                     `).join('')}
@@ -283,17 +272,16 @@
                     cursor.continue();
                 } else {
                     document.querySelectorAll('.class-card').forEach(card => {
-                        const subjectText = Object.keys(subjectEmojis).find(key => card.querySelector('.subject').innerText.includes(key));
+                        const title = card.querySelector('.subject').innerText;
                         let b = card.querySelector('.task-count-badge');
-                        if (pendientes[subjectText]) {
+                        if (pendientes[title]) {
                             if (!b) { b = document.createElement('span'); b.className = 'task-count-badge'; card.appendChild(b); }
-                            b.innerText = pendientes[subjectText];
+                            b.innerText = pendientes[title];
                         } else if (b) b.remove();
                     });
                     const porc = total > 0 ? Math.round((done/total)*100) : 0;
                     document.getElementById('progress-fill').style.width = porc + '%';
                     document.getElementById('progress-percentage').innerText = porc + '%';
-                    document.getElementById('progress-stats').innerText = `${done} / ${total} TAREAS FINALIZADAS`;
                 }
             };
         }
@@ -305,7 +293,7 @@
 
         function showTasks(materia) {
             document.getElementById('modalOverlay').classList.add('active');
-            document.getElementById('modalTitle').innerText = subjectEmojis[materia] + " " + materia;
+            document.getElementById('modalTitle').innerText = "OBJECTIVE: " + materia;
             const list = document.getElementById('taskList');
             const transaction = db.transaction(["tareas"], "readonly");
             const res = [];
@@ -315,16 +303,16 @@
                     if (cursor.value.materia === materia) res.push(cursor.value);
                     cursor.continue();
                 } else {
-                    list.innerHTML = res.length ? '' : '<p style="text-align:center; opacity:0.3; padding:20px;">SIN TAREAS</p>';
+                    list.innerHTML = res.length ? '' : '<p style="text-align:center; opacity:0.3;">NULL_TASKS_FOUND</p>';
                     res.forEach(t => {
                         list.innerHTML += `
-                            <div class="task-item">
-                                <div style="${t.entregada ? 'text-decoration:line-through; opacity:0.5;' : ''}">
-                                    <div style="font-weight:700;">${t.nombre}</div>
-                                    <div style="font-size:0.7rem; color:var(--text-dim)">${t.fecha}</div>
+                            <div class="task-item" style="border-color:${t.entregada ? '#00ff11' : '#ff0000'}">
+                                <div>
+                                    <div style="font-weight:700; ${t.entregada ? 'text-decoration:line-through; opacity:0.5;' : ''}">${t.nombre}</div>
+                                    <div style="font-size:0.7rem; color:#666">${t.fecha}</div>
                                 </div>
-                                <button style="background:${t.entregada ? 'var(--success)' : '#333'}; color:white; border:none; padding:5px 10px; border-radius:5px; font-size:0.7rem; cursor:pointer;" onclick="toggleTarea(${t.id}, '${materia}')">
-                                    ${t.entregada ? 'LISTO' : 'MARCAR'}
+                                <button style="background:transparent; border:1px solid #fff; color:#fff; padding:5px; cursor:pointer;" onclick="toggleTarea(${t.id}, '${materia}')">
+                                    ${t.entregada ? 'COMPLETED' : 'PENDING'}
                                 </button>
                             </div>`;
                     });
@@ -355,12 +343,13 @@
                     const data = e.target.result;
                     data.entregada = !data.entregada;
                     store.put(data);
-                    if(data.entregada) confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+                    if(data.entregada) confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 }, colors: ['#ff0000', '#00ff00', '#0000ff'] });
                 };
                 transaction.oncomplete = () => { actualizarDashboard(); showTasks(pendingAction.materia); closePinModal(); };
-            } else { alert("PIN INCORRECTO"); }
+            } else { alert("ACCESS_DENIED"); }
         }
     </script>
 </body>
 </html>
+
 
