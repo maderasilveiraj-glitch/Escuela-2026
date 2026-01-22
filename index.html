@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+   <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -9,8 +9,9 @@
         :root {
             --bg-overlay: rgba(11, 14, 20, 0.85);
             --card-bg: rgba(22, 27, 34, 0.9);
-            --text-main: #ffffff;
-            --text-dim: #a0a0a0;
+            /* Colores de texto ajustados para efecto Neón */
+            --text-main: #fff;
+            --text-dim: #00f3ff; /* Azul neón para textos secundarios */
             --accent-cyber: #7000ff;
             --color-calculo: #b388ff;
             --color-etica: #ffd54f;
@@ -36,6 +37,11 @@
             min-height: 100vh;
         }
 
+        /* APLICACIÓN DE EFECTO NEÓN A TODOS LOS TEXTOS */
+        body, h1, h2, p, span, div, input, select, button {
+            text-shadow: 0 0 8px currentColor;
+        }
+
         .header { 
             padding: 30px 20px; text-align: center; 
             background: rgba(13, 17, 23, 0.8); 
@@ -43,7 +49,13 @@
             backdrop-filter: blur(10px);
             box-shadow: 0 4px 20px rgba(0,0,0,0.5);
         }
-        h1 { font-family: 'Orbitron'; font-size: 1.4rem; letter-spacing: 2px; color: #fff; text-shadow: 0 0 15px var(--accent-cyber); }
+        h1 { 
+            font-family: 'Orbitron'; 
+            font-size: 1.4rem; 
+            letter-spacing: 2px; 
+            color: #fff; 
+            text-shadow: 0 0 15px var(--accent-cyber), 0 0 5px #fff; 
+        }
 
         .progress-section { 
             padding: 20px; background: var(--card-bg); margin: 15px; 
@@ -71,21 +83,22 @@
         }
         .class-card:hover { transform: translateY(-5px); filter: brightness(1.2); }
         
-        .bg-calculo { background: linear-gradient(135deg, var(--color-calculo), #7e57c2); }
-        .bg-legislacion { background: linear-gradient(135deg, var(--color-legislacion), #d32f2f); }
-        .bg-dinamica { background: linear-gradient(135deg, var(--color-dinamica), #388e3c); }
-        .bg-contabilidad { background: linear-gradient(135deg, var(--color-contabilidad), #e64a19); }
-        .bg-soft { background: linear-gradient(135deg, var(--color-soft), #0288d1); }
+        .bg-calculo { background: linear-gradient(135deg, var(--color-calculo), #7e57c2); color: #fff; }
+        .bg-legislacion { background: linear-gradient(135deg, var(--color-legislacion), #d32f2f); color: #fff; }
+        .bg-dinamica { background: linear-gradient(135deg, var(--color-dinamica), #388e3c); color: #fff; }
+        .bg-contabilidad { background: linear-gradient(135deg, var(--color-contabilidad), #e64a19); color: #fff; }
+        .bg-soft { background: linear-gradient(135deg, var(--color-soft), #0288d1); color: #fff; }
         .bg-etica { background: linear-gradient(135deg, var(--color-etica), #fbc02d); color: #000 !important; }
 
-        .time-tag { font-size: 0.75rem; background: rgba(0,0,0,0.3); padding: 3px 8px; border-radius: 20px; }
-        .subject { font-weight: 700; margin-top: 5px; display: flex; align-items: center; gap: 8px; }
-        .teacher { font-size: 0.8rem; opacity: 0.8; }
+        .time-tag { font-size: 0.75rem; background: rgba(0,0,0,0.3); padding: 3px 8px; border-radius: 20px; color: #fff; }
+        .subject { font-weight: 700; margin-top: 5px; display: flex; align-items: center; gap: 8px; color: inherit; }
+        .teacher { font-size: 0.8rem; opacity: 0.9; color: #fff; }
 
         .task-count-badge {
             position: absolute; top: 12px; right: 12px;
             background: #fff; color: #000; width: 22px; height: 22px;
             display: grid; place-items: center; font-size: 0.75rem; font-weight: 900; border-radius: 50%;
+            box-shadow: 0 0 10px #fff;
         }
 
         .modal-overlay { 
@@ -97,10 +110,11 @@
         .modal-content { 
             width: 90%; max-width: 400px; background: #161b22; 
             border-radius: 25px; padding: 30px; border: 1px solid var(--accent-cyber);
+            box-shadow: 0 0 20px var(--accent-cyber);
         }
 
         input, select { 
-            width: 100%; background: #0d1117; border: 1px solid #30363d; color: #fff; 
+            width: 100%; background: #0d1117; border: 1px solid #30363d; color: var(--text-dim); 
             padding: 12px; border-radius: 8px; font-family: 'Rajdhani'; margin-top: 10px;
         }
 
@@ -108,26 +122,27 @@
             width: 100%; background: var(--accent-cyber); color: #fff; 
             border: none; padding: 15px; font-family: 'Orbitron'; font-weight: 700;
             border-radius: 12px; cursor: pointer; margin-top: 15px;
+            box-shadow: 0 0 10px var(--accent-cyber);
         }
         .fab { 
             position: fixed; bottom: 30px; right: 30px; 
             width: 65px; height: 65px; background: var(--accent-cyber); 
             border: none; border-radius: 50%; color: #fff; font-size: 2rem;
-            box-shadow: 0 0 20px rgba(112, 0, 255, 0.5); z-index: 100;
+            box-shadow: 0 0 20px rgba(112, 0, 255, 0.8); z-index: 100;
         }
 
         .task-item {
             background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px;
             margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;
         }
-        .btn-toggle { padding: 8px 12px; border: none; border-radius: 8px; font-family: 'Orbitron'; cursor: pointer; }
-        .btn-toggle.completed { background: var(--success); color: #000; font-weight: 700; }
-        .completed-text { text-decoration: line-through; opacity: 0.3; }
+        .btn-toggle { padding: 8px 12px; border: none; border-radius: 8px; font-family: 'Orbitron'; cursor: pointer; text-shadow: none; }
+        .btn-toggle.completed { background: var(--success); color: #000; font-weight: 700; box-shadow: 0 0 10px var(--success); }
+        .completed-text { text-decoration: line-through; opacity: 0.5; color: var(--success) !important; }
 
         /* Estilo PIN */
         .pin-input {
             text-align: center; font-size: 2rem; letter-spacing: 15px; font-family: 'Orbitron';
-            border-color: var(--accent-cyber);
+            border-color: var(--accent-cyber); color: var(--accent-cyber);
         }
     </style>
 </head>
@@ -164,7 +179,7 @@
     <div class="modal-overlay" id="pinModal">
         <div class="modal-content">
             <h2 style="color: var(--danger); font-family: 'Orbitron'; text-align: center;">SEGURIDAD</h2>
-            <p style="text-align: center; font-size: 0.8rem; margin-top: 10px;">Introduce el código de acceso</p>
+            <p style="text-align: center; font-size: 0.8rem; margin-top: 10px; color: var(--danger);">Introduce el código de acceso</p>
             <input type="password" id="pinCode" class="pin-input" maxlength="4" placeholder="****">
             <div style="display: flex; gap: 10px;">
                 <button class="btn-add" style="background: #30363d;" onclick="closePinModal()">CANCELAR</button>
@@ -227,7 +242,7 @@
         };
 
         let db;
-        let pendingToggle = null; // Guardar acción pendiente de validación
+        let pendingToggle = null;
 
         const request = indexedDB.open("CyberDB", 1);
         request.onupgradeneeded = (e) => {
@@ -256,7 +271,6 @@
             `).join('');
         }
 
-        // FUNCIONES MODALES
         function openAddModal() { document.getElementById('addModal').classList.add('active'); }
         function closeAddModal() { document.getElementById('addModal').classList.remove('active'); }
         function closeModal() { document.getElementById('modalOverlay').classList.remove('active'); }
@@ -266,7 +280,6 @@
             pendingToggle = null;
         }
 
-        // LÓGICA DE PIN
         function toggleTarea(id, materia) {
             pendingToggle = { id, materia };
             document.getElementById('pinModal').classList.add('active');
@@ -373,5 +386,4 @@
     </script>
 </body>
 </html>
-                        .
-        
+         
