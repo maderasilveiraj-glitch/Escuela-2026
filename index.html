@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Slow_Chroma_HORARIO</title>
+    <title>Chroma_Horario_Final</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
@@ -13,7 +13,7 @@
             --text-main: #fff;
         }
 
-        /* --- ANIMACIÓN CHROMA SUAVE (12 SEGUNDOS) --- */
+        /* ANIMACIÓN CHROMA LENTA */
         @keyframes chromaBorders {
             0% { border-color: #ff0000; box-shadow: 0 0 15px rgba(255, 0, 0, 0.3); }
             25% { border-color: #00ff11; box-shadow: 0 0 15px rgba(0, 255, 17, 0.3); }
@@ -40,12 +40,12 @@
             min-height: 100vh;
         }
 
-        #particles-js { position: fixed; width: 100%; height: 100%; z-index: -1; opacity: 0.4; }
+        #particles-js { position: fixed; width: 100%; height: 100%; z-index: -1; opacity: 0.3; }
 
         .header { 
             padding: 40px 20px; text-align: center; 
             background: rgba(0, 0, 0, 0.85); 
-            border-bottom: 2px solid #333;
+            border-bottom: 2px solid transparent;
             animation: chromaBorders 12s infinite linear;
         }
 
@@ -54,56 +54,35 @@
         .schedule-container { display: flex; overflow-x: auto; gap: 20px; padding: 30px; scrollbar-width: none; }
         
         .day-column { 
-            min-width: 320px; 
-            background: rgba(10, 10, 10, 0.4); 
-            border-radius: 20px; 
-            padding: 20px; 
-            border: 1px solid rgba(255,255,255,0.03);
+            min-width: 320px; background: rgba(10, 10, 10, 0.4); 
+            border-radius: 20px; padding: 20px; border: 1px solid rgba(255,255,255,0.03);
             backdrop-filter: blur(8px);
         }
 
-        .day-name { 
-            font-family: 'Orbitron'; font-size: 1.4rem; color: #fff; 
-            margin-bottom: 20px; text-align: center; border-bottom: 1px solid #222; padding-bottom: 10px;
-        }
+        .day-name { font-family: 'Orbitron'; font-size: 1.4rem; color: #fff; margin-bottom: 20px; text-align: center; border-bottom: 1px solid #222; padding-bottom: 10px; }
 
         .class-card { 
             margin-bottom: 20px; padding: 22px; border-radius: 15px;
-            position: relative; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            background: transparent;
-            border: 2px solid transparent; 
-            animation: chromaBorders 12s infinite linear;
-            cursor: pointer;
+            position: relative; transition: 0.4s;
+            background: transparent; border: 2px solid transparent; 
+            animation: chromaBorders 12s infinite linear; cursor: pointer;
         }
 
-        .class-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            background: rgba(255, 255, 255, 0.03);
-        }
+        .class-card:hover { transform: translateY(-5px); background: rgba(255, 255, 255, 0.03); }
 
-        .subject { 
-            font-family: 'Orbitron'; font-weight: 700; font-size: 1.1rem; 
-            animation: chromaText 12s infinite linear; 
-        }
+        .subject { font-family: 'Orbitron'; font-weight: 700; font-size: 1.1rem; animation: chromaText 12s infinite linear; }
 
-        .teacher { 
-            font-size: 0.85rem; margin-top: 10px; font-weight: 500;
-            animation: chromaText 12s infinite linear; 
-            opacity: 0.8;
-        }
+        .teacher { font-size: 0.85rem; margin-top: 10px; animation: chromaText 12s infinite linear; opacity: 0.8; }
 
         .time-tag { font-size: 0.7rem; color: #555; margin-bottom: 6px; letter-spacing: 2px; }
 
-        .progress-section { 
-            padding: 20px; background: rgba(255,255,255,0.02); margin: 20px; 
-            border-radius: 15px; border: 1px solid #111; 
-        }
-        .progress-bar-bg { width: 100%; height: 8px; background: #000; border-radius: 4px; overflow: hidden; margin-top: 10px; }
+        .progress-section { padding: 20px; background: rgba(255,255,255,0.02); margin: 20px; border-radius: 15px; border: 1px solid #111; }
+        .progress-bar-bg { width: 100%; height: 10px; background: #000; border-radius: 5px; overflow: hidden; margin-top: 10px; }
         .progress-fill { height: 100%; background: linear-gradient(90deg, #ff0000, #00ff11, #00f3ff, #7000ff); background-size: 300%; width: 0%; transition: 1.5s ease; }
 
         .fab { 
             position: fixed; bottom: 30px; right: 30px; width: 65px; height: 65px; 
-            background: #000; border-radius: 20px; color: #fff; font-size: 2rem; 
+            background: #000; border-radius: 20px; color: #fff; font-size: 2.2rem; 
             cursor: pointer; border: 2px solid transparent; animation: chromaBorders 12s infinite linear;
         }
 
@@ -111,17 +90,20 @@
             position: absolute; top: -12px; right: -12px;
             background: #000; color: #fff; width: 28px; height: 28px;
             display: grid; place-items: center; font-size: 0.8rem; border-radius: 50%;
-            border: 2px solid transparent; animation: chromaBorders 8s infinite linear;
-            font-weight: 900;
+            border: 2px solid transparent; animation: chromaBorders 8s infinite linear; font-weight: 900;
         }
 
-        /* Modales */
+        /* MODALES */
         .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(15px); }
         .modal-overlay.active { display: flex; }
-        .modal-content { width: 90%; max-width: 400px; background: #050505; border-radius: 20px; padding: 30px; border: 2px solid transparent; animation: chromaBorders 12s infinite linear; }
+        .modal-content { width: 95%; max-width: 400px; background: #050505; border-radius: 20px; padding: 30px; border: 2px solid transparent; animation: chromaBorders 12s infinite linear; }
+        
         .task-item { background: rgba(255,255,255,0.03); padding: 15px; border-radius: 12px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #222; }
-        input, select { width: 100%; background: #000; border: 1px solid #222; color: #fff; padding: 14px; border-radius: 10px; margin-top: 10px; }
-        .btn-add { width: 100%; padding: 15px; margin-top: 20px; background: transparent; border: 2px solid transparent; color: #fff; font-family: 'Orbitron'; cursor: pointer; animation: chromaBorders 12s infinite linear; border-radius: 10px; font-weight: 700; }
+        input, select { width: 100%; background: #000; border: 1px solid #333; color: #fff; padding: 14px; border-radius: 10px; margin-top: 10px; font-family: 'Rajdhani'; }
+        
+        .btn-action { width: 100%; padding: 15px; margin-top: 20px; background: transparent; border: 2px solid transparent; color: #fff; font-family: 'Orbitron'; cursor: pointer; animation: chromaBorders 12s infinite linear; border-radius: 10px; font-weight: 700; }
+        
+        .btn-toggle { background: transparent; border: 1px solid #fff; color: #fff; padding: 8px 12px; border-radius: 8px; cursor: pointer; font-size: 0.6rem; font-family: 'Orbitron'; }
     </style>
 </head>
 <body>
@@ -129,13 +111,13 @@
     <div id="particles-js"></div>
 
     <div class="header">
-        <p style="color: #444; font-weight: 700; font-size: 0.65rem; letter-spacing: 5px; margin-bottom: 8px;">D.I.G.E. - PROTOCOL</p>
+        <p style="color: #444; font-weight: 700; font-size: 0.65rem; letter-spacing: 5px;">D.I.G.E. - SECURE TERMINAL</p>
         <h1>HORARIO ALEJANDRO_MADERA</h1>
     </div>
 
     <div class="progress-section">
         <div style="display:flex; justify-content:space-between; align-items: center;">
-            <span style="font-size: 0.8rem; color: #666; letter-spacing: 2px;">SYNC_STABILITY</span>
+            <span style="font-size: 0.8rem; color: #666;">SYNC_PROGRESS</span>
             <span id="progress-percentage" style="font-family: 'Orbitron'; animation: chromaText 12s infinite linear;">0%</span>
         </div>
         <div class="progress-bar-bg"><div id="progress-fill" class="progress-fill"></div></div>
@@ -149,25 +131,25 @@
         <div class="modal-content">
             <h2 id="modalTitle" style="font-family: 'Orbitron'; margin-bottom: 20px; text-align: center; animation: chromaText 12s infinite linear;"></h2>
             <div id="taskList"></div>
-            <button class="btn-add" onclick="closeModal()">RETURN</button>
+            <button class="btn-action" onclick="closeModal()">VOLVER</button>
         </div>
     </div>
 
     <div class="modal-overlay" id="pinModal">
         <div class="modal-content" style="text-align:center;">
-            <h2 style="font-family: 'Orbitron'; margin-bottom:20px; color: #fff;">SECURITY_CHECK</h2>
-            <input type="password" id="pinCode" style="text-align: center; font-size: 2rem; border-color: #333;" maxlength="4" placeholder="****">
+            <h2 style="font-family: 'Orbitron'; margin-bottom:20px; color: #fff;">INGRESE PIN (9114)</h2>
+            <input type="password" id="pinCode" style="text-align: center; font-size: 2rem;" maxlength="4" placeholder="****">
             <div style="display: flex; gap: 15px;">
-                <button class="btn-add" style="animation: none; border-color: #222;" onclick="closePinModal()">ABORT</button>
-                <button class="btn-add" onclick="validatePin()">CONFIRM</button>
+                <button class="btn-action" style="animation: none; border-color: #222;" onclick="closePinModal()">CANCELAR</button>
+                <button class="btn-action" onclick="validatePin()">CONFIRMAR</button>
             </div>
         </div>
     </div>
 
     <div class="modal-overlay" id="addModal" onclick="if(event.target==this) closeAddModal()">
         <div class="modal-content">
-            <h2 style="font-family: 'Orbitron'; text-align: center; animation: chromaText 12s infinite linear;">NEW_ENTRY</h2>
-            <input type="text" id="taskName" placeholder="Assignment Name...">
+            <h2 style="font-family: 'Orbitron'; text-align: center; animation: chromaText 12s infinite linear;">NUEVA TAREA</h2>
+            <input type="text" id="taskName" placeholder="Nombre de la tarea...">
             <select id="taskSubject">
                 <option value="CÁLCULO INTEGRAL">CÁLCULO INTEGRAL</option>
                 <option value="LEGISLACIÓN LABORAL">LEGISLACIÓN LABORAL</option>
@@ -177,7 +159,7 @@
                 <option value="TALLER DE ÉTICA">TALLER DE ÉTICA</option>
             </select>
             <input type="date" id="taskDate">
-            <button class="btn-add" onclick="saveTask()">UPLOAD_DATA</button>
+            <button class="btn-action" onclick="saveTask()">SUBIR TAREA</button>
         </div>
     </div>
 
@@ -219,7 +201,8 @@
         let db;
         let pendingAction = null;
 
-        const request = indexedDB.open("SlowChromaDB", 1);
+        // INICIALIZAR BASE DE DATOS
+        const request = indexedDB.open("SecureChromaDB", 1);
         request.onupgradeneeded = (e) => {
             db = e.target.result;
             db.createObjectStore("tareas", { keyPath: "id", autoIncrement: true });
@@ -292,7 +275,7 @@
                     if (cursor.value.materia === materia) res.push(cursor.value);
                     cursor.continue();
                 } else {
-                    list.innerHTML = res.length ? '' : '<p style="text-align:center; opacity:0.3; padding:20px;">NO_ACTIVE_TASKS</p>';
+                    list.innerHTML = res.length ? '' : '<p style="text-align:center; opacity:0.3; padding:20px;">SIN TAREAS ACTIVAS</p>';
                     res.forEach(t => {
                         list.innerHTML += `
                             <div class="task-item">
@@ -300,8 +283,8 @@
                                     <div style="font-weight:700; ${t.entregada ? 'text-decoration:line-through; opacity:0.4;' : ''}">${t.nombre}</div>
                                     <div style="font-size:0.7rem; color:#444">${t.fecha}</div>
                                 </div>
-                                <button style="background:transparent; border:1px solid #333; color:#fff; padding:8px 12px; border-radius:8px; cursor:pointer; font-family:'Orbitron'; font-size:0.6rem;" onclick="toggleTarea(${t.id}, '${materia}')">
-                                    ${t.entregada ? 'STABLE' : 'PENDING'}
+                                <button class="btn-toggle" style="border-color:${t.entregada ? '#00ff11' : '#fff'}" onclick="toggleTarea(${t.id}, '${materia}')">
+                                    ${t.entregada ? 'ENTREGADA' : 'PENDIENTE'}
                                 </button>
                             </div>`;
                     });
@@ -332,14 +315,13 @@
                     const data = e.target.result;
                     data.entregada = !data.entregada;
                     store.put(data);
-                    if(data.entregada) confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 }, colors: ['#ffffff', '#00f3ff', '#7000ff'] });
+                    if(data.entregada) confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 }, colors: ['#ffffff', '#00ff11', '#7000ff'] });
                 };
                 transaction.oncomplete = () => { actualizarDashboard(); showTasks(pendingAction.materia); closePinModal(); };
-            } else { alert("INVALID_PIN"); }
+            } else { alert("CÓDIGO INCORRECTO"); }
         }
     </script>
 </body>
 </html>
-
 
 
