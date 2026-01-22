@@ -18,7 +18,6 @@
             --danger: #ff0055;
         }
 
-        /* --- ANIMACIÓN RGB GAMER LENTA --- */
         @keyframes chromaGamer {
             0% { border-color: #ff0000; color: #ff0000; box-shadow: 0 0 10px rgba(255, 0, 0, 0.2); }
             20% { border-color: #ffff00; color: #ffff00; box-shadow: 0 0 10px rgba(255, 255, 0, 0.2); }
@@ -28,7 +27,6 @@
             100% { border-color: #ff0000; color: #ff0000; box-shadow: 0 0 10px rgba(255, 0, 0, 0.2); }
         }
 
-        /* Animación específica para solo el texto del título */
         @keyframes chromaTextOnly {
             0% { color: #ff0000; text-shadow: 0 0 10px rgba(255, 0, 0, 0.5); }
             20% { color: #ffff00; text-shadow: 0 0 10px rgba(255, 255, 0, 0.5); }
@@ -72,31 +70,32 @@
         .header { 
             padding: 30px 20px; text-align: center; 
             background: rgba(5, 5, 5, 0.8); 
-            border-bottom: 2px solid transparent; /* El borde se anima abajo */
+            border-bottom: 2px solid transparent;
             backdrop-filter: blur(15px);
-            animation: chromaGamer 12s infinite linear; /* Aplicamos animación al borde del header */
+            animation: chromaGamer 12s infinite linear;
         }
 
         h1 { 
             font-family: 'Orbitron'; 
             font-size: 1.6rem; 
             letter-spacing: 4px; 
-            animation: chromaTextOnly 12s infinite linear; /* Texto animado */
+            animation: chromaTextOnly 12s infinite linear;
         }
 
         .class-card { 
             margin-top: 15px; padding: 18px; border-radius: 12px;
-            position: relative; transition: all 0.3s ease;
+            position: relative; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer; 
             background: var(--card-bg);
             border: 2px solid transparent;
-            /* ANIMACIÓN DE BORDE GAMER LENTA (12 segundos) */
             animation: chromaGamer 12s infinite linear;
         }
 
+        /* --- EFECTO DE LEVANTAMIENTO --- */
         .class-card:hover { 
-            transform: translateY(-5px); 
-            filter: brightness(1.2);
+            transform: translateY(-15px); 
+            filter: brightness(1.3);
+            z-index: 10;
         }
 
         .progress-section { padding: 20px; background: var(--card-bg); margin: 15px; border-radius: 15px; border: 1px solid rgba(112, 0, 255, 0.2); }
@@ -108,9 +107,6 @@
         .time-tag { font-size: 0.8rem; opacity: 0.7; margin-bottom: 5px; color: #fff !important; }
         .subject { font-weight: 700; font-size: 1.1rem; }
         .teacher { font-size: 0.85rem; opacity: 0.6; margin-top: 4px; color: #fff !important; }
-        
-        /* Forzamos que el texto dentro de los cuadros sea blanco por defecto o herede el chroma si lo prefieres */
-        .subject span { margin-right: 5px; }
 
         .task-count-badge {
             position: absolute; top: -10px; right: -10px;
@@ -121,9 +117,12 @@
 
         .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(15px); }
         .modal-overlay.active { display: flex; }
-        .modal-content { width: 90%; max-width: 400px; background: #0d1117; border-radius: 20px; padding: 30px; border: 1px solid var(--accent-cyber); }
+        .modal-content { width: 90%; max-width: 400px; background: #0d1117; border-radius: 20px; padding: 30px; border: 1px solid var(--accent-cyber); max-height: 80vh; overflow-y: auto; }
         .fab { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: var(--accent-cyber); border: none; border-radius: 50%; color: #fff; font-size: 2rem; cursor: pointer; box-shadow: 0 0 20px var(--accent-cyber); }
-        .task-item { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        
+        .task-item { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+        .task-actions { display: flex; gap: 5px; }
+        
         input, select { width: 100%; background: #000; border: 1px solid #333; color: #fff; padding: 12px; border-radius: 8px; margin-top: 10px; }
         .btn-add { width: 100%; padding: 15px; margin-top: 20px; background: var(--accent-cyber); color: #fff; border: none; border-radius: 10px; font-family: 'Orbitron'; cursor: pointer; }
     </style>
@@ -314,9 +313,14 @@
                                     <div style="font-weight:700;">${t.nombre}</div>
                                     <div style="font-size:0.7rem; color:var(--text-dim)">${t.fecha}</div>
                                 </div>
-                                <button style="background:${t.entregada ? 'var(--success)' : '#333'}; color:white; border:none; padding:5px 10px; border-radius:5px; font-size:0.7rem; cursor:pointer;" onclick="toggleTarea(${t.id}, '${materia}')">
-                                    ${t.entregada ? 'LISTO' : 'MARCAR'}
-                                </button>
+                                <div class="task-actions">
+                                    <button style="background:${t.entregada ? 'var(--success)' : '#333'}; color:white; border:none; padding:5px 10px; border-radius:5px; font-size:0.7rem; cursor:pointer;" onclick="toggleTarea(${t.id}, '${materia}')">
+                                        ${t.entregada ? 'LISTO' : 'MARCAR'}
+                                    </button>
+                                    <button style="background:var(--danger); color:white; border:none; padding:5px 10px; border-radius:5px; font-size:0.7rem; cursor:pointer;" onclick="deleteTarea(${t.id}, '${materia}')">
+                                        🗑️
+                                    </button>
+                                </div>
                             </div>`;
                     });
                 }
@@ -334,7 +338,13 @@
         }
 
         function toggleTarea(id, materia) {
-            pendingAction = { id, materia };
+            pendingAction = { type: 'toggle', id, materia };
+            document.getElementById('pinModal').classList.add('active');
+        }
+
+        // --- NUEVA FUNCIÓN PARA BORRAR ---
+        function deleteTarea(id, materia) {
+            pendingAction = { type: 'delete', id, materia };
             document.getElementById('pinModal').classList.add('active');
         }
 
@@ -342,17 +352,25 @@
             if (document.getElementById('pinCode').value === "9114") {
                 const transaction = db.transaction(["tareas"], "readwrite");
                 const store = transaction.objectStore("tareas");
-                store.get(pendingAction.id).onsuccess = (e) => {
-                    const data = e.target.result;
-                    data.entregada = !data.entregada;
-                    store.put(data);
-                    if(data.entregada) confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+                
+                if(pendingAction.type === 'toggle') {
+                    store.get(pendingAction.id).onsuccess = (e) => {
+                        const data = e.target.result;
+                        data.entregada = !data.entregada;
+                        store.put(data);
+                        if(data.entregada) confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+                    };
+                } else if(pendingAction.type === 'delete') {
+                    store.delete(pendingAction.id);
+                }
+
+                transaction.oncomplete = () => { 
+                    actualizarDashboard(); 
+                    showTasks(pendingAction.materia); 
+                    closePinModal(); 
                 };
-                transaction.oncomplete = () => { actualizarDashboard(); showTasks(pendingAction.materia); closePinModal(); };
             } else { alert("PIN INCORRECTO"); }
         }
     </script>
 </body>
 </html>
-
-
