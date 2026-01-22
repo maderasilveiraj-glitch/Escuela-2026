@@ -3,167 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEURAL_HORARIO v2.6</title>
+    <title>NEURAL_HORARIO v3.0</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #050508;
-            --accent: #00f2ff;
-            --accent-2: #7000ff;
+            --bg: #f4f7f9;
+            --text-dark: #1a1a2e;
+            --accent-cyber: #7000ff;
+            /* Colores de las materias */
+            --color-calculo: #b388ff;
+            --color-etica: #ffd54f;
+            --color-soft: #4fc3f7;
+            --color-dinamica: #81c784;
+            --color-contabilidad: #ff8a65;
+            --color-legislacion: #ff5252;
             --danger: #ff0055;
             --success: #00ff88;
-            --border-glow: 0 0 15px rgba(0, 242, 255, 0.3);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
-            background: var(--bg); color: #fff; 
+            background: var(--bg); color: var(--text-dark); 
             font-family: 'Rajdhani', sans-serif; overflow-x: hidden;
         }
 
-        /* HEADER */
-        .header { padding: 40px 20px; text-align: center; border-bottom: 1px solid rgba(0, 242, 255, 0.2); }
-        h1 { font-family: 'Orbitron'; font-size: 1.5rem; letter-spacing: 4px; color: #fff; text-shadow: var(--border-glow); }
+        /* HEADER MODERNO */
+        .header { 
+            padding: 30px 20px; text-align: center; 
+            background: #fff; border-bottom: 2px solid #e0e0e0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        h1 { font-family: 'Orbitron'; font-size: 1.4rem; letter-spacing: 2px; color: var(--text-dark); }
 
-        /* DASHBOARD */
-        .progress-section { padding: 20px; background: rgba(255,255,255,0.02); margin: 10px; border-radius: 10px; }
-        .progress-bar-bg { width: 100%; height: 4px; background: #222; margin: 10px 0; overflow: hidden; }
-        .progress-fill { height: 100%; background: var(--accent); width: 0%; transition: 1s ease; box-shadow: 0 0 15px var(--accent); }
+        /* DASHBOARD DE PROGRESO */
+        .progress-section { padding: 20px; background: #fff; margin: 15px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .progress-bar-bg { width: 100%; height: 8px; background: #eee; margin: 10px 0; border-radius: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent-cyber), var(--color-soft)); width: 0%; transition: 1s cubic-bezier(0.17, 0.67, 0.83, 0.67); }
 
-        /* HORARIO SCROLL */
-        .schedule-container { display: flex; overflow-x: auto; gap: 15px; padding: 20px; scroll-snap-type: x mandatory; }
-        .schedule-container::-webkit-scrollbar { display: none; }
+        /* CONTENEDOR DE HORARIO */
+        .schedule-container { 
+            display: flex; overflow-x: auto; gap: 15px; padding: 20px; 
+            scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+        }
+        .schedule-container::-webkit-scrollbar { height: 5px; }
+        .schedule-container::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
 
         .day-column { 
-            min-width: 80vw; scroll-snap-align: center; 
-            background: rgba(20, 20, 30, 0.6); 
-            border-left: 3px solid var(--accent);
-            padding: 20px; border-radius: 0 15px 15px 0;
+            min-width: 280px; scroll-snap-align: center; 
+            background: #fff; border-radius: 20px; padding: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.04);
         }
         .day-name { 
-            font-family: 'Orbitron', sans-serif; font-size: 1.2rem; 
-            margin-bottom: 20px; color: var(--accent);
-            display: flex; justify-content: space-between;
+            font-family: 'Orbitron'; font-size: 1.1rem; font-weight: 900;
+            margin-bottom: 20px; color: var(--accent-cyber);
+            display: flex; justify-content: space-between; align-items: center;
         }
 
-        /* TARJETAS DE CLASE */
+        /* TARJETAS COLORIDAS */
         .class-card { 
-            background: rgba(255,255,255,0.03); 
-            margin-bottom: 15px; padding: 15px;
-            border: 1px solid rgba(0, 242, 255, 0.1);
-            position: relative; transition: 0.3s;
+            margin-bottom: 15px; padding: 15px; border-radius: 15px;
+            color: #fff; position: relative; transition: all 0.3s ease;
+            cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
         }
-        .class-card:active { background: rgba(0, 242, 255, 0.1); }
-        .class-card::after {
-            content: ''; position: absolute; bottom: 0; right: 0;
-            width: 10px; height: 10px; background: var(--accent);
-            clip-path: polygon(100% 0, 100% 100%, 0 100%);
-        }
+        .class-card:hover { transform: translateY(-5px); box-shadow: 0 8px 15px rgba(0,0,0,0.15); }
+        
+        /* Clases de color */
+        .bg-calculo { background-color: var(--color-calculo); }
+        .bg-legislacion { background-color: var(--color-legislacion); }
+        .bg-dinamica { background-color: var(--color-dinamica); }
+        .bg-contabilidad { background-color: var(--color-contabilidad); }
+        .bg-soft { background-color: var(--color-soft); }
+        .bg-etica { background-color: var(--color-etica); color: #1a1a2e !important; }
+        .bg-default { background-color: #90a4ae; }
 
-        .subject-box { display: flex; align-items: center; gap: 12px; }
-        .subject-icon { 
-            font-size: 1.5rem; width: 40px; height: 40px; 
-            display: grid; place-items: center;
-            background: rgba(0, 242, 255, 0.1); border-radius: 8px;
+        .time-tag { 
+            font-size: 0.75rem; background: rgba(0,0,0,0.15); 
+            padding: 3px 8px; border-radius: 20px; margin-bottom: 8px; display: inline-block;
         }
-        .subject { font-weight: 700; letter-spacing: 1px; color: #fff; font-size: 1.1rem; }
-        .teacher { font-size: 0.8rem; color: #888; margin-top: 4px; }
+        .subject { font-weight: 700; font-size: 1.05rem; letter-spacing: 0.5px; }
+        .teacher { font-size: 0.8rem; opacity: 0.9; margin-top: 5px; font-weight: 500; }
 
         .task-count-badge {
-            position: absolute; top: 10px; right: 10px;
-            background: var(--danger); color: #fff;
-            padding: 2px 8px; font-size: 0.7rem; font-weight: 900;
-            border-radius: 4px; box-shadow: 0 0 10px var(--danger);
+            position: absolute; top: 12px; right: 12px;
+            background: #fff; color: var(--danger);
+            width: 22px; height: 22px; display: grid; place-items: center;
+            font-size: 0.75rem; font-weight: 900; border-radius: 50%;
         }
 
         /* MODALES */
         .modal-overlay { 
-            position: fixed; inset: 0; background: rgba(0,0,0,0.9); 
+            position: fixed; inset: 0; background: rgba(0,0,0,0.6); 
             display: none; z-index: 1000; align-items: center; justify-content: center;
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(5px);
         }
         .modal-overlay.active { display: flex; }
         .modal-content { 
-            width: 90%; max-width: 400px; background: #0a0c14; 
-            border: 1px solid var(--accent); padding: 30px;
-            box-shadow: 0 0 30px rgba(0, 242, 255, 0.2);
-            position: relative; overflow: hidden;
+            width: 90%; max-width: 400px; background: #fff; 
+            border-radius: 25px; padding: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.2);
         }
 
-        /* BOTONES Y FORM */
-        .input-group { margin-bottom: 20px; }
-        .input-group label { color: var(--accent); font-size: 0.8rem; letter-spacing: 2px; }
-        .input-group input, .input-group select { 
-            width: 100%; background: #1a1a25; border: 1px solid #333; 
-            padding: 12px; color: #fff; font-family: 'Rajdhani'; outline: none;
-        }
-        .input-group input:focus { border-color: var(--accent); box-shadow: var(--border-glow); }
-
+        /* BOTONES */
         .btn-add { 
-            width: 100%; background: var(--accent); color: #000; 
-            border: none; padding: 15px; font-family: 'Orbitron'; font-weight: 900;
-            cursor: pointer; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+            width: 100%; background: var(--accent-cyber); color: #fff; 
+            border: none; padding: 15px; font-family: 'Orbitron'; font-weight: 700;
+            border-radius: 12px; cursor: pointer; transition: 0.3s;
         }
-
         .fab { 
             position: fixed; bottom: 30px; right: 30px; 
-            width: 65px; height: 65px; background: var(--accent-2); 
+            width: 65px; height: 65px; background: var(--accent-cyber); 
             border: none; border-radius: 50%; color: #fff; font-size: 2rem;
-            box-shadow: 0 0 20px var(--accent-2); z-index: 100;
+            box-shadow: 0 10px 20px rgba(112, 0, 255, 0.3); z-index: 100;
         }
 
-        /* LISTA DE TAREAS */
+        /* LISTA TAREAS */
         .task-item {
-            background: rgba(255,255,255,0.02); padding: 15px;
-            border-left: 2px solid var(--accent); margin-bottom: 10px;
-            display: flex; justify-content: space-between; align-items: center;
+            background: #f9f9f9; padding: 15px; border-radius: 12px;
+            margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;
         }
-        .btn-toggle {
-            padding: 6px 12px; border: 1px solid var(--accent);
-            background: transparent; color: var(--accent);
-            font-family: 'Orbitron'; font-size: 0.6rem; cursor: pointer;
-        }
-        .btn-toggle.completed {
-            background: var(--success); color: #000; border-color: var(--success);
-            box-shadow: 0 0 10px var(--success);
-        }
-        .btn-delete {
-            background: transparent; color: var(--danger);
-            border: 1px solid var(--danger); padding: 6px 10px;
-            font-family: 'Orbitron'; font-size: 0.6rem; cursor: pointer;
-            margin-left: 8px; transition: 0.3s;
-        }
-        .btn-delete:hover { background: var(--danger); color: #fff; }
-
+        .btn-toggle { padding: 8px 12px; border: none; border-radius: 8px; font-family: 'Orbitron'; font-size: 0.6rem; cursor: pointer; }
+        .btn-toggle.completed { background: var(--success); color: #fff; }
         .completed-text { text-decoration: line-through; opacity: 0.4; }
-
-        /* ANIMACIÓN DE ACCESO */
-        .access-granted {
-            animation: flashSuccess 0.5s ease-out;
-            border-color: var(--success) !important;
-        }
-        @keyframes flashSuccess {
-            0% { background: var(--success); }
-            100% { background: #0a0c14; }
-        }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <p style="color: var(--accent-2); font-weight: 700; font-size: 0.7rem; letter-spacing: 5px;">SYSTEM STATUS: ONLINE</p>
-        <h1>NEURAL_HORARIO v2.6</h1>
+        <p style="color: var(--accent-cyber); font-weight: 700; font-size: 0.6rem; letter-spacing: 3px; margin-bottom: 5px;">STATUS: CONNECTED</p>
+        <h1>MI HORARIO</h1>
     </div>
 
     <div class="progress-section">
         <div style="display:flex; justify-content:space-between; align-items:baseline;">
-            <span style="font-size: 0.8rem; letter-spacing: 2px;">SYNC_PROGRESS</span>
-            <span id="progress-percentage" style="font-family: 'Orbitron'; color:var(--accent);">0%</span>
+            <span style="font-size: 0.8rem; font-weight: 700;">PROGRESO SEMESTRAL</span>
+            <span id="progress-percentage" style="font-family: 'Orbitron'; color: var(--accent-cyber);">0%</span>
         </div>
         <div class="progress-bar-bg">
             <div id="progress-fill" class="progress-fill"></div>
         </div>
-        <p id="progress-stats" style="font-size: 0.7rem; color: #555; text-transform: uppercase;"></p>
+        <p id="progress-stats" style="font-size: 0.7rem; color: #888;"></p>
     </div>
 
     <div class="schedule-container" id="schedule-render"></div>
@@ -172,75 +150,70 @@
 
     <div class="modal-overlay" id="modalOverlay" onclick="if(event.target==this) closeModal()">
         <div class="modal-content">
-            <h2 id="modalTitle" style="color: var(--accent); font-family: 'Orbitron'; margin-bottom: 20px;">MATERIA</h2>
+            <h2 id="modalTitle" style="color: var(--accent-cyber); font-family: 'Orbitron'; margin-bottom: 20px; font-size: 1.2rem;">MATERIA</h2>
             <div id="taskList"></div>
-            <button class="btn-add" style="margin-top:20px; background: #222; color: #fff;" onclick="closeModal()">CERRAR</button>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="securityModal">
-        <div class="modal-content" id="securityContent" style="border-color: var(--danger);">
-            <h2 style="color: var(--danger); font-family: 'Orbitron'; margin-bottom: 20px; font-size: 1rem;">SEGURIDAD_CRÍTICA</h2>
-            <div class="input-group">
-                <label>PASSWORD_REQUERIDO</label>
-                <input type="password" id="securityCode" placeholder="****" style="text-align: center; font-size: 1.5rem; letter-spacing: 10px;">
-            </div>
-            <div style="display: flex; gap: 10px;">
-                <button class="btn-add" id="confirmSecurity" style="background: var(--danger);">DECODIFICAR</button>
-                <button class="btn-add" onclick="closeSecurityModal()" style="background: #222; color: #fff;">ABORTR</button>
-            </div>
+            <button class="btn-add" style="margin-top:20px; background: #eee; color: #333;" onclick="closeModal()">CERRAR</button>
         </div>
     </div>
 
     <div class="modal-overlay" id="addModal" onclick="if(event.target==this) closeAddModal()">
         <div class="modal-content">
-            <h2 style="color: var(--accent-2); font-family: 'Orbitron'; margin-bottom: 20px;">NUEVO_DATO</h2>
-            <div class="input-group">
-                <label>NOMBRE_TAREA</label>
-                <input type="text" id="taskName" placeholder="...">
-            </div>
-            <div class="input-group">
-                <label>MODULO</label>
-                <select id="taskSubject">
+            <h2 style="color: var(--accent-cyber); font-family: 'Orbitron'; margin-bottom: 20px;">NUEVA TAREA</h2>
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+                <input type="text" id="taskName" placeholder="Nombre de la tarea..." style="padding:12px; border-radius:8px; border:1px solid #ddd;">
+                <select id="taskSubject" style="padding:12px; border-radius:8px; border:1px solid #ddd;">
                     <option>CÁLCULO INTEGRAL</option>
                     <option>LEGISLACIÓN LABORAL</option>
                     <option>DINÁMICA SOCIAL</option>
-                    <option>CONTABILIDAD</option>
+                    <option>CONT. ORIENTADA NEG.</option>
+                    <option>SOFT. APLIC. EJEC.</option>
+                    <option>TALLER DE ÉTICA</option>
                 </select>
+                <input type="date" id="taskDate" style="padding:12px; border-radius:8px; border:1px solid #ddd;">
+                <button class="btn-add" onclick="saveTask()">GUARDAR TAREA</button>
             </div>
-            <div class="input-group">
-                <label>DEADLINE</label>
-                <input type="date" id="taskDate">
-            </div>
-            <button class="btn-add" onclick="saveTask()">EJECUTAR_GUARDADO</button>
         </div>
     </div>
 
     <script>
         const materiasData = [
-            { dia: "Lunes", emoji: "⚡", clases: [{h: "12:00 - 14:00", n: "CÁLCULO INTEGRAL", t: "A. Herrera"}] },
-            { dia: "Martes", emoji: "🔥", clases: [{h: "07:00 - 09:00", n: "LEGISLACIÓN LABORAL", t: "C. Rodríguez"}, {h: "09:00 - 11:00", n: "DINÁMICA SOCIAL", t: "D. Pat Reyes"}] },
-            { dia: "Miércoles", emoji: "💎", clases: [{h: "07:00 - 09:00", n: "LEGISLACIÓN LABORAL", t: "C. Rodríguez"}, {h: "11:00 - 14:00", n: "CÁLCULO INTEGRAL", t: "A. Herrera"}] },
-            { dia: "Jueves", emoji: "🎯", clases: [{h: "09:00 - 12:00", n: "CONTABILIDAD", t: "M. Castro"}] },
-            { dia: "Viernes", emoji: "🎉", clases: [{h: "12:00 - 14:00", n: "CONTABILIDAD", t: "M. Castro"}] }
+            { dia: "Lunes", emoji: "⚡", clases: [{h: "12:00-14:00", n: "CÁLCULO INTEGRAL", t: "A. Herrera"}] },
+            { dia: "Martes", emoji: "🔥", clases: [
+                {h: "07:00-09:00", n: "LEGISLACIÓN LABORAL", t: "C. Rodríguez"},
+                {h: "09:00-11:00", n: "DINÁMICA SOCIAL", t: "D. Pat Reyes"},
+                {h: "11:00-13:00", n: "TALLER DE ÉTICA", t: "G. León Lara"},
+                {h: "14:00-17:00", n: "SOFT. APLIC. EJEC.", t: "Y. Paredes"}
+            ]},
+            { dia: "Miércoles", emoji: "💎", clases: [
+                {h: "07:00-09:00", n: "LEGISLACIÓN LABORAL", t: "C. Rodríguez"},
+                {h: "09:00-11:00", n: "DINÁMICA SOCIAL", t: "D. Pat Reyes"},
+                {h: "11:00-14:00", n: "CÁLCULO INTEGRAL", t: "A. Herrera"}
+            ]},
+            { dia: "Jueves", emoji: "🎯", clases: [
+                {h: "09:00-12:00", n: "CONT. ORIENTADA NEG.", t: "M. Castro"},
+                {h: "12:00-14:00", n: "TALLER DE ÉTICA", t: "G. León Lara"},
+                {h: "16:00-18:00", n: "SOFT. APLIC. EJEC.", t: "Y. Paredes"}
+            ]},
+            { dia: "Viernes", emoji: "🎉", clases: [
+                {h: "12:00-14:00", n: "CONT. ORIENTADA NEG.", t: "M. Castro"}
+            ]}
         ];
 
-        const iconMap = {
-            "CÁLCULO INTEGRAL": "∫",
-            "LEGISLACIÓN LABORAL": "⚖️",
-            "DINÁMICA SOCIAL": "🌐",
-            "CONTABILIDAD": "💰"
+        const colorMap = {
+            "CÁLCULO INTEGRAL": "bg-calculo",
+            "LEGISLACIÓN LABORAL": "bg-legislacion",
+            "DINÁMICA SOCIAL": "bg-dinamica",
+            "CONT. ORIENTADA NEG.": "bg-contabilidad",
+            "SOFT. APLIC. EJEC.": "bg-soft",
+            "TALLER DE ÉTICA": "bg-etica"
         };
 
         let db;
-        let pendingToggle = null;
         const request = indexedDB.open("CyberDB", 1);
-        
         request.onupgradeneeded = (e) => {
             db = e.target.result;
             db.createObjectStore("tareas", { keyPath: "id", autoIncrement: true });
         };
-
         request.onsuccess = (e) => {
             db = e.target.result;
             renderSchedule();
@@ -253,81 +226,20 @@
                 <div class="day-column">
                     <div class="day-name">${d.dia} <span>${d.emoji}</span></div>
                     ${d.clases.map(c => `
-                        <div class="class-card" onclick="showTasks('${c.n}')">
-                            <div class="subject-box">
-                                <div class="subject-icon">${iconMap[c.n] || '📑'}</div>
-                                <div>
-                                    <div class="subject">${c.n}</div>
-                                    <div class="teacher">${c.h} | ${c.t}</div>
-                                </div>
-                            </div>
+                        <div class="class-card ${colorMap[c.n] || 'bg-default'}" onclick="showTasks('${c.n}')">
+                            <div class="time-tag">${c.h}</div>
+                            <div class="subject">${c.n}</div>
+                            <div class="teacher">${c.t}</div>
                         </div>
                     `).join('')}
                 </div>
             `).join('');
         }
 
+        // Funciones de Modal y Tareas
         function openAddModal() { document.getElementById('addModal').classList.add('active'); }
         function closeAddModal() { document.getElementById('addModal').classList.remove('active'); }
         function closeModal() { document.getElementById('modalOverlay').classList.remove('active'); }
-
-        // SEGURIDAD
-        function openSecurityModal() {
-            document.getElementById('securityModal').classList.add('active');
-            document.getElementById('securityCode').value = '';
-            document.getElementById('securityCode').focus();
-        }
-
-        function closeSecurityModal() {
-            document.getElementById('securityModal').classList.remove('active');
-            document.getElementById('securityContent').classList.remove('access-granted');
-            pendingToggle = null;
-        }
-
-        document.getElementById('confirmSecurity').onclick = function() {
-            const code = document.getElementById('securityCode').value;
-            const content = document.getElementById('securityContent');
-            
-            if (code === "9114") {
-                content.classList.add('access-granted');
-                setTimeout(() => {
-                    ejecutarToggle(pendingToggle.id, pendingToggle.currentMateria);
-                    closeSecurityModal();
-                }, 600);
-            } else {
-                alert("SISTEMA: ACCESO DENEGADO. CÓDIGO INCORRECTO.");
-                closeSecurityModal();
-            }
-        };
-
-        function toggleTarea(id, currentMateria) {
-            const transaction = db.transaction(["tareas"], "readonly");
-            const store = transaction.objectStore("tareas");
-            
-            store.get(id).onsuccess = (e) => {
-                const data = e.target.result;
-                if (data.entregada) {
-                    pendingToggle = { id, currentMateria };
-                    openSecurityModal();
-                } else {
-                    ejecutarToggle(id, currentMateria);
-                }
-            };
-        }
-
-        function ejecutarToggle(id, currentMateria) {
-            const transaction = db.transaction(["tareas"], "readwrite");
-            const store = transaction.objectStore("tareas");
-            store.get(id).onsuccess = (e) => {
-                const data = e.target.result;
-                data.entregada = !data.entregada;
-                store.put(data);
-            };
-            transaction.oncomplete = () => {
-                actualizarDashboard();
-                showTasks(currentMateria);
-            };
-        }
 
         function saveTask() {
             const nombre = document.getElementById('taskName').value;
@@ -337,22 +249,10 @@
 
             const transaction = db.transaction(["tareas"], "readwrite");
             transaction.objectStore("tareas").add({ nombre, materia, fecha, entregada: false, time: Date.now() });
-            
             transaction.oncomplete = () => {
                 closeAddModal();
                 actualizarDashboard();
             };
-        }
-
-        function deleteTarea(id, currentMateria) {
-            if (confirm("¿CONFIRMAR ELIMINACIÓN PERMANENTE DE ESTE NODO?")) {
-                const transaction = db.transaction(["tareas"], "readwrite");
-                transaction.objectStore("tareas").delete(id);
-                transaction.oncomplete = () => {
-                    actualizarDashboard();
-                    showTasks(currentMateria);
-                };
-            }
         }
 
         function actualizarDashboard() {
@@ -388,7 +288,7 @@
                     const porc = total > 0 ? Math.round((done/total)*100) : 0;
                     document.getElementById('progress-fill').style.width = porc + '%';
                     document.getElementById('progress-percentage').innerText = porc + '%';
-                    document.getElementById('progress-stats').innerText = `${done} / ${total} NODOS COMPLETADOS`;
+                    document.getElementById('progress-stats').innerText = `${done} / ${total} TAREAS COMPLETADAS`;
                 }
             };
         }
@@ -407,28 +307,37 @@
                     if (cursor.value.materia === materia) res.push(cursor.value);
                     cursor.continue();
                 } else {
-                    list.innerHTML = res.length ? '' : '<p style="text-align:center; opacity:0.3; padding:20px;">[ SIN DATOS ]</p>';
-                    res.sort((a,b) => b.time - a.time).forEach(t => {
+                    list.innerHTML = res.length ? '' : '<p style="text-align:center; opacity:0.3; padding:20px;">SIN TAREAS PENDIENTES</p>';
+                    res.forEach(t => {
                         list.innerHTML += `
                             <div class="task-item">
                                 <div class="${t.entregada ? 'completed-text' : ''}">
                                     <div style="font-weight:700;">${t.nombre}</div>
-                                    <div style="font-size:0.7rem; color:var(--accent-2);">LIMIT: ${t.fecha}</div>
+                                    <div style="font-size:0.7rem; color:#888;">FECHA: ${t.fecha}</div>
                                 </div>
-                                <div style="display:flex; align-items:center;">
-                                    <button class="btn-toggle ${t.entregada ? 'completed' : ''}" 
-                                            onclick="toggleTarea(${t.id}, '${materia}')">
-                                        ${t.entregada ? 'REVERSAR' : 'LISTO'}
-                                    </button>
-                                    <button class="btn-delete" onclick="deleteTarea(${t.id}, '${materia}')">
-                                        X
-                                    </button>
-                                </div>
+                                <button class="btn-toggle ${t.entregada ? 'completed' : ''}" onclick="toggleTarea(${t.id}, '${materia}')">
+                                    ${t.entregada ? 'OK' : 'LISTO'}
+                                </button>
                             </div>`;
                     });
                 }
             };
         }
+
+        function toggleTarea(id, currentMateria) {
+            const transaction = db.transaction(["tareas"], "readwrite");
+            const store = transaction.objectStore("tareas");
+            store.get(id).onsuccess = (e) => {
+                const data = e.target.result;
+                data.entregada = !data.entregada;
+                store.put(data);
+            };
+            transaction.oncomplete = () => {
+                actualizarDashboard();
+                showTasks(currentMateria);
+            };
+        }
     </script>
 </body>
 </html>
+
