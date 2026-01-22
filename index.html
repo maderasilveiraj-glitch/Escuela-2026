@@ -1,48 +1,54 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEURAL_HORARIO v3.0 Dark</title>
+    <title>Enero-Junio_HORARIO</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Fondo Dark Profundo */
-            --bg: #0b0e14; 
-            --card-bg: #161b22;
+            --bg-overlay: rgba(11, 14, 20, 0.85);
+            --card-bg: rgba(22, 27, 34, 0.9);
             --text-main: #ffffff;
             --text-dim: #a0a0a0;
             --accent-cyber: #7000ff;
-            
-            /* Colores de las materias (se mantienen originales) */
             --color-calculo: #b388ff;
             --color-etica: #ffd54f;
             --color-soft: #4fc3f7;
             --color-dinamica: #81c784;
             --color-contabilidad: #ff8a65;
             --color-legislacion: #ff5252;
-            --danger: #ff0055;
             --success: #00ff88;
+            --danger: #ff0055;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body { 
-            background: var(--bg); color: var(--text-main); 
-            font-family: 'Rajdhani', sans-serif; overflow-x: hidden;
+            background: linear-gradient(var(--bg-overlay), var(--bg-overlay)), 
+                        url('https://images.unsplash.com/photo-1614850523296-d8c1af93d400?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: var(--text-main); 
+            font-family: 'Rajdhani', sans-serif; 
+            overflow-x: hidden;
+            min-height: 100vh;
         }
 
-        /* HEADER DARK */
         .header { 
             padding: 30px 20px; text-align: center; 
-            background: #0d1117; border-bottom: 1px solid #30363d;
+            background: rgba(13, 17, 23, 0.8); 
+            border-bottom: 1px solid rgba(112, 0, 255, 0.3);
+            backdrop-filter: blur(10px);
             box-shadow: 0 4px 20px rgba(0,0,0,0.5);
         }
-        h1 { font-family: 'Orbitron'; font-size: 1.4rem; letter-spacing: 2px; color: #fff; text-shadow: 0 0 10px rgba(112, 0, 255, 0.5); }
+        h1 { font-family: 'Orbitron'; font-size: 1.4rem; letter-spacing: 2px; color: #fff; text-shadow: 0 0 15px var(--accent-cyber); }
 
-        /* DASHBOARD DARK */
         .progress-section { 
             padding: 20px; background: var(--card-bg); margin: 15px; 
-            border-radius: 15px; border: 1px solid #30363d;
+            border-radius: 15px; border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(5px);
         }
         .progress-bar-bg { width: 100%; height: 8px; background: #21262d; margin: 10px 0; border-radius: 10px; overflow: hidden; }
         .progress-fill { 
@@ -51,79 +57,57 @@
             box-shadow: 0 0 15px rgba(112, 0, 255, 0.6);
         }
 
-        /* CONTENEDOR DE HORARIO */
-        .schedule-container { 
-            display: flex; overflow-x: auto; gap: 15px; padding: 20px; 
-            scroll-snap-type: x mandatory;
-        }
-        .schedule-container::-webkit-scrollbar { height: 4px; }
-        .schedule-container::-webkit-scrollbar-thumb { background: #30363d; border-radius: 10px; }
-
+        .schedule-container { display: flex; overflow-x: auto; gap: 15px; padding: 20px; }
         .day-column { 
-            min-width: 280px; scroll-snap-align: center; 
-            background: var(--card-bg); border-radius: 20px; padding: 20px;
-            border: 1px solid #30363d;
+            min-width: 280px; background: var(--card-bg); border-radius: 20px; padding: 20px;
+            border: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(10px);
         }
-        .day-name { 
-            font-family: 'Orbitron'; font-size: 1.1rem; font-weight: 900;
-            margin-bottom: 20px; color: var(--accent-cyber);
-            display: flex; justify-content: space-between; align-items: center;
-        }
+        .day-name { font-family: 'Orbitron'; font-size: 1.1rem; color: var(--accent-cyber); display: flex; justify-content: space-between; }
 
-        /* TARJETAS DE MATERIA (Colores resaltados) */
         .class-card { 
-            margin-bottom: 15px; padding: 15px; border-radius: 15px;
-            color: #fff; position: relative; transition: all 0.3s ease;
-            cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            margin-top: 15px; padding: 15px; border-radius: 15px;
+            color: #fff; position: relative; transition: 0.3s;
+            cursor: pointer; border: 1px solid rgba(255,255,255,0.1);
         }
-        .class-card:hover { transform: scale(1.02); filter: brightness(1.1); }
+        .class-card:hover { transform: translateY(-5px); filter: brightness(1.2); }
         
-        .bg-calculo { background-color: var(--color-calculo); }
-        .bg-legislacion { background-color: var(--color-legislacion); }
-        .bg-dinamica { background-color: var(--color-dinamica); }
-        .bg-contabilidad { background-color: var(--color-contabilidad); }
-        .bg-soft { background-color: var(--color-soft); }
-        .bg-etica { background-color: var(--color-etica); color: #000 !important; }
-        .bg-default { background-color: #30363d; }
+        .bg-calculo { background: linear-gradient(135deg, var(--color-calculo), #7e57c2); }
+        .bg-legislacion { background: linear-gradient(135deg, var(--color-legislacion), #d32f2f); }
+        .bg-dinamica { background: linear-gradient(135deg, var(--color-dinamica), #388e3c); }
+        .bg-contabilidad { background: linear-gradient(135deg, var(--color-contabilidad), #e64a19); }
+        .bg-soft { background: linear-gradient(135deg, var(--color-soft), #0288d1); }
+        .bg-etica { background: linear-gradient(135deg, var(--color-etica), #fbc02d); color: #000 !important; }
 
-        .time-tag { 
-            font-size: 0.75rem; background: rgba(0,0,0,0.25); 
-            padding: 3px 8px; border-radius: 20px; margin-bottom: 8px; display: inline-block;
-        }
-        .subject { font-weight: 700; font-size: 1.05rem; }
-        .teacher { font-size: 0.8rem; opacity: 0.85; margin-top: 5px; }
+        .time-tag { font-size: 0.75rem; background: rgba(0,0,0,0.3); padding: 3px 8px; border-radius: 20px; }
+        .subject { font-weight: 700; margin-top: 5px; display: flex; align-items: center; gap: 8px; }
+        .teacher { font-size: 0.8rem; opacity: 0.8; }
 
         .task-count-badge {
             position: absolute; top: 12px; right: 12px;
-            background: #fff; color: #000;
-            width: 22px; height: 22px; display: grid; place-items: center;
-            font-size: 0.75rem; font-weight: 900; border-radius: 50%;
-            box-shadow: 0 0 10px rgba(255,255,255,0.3);
+            background: #fff; color: #000; width: 22px; height: 22px;
+            display: grid; place-items: center; font-size: 0.75rem; font-weight: 900; border-radius: 50%;
         }
 
-        /* MODALES DARK */
         .modal-overlay { 
             position: fixed; inset: 0; background: rgba(0,0,0,0.85); 
             display: none; z-index: 1000; align-items: center; justify-content: center;
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(10px);
         }
         .modal-overlay.active { display: flex; }
         .modal-content { 
             width: 90%; max-width: 400px; background: #161b22; 
             border-radius: 25px; padding: 30px; border: 1px solid var(--accent-cyber);
-            box-shadow: 0 0 30px rgba(112, 0, 255, 0.2);
         }
 
         input, select { 
-            background: #0d1117; border: 1px solid #30363d; color: #fff; 
-            padding: 12px; border-radius: 8px; font-family: 'Rajdhani';
+            width: 100%; background: #0d1117; border: 1px solid #30363d; color: #fff; 
+            padding: 12px; border-radius: 8px; font-family: 'Rajdhani'; margin-top: 10px;
         }
 
-        /* BOTONES */
         .btn-add { 
             width: 100%; background: var(--accent-cyber); color: #fff; 
             border: none; padding: 15px; font-family: 'Orbitron'; font-weight: 700;
-            border-radius: 12px; cursor: pointer;
+            border-radius: 12px; cursor: pointer; margin-top: 15px;
         }
         .fab { 
             position: fixed; bottom: 30px; right: 30px; 
@@ -132,21 +116,26 @@
             box-shadow: 0 0 20px rgba(112, 0, 255, 0.5); z-index: 100;
         }
 
-        /* LISTA TAREAS DARK */
         .task-item {
-            background: #21262d; padding: 15px; border-radius: 12px;
+            background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px;
             margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;
         }
         .btn-toggle { padding: 8px 12px; border: none; border-radius: 8px; font-family: 'Orbitron'; cursor: pointer; }
         .btn-toggle.completed { background: var(--success); color: #000; font-weight: 700; }
         .completed-text { text-decoration: line-through; opacity: 0.3; }
+
+        /* Estilo PIN */
+        .pin-input {
+            text-align: center; font-size: 2rem; letter-spacing: 15px; font-family: 'Orbitron';
+            border-color: var(--accent-cyber);
+        }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <p style="color: var(--accent-cyber); font-weight: 700; font-size: 0.6rem; letter-spacing: 3px; margin-bottom: 5px;">SYSTEM STATUS: DARK_MODE</p>
-        <h1>MI HORARIO</h1>
+        <p style="color: var(--accent-cyber); font-weight: 700; font-size: 0.6rem; letter-spacing: 3px; margin-bottom: 5px;">Ingeniería En Gestión Empresarial</p>
+        <h1>MI HORARIO (Alejandro_Madera)</h1>
     </div>
 
     <div class="progress-section">
@@ -168,63 +157,78 @@
         <div class="modal-content">
             <h2 id="modalTitle" style="color: var(--accent-cyber); font-family: 'Orbitron'; margin-bottom: 20px; font-size: 1.2rem;">MATERIA</h2>
             <div id="taskList"></div>
-            <button class="btn-add" style="margin-top:20px; background: #30363d; color: #fff;" onclick="closeModal()">CERRAR</button>
+            <button class="btn-add" style="background: #30363d;" onclick="closeModal()">CERRAR</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="pinModal">
+        <div class="modal-content">
+            <h2 style="color: var(--danger); font-family: 'Orbitron'; text-align: center;">SEGURIDAD</h2>
+            <p style="text-align: center; font-size: 0.8rem; margin-top: 10px;">Introduce el código de acceso</p>
+            <input type="password" id="pinCode" class="pin-input" maxlength="4" placeholder="****">
+            <div style="display: flex; gap: 10px;">
+                <button class="btn-add" style="background: #30363d;" onclick="closePinModal()">CANCELAR</button>
+                <button class="btn-add" onclick="validatePin()">CONFIRMAR</button>
+            </div>
         </div>
     </div>
 
     <div class="modal-overlay" id="addModal" onclick="if(event.target==this) closeAddModal()">
         <div class="modal-content">
-            <h2 style="color: var(--accent-cyber); font-family: 'Orbitron'; margin-bottom: 20px;">NUEVA TAREA</h2>
-            <div style="display: flex; flex-direction: column; gap: 15px;">
-                <input type="text" id="taskName" placeholder="Nombre de la tarea...">
-                <select id="taskSubject">
-                    <option>CÁLCULO INTEGRAL</option>
-                    <option>LEGISLACIÓN LABORAL</option>
-                    <option>DINÁMICA SOCIAL</option>
-                    <option>CONT. ORIENTADA NEG.</option>
-                    <option>SOFT. APLIC. EJEC.</option>
-                    <option>TALLER DE ÉTICA</option>
-                </select>
-                <input type="date" id="taskDate">
-                <button class="btn-add" onclick="saveTask()">GUARDAR TAREA</button>
-            </div>
+            <h2 style="color: var(--accent-cyber); font-family: 'Orbitron';">NUEVA TAREA</h2>
+            <input type="text" id="taskName" placeholder="Nombre de la tarea...">
+            <select id="taskSubject">
+                <option value="CÁLCULO INTEGRAL">📐 CÁLCULO INTEGRAL</option>
+                <option value="LEGISLACIÓN LABORAL">⚖️ LEGISLACIÓN LABORAL</option>
+                <option value="DINÁMICA SOCIAL">👥 DINÁMICA SOCIAL</option>
+                <option value="CONT. ORIENTADA NEG.">💼 CONT. ORIENTADA NEG.</option>
+                <option value="SOFT. APLIC. EJEC.">💻 SOFT. APLIC. EJEC.</option>
+                <option value="TALLER DE ÉTICA">🧠 TALLER DE ÉTICA</option>
+            </select>
+            <input type="date" id="taskDate">
+            <button class="btn-add" onclick="saveTask()">GUARDAR TAREA</button>
         </div>
     </div>
 
     <script>
+        const subjectEmojis = {
+            "CÁLCULO INTEGRAL": "📐", "LEGISLACIÓN LABORAL": "⚖️",
+            "DINÁMICA SOCIAL": "👥", "CONT. ORIENTADA NEG.": "💼",
+            "SOFT. APLIC. EJEC.": "💻", "TALLER DE ÉTICA": "🧠"
+        };
+
         const materiasData = [
-            { dia: "Lunes", emoji: "⚡", clases: [{h: "12:00-14:00", n: "CÁLCULO INTEGRAL", t: "A. Herrera"}] },
+            { dia: "Lunes", emoji: "⚡", clases: [{h: "12:00-14:00", n: "CÁLCULO INTEGRAL", t: "Alejandro Herrera Martín"}] },
             { dia: "Martes", emoji: "🔥", clases: [
-                {h: "07:00-09:00", n: "LEGISLACIÓN LABORAL", t: "C. Rodríguez"},
-                {h: "09:00-11:00", n: "DINÁMICA SOCIAL", t: "D. Pat Reyes"},
-                {h: "11:00-13:00", n: "TALLER DE ÉTICA", t: "G. León Lara"},
-                {h: "14:00-17:00", n: "SOFT. APLIC. EJEC.", t: "Y. Paredes"}
+                {h: "07:00-09:00", n: "LEGISLACIÓN LABORAL", t: "Carmen María Rodríguez Carrillo"},
+                {h: "09:00-11:00", n: "DINÁMICA SOCIAL", t: "Drisdel Mariela Pat Reyes"},
+                {h: "11:00-13:00", n: "TALLER DE ÉTICA", t: "Germán Jesús León Lara"},
+                {h: "14:00-17:00", n: "SOFT. APLIC. EJEC.", t: "Yolanda del Socorro Paredes"}
             ]},
             { dia: "Miércoles", emoji: "💎", clases: [
-                {h: "07:00-09:00", n: "LEGISLACIÓN LABORAL", t: "C. Rodríguez"},
-                {h: "09:00-11:00", n: "DINÁMICA SOCIAL", t: "D. Pat Reyes"},
-                {h: "11:00-14:00", n: "CÁLCULO INTEGRAL", t: "A. Herrera"}
+                {h: "07:00-09:00", n: "LEGISLACIÓN LABORAL", t: "Carmen María Rodríguez Carrillo"},
+                {h: "09:00-11:00", n: "DINÁMICA SOCIAL", t: "Drisdel Mariela Pat Reyes"},
+                {h: "11:00-14:00", n: "CÁLCULO INTEGRAL", t:"Alejandro Herrera Martín "}
             ]},
             { dia: "Jueves", emoji: "🎯", clases: [
-                {h: "09:00-12:00", n: "CONT. ORIENTADA NEG.", t: "M. Castro"},
-                {h: "12:00-14:00", n: "TALLER DE ÉTICA", t: "G. León Lara"},
-                {h: "16:00-18:00", n: "SOFT. APLIC. EJEC.", t: "Y. Paredes"}
+                {h: "09:00-12:00", n: "CONT. ORIENTADA NEG.", t: "Mario Alberto Castro Cortés"},
+                {h: "12:00-14:00", n: "TALLER DE ÉTICA", t: "Germán Jesús León Lara"},
+                {h: "16:00-18:00", n: "SOFT. APLIC. EJEC.", t: "Yolanda del Socorro Paredes"}
             ]},
             { dia: "Viernes", emoji: "🎉", clases: [
-                {h: "12:00-14:00", n: "CONT. ORIENTADA NEG.", t: "M. Castro"}
+                {h: "12:00-14:00", n: "CONT. ORIENTADA NEG.", t: "Mario Alberto Castro Cortés"}
             ]}
         ];
 
         const colorMap = {
-            "CÁLCULO INTEGRAL": "bg-calculo",
-            "LEGISLACIÓN LABORAL": "bg-legislacion",
-            "DINÁMICA SOCIAL": "bg-dinamica",
-            "CONT. ORIENTADA NEG.": "bg-contabilidad",
-            "SOFT. APLIC. EJEC.": "bg-soft",
-            "TALLER DE ÉTICA": "bg-etica"
+            "CÁLCULO INTEGRAL": "bg-calculo", "LEGISLACIÓN LABORAL": "bg-legislacion",
+            "DINÁMICA SOCIAL": "bg-dinamica", "CONT. ORIENTADA NEG.": "bg-contabilidad",
+            "SOFT. APLIC. EJEC.": "bg-soft", "TALLER DE ÉTICA": "bg-etica"
         };
 
         let db;
+        let pendingToggle = null; // Guardar acción pendiente de validación
+
         const request = indexedDB.open("CyberDB", 1);
         request.onupgradeneeded = (e) => {
             db = e.target.result;
@@ -244,7 +248,7 @@
                     ${d.clases.map(c => `
                         <div class="class-card ${colorMap[c.n] || 'bg-default'}" onclick="showTasks('${c.n}')">
                             <div class="time-tag">${c.h}</div>
-                            <div class="subject">${c.n}</div>
+                            <div class="subject"><span>${subjectEmojis[c.n] || '📚'}</span> ${c.n}</div>
                             <div class="teacher">${c.t}</div>
                         </div>
                     `).join('')}
@@ -252,9 +256,44 @@
             `).join('');
         }
 
+        // FUNCIONES MODALES
         function openAddModal() { document.getElementById('addModal').classList.add('active'); }
         function closeAddModal() { document.getElementById('addModal').classList.remove('active'); }
         function closeModal() { document.getElementById('modalOverlay').classList.remove('active'); }
+        function closePinModal() { 
+            document.getElementById('pinModal').classList.remove('active');
+            document.getElementById('pinCode').value = '';
+            pendingToggle = null;
+        }
+
+        // LÓGICA DE PIN
+        function toggleTarea(id, materia) {
+            pendingToggle = { id, materia };
+            document.getElementById('pinModal').classList.add('active');
+            document.getElementById('pinCode').focus();
+        }
+
+        function validatePin() {
+            const pin = document.getElementById('pinCode').value;
+            if (pin === "9114") {
+                const { id, materia } = pendingToggle;
+                const transaction = db.transaction(["tareas"], "readwrite");
+                const store = transaction.objectStore("tareas");
+                store.get(id).onsuccess = (e) => {
+                    const data = e.target.result;
+                    data.entregada = !data.entregada;
+                    store.put(data);
+                };
+                transaction.oncomplete = () => { 
+                    actualizarDashboard(); 
+                    showTasks(materia); 
+                    closePinModal();
+                };
+            } else {
+                alert("CÓDIGO INCORRECTO");
+                document.getElementById('pinCode').value = '';
+            }
+        }
 
         function saveTask() {
             const nombre = document.getElementById('taskName').value;
@@ -284,15 +323,15 @@
                     cursor.continue();
                 } else {
                     document.querySelectorAll('.class-card').forEach(card => {
-                        const m = card.querySelector('.subject').innerText;
+                        const subjectText = Object.keys(subjectEmojis).find(key => card.querySelector('.subject').innerText.includes(key));
                         let b = card.querySelector('.task-count-badge');
-                        if (pendientes[m]) {
+                        if (pendientes[subjectText]) {
                             if (!b) {
                                 b = document.createElement('span');
                                 b.className = 'task-count-badge';
                                 card.appendChild(b);
                             }
-                            b.innerText = pendientes[m];
+                            b.innerText = pendientes[subjectText];
                         } else if (b) b.remove();
                     });
                     const porc = total > 0 ? Math.round((done/total)*100) : 0;
@@ -305,7 +344,7 @@
 
         function showTasks(materia) {
             document.getElementById('modalOverlay').classList.add('active');
-            document.getElementById('modalTitle').innerText = materia;
+            document.getElementById('modalTitle').innerText = subjectEmojis[materia] + " " + materia;
             const list = document.getElementById('taskList');
             const transaction = db.transaction(["tareas"], "readonly");
             const res = [];
@@ -331,18 +370,9 @@
                 }
             };
         }
-
-        function toggleTarea(id, currentMateria) {
-            const transaction = db.transaction(["tareas"], "readwrite");
-            const store = transaction.objectStore("tareas");
-            store.get(id).onsuccess = (e) => {
-                const data = e.target.result;
-                data.entregada = !data.entregada;
-                store.put(data);
-            };
-            transaction.oncomplete = () => { actualizarDashboard(); showTasks(currentMateria); };
-        }
     </script>
 </body>
 </html>
+
     
+
