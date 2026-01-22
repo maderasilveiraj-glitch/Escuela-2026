@@ -87,6 +87,7 @@
             width: 90%; max-width: 400px; background: #0a0c14; 
             border: 1px solid var(--accent); padding: 30px;
             box-shadow: 0 0 30px rgba(0, 242, 255, 0.2);
+            position: relative; overflow: hidden;
         }
 
         /* BOTONES Y FORM */
@@ -135,6 +136,16 @@
         .btn-delete:hover { background: var(--danger); color: #fff; }
 
         .completed-text { text-decoration: line-through; opacity: 0.4; }
+
+        /* ANIMACIÓN DE ACCESO */
+        .access-granted {
+            animation: flashSuccess 0.5s ease-out;
+            border-color: var(--success) !important;
+        }
+        @keyframes flashSuccess {
+            0% { background: var(--success); }
+            100% { background: #0a0c14; }
+        }
     </style>
 </head>
 <body>
@@ -164,6 +175,20 @@
             <h2 id="modalTitle" style="color: var(--accent); font-family: 'Orbitron'; margin-bottom: 20px;">MATERIA</h2>
             <div id="taskList"></div>
             <button class="btn-add" style="margin-top:20px; background: #222; color: #fff;" onclick="closeModal()">CERRAR</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="securityModal">
+        <div class="modal-content" id="securityContent" style="border-color: var(--danger);">
+            <h2 style="color: var(--danger); font-family: 'Orbitron'; margin-bottom: 20px; font-size: 1rem;">SEGURIDAD_CRÍTICA</h2>
+            <div class="input-group">
+                <label>PASSWORD_REQUERIDO</label>
+                <input type="password" id="securityCode" placeholder="****" style="text-align: center; font-size: 1.5rem; letter-spacing: 10px;">
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn-add" id="confirmSecurity" style="background: var(--danger);">DECODIFICAR</button>
+                <button class="btn-add" onclick="closeSecurityModal()" style="background: #222; color: #fff;">ABORTR</button>
+            </div>
         </div>
     </div>
 
@@ -208,6 +233,7 @@
         };
 
         let db;
+        let pendingToggle = null;
         const request = indexedDB.open("CyberDB", 1);
         
         request.onupgradeneeded = (e) => {
@@ -245,6 +271,64 @@
         function closeAddModal() { document.getElementById('addModal').classList.remove('active'); }
         function closeModal() { document.getElementById('modalOverlay').classList.remove('active'); }
 
+        // SEGURIDAD
+        function openSecurityModal() {
+            document.getElementById('securityModal').classList.add('active');
+            document.getElementById('securityCode').value = '';
+            document.getElementById('securityCode').focus();
+        }
+
+        function closeSecurityModal() {
+            document.getElementById('securityModal').classList.remove('active');
+            document.getElementById('securityContent').classList.remove('access-granted');
+            pendingToggle = null;
+        }
+
+        document.getElementById('confirmSecurity').onclick = function() {
+            const code = document.getElementById('securityCode').value;
+            const content = document.getElementById('securityContent');
+            
+            if (code === "9114") {
+                content.classList.add('access-granted');
+                setTimeout(() => {
+                    ejecutarToggle(pendingToggle.id, pendingToggle.currentMateria);
+                    closeSecurityModal();
+                }, 600);
+            } else {
+                alert("SISTEMA: ACCESO DENEGADO. CÓDIGO INCORRECTO.");
+                closeSecurityModal();
+            }
+        };
+
+        function toggleTarea(id, currentMateria) {
+            const transaction = db.transaction(["tareas"], "readonly");
+            const store = transaction.objectStore("tareas");
+            
+            store.get(id).onsuccess = (e) => {
+                const data = e.target.result;
+                if (data.entregada) {
+                    pendingToggle = { id, currentMateria };
+                    openSecurityModal();
+                } else {
+                    ejecutarToggle(id, currentMateria);
+                }
+            };
+        }
+
+        function ejecutarToggle(id, currentMateria) {
+            const transaction = db.transaction(["tareas"], "readwrite");
+            const store = transaction.objectStore("tareas");
+            store.get(id).onsuccess = (e) => {
+                const data = e.target.result;
+                data.entregada = !data.entregada;
+                store.put(data);
+            };
+            transaction.oncomplete = () => {
+                actualizarDashboard();
+                showTasks(currentMateria);
+            };
+        }
+
         function saveTask() {
             const nombre = document.getElementById('taskName').value;
             const materia = document.getElementById('taskSubject').value;
@@ -260,37 +344,10 @@
             };
         }
 
-        function toggleTarea(id, currentMateria) {
-            const transaction = db.transaction(["tareas"], "readwrite");
-            const store = transaction.objectStore("tareas");
-            
-            store.get(id).onsuccess = (e) => {
-                const data = e.target.result;
-                
-                // Seguridad para revertir tareas completadas
-                if (data.entregada) {
-                    const pass = prompt("ACCESO RESTRINGIDO: INGRESE CÓDIGO DE AUTORIZACIÓN PARA REVERSAR");
-                    if (pass !== "9114") {
-                        alert("ERROR: CÓDIGO INVÁLIDO. ACCIÓN ABORTADA.");
-                        return;
-                    }
-                }
-
-                data.entregada = !data.entregada;
-                store.put(data);
-            };
-
-            transaction.oncomplete = () => {
-                actualizarDashboard();
-                showTasks(currentMateria);
-            };
-        }
-
         function deleteTarea(id, currentMateria) {
             if (confirm("¿CONFIRMAR ELIMINACIÓN PERMANENTE DE ESTE NODO?")) {
                 const transaction = db.transaction(["tareas"], "readwrite");
                 transaction.objectStore("tareas").delete(id);
-                
                 transaction.oncomplete = () => {
                     actualizarDashboard();
                     showTasks(currentMateria);
