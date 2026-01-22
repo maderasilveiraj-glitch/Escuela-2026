@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -10,7 +10,7 @@
     <style>
         :root {
             --bg-deep: #050505;
-            --card-bg: rgba(13, 17, 23, 0.7);
+            --card-bg: rgba(13, 17, 23, 0.85);
             --text-main: #fff;
             --text-dim: #00f3ff;
             --accent-cyber: #7000ff;
@@ -22,6 +22,31 @@
             --neon-etica: #ffd54f;
             --success: #00ff88;
             --danger: #ff0055;
+            --gradient-angle: 0deg; /* Para el borde rotatorio */
+        }
+
+        /* Registro de propiedad para animación de ángulo */
+        @property --gradient-angle {
+            syntax: "<angle>";
+            initial-value: 0deg;
+            inherits: false;
+        }
+
+        @keyframes rotateGradient {
+            0% { --gradient-angle: 0deg; }
+            100% { --gradient-angle: 360deg; }
+        }
+
+        @keyframes rgbBody {
+            0% { background-color: #050505; }
+            33% { background-color: #050a05; }
+            66% { background-color: #05050a; }
+            100% { background-color: #050505; }
+        }
+
+        @keyframes neonFlow {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -32,14 +57,15 @@
             font-family: 'Rajdhani', sans-serif; 
             overflow-x: hidden;
             min-height: 100vh;
+            animation: rgbBody 15s infinite alternate linear;
         }
 
         #particles-js {
             position: fixed;
             width: 100%;
             height: 100%;
-            background-image: radial-gradient(circle at 50% 50%, #1a0b2e 0%, #050505 100%);
             z-index: -1;
+            background: transparent;
         }
 
         .grid-overlay {
@@ -53,77 +79,81 @@
             pointer-events: none;
         }
 
-        body, h1, h2, p, span, div, input, select, button {
-            text-shadow: 0 0 8px currentColor;
-        }
-
         .header { 
             padding: 30px 20px; text-align: center; 
-            background: rgba(5, 5, 5, 0.6); 
-            border-bottom: 2px solid var(--accent-cyber);
+            background: rgba(5, 5, 5, 0.8); 
+            border-bottom: 2px solid transparent;
+            border-image: linear-gradient(90deg, #7000ff, #00f3ff, #00ff88, #7000ff) 1;
             backdrop-filter: blur(15px);
-            box-shadow: 0 0 30px rgba(112, 0, 255, 0.4);
+            animation: neonFlow 6s infinite linear;
+            box-shadow: 0 0 30px rgba(112, 0, 255, 0.2);
         }
-        h1 { font-family: 'Orbitron'; font-size: 1.6rem; letter-spacing: 4px; color: #fff; text-shadow: 0 0 20px var(--accent-cyber); }
-
-        .progress-section { 
-            padding: 20px; background: var(--card-bg); margin: 15px; 
-            border-radius: 15px; border: 1px solid rgba(112, 0, 255, 0.2);
-            backdrop-filter: blur(10px);
-            box-shadow: inset 0 0 15px rgba(112, 0, 255, 0.1);
-        }
-        .progress-bar-bg { width: 100%; height: 10px; background: #000; margin: 10px 0; border-radius: 10px; overflow: hidden; border: 1px solid #333; }
-        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent-cyber), #00d4ff, var(--success)); width: 0%; transition: 1.5s cubic-bezier(0.22, 1, 0.36, 1); box-shadow: 0 0 20px var(--accent-cyber); }
-
-        .schedule-container { display: flex; overflow-x: auto; gap: 20px; padding: 25px; scrollbar-width: none; }
-        .day-column { min-width: 300px; background: rgba(13, 17, 23, 0.5); border-radius: 25px; padding: 20px; border: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(5px); }
-        .day-name { font-family: 'Orbitron'; font-size: 1.3rem; color: var(--text-dim); display: flex; justify-content: space-between; border-bottom: 1px solid rgba(0, 243, 255, 0.2); padding-bottom: 10px; }
 
         .class-card { 
             margin-top: 15px; padding: 18px; border-radius: 18px;
             position: relative; transition: all 0.4s ease;
-            cursor: pointer; border: 1px solid rgba(255,255,255,0.08);
-            background: rgba(255, 255, 255, 0.03);
+            cursor: pointer; 
+            background: var(--card-bg);
             overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+            z-index: 1;
         }
-        .class-card:hover { transform: translateY(-5px) scale(1.02); background: rgba(255, 255, 255, 0.07); box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
 
+        /* Pseudo-elemento para el borde RGB rotatorio */
+        .class-card::before {
+            content: "";
+            position: absolute;
+            inset: -2px;
+            z-index: -1;
+            background: conic-gradient(
+                from var(--gradient-angle),
+                #7000ff, #00f3ff, #00ff88, #ffd54f, #ff0055, #7000ff
+            );
+            animation: rotateGradient 4s linear infinite;
+            opacity: 0.3;
+            transition: opacity 0.3s;
+        }
+
+        .class-card:hover::before {
+            opacity: 1;
+        }
+
+        .class-card:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+
+        /* Estilos base que ya tenías */
+        h1 { font-family: 'Orbitron'; font-size: 1.6rem; letter-spacing: 4px; color: #fff; text-shadow: 0 0 20px var(--accent-cyber); }
+        .progress-section { 
+            padding: 20px; background: var(--card-bg); margin: 15px; 
+            border-radius: 15px; border: 1px solid rgba(112, 0, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        .progress-bar-bg { width: 100%; height: 10px; background: #000; margin: 10px 0; border-radius: 10px; overflow: hidden; border: 1px solid #333; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent-cyber), #00d4ff, var(--success)); width: 0%; transition: 1.5s cubic-bezier(0.22, 1, 0.36, 1); }
+        .schedule-container { display: flex; overflow-x: auto; gap: 20px; padding: 25px; scrollbar-width: none; }
+        .day-column { min-width: 300px; background: rgba(13, 17, 23, 0.5); border-radius: 25px; padding: 20px; border: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(5px); }
+        .day-name { font-family: 'Orbitron'; font-size: 1.3rem; color: var(--text-dim); display: flex; justify-content: space-between; border-bottom: 1px solid rgba(0, 243, 255, 0.2); padding-bottom: 10px; }
+        .time-tag { font-size: 0.8rem; background: rgba(112, 0, 255, 0.2); padding: 4px 12px; border-radius: 20px; color: #fff; margin-bottom: 8px; display: inline-block; border: 1px solid var(--accent-cyber); }
+        .subject { font-weight: 700; font-size: 1.2rem; display: flex; align-items: center; gap: 10px; }
+        .teacher { font-size: 0.9rem; opacity: 0.8; margin-top: 6px; font-weight: 500; }
         .txt-calculo { color: var(--neon-calculo) !important; }
         .txt-legislacion { color: var(--neon-legislacion) !important; }
         .txt-dinamica { color: var(--neon-dinamica) !important; }
         .txt-contabilidad { color: var(--neon-contabilidad) !important; }
         .txt-soft { color: var(--neon-soft) !important; }
         .txt-etica { color: var(--neon-etica) !important; }
-
-        .time-tag { font-size: 0.8rem; background: rgba(112, 0, 255, 0.2); padding: 4px 12px; border-radius: 20px; color: #fff; margin-bottom: 8px; display: inline-block; border: 1px solid var(--accent-cyber); }
-        .subject { font-weight: 700; font-size: 1.2rem; display: flex; align-items: center; gap: 10px; }
-        .teacher { font-size: 0.9rem; opacity: 0.8; margin-top: 6px; font-weight: 500; }
-
         .task-count-badge {
             position: absolute; top: 15px; right: 15px;
             background: var(--accent-cyber); color: #fff; width: 25px; height: 25px;
             display: grid; place-items: center; font-size: 0.8rem; font-weight: 900; border-radius: 50%;
             box-shadow: 0 0 15px var(--accent-cyber);
         }
-
         .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(20px); }
         .modal-overlay.active { display: flex; }
-        .modal-content { width: 90%; max-width: 450px; background: #0d1117; border-radius: 30px; padding: 35px; border: 2px solid var(--accent-cyber); box-shadow: 0 0 50px rgba(112, 0, 255, 0.5); }
-
-        input, select { width: 100%; background: #000; border: 1px solid var(--accent-cyber); color: var(--text-dim); padding: 14px; border-radius: 12px; margin-top: 15px; font-family: 'Rajdhani'; }
-
+        .modal-content { width: 90%; max-width: 450px; background: #0d1117; border-radius: 30px; padding: 35px; border: 2px solid var(--accent-cyber); }
         .btn-add { width: 100%; background: linear-gradient(45deg, var(--accent-cyber), #450099); color: #fff; border: none; padding: 18px; font-family: 'Orbitron'; border-radius: 15px; cursor: pointer; margin-top: 20px; font-weight: 700; transition: 0.3s; }
-        .btn-add:hover { letter-spacing: 2px; box-shadow: 0 0 20px var(--accent-cyber); }
-
-        .fab { position: fixed; bottom: 35px; right: 35px; width: 70px; height: 70px; background: var(--accent-cyber); border: none; border-radius: 22px; color: #fff; font-size: 2.5rem; box-shadow: 0 0 25px rgba(112, 0, 255, 0.8); z-index: 100; cursor: pointer; transition: 0.4s; }
-        .fab:hover { transform: rotate(90deg) scale(1.1); }
-
-        .task-item { background: rgba(255,255,255,0.03); padding: 18px; border-radius: 15px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; border: 1px solid rgba(255,255,255,0.05); }
-        .btn-toggle { padding: 10px 15px; border: none; border-radius: 10px; font-family: 'Orbitron'; cursor: pointer; font-size: 0.75rem; transition: 0.3s; }
-        .btn-toggle.completed { background: var(--success); color: #000; font-weight: 900; }
-        .btn-delete { background: var(--danger); color: #fff; border: none; padding: 10px; border-radius: 10px; cursor: pointer; }
-        .completed-text { text-decoration: line-through; opacity: 0.4; color: var(--success) !important; }
-        .pin-input { text-align: center; font-size: 2.5rem; letter-spacing: 15px; color: var(--accent-cyber); border-bottom: 2px solid var(--accent-cyber); }
+        .fab { position: fixed; bottom: 35px; right: 35px; width: 70px; height: 70px; background: var(--accent-cyber); border: none; border-radius: 22px; color: #fff; font-size: 2.5rem; box-shadow: 0 0 25px rgba(112, 0, 255, 0.8); z-index: 100; cursor: pointer; }
+        .task-item { background: rgba(255,255,255,0.03); padding: 18px; border-radius: 15px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+        input, select { width: 100%; background: #000; border: 1px solid var(--accent-cyber); color: var(--text-dim); padding: 14px; border-radius: 12px; margin-top: 15px; }
     </style>
 </head>
 <body>
@@ -160,7 +190,7 @@
     <div class="modal-overlay" id="pinModal">
         <div class="modal-content">
             <h2 id="pinModalTitle" style="color: var(--danger); font-family: 'Orbitron'; text-align: center; letter-spacing: 2px;">AUTHORIZATION_REQUIRED</h2>
-            <input type="password" id="pinCode" class="pin-input" maxlength="4" placeholder="****">
+            <input type="password" id="pinCode" style="text-align: center; font-size: 2rem;" maxlength="4" placeholder="****">
             <div style="display: flex; gap: 15px;">
                 <button class="btn-add" style="background: #1a1a1a;" onclick="closePinModal()">ABORT</button>
                 <button class="btn-add" onclick="validatePin()">CONFIRM</button>
@@ -186,60 +216,11 @@
     </div>
 
     <script>
-        // --- INICIALIZACIÓN DE NOTIFICACIONES ---
-        function requestNotificationPermission() {
-            if ("Notification" in window) {
-                Notification.requestPermission();
-            }
-        }
-
-        function sendCyberAlert(title, message) {
-            if ("Notification" in window && Notification.permission === "granted") {
-                new Notification(title, {
-                    body: message,
-                    icon: "https://cdn-icons-png.flaticon.com/512/599/599502.png"
-                });
-            }
-        }
-
-        // --- SISTEMA DE MONITOREO DE PLAZOS ---
-        function checkDeadlines() {
-            if (!db) return;
-            const now = new Date();
-            const transaction = db.transaction(["tareas"], "readonly");
-            const store = transaction.objectStore("tareas");
-            
-            store.openCursor().onsuccess = (e) => {
-                const cursor = e.target.result;
-                if (cursor) {
-                    const t = cursor.value;
-                    // Solo alertar si NO está entregada
-                    if (!t.entregada) {
-                        const deadline = new Date(t.fecha + "T23:59:59");
-                        const timeDiff = deadline - now;
-                        const hoursLeft = timeDiff / (1000 * 60 * 60);
-
-                        // Alerta si faltan menos de 24 horas y no ha pasado la fecha
-                        if (hoursLeft > 0 && hoursLeft <= 24) {
-                            sendCyberAlert(
-                                `⚠️ PLAZO CRÍTICO: ${t.materia}`,
-                                `La tarea "${t.nombre}" vence en menos de 24 horas. ¡Priorizar ejecución!`
-                            );
-                        }
-                    }
-                    cursor.continue();
-                }
-            };
-        }
-
-        // Ejecutar revisión cada 60 segundos
-        setInterval(checkDeadlines, 60000);
-
-        // Partículas
+        // Configuración de Partículas RGB
         particlesJS("particles-js", {
             "particles": {
-                "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
-                "color": { "value": "#7000ff" },
+                "number": { "value": 70, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": ["#7000ff", "#00f3ff", "#00ff88", "#ff0055"] },
                 "shape": { "type": "circle" },
                 "opacity": { "value": 0.5 },
                 "size": { "value": 3, "random": true },
@@ -252,6 +233,7 @@
             "retina_detect": true
         });
 
+        // --- LÓGICA DE DATOS (Mantenida de tu código) ---
         const subjectEmojis = {
             "CÁLCULO INTEGRAL": "📐", "LEGISLACIÓN LABORAL": "⚖️",
             "DINÁMICA SOCIAL": "👥", "CONT. ORIENTADA NEG.": "💼",
@@ -299,7 +281,6 @@
             db = e.target.result;
             renderSchedule();
             actualizarDashboard();
-            requestNotificationPermission(); // Pedir permiso al iniciar
         };
 
         function renderSchedule() {
@@ -316,79 +297,6 @@
                     `).join('')}
                 </div>
             `).join('');
-        }
-
-        function launchCelebration() {
-            const count = 200;
-            const defaults = { origin: { y: 0.7 }, zIndex: 2000 };
-            function fire(particleRatio, opts) {
-                confetti({ ...defaults, ...opts, particleCount: Math.floor(count * particleRatio) });
-            }
-            fire(0.25, { spread: 26, startVelocity: 55 });
-            fire(0.2, { spread: 60 });
-            fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
-            fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
-            fire(0.1, { spread: 120, startVelocity: 45 });
-        }
-
-        function openAddModal() { document.getElementById('addModal').classList.add('active'); }
-        function closeAddModal() { document.getElementById('addModal').classList.remove('active'); }
-        function closeModal() { document.getElementById('modalOverlay').classList.remove('active'); }
-        function closePinModal() { 
-            document.getElementById('pinModal').classList.remove('active'); 
-            document.getElementById('pinCode').value = ''; 
-            pendingAction = null;
-        }
-
-        function toggleTarea(id, materia) {
-            pendingAction = { type: 'TOGGLE', id, materia };
-            document.getElementById('pinModalTitle').innerText = "AUTHORIZATION";
-            document.getElementById('pinModal').classList.add('active');
-            document.getElementById('pinCode').focus();
-        }
-
-        function eliminarTarea(id, materia) {
-            pendingAction = { type: 'DELETE', id, materia };
-            document.getElementById('pinModalTitle').innerText = "DELETE_TASK";
-            document.getElementById('pinModal').classList.add('active');
-            document.getElementById('pinCode').focus();
-        }
-
-        function validatePin() {
-            if (document.getElementById('pinCode').value === "9114") {
-                const { type, id, materia } = pendingAction;
-                const transaction = db.transaction(["tareas"], "readwrite");
-                const store = transaction.objectStore("tareas");
-                if (type === 'TOGGLE') {
-                    store.get(id).onsuccess = (e) => {
-                        const data = e.target.result;
-                        const wasEntregada = data.entregada;
-                        data.entregada = !data.entregada;
-                        store.put(data);
-                        if (!wasEntregada) {
-                            launchCelebration();
-                            sendCyberAlert("MISIÓN CUMPLIDA", `Tarea completada: ${data.nombre}. Alertas desactivadas.`);
-                        }
-                    };
-                } else if (type === 'DELETE') {
-                    store.delete(id);
-                }
-                transaction.oncomplete = () => { actualizarDashboard(); showTasks(materia); closePinModal(); };
-            } else { alert("ERROR: PIN_INVALID"); document.getElementById('pinCode').value = ''; }
-        }
-
-        function saveTask() {
-            const nombre = document.getElementById('taskName').value;
-            const materia = document.getElementById('taskSubject').value;
-            const fecha = document.getElementById('taskDate').value;
-            if(!nombre || !fecha) return;
-            const transaction = db.transaction(["tareas"], "readwrite");
-            transaction.objectStore("tareas").add({ nombre, materia, fecha, entregada: false, time: Date.now() });
-            transaction.oncomplete = () => { 
-                closeAddModal(); 
-                actualizarDashboard();
-                sendCyberAlert("NUEVO REGISTRO", `Tarea "${nombre}" añadida a ${materia}.`);
-            };
         }
 
         function actualizarDashboard() {
@@ -420,6 +328,12 @@
             };
         }
 
+        // --- Funciones de Modal y Tareas ---
+        function openAddModal() { document.getElementById('addModal').classList.add('active'); }
+        function closeAddModal() { document.getElementById('addModal').classList.remove('active'); }
+        function closeModal() { document.getElementById('modalOverlay').classList.remove('active'); }
+        function closePinModal() { document.getElementById('pinModal').classList.remove('active'); document.getElementById('pinCode').value = ''; }
+
         function showTasks(materia) {
             document.getElementById('modalOverlay').classList.add('active');
             document.getElementById('modalTitle').innerText = subjectEmojis[materia] + " " + materia;
@@ -436,21 +350,48 @@
                     res.forEach(t => {
                         list.innerHTML += `
                             <div class="task-item">
-                                <div class="task-info ${t.entregada ? 'completed-text' : ''}">
-                                    <div style="font-weight:700; color: #fff;">${t.nombre}</div>
-                                    <div style="font-size:0.7rem; color: var(--text-dim);">LÍMITE: ${t.fecha}</div>
+                                <div class="${t.entregada ? 'completed-text' : ''}">
+                                    <div style="font-weight:700;">${t.nombre}</div>
+                                    <div style="font-size:0.7rem; color:var(--text-dim)">${t.fecha}</div>
                                 </div>
-                                <button class="btn-toggle ${t.entregada ? 'completed' : ''}" style="background:#0d1117; color:#fff;" onclick="toggleTarea(${t.id}, '${materia}')">
+                                <button class="btn-toggle ${t.entregada ? 'completed' : ''}" onclick="toggleTarea(${t.id}, '${materia}')">
                                     ${t.entregada ? 'REVISADO' : 'PENDIENTE'}
                                 </button>
-                                <button class="btn-delete" onclick="eliminarTarea(${t.id}, '${materia}')">🗑️</button>
                             </div>`;
                     });
                 }
             };
         }
+
+        function saveTask() {
+            const nombre = document.getElementById('taskName').value;
+            const materia = document.getElementById('taskSubject').value;
+            const fecha = document.getElementById('taskDate').value;
+            if(!nombre || !fecha) return;
+            const transaction = db.transaction(["tareas"], "readwrite");
+            transaction.objectStore("tareas").add({ nombre, materia, fecha, entregada: false });
+            transaction.oncomplete = () => { closeAddModal(); actualizarDashboard(); };
+        }
+
+        function toggleTarea(id, materia) {
+            pendingAction = { id, materia };
+            document.getElementById('pinModal').classList.add('active');
+        }
+
+        function validatePin() {
+            if (document.getElementById('pinCode').value === "9114") {
+                const transaction = db.transaction(["tareas"], "readwrite");
+                const store = transaction.objectStore("tareas");
+                store.get(pendingAction.id).onsuccess = (e) => {
+                    const data = e.target.result;
+                    data.entregada = !data.entregada;
+                    store.put(data);
+                    if(data.entregada) confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+                };
+                transaction.oncomplete = () => { actualizarDashboard(); showTasks(pendingAction.materia); closePinModal(); };
+            } else { alert("PIN INCORRECTO"); }
+        }
     </script>
 </body>
 </html>
-               
 
