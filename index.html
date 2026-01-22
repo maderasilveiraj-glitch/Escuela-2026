@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -9,20 +9,17 @@
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <style>
         :root {
-            /* Colores base más profundos para resaltar el neón */
             --bg-deep: #050505;
             --card-bg: rgba(13, 17, 23, 0.7);
             --text-main: #fff;
             --text-dim: #00f3ff;
             --accent-cyber: #7000ff;
-            
             --neon-calculo: #b388ff;
             --neon-legislacion: #ff5252;
             --neon-dinamica: #81c784;
             --neon-contabilidad: #ff8a65;
             --neon-soft: #4fc3f7;
             --neon-etica: #ffd54f;
-
             --success: #00ff88;
             --danger: #ff0055;
         }
@@ -37,7 +34,6 @@
             min-height: 100vh;
         }
 
-        /* Contenedor del Fondo Animado */
         #particles-js {
             position: fixed;
             width: 100%;
@@ -46,7 +42,6 @@
             z-index: -1;
         }
 
-        /* Capa de rejilla (Grid) para estilo retro-futurista */
         .grid-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -93,7 +88,6 @@
         }
         .class-card:hover { transform: translateY(-5px) scale(1.02); background: rgba(255, 255, 255, 0.07); box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
 
-        /* Colores Neón */
         .txt-calculo { color: var(--neon-calculo) !important; }
         .txt-legislacion { color: var(--neon-legislacion) !important; }
         .txt-dinamica { color: var(--neon-dinamica) !important; }
@@ -166,7 +160,6 @@
     <div class="modal-overlay" id="pinModal">
         <div class="modal-content">
             <h2 id="pinModalTitle" style="color: var(--danger); font-family: 'Orbitron'; text-align: center; letter-spacing: 2px;">AUTHORIZATION_REQUIRED</h2>
-            <p style="text-align: center; font-size: 0.8rem; margin-top: 10px; opacity: 0.6;">INGRESE PIN DE ACCESO</p>
             <input type="password" id="pinCode" class="pin-input" maxlength="4" placeholder="****">
             <div style="display: flex; gap: 15px;">
                 <button class="btn-add" style="background: #1a1a1a;" onclick="closePinModal()">ABORT</button>
@@ -193,26 +186,72 @@
     </div>
 
     <script>
-        // Inicialización de Partículas
+        // --- INICIALIZACIÓN DE NOTIFICACIONES ---
+        function requestNotificationPermission() {
+            if ("Notification" in window) {
+                Notification.requestPermission();
+            }
+        }
+
+        function sendCyberAlert(title, message) {
+            if ("Notification" in window && Notification.permission === "granted") {
+                new Notification(title, {
+                    body: message,
+                    icon: "https://cdn-icons-png.flaticon.com/512/599/599502.png"
+                });
+            }
+        }
+
+        // --- SISTEMA DE MONITOREO DE PLAZOS ---
+        function checkDeadlines() {
+            if (!db) return;
+            const now = new Date();
+            const transaction = db.transaction(["tareas"], "readonly");
+            const store = transaction.objectStore("tareas");
+            
+            store.openCursor().onsuccess = (e) => {
+                const cursor = e.target.result;
+                if (cursor) {
+                    const t = cursor.value;
+                    // Solo alertar si NO está entregada
+                    if (!t.entregada) {
+                        const deadline = new Date(t.fecha + "T23:59:59");
+                        const timeDiff = deadline - now;
+                        const hoursLeft = timeDiff / (1000 * 60 * 60);
+
+                        // Alerta si faltan menos de 24 horas y no ha pasado la fecha
+                        if (hoursLeft > 0 && hoursLeft <= 24) {
+                            sendCyberAlert(
+                                `⚠️ PLAZO CRÍTICO: ${t.materia}`,
+                                `La tarea "${t.nombre}" vence en menos de 24 horas. ¡Priorizar ejecución!`
+                            );
+                        }
+                    }
+                    cursor.continue();
+                }
+            };
+        }
+
+        // Ejecutar revisión cada 60 segundos
+        setInterval(checkDeadlines, 60000);
+
+        // Partículas
         particlesJS("particles-js", {
             "particles": {
                 "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
                 "color": { "value": "#7000ff" },
                 "shape": { "type": "circle" },
-                "opacity": { "value": 0.5, "random": false },
+                "opacity": { "value": 0.5 },
                 "size": { "value": 3, "random": true },
                 "line_linked": { "enable": true, "distance": 150, "color": "#7000ff", "opacity": 0.2, "width": 1 },
-                "move": { "enable": true, "speed": 2, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false }
+                "move": { "enable": true, "speed": 2 }
             },
             "interactivity": {
-                "detect_on": "canvas",
-                "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" }, "resize": true },
-                "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 1 } }, "push": { "particles_nb": 4 } }
+                "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" } }
             },
             "retina_detect": true
         });
 
-        // --- Lógica de la App (Se mantiene funcional igual que tu código anterior) ---
         const subjectEmojis = {
             "CÁLCULO INTEGRAL": "📐", "LEGISLACIÓN LABORAL": "⚖️",
             "DINÁMICA SOCIAL": "👥", "CONT. ORIENTADA NEG.": "💼",
@@ -260,6 +299,7 @@
             db = e.target.result;
             renderSchedule();
             actualizarDashboard();
+            requestNotificationPermission(); // Pedir permiso al iniciar
         };
 
         function renderSchedule() {
@@ -325,7 +365,10 @@
                         const wasEntregada = data.entregada;
                         data.entregada = !data.entregada;
                         store.put(data);
-                        if (!wasEntregada) launchCelebration();
+                        if (!wasEntregada) {
+                            launchCelebration();
+                            sendCyberAlert("MISIÓN CUMPLIDA", `Tarea completada: ${data.nombre}. Alertas desactivadas.`);
+                        }
                     };
                 } else if (type === 'DELETE') {
                     store.delete(id);
@@ -341,7 +384,11 @@
             if(!nombre || !fecha) return;
             const transaction = db.transaction(["tareas"], "readwrite");
             transaction.objectStore("tareas").add({ nombre, materia, fecha, entregada: false, time: Date.now() });
-            transaction.oncomplete = () => { closeAddModal(); actualizarDashboard(); };
+            transaction.oncomplete = () => { 
+                closeAddModal(); 
+                actualizarDashboard();
+                sendCyberAlert("NUEVO REGISTRO", `Tarea "${nombre}" añadida a ${materia}.`);
+            };
         }
 
         function actualizarDashboard() {
@@ -405,7 +452,4 @@
     </script>
 </body>
 </html>
-
-
-                
-
+               
