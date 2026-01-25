@@ -213,17 +213,40 @@
     </div>
 
     <script>
+        // Inicialización de partículas con color dinámico habilitado
         particlesJS("particles-js", {
             "particles": {
                 "number": { "value": 50 },
-                "color": { "value": "#7000ff" },
+                "color": { "value": "#ff0000" }, // Iniciamos en Rojo
                 "shape": { "type": "circle" },
-                "opacity": { "value": 0.3 },
+                "opacity": { "value": 0.4 },
                 "size": { "value": 2 },
-                "line_linked": { "enable": true, "distance": 150, "color": "#7000ff", "opacity": 0.1, "width": 1 },
-                "move": { "enable": true, "speed": 1 }
+                "line_linked": { 
+                    "enable": true, 
+                    "distance": 150, 
+                    "color": "#ff0000", 
+                    "opacity": 0.2, 
+                    "width": 1 
+                },
+                "move": { "enable": true, "speed": 1.5 }
             }
         });
+
+        // --- LÓGICA DE SINCRONIZACIÓN DE COLOR PARA PARTÍCULAS ---
+        const colors = ["#ff0000", "#ffff00", "#00ff00", "#00f3ff", "#7000ff"];
+        let colorIndex = 0;
+
+        setInterval(() => {
+            colorIndex = (colorIndex + 1) % colors.length;
+            const newColor = colors[colorIndex];
+            
+            if (window.pJSDom && window.pJSDom[0]) {
+                const pJS = window.pJSDom[0].pJS;
+                pJS.particles.color.value = newColor;
+                pJS.particles.line_linked.color = newColor;
+                pJS.fn.particlesRefresh(); // Actualiza el render sin reiniciar el movimiento
+            }
+        }, 2400); // 2.4s por color * 5 colores = 12s (Coincide con la animación CSS)
 
         const subjectEmojis = {
             "CÁLCULO INTEGRAL": "📐", "LEGISLACIÓN LABORAL": "⚖️",
@@ -399,3 +422,6 @@
     </script>
 </body>
 </html>
+
+    
+            
