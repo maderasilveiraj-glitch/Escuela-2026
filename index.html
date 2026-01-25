@@ -69,12 +69,11 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
-        /* AJUSTE PARA TAMAÑO FIJO DE PANTALLA */
         body { 
             background-color: var(--bg-deep);
             color: var(--text-main); 
             font-family: 'Rajdhani', sans-serif; 
-            overflow: hidden; /* Evita el scroll global */
+            overflow: hidden; 
             height: 100vh;
             display: flex;
             flex-direction: column;
@@ -137,13 +136,12 @@
         .progress-bar-bg { width: 100%; height: 8px; background: #000; margin: 8px 0; border-radius: 10px; overflow: hidden; }
         .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent-cyber), var(--success)); width: 0%; transition: 1.5s ease; }
 
-        /* CONTENEDOR DE HORARIO CON SCROLL INDEPENDIENTE */
         .schedule-container { 
             display: flex; 
             overflow-x: auto; 
             gap: 20px; 
             padding: 10px 20px 20px 20px;
-            flex-grow: 1; /* Ocupa el espacio restante */
+            flex-grow: 1; 
             align-items: flex-start;
         }
 
@@ -154,7 +152,7 @@
             padding: 15px; 
             border: 1px solid rgba(255,255,255,0.05);
             max-height: 100%;
-            overflow-y: auto; /* Scroll vertical solo si las clases exceden la columna */
+            overflow-y: auto;
         }
 
         .day-name { font-family: 'Orbitron'; font-size: 1.1rem; color: var(--text-dim); display: flex; justify-content: space-between; margin-bottom: 10px; }
@@ -240,21 +238,27 @@
     </div>
 
     <script>
-        // CONFIGURACIÓN PARA LÍNEAS QUE FORMAN FIGURAS GEOMÉTRICAS SÓLIDAS
+        // CONFIGURACIÓN SUAVIZADA (MENOS LÍNEAS)
         particlesJS("particles-js", {
             "particles": {
-                "number": { "value": 45, "density": { "enable": false } },
+                "number": { "value": 25, "density": { "enable": false } }, // Bajado de 45 a 25
                 "color": { "value": "#ff0000" },
                 "shape": { "type": "polygon", "polygon": { "nb_sides": 6 } },
-                "opacity": { "value": 0.6, "random": false, "anim": { "enable": true, "speed": 1, "opacity_min": 0.2, "sync": false } },
-                "size": { "value": 6, "random": true, "anim": { "enable": true, "speed": 2, "size_min": 2, "sync": false } },
-                "line_linked": { "enable": true, "distance": 250, "color": "#ff0000", "opacity": 0.5, "width": 2 },
-                "move": { "enable": true, "speed": 1.5, "direction": "none", "random": false, "straight": false, "out_mode": "bounce", "bounce": true, "attract": { "enable": true, "rotateX": 1200, "rotateY": 1200 } }
+                "opacity": { "value": 0.3, "random": false }, // Opacidad más baja
+                "size": { "value": 4, "random": true }, 
+                "line_linked": { 
+                    "enable": true, 
+                    "distance": 200, 
+                    "color": "#ff0000", 
+                    "opacity": 0.2, // Líneas mucho más tenues
+                    "width": 1.5 
+                },
+                "move": { "enable": true, "speed": 1, "out_mode": "bounce" }
             },
             "interactivity": {
                 "detect_on": "canvas",
-                "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" } },
-                "modes": { "grab": { "distance": 300, "line_linked": { "opacity": 1 } } }
+                "events": { "onhover": { "enable": true, "mode": "grab" } },
+                "modes": { "grab": { "distance": 200, "line_linked": { "opacity": 0.5 } } }
             },
             "retina_detect": true
         });
@@ -427,3 +431,5 @@
     </script>
 </body>
 </html>
+
+            
