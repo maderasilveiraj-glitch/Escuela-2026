@@ -213,26 +213,57 @@
     </div>
 
     <script>
-        // Inicialización de partículas con color dinámico habilitado
+        // Configuración para figuras geométricas grandes y definidas
         particlesJS("particles-js", {
             "particles": {
-                "number": { "value": 50 },
-                "color": { "value": "#ff0000" }, // Iniciamos en Rojo
-                "shape": { "type": "circle" },
-                "opacity": { "value": 0.4 },
-                "size": { "value": 2 },
+                "number": { "value": 35, "density": { "enable": false } },
+                "color": { "value": "#ff0000" },
+                "shape": { 
+                    "type": ["polygon", "circle"], 
+                    "polygon": { "nb_sides": 6 } 
+                },
+                "opacity": { 
+                    "value": 0.5, 
+                    "random": false,
+                    "anim": { "enable": true, "speed": 1, "opacity_min": 0.2, "sync": false }
+                },
+                "size": { 
+                    "value": 15, 
+                    "random": true, 
+                    "anim": { "enable": true, "speed": 2, "size_min": 5, "sync": false } 
+                },
                 "line_linked": { 
                     "enable": true, 
-                    "distance": 150, 
+                    "distance": 300, 
                     "color": "#ff0000", 
-                    "opacity": 0.2, 
-                    "width": 1 
+                    "opacity": 0.4, 
+                    "width": 2 
                 },
-                "move": { "enable": true, "speed": 1.5 }
-            }
+                "move": { 
+                    "enable": true, 
+                    "speed": 2, 
+                    "direction": "none", 
+                    "random": false, 
+                    "straight": false, 
+                    "out_mode": "out", 
+                    "bounce": false, 
+                    "attract": { "enable": true, "rotateX": 600, "rotateY": 1200 }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": { "enable": true, "mode": "grab" },
+                    "onclick": { "enable": true, "mode": "push" }
+                },
+                "modes": {
+                    "grab": { "distance": 400, "line_linked": { "opacity": 1 } }
+                }
+            },
+            "retina_detect": true
         });
 
-        // --- LÓGICA DE SINCRONIZACIÓN DE COLOR PARA PARTÍCULAS ---
+        // --- LÓGICA DE SINCRONIZACIÓN DE COLOR ---
         const colors = ["#ff0000", "#ffff00", "#00ff00", "#00f3ff", "#7000ff"];
         let colorIndex = 0;
 
@@ -244,9 +275,9 @@
                 const pJS = window.pJSDom[0].pJS;
                 pJS.particles.color.value = newColor;
                 pJS.particles.line_linked.color = newColor;
-                pJS.fn.particlesRefresh(); // Actualiza el render sin reiniciar el movimiento
+                pJS.fn.particlesRefresh();
             }
-        }, 2400); // 2.4s por color * 5 colores = 12s (Coincide con la animación CSS)
+        }, 2400);
 
         const subjectEmojis = {
             "CÁLCULO INTEGRAL": "📐", "LEGISLACIÓN LABORAL": "⚖️",
@@ -423,5 +454,7 @@
 </body>
 </html>
 
+
     
             
+
