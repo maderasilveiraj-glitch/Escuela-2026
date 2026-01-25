@@ -213,51 +213,58 @@
     </div>
 
     <script>
-        // Configuración para figuras geométricas grandes y definidas
+        // CONFIGURACIÓN PARA LÍNEAS QUE FORMAN FIGURAS GEOMÉTRICAS SÓLIDAS
         particlesJS("particles-js", {
             "particles": {
-                "number": { "value": 35, "density": { "enable": false } },
+                "number": { 
+                    "value": 45, 
+                    "density": { "enable": false } 
+                },
                 "color": { "value": "#ff0000" },
                 "shape": { 
-                    "type": ["polygon", "circle"], 
+                    "type": "polygon", 
                     "polygon": { "nb_sides": 6 } 
                 },
                 "opacity": { 
-                    "value": 0.5, 
+                    "value": 0.6, 
                     "random": false,
                     "anim": { "enable": true, "speed": 1, "opacity_min": 0.2, "sync": false }
                 },
                 "size": { 
-                    "value": 15, 
+                    "value": 6, 
                     "random": true, 
-                    "anim": { "enable": true, "speed": 2, "size_min": 5, "sync": false } 
+                    "anim": { "enable": true, "speed": 2, "size_min": 2, "sync": false } 
                 },
                 "line_linked": { 
                     "enable": true, 
-                    "distance": 300, 
+                    "distance": 250, // Distancia alta para crear redes geométricas
                     "color": "#ff0000", 
-                    "opacity": 0.4, 
-                    "width": 2 
+                    "opacity": 0.5, 
+                    "width": 2, // Líneas más gruesas para definir figuras
                 },
                 "move": { 
                     "enable": true, 
-                    "speed": 2, 
+                    "speed": 1.5, 
                     "direction": "none", 
                     "random": false, 
                     "straight": false, 
-                    "out_mode": "out", 
-                    "bounce": false, 
-                    "attract": { "enable": true, "rotateX": 600, "rotateY": 1200 }
+                    "out_mode": "bounce", // Rebota para mantener las figuras en pantalla
+                    "bounce": true, 
+                    "attract": { 
+                        "enable": true, // Atrae partículas para cerrar polígonos
+                        "rotateX": 1200, 
+                        "rotateY": 1200 
+                    }
                 }
             },
             "interactivity": {
                 "detect_on": "canvas",
                 "events": {
-                    "onhover": { "enable": true, "mode": "grab" },
+                    "onhover": { "enable": true, "mode": "grab" }, // Resalta la geometría al pasar el mouse
                     "onclick": { "enable": true, "mode": "push" }
                 },
                 "modes": {
-                    "grab": { "distance": 400, "line_linked": { "opacity": 1 } }
+                    "grab": { "distance": 300, "line_linked": { "opacity": 1 } }
                 }
             },
             "retina_detect": true
@@ -279,6 +286,7 @@
             }
         }, 2400);
 
+        // El resto de tu lógica funcional (IndexedDB, Materias, Dashboard)
         const subjectEmojis = {
             "CÁLCULO INTEGRAL": "📐", "LEGISLACIÓN LABORAL": "⚖️",
             "DINÁMICA SOCIAL": "👥", "CONT. ORIENTADA NEG.": "💼",
@@ -454,7 +462,4 @@
 </body>
 </html>
 
-
-    
             
-
