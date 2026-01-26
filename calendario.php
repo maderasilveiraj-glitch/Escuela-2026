@@ -22,14 +22,50 @@
             color: #f8fafc;
             font-family: 'Plus Jakarta Sans', sans-serif;
             margin: 0;
-            padding: 40px 20px;
+            padding: 0; /* Cambiado para que el nav pegue arriba */
             min-height: 100vh;
             line-height: 1.6;
         }
 
+        /* --- NUEVO ESTILO PARA EL MENÚ --- */
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            text-decoration: none;
+            color: #f8fafc;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 10px 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-btn:hover {
+            border-color: var(--primary-glow);
+            color: var(--primary-glow);
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        /* -------------------------------- */
+
         header {
             text-align: center;
-            margin-bottom: 60px;
+            margin: 60px 0;
         }
 
         .logo-text {
@@ -56,6 +92,7 @@
             gap: 30px;
             max-width: 1400px;
             margin: 0 auto;
+            padding: 0 20px 40px 20px;
         }
 
         .mes-card {
@@ -182,12 +219,16 @@
         .dot-blue { background: var(--primary-glow); box-shadow: 0 0 8px var(--primary-glow); }
         .dot-red { background: #fb7185; box-shadow: 0 0 8px #fb7185; }
 
-        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 10px; }
     </style>
 </head>
 <body>
+
+    <nav>
+        <a href="index.html" class="nav-btn">Inicio</a>
+        <a href="admin.html" class="nav-btn">Recursos Tareas</a>
+    </nav>
 
     <header>
         <span class="logo-text">TECNM Mérida • Academic Core</span>
