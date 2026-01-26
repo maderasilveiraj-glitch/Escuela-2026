@@ -18,10 +18,44 @@
             --danger: #ff0055;
         }
 
+        /* --- NUEVO ESTILO DEL MENÚ SUPERIOR --- */
+        .top-navbar {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 12px;
+            background: rgba(13, 17, 23, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(112, 0, 255, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            font-family: 'Orbitron';
+            font-size: 0.65rem;
+            color: var(--text-dim);
+            padding: 8px 15px;
+            border: 1px solid var(--text-dim);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-item:hover {
+            background: var(--text-dim);
+            color: #000;
+            box-shadow: 0 0 15px var(--text-dim);
+        }
+        /* -------------------------------------- */
+
         /* --- ESTILO DEL BOTÓN ADMIN --- */
         .btn-admin-nav {
             position: absolute;
-            top: 20px;
+            top: 70px; /* Ajustado para no chocar con el menú */
             right: 20px;
             padding: 10px 20px;
             background: transparent;
@@ -68,12 +102,12 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body { 
+
+        body {
             background-color: var(--bg-deep);
-            color: var(--text-main); 
-            font-family: 'Rajdhani', sans-serif; 
-            overflow: hidden; 
+            color: var(--text-main);
+            font-family: 'Rajdhani', sans-serif;
+            overflow: hidden;
             height: 100vh;
             display: flex;
             flex-direction: column;
@@ -85,7 +119,7 @@
         .grid-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background-image: 
+            background-image:
                 linear-gradient(rgba(112, 0, 255, 0.05) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(112, 0, 255, 0.05) 1px, transparent 1px);
             background-size: 40px 40px;
@@ -93,9 +127,9 @@
             pointer-events: none;
         }
 
-        .header { 
-            padding: 20px; text-align: center; 
-            background: rgba(5, 5, 5, 0.8); 
+        .header {
+            padding: 20px; text-align: center;
+            background: rgba(5, 5, 5, 0.8);
             border-bottom: 2px solid transparent;
             backdrop-filter: blur(15px);
             animation: chromaGamer 12s infinite linear;
@@ -103,53 +137,53 @@
             flex-shrink: 0;
         }
 
-        h1 { 
-            font-family: 'Orbitron'; 
-            font-size: 1.4rem; 
-            letter-spacing: 2px; 
+        h1 {
+            font-family: 'Orbitron';
+            font-size: 1.4rem;
+            letter-spacing: 2px;
             animation: chromaTextOnly 12s infinite linear;
         }
 
-        .class-card { 
+        .class-card {
             margin-top: 12px; padding: 15px; border-radius: 12px;
             position: relative; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            cursor: pointer; 
+            cursor: pointer;
             background: var(--card-bg);
             border: 2px solid transparent;
             animation: chromaGamer 12s infinite linear;
         }
 
-        .class-card:hover { 
-            transform: translateY(-5px); 
+        .class-card:hover {
+            transform: translateY(-5px);
             filter: brightness(1.3);
         }
 
-        .progress-section { 
-            padding: 15px; 
-            background: var(--card-bg); 
-            margin: 10px 15px; 
-            border-radius: 15px; 
+        .progress-section {
+            padding: 15px;
+            background: var(--card-bg);
+            margin: 10px 15px;
+            border-radius: 15px;
             border: 1px solid rgba(112, 0, 255, 0.2);
             flex-shrink: 0;
         }
-        
+
         .progress-bar-bg { width: 100%; height: 8px; background: #000; margin: 8px 0; border-radius: 10px; overflow: hidden; }
         .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent-cyber), var(--success)); width: 0%; transition: 1.5s ease; }
 
-        .schedule-container { 
-            display: flex; 
-            overflow-x: auto; 
-            gap: 20px; 
+        .schedule-container {
+            display: flex;
+            overflow-x: auto;
+            gap: 20px;
             padding: 10px 20px 20px 20px;
-            flex-grow: 1; 
+            flex-grow: 1;
             align-items: flex-start;
         }
 
-        .day-column { 
-            min-width: 280px; 
-            background: rgba(13, 17, 23, 0.4); 
-            border-radius: 20px; 
-            padding: 15px; 
+        .day-column {
+            min-width: 280px;
+            background: rgba(13, 17, 23, 0.4);
+            border-radius: 20px;
+            padding: 15px;
             border: 1px solid rgba(255,255,255,0.05);
             max-height: 100%;
             overflow-y: auto;
@@ -171,13 +205,18 @@
         .modal-overlay.active { display: flex; }
         .modal-content { width: 90%; max-width: 400px; background: #0d1117; border-radius: 20px; padding: 30px; border: 1px solid var(--accent-cyber); max-height: 80vh; overflow-y: auto; }
         .fab { position: fixed; bottom: 20px; right: 20px; width: 55px; height: 55px; background: var(--accent-cyber); border: none; border-radius: 50%; color: #fff; font-size: 1.8rem; cursor: pointer; box-shadow: 0 0 20px var(--accent-cyber); z-index: 99; }
-        
+
         .task-item { background: rgba(255,255,255,0.05); padding: 12px; border-radius: 10px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
         input, select { width: 100%; background: #000; border: 1px solid #333; color: #fff; padding: 12px; border-radius: 8px; margin-top: 10px; }
         .btn-add { width: 100%; padding: 15px; margin-top: 20px; background: var(--accent-cyber); color: #fff; border: none; border-radius: 10px; font-family: 'Orbitron'; cursor: pointer; }
     </style>
 </head>
 <body>
+
+    <nav class="top-navbar">
+        <a href="admin.html" class="nav-item">Recursos Tareas</a>
+        <a href="calendario.php" class="nav-item">CALENDARIO</a>
+    </nav>
 
     <div id="particles-js"></div>
     <div class="grid-overlay"></div>
@@ -238,20 +277,20 @@
     </div>
 
     <script>
-        // CONFIGURACIÓN SUAVIZADA (MENOS LÍNEAS)
+        // EL SCRIPT SIGUE IGUAL (LÓGICA DE PARTICULAS, RENDER Y DB)
         particlesJS("particles-js", {
             "particles": {
-                "number": { "value": 25, "density": { "enable": false } }, // Bajado de 45 a 25
+                "number": { "value": 25, "density": { "enable": false } },
                 "color": { "value": "#ff0000" },
                 "shape": { "type": "polygon", "polygon": { "nb_sides": 6 } },
-                "opacity": { "value": 0.3, "random": false }, // Opacidad más baja
-                "size": { "value": 4, "random": true }, 
-                "line_linked": { 
-                    "enable": true, 
-                    "distance": 200, 
-                    "color": "#ff0000", 
-                    "opacity": 0.2, // Líneas mucho más tenues
-                    "width": 1.5 
+                "opacity": { "value": 0.3, "random": false },
+                "size": { "value": 4, "random": true },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 200,
+                    "color": "#ff0000",
+                    "opacity": 0.2,
+                    "width": 1.5
                 },
                 "move": { "enable": true, "speed": 1, "out_mode": "bounce" }
             },
@@ -431,5 +470,7 @@
     </script>
 </body>
 </html>
+       
 
             
+
