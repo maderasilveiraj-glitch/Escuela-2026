@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ITM Horizon 2026</title>
+    <title>ITM Calendario 2026</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -231,7 +231,7 @@
     </nav>
 
     <header>
-        <span class="logo-text">TECNM Mérida • Academic Core</span>
+        <span class="logo-text">TECNM Mérida • Academic Horario</span>
         <h1>Ciclo Escolar 2026</h1>
     </header>
 
