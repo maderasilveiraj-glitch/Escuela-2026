@@ -8,18 +8,21 @@
     <style>
         :root {
             --neon-green: #a2ff00;
+            --neon-blue: #00e5ff;
             --neon-purple: #8a2be2;
+            --neon-red: #ff2d55;
             --bg-dark: #05080a;
-            --card-bg: rgba(13, 18, 23, 0.85);
-            --border-glow: rgba(162, 255, 0, 0.4);
+            --card-bg: rgba(13, 18, 23, 0.9);
+            --border-color: rgba(162, 255, 0, 0.2);
         }
 
         body {
             background-color: var(--bg-dark);
-            /* Patrón de red/nodos similar al fondo de la imagen 1 */
+            /* Fondo de red de nodos de la imagen 1 */
             background-image: 
+                linear-gradient(rgba(5, 8, 10, 0.9), rgba(5, 8, 10, 0.9)),
                 radial-gradient(circle at 2px 2px, rgba(162, 255, 0, 0.05) 1px, transparent 0);
-            background-size: 40px 40px;
+            background-size: 100% 100%, 40px 40px;
             color: #ffffff;
             font-family: 'Rajdhani', sans-serif;
             margin: 0;
@@ -27,78 +30,63 @@
             min-height: 100vh;
         }
 
-        /* --- NAVEGACIÓN ESTILO SUPERIOR --- */
+        /* --- NAVEGACIÓN ESTILO IMAGEN 2 --- */
         nav {
             display: flex;
             justify-content: center;
             gap: 15px;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.5);
+            padding: 25px;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
         .nav-btn {
             text-decoration: none;
-            color: #00e5ff;
+            color: var(--neon-blue);
             font-family: 'Orbitron', sans-serif;
             font-size: 0.7rem;
-            padding: 8px 25px;
-            border: 1px solid #00e5ff;
+            letter-spacing: 1px;
+            padding: 10px 25px;
+            border: 1px solid var(--neon-blue);
             text-transform: uppercase;
-            transition: 0.3s;
+            transition: all 0.3s;
+            background: transparent;
+            /* Corte diagonal en las esquinas */
             clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
         }
 
         .nav-btn:hover {
-            background: rgba(0, 229, 255, 0.2);
-            box-shadow: 0 0 15px #00e5ff;
+            background: rgba(0, 229, 255, 0.1);
+            box-shadow: 0 0 15px var(--neon-blue);
+            transform: scale(1.05);
         }
 
         /* --- HEADER --- */
         header {
             text-align: center;
-            margin: 30px 0;
+            margin: 40px 0;
         }
 
         .logo-text {
-            font-size: 0.9rem;
-            letter-spacing: 2px;
-            color: #eee;
-            text-transform: uppercase;
             font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            color: #fff;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 5px;
         }
 
         h1 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 2.2rem;
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: 700;
             color: var(--neon-green);
-            text-shadow: 0 0 10px rgba(162, 255, 0, 0.7);
-            margin: 10px 0;
+            text-shadow: 0 0 10px rgba(162, 255, 0, 0.5);
+            margin: 0;
             text-transform: uppercase;
-        }
-
-        /* --- PROGRESS BAR (De la imagen 1) --- */
-        .system-progress {
-            max-width: 400px;
-            margin: 0 auto 40px;
-            background: var(--card-bg);
-            padding: 15px;
-            border-radius: 15px;
-            border-left: 3px solid var(--neon-green);
-        }
-
-        .progress-header {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.8rem;
-            color: #00e5ff;
-            font-family: 'Orbitron', sans-serif;
-            margin-bottom: 10px;
-        }
-
-        .bar-bg {
-            height: 4px;
-            background: #1a2228;
-            width: 100%;
         }
 
         /* --- CONTENEDOR CALENDARIO --- */
@@ -106,158 +94,180 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 25px;
-            max-width: 1200px;
+            max-width: 1300px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 0 20px 60px 20px;
         }
 
         .mes-card {
             background: var(--card-bg);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
             padding: 20px;
             position: relative;
+            transition: 0.3s;
+            /* Borde izquierdo resaltado como en la imagen 1 */
+            border-left: 4px solid var(--neon-green);
         }
 
-        /* Cabecera del mes con el rayo de la imagen 1 */
+        .mes-card:hover {
+            border-color: var(--neon-green);
+            box-shadow: 0 0 20px rgba(162, 255, 0, 0.1);
+            transform: translateY(-5px);
+        }
+
         .mes-header {
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             color: #fff;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .mes-header::after {
-            content: '⚡';
-            color: var(--neon-green);
-            font-size: 1.2rem;
+        .mes-header span {
+            font-size: 0.7rem;
+            color: var(--neon-blue);
+            border: 1px solid var(--neon-blue);
+            padding: 2px 8px;
+            border-radius: 4px;
         }
 
-        /* Rejilla de días */
+        /* --- GRID DE DÍAS --- */
         .dias-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 5px;
-            text-align: center;
+            gap: 6px;
+            margin-bottom: 15px;
         }
 
         .dia-nombre {
             font-size: 0.7rem;
-            color: #00e5ff;
-            font-weight: bold;
-            padding-bottom: 10px;
+            text-align: center;
+            color: var(--neon-blue);
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
         }
 
         .dia {
-            padding: 8px 0;
-            font-size: 0.9rem;
-            border-radius: 5px;
-            color: #888;
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            border-radius: 6px;
+            color: #666;
+            border: 1px solid transparent;
         }
 
-        /* Estilo de "Cálculo Integral" de la imagen 1 */
+        /* Diseño basado en "Cálculo Integral" de la Imagen 1 */
         .con-actividad {
             background: rgba(162, 255, 0, 0.05);
-            border: 1px solid var(--neon-green);
             color: var(--neon-green);
-            box-shadow: inset 0 0 10px rgba(162, 255, 0, 0.1);
+            border: 1px solid var(--neon-green);
         }
 
         .inhabil {
-            border: 1px solid #ff4d4d;
-            color: #ff4d4d;
+            background: rgba(255, 45, 85, 0.05);
+            color: var(--neon-red);
+            border: 1px solid var(--neon-red);
         }
 
         .hoy {
-            background: var(--neon-green);
+            background: #fff;
             color: #000;
-            font-weight: bold;
+            font-weight: 800;
+            box-shadow: 0 0 15px #fff;
         }
 
-        /* Caja de eventos inferior */
+        /* --- CAJA DE EVENTOS --- */
         .actividades-box {
-            margin-top: 15px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            padding-top: 10px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 15px;
         }
 
         .actividad-item {
             font-size: 0.75rem;
-            margin-bottom: 5px;
+            padding: 6px;
+            margin-bottom: 4px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 4px;
         }
 
         .dot {
             width: 8px;
             height: 8px;
-            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); /* Diamante */
+            flex-shrink: 0;
+            /* Forma de diamante para toque futurista */
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
         }
 
-        .dot-green { background: var(--neon-green); box-shadow: 0 0 5px var(--neon-green); }
-        .dot-red { background: #ff4d4d; }
+        .dot-blue { background: var(--neon-green); box-shadow: 0 0 8px var(--neon-green); }
+        .dot-red { background: var(--neon-red); box-shadow: 0 0 8px var(--neon-red); }
 
-        /* Botón Flotante "+" de la imagen 1 */
-        .fab {
+        /* Botón flotante púrpura de la imagen 1 */
+        .fab-add {
             position: fixed;
             bottom: 30px;
             right: 30px;
-            width: 60px;
-            height: 60px;
+            width: 55px;
+            height: 55px;
             background: var(--neon-purple);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
+            font-size: 24px;
             color: white;
             box-shadow: 0 0 20px var(--neon-purple);
             cursor: pointer;
             border: none;
+            z-index: 1001;
         }
 
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-thumb { background: var(--neon-blue); border-radius: 10px; }
     </style>
 </head>
 <body>
 
     <nav>
+        <a href="index.html" class="nav-btn">Inicio Horario</a>
         <a href="admin.html" class="nav-btn">Recursos Tareas</a>
-        <a href="imdex.html" class="nav-btn">Inicio</a>
     </nav>
 
     <header>
         <span class="logo-text">División Ingeniería Gestión Empresarial</span>
-        <h1>Calendario ITM</h1>
+        <h1>Horario Alejandro_Madera</h1>
     </header>
-
-    <div class="system-progress">
-        <div class="progress-header">
-            <span>SYSTEM_PROGRESS</span>
-            <span>0%</span>
-        </div>
-        <div class="bar-bg"></div>
-        <div style="font-size: 0.6rem; color: #555; margin-top: 5px;">0 / 0 TAREAS FINALIZADAS</div>
-    </div>
 
     <div class="calendario-container" id="calendario-render"></div>
 
-    <button class="fab">+</button>
+    <div class="fab-add">+</div>
 
     <script>
+        // Mantenemos tus eventos exactamente igual
         const eventos = [
-            { fecha: '2026-01-26', desc: 'Apertura de Cursos', tipo: 'actividad' },
-            { fecha: '2026-02-02', desc: 'Día de la Constitución', tipo: 'inhabil' },
-            { fecha: '2026-03-16', desc: 'Natalicio Benito Juárez', tipo: 'inhabil' },
-            { fecha: '2026-05-01', desc: 'Día del Trabajo', tipo: 'inhabil' },
-            { fecha: '2026-05-29', desc: 'Cierre de Sesiones', tipo: 'actividad' }
+            { fecha: '2026-01-07', desc: 'Inicio labores administrativas', tipo: 'actividad' },
+            { fecha: '2026-01-07', hasta: '2026-01-15', desc: 'Periodo de Inscripciones', tipo: 'actividad' },
+            { fecha: '2026-01-26', desc: 'Apertura de Cursos Enero-Junio', tipo: 'actividad' },
+            { fecha: '2026-02-02', desc: 'Suspensión: Día de la Constitución', tipo: 'inhabil' },
+            { fecha: '2026-02-16', hasta: '2026-02-17', desc: 'Festejos de Carnaval', tipo: 'actividad' },
+            { fecha: '2026-03-16', desc: 'Suspensión: Natalicio de Benito Juárez', tipo: 'inhabil' },
+            { fecha: '2026-03-30', hasta: '2026-04-10', desc: 'Receso Académico Primavera', tipo: 'inhabil' },
+            { fecha: '2026-05-01', desc: 'Suspensión: Día del Trabajo', tipo: 'inhabil' },
+            { fecha: '2026-05-05', desc: 'Suspensión: Batalla de Puebla', tipo: 'inhabil' },
+            { fecha: '2026-05-15', desc: 'Día del Maestro', tipo: 'inhabil' },
+            { fecha: '2026-05-29', desc: 'Cierre de Sesiones Académicas', tipo: 'actividad' },
+            { fecha: '2026-06-01', desc: 'Captura Final de Calificaciones', tipo: 'actividad' }
         ];
 
         const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio"];
-        const dias = ["LU", "MA", "MI", "JU", "VI", "SA", "DO"];
+        const dias = ["DO", "LU", "MA", "MI", "JU", "VI", "SA"];
 
         function render() {
             const container = document.getElementById('calendario-render');
@@ -268,7 +278,7 @@
                 card.className = 'mes-card';
 
                 let html = `
-                    <div class="mes-header">${meses[m]}</div>
+                    <div class="mes-header">${meses[m]} <span>2026</span></div>
                     <div class="dias-grid">
                         ${dias.map(d => `<div class="dia-nombre">${d}</div>`).join('')}
                 `;
@@ -276,12 +286,12 @@
                 const start = new Date(2026, m, 1).getDay();
                 const total = new Date(2026, m + 1, 0).getDate();
 
-                for (let i = 1; i < (start === 0 ? 7 : start); i++) html += `<div></div>`;
+                for (let i = 0; i < start; i++) html += `<div></div>`;
 
                 for (let d = 1; d <= total; d++) {
                     const f = `2026-${String(m + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
                     let cl = 'dia';
-                    const ev = eventos.find(e => f === e.fecha);
+                    const ev = eventos.find(e => f >= e.fecha && f <= (e.hasta || e.fecha));
 
                     if (ev) cl += ev.tipo === 'inhabil' ? ' inhabil' : ' con-actividad';
                     if (f === hoy) cl += ' hoy';
@@ -289,10 +299,15 @@
                 }
 
                 html += `</div><div class="actividades-box">`;
-                eventos.filter(e => parseInt(e.fecha.split('-')[1]) === (m+1)).forEach(e => {
+
+                eventos.filter(e => {
+                    const mesE = parseInt(e.fecha.split('-')[1]);
+                    return mesE === (m+1);
+                }).forEach(e => {
+                    const dotClass = e.tipo === 'inhabil' ? 'dot-red' : 'dot-blue';
                     html += `
                         <div class="actividad-item">
-                            <div class="dot ${e.tipo === 'inhabil' ? 'dot-red' : 'dot-green'}"></div>
+                            <div class="dot ${dotClass}"></div>
                             <span>${e.desc}</span>
                         </div>`;
                 });
@@ -306,3 +321,5 @@
     </script>
 </body>
 </html>
+
+                    
