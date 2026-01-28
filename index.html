@@ -18,7 +18,7 @@
             --danger: #ff0055;
         }
 
-        /* --- NUEVO ESTILO DEL MENÚ SUPERIOR --- */
+        /* --- ESTILO DEL MENÚ SUPERIOR --- */
         .top-navbar {
             display: flex;
             justify-content: center;
@@ -82,7 +82,7 @@
             background-color: var(--bg-deep);
             color: var(--text-main);
             font-family: 'Rajdhani', sans-serif;
-            overflow-y: auto; /* PERMITIR SCROLL VERTICAL */
+            overflow-y: auto;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -126,7 +126,7 @@
             background: var(--card-bg);
             border: 2px solid transparent;
             animation: chromaGamer 12s infinite linear;
-            flex-shrink: 0; /* EVITA QUE SE ENCOJAN */
+            flex-shrink: 0;
         }
 
         .class-card:hover {
@@ -150,9 +150,9 @@
             display: flex;
             overflow-x: auto;
             gap: 20px;
-            padding: 10px 20px 40px 20px; /* MÁS PADDING INFERIOR */
+            padding: 10px 20px 40px 20px;
             flex-grow: 1;
-            align-items: flex-start; /* ALINEAR COLUMNAS AL INICIO */
+            align-items: flex-start;
         }
 
         .day-column {
@@ -161,7 +161,7 @@
             border-radius: 20px;
             padding: 15px;
             border: 1px solid rgba(255,255,255,0.05);
-            height: auto; /* ALTURA DINÁMICA */
+            height: auto;
             display: flex;
             flex-direction: column;
         }
@@ -253,6 +253,7 @@
     </div>
 
     <script>
+        // Partículas
         particlesJS("particles-js", {
             "particles": {
                 "number": { "value": 25, "density": { "enable": false } },
@@ -260,20 +261,10 @@
                 "shape": { "type": "polygon", "polygon": { "nb_sides": 6 } },
                 "opacity": { "value": 0.3, "random": false },
                 "size": { "value": 4, "random": true },
-                "line_linked": {
-                    "enable": true,
-                    "distance": 200,
-                    "color": "#ff0000",
-                    "opacity": 0.2,
-                    "width": 1.5
-                },
+                "line_linked": { "enable": true, "distance": 200, "color": "#ff0000", "opacity": 0.2, "width": 1.5 },
                 "move": { "enable": true, "speed": 1, "out_mode": "bounce" }
             },
-            "interactivity": {
-                "detect_on": "canvas",
-                "events": { "onhover": { "enable": true, "mode": "grab" } },
-                "modes": { "grab": { "distance": 200, "line_linked": { "opacity": 0.5 } } }
-            },
+            "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": true, "mode": "grab" } } },
             "retina_detect": true
         });
 
@@ -281,11 +272,10 @@
         let colorIndex = 0;
         setInterval(() => {
             colorIndex = (colorIndex + 1) % colors.length;
-            const newColor = colors[colorIndex];
             if (window.pJSDom && window.pJSDom[0]) {
                 const pJS = window.pJSDom[0].pJS;
-                pJS.particles.color.value = newColor;
-                pJS.particles.line_linked.color = newColor;
+                pJS.particles.color.value = colors[colorIndex];
+                pJS.particles.line_linked.color = colors[colorIndex];
                 pJS.fn.particlesRefresh();
             }
         }, 2400);
@@ -296,27 +286,30 @@
             "SOFT. APLIC. EJEC.": "💻", "TALLER DE ÉTICA": "🧠"
         };
 
+        // --- DATOS ACTUALIZADOS SEGÚN EL SIE ---
         const materiasData = [
-            { dia: "Lunes", emoji: "⚡", clases: [{h: "12:00-14:00", n: "CÁLCULO INTEGRAL", t: "Alejandro Herrera Martín"}] },
+            { dia: "Lunes", emoji: "⚡", clases: [
+                {h: "12:00-14:00", n: "CÁLCULO INTEGRAL", t: "ALEJANDRO HERRERA MARTÍN"},
+                {h: "14:00-16:00", n: "LEGISLACIÓN LABORAL", t: "ELIZABETH DEL CARMEN RODRIGUEZ"},
+                {h: "18:00-19:00", n: "CONT. ORIENTADA NEG.", t: "MARIO ALBERTO CASTRO CORTES"}
+            ]},
             { dia: "Martes", emoji: "🔥", clases: [
-                {h: "07:00-09:00", n: "LEGISLACIÓN LABORAL", t: "Carmen María Rodríguez Carrillo"},
-                {h: "09:00-11:00", n: "DINÁMICA SOCIAL", t: "Drisdel Mariela Pat Reyes"},
-                {h: "11:00-13:00", n: "TALLER DE ÉTICA", t: "Germán Jesús León Lara"},
-                {h: "14:00-17:00", n: "SOFT. APLIC. EJEC.", t: "Yolanda del Socorro Paredes"}
+                {h: "09:00-11:00", n: "DINÁMICA SOCIAL", t: "DRISDEL MARIELA PAT REYES"},
+                {h: "11:00-13:00", n: "TALLER DE ÉTICA", t: "GERMÁN JESÚS LEÓN LARA"},
+                {h: "14:00-17:00", n: "SOFT. APLIC. EJEC.", t: "YOLANDA DEL SOCORRO PAREDES"},
+                {h: "17:00-19:00", n: "CONT. ORIENTADA NEG.", t: "MARIO ALBERTO CASTRO CORTES"}
             ]},
             { dia: "Miércoles", emoji: "💎", clases: [
-                {h: "07:00-09:00", n: "LEGISLACIÓN LABORAL", t: "Carmen María Rodríguez Carrillo"},
-                {h: "09:00-11:00", n: "DINÁMICA SOCIAL", t: "Drisdel Mariela Pat Reyes"},
-                {h: "11:00-14:00", n: "CÁLCULO INTEGRAL", t:"Alejandro Herrera Martín "}
+                {h: "09:00-11:00", n: "DINÁMICA SOCIAL", t: "DRISDEL MARIELA PAT REYE"},
+                {h: "11:00-14:00", n: "CÁLCULO INTEGRAL", t: "ALEJANDRO HERRERA MARTÍN"},
+                {h: "16:00-18:00", n: "CONT. ORIENTADA NEG.", t: "MARIO ALBERTO CASTRO CORTES"}
             ]},
             { dia: "Jueves", emoji: "🎯", clases: [
-                {h: "09:00-12:00", n: "CONT. ORIENTADA NEG.", t: "Mario Alberto Castro Cortés"},
-                {h: "12:00-14:00", n: "TALLER DE ÉTICA", t: "Germán Jesús León Lara"},
-                {h: "16:00-18:00", n: "SOFT. APLIC. EJEC.", t: "Yolanda del Socorro Paredes"}
+                {h: "12:00-14:00", n: "TALLER DE ÉTICA", t: "GERMÁN JESÚS LEÓN LARA"},
+                {h: "14:00-16:00", n: "LEGISLACIÓN LABORAL", t: "ELIZABETH DEL CARMEN RODRIGUEZ"},
+                {h: "16:00-18:00", n: "SOFT. APLIC. EJEC.", t: "YOLANDA DEL SOCORRO PAREDES"}
             ]},
-            { dia: "Viernes", emoji: "🎉", clases: [
-                {h: "12:00-14:00", n: "CONT. ORIENTADA NEG.", t: "Mario Alberto Castro Cortés"}
-            ]}
+            { dia: "Viernes", emoji: "🎉", clases: [] }
         ];
 
         let db;
@@ -337,13 +330,13 @@
             container.innerHTML = materiasData.map(d => `
                 <div class="day-column">
                     <div class="day-name">${d.dia} <span>${d.emoji}</span></div>
-                    ${d.clases.map(c => `
+                    ${d.clases.length > 0 ? d.clases.map(c => `
                         <div class="class-card" onclick="showTasks('${c.n}')">
                             <div class="time-tag">${c.h}</div>
                             <div class="subject"><span>${subjectEmojis[c.n]}</span> ${c.n}</div>
                             <div class="teacher">${c.t}</div>
                         </div>
-                    `).join('')}
+                    `).join('') : '<p style="opacity:0.2; font-size:0.7rem; text-align:center; margin-top:20px;">SIN ACTIVIDAD</p>'}
                 </div>
             `).join('');
         }
@@ -445,5 +438,3 @@
     </script>
 </body>
 </html>
-
-            
