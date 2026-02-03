@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -181,6 +181,10 @@
         .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(15px); }
         .modal-overlay.active { display: flex; }
         .modal-content { width: 90%; max-width: 400px; background: #0d1117; border-radius: 20px; padding: 30px; border: 1px solid var(--accent-cyber); max-height: 80vh; overflow-y: auto; }
+        
+        /* Prioridad para el Modal del PIN sobre el de Tareas */
+        #pinModal { z-index: 2000; }
+
         .fab { position: fixed; bottom: 20px; right: 20px; width: 55px; height: 55px; background: var(--accent-cyber); border: none; border-radius: 50%; color: #fff; font-size: 1.8rem; cursor: pointer; box-shadow: 0 0 20px var(--accent-cyber); z-index: 99; }
 
         .task-item { background: rgba(255,255,255,0.05); padding: 12px; border-radius: 10px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
@@ -286,7 +290,6 @@
             "SOFT. APLIC. EJEC.": "💻", "TALLER DE ÉTICA": "🧠"
         };
 
-        // --- DATOS ACTUALIZADOS SEGÚN EL SIE ---
         const materiasData = [
             { dia: "Lunes", emoji: "⚡", clases: [
                 {h: "12:00-14:00", n: "CÁLCULO INTEGRAL", t: "ALEJANDRO HERRERA MARTÍN"},
@@ -407,14 +410,25 @@
             };
         }
 
+        // --- CAMBIO: AHORA PIDE PIN ANTES DE GUARDAR ---
         function saveTask() {
             const nombre = document.getElementById('taskName').value;
             const materia = document.getElementById('taskSubject').value;
             const fecha = document.getElementById('taskDate').value;
-            if(!nombre || !fecha) return;
-            const transaction = db.transaction(["tareas"], "readwrite");
-            transaction.objectStore("tareas").add({ nombre, materia, fecha, entregada: false });
-            transaction.oncomplete = () => { closeAddModal(); actualizarDashboard(); };
+            
+            if(!nombre || !fecha) {
+                alert("Completa todos los campos");
+                return;
+            }
+
+            // Guardamos datos en la acción pendiente
+            pendingAction = { 
+                type: 'save', 
+                data: { nombre, materia, fecha, entregada: false } 
+            };
+            
+            // Mostramos el modal del PIN
+            document.getElementById('pinModal').classList.add('active');
         }
 
         function toggleTarea(id, materia) { pendingAction = { type: 'toggle', id, materia }; document.getElementById('pinModal').classList.add('active'); }
@@ -424,17 +438,38 @@
             if (document.getElementById('pinCode').value === "9114") {
                 const transaction = db.transaction(["tareas"], "readwrite");
                 const store = transaction.objectStore("tareas");
-                if(pendingAction.type === 'toggle') {
+
+                if(pendingAction.type === 'save') {
+                    // Acción de guardado
+                    store.add(pendingAction.data);
+                    transaction.oncomplete = () => { 
+                        closeAddModal(); 
+                        actualizarDashboard(); 
+                        closePinModal();
+                        // Reset de campos
+                        document.getElementById('taskName').value = '';
+                        document.getElementById('taskDate').value = '';
+                    };
+                } else if(pendingAction.type === 'toggle') {
+                    // Acción de marcar como completado
                     store.get(pendingAction.id).onsuccess = (e) => {
                         const data = e.target.result;
                         data.entregada = !data.entregada;
                         store.put(data);
                         if(data.entregada) confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
                     };
-                } else if(pendingAction.type === 'delete') { store.delete(pendingAction.id); }
-                transaction.oncomplete = () => { actualizarDashboard(); showTasks(pendingAction.materia); closePinModal(); };
-            } else { alert("PIN INCORRECTO"); }
+                    transaction.oncomplete = () => { actualizarDashboard(); showTasks(pendingAction.materia); closePinModal(); };
+                } else if(pendingAction.type === 'delete') {
+                    // Acción de borrar
+                    store.delete(pendingAction.id);
+                    transaction.oncomplete = () => { actualizarDashboard(); showTasks(pendingAction.materia); closePinModal(); };
+                }
+            } else { 
+                alert("PIN INCORRECTO"); 
+                document.getElementById('pinCode').value = '';
+            }
         }
     </script>
 </body>
 </html>
+                                       
