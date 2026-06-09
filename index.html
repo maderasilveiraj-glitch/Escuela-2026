@@ -3,474 +3,1015 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Enero-Junio_HORARIO</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <title>Core Académico - Interfaz Ejecutiva 3D</title>
     <style>
         :root {
-            --bg-deep: #050505;
-            --card-bg: rgba(13, 17, 23, 0.6);
-            --text-main: #fff;
-            --text-dim: #00f3ff;
-            --accent-cyber: #7000ff;
-            --success: #00ff88;
-            --danger: #ff0055;
+            /* Paleta Cerámica y Oro Pulido */
+            --bg-ceramic: #f4f5f8;
+            --panel-bg: #eceef3;
+            --panel-border: #ffffff;
+            
+            --azul-marino: #1e293b;
+            --azul-muted: #475569;
+            --oro-pulido: linear-gradient(135deg, #c5a059 0%, #edd6a4 50%, #b38b46 100%);
+            --oro-flat: #b38b46;
+            --oro-glow: rgba(197, 160, 89, 0.2);
+            --blanco-puro: #ffffff;
+            
+            --exito-soft: #def7ec;
+            --exito-texto: #03543f;
+            --exito-border: #84e1bc;
+            
+            /* Sombras Neomórficas 3D de alta definición */
+            --shadow-3d-panel: 
+                8px 8px 16px #d1d5db, 
+                -8px -8px 16px #ffffff,
+                inset 1px 1px 0px #ffffff;
+                
+            --shadow-3d-inset: 
+                inset 4px 4px 8px #d1d5db, 
+                inset -4px -4px 8px #ffffff;
+                
+            --shadow-card-materia: 
+                0 6px 0px #cfd4dc, 
+                4px 10px 15px rgba(165, 175, 190, 0.4);
+                
+            --shadow-card-active: 
+                0 2px 0px #cfd4dc, 
+                2px 4px 6px rgba(165, 175, 190, 0.4);
         }
 
-        /* --- ESTILO DEL MENÚ SUPERIOR --- */
-        .top-navbar {
+        body { 
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
+            background-color: var(--bg-ceramic);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(236, 238, 243, 0.5) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(197, 160, 89, 0.05) 0px, transparent 50%);
+            padding: 30px 20px; 
+            margin: 0; 
+            color: var(--azul-marino);
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .workspace-frame {
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+
+        /* --- CUADRO DE MANDO SUPERIOR (HEADER 3D) --- */
+        header { 
+            background: var(--panel-bg);
+            padding: 26px 36px; 
+            border-radius: 28px; 
+            margin-bottom: 35px; 
+            border: 1px solid var(--panel-border);
+            box-shadow: var(--shadow-3d-panel);
+            position: relative;
+        }
+        
+        .header-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            align-items: center;
+            text-align: center;
+        }
+
+        @media (min-width: 768px) {
+            .header-layout {
+                flex-direction: row;
+                justify-content: space-between;
+                text-align: left;
+            }
+        }
+
+        header h1 { 
+            margin: 0; 
+            font-size: 28px; 
+            font-weight: 800; 
+            letter-spacing: -0.5px;
+            text-transform: uppercase;
+            color: var(--azul-marino);
+            text-shadow: 1px 1px 0px #ffffff;
+        }
+
+        .nav-container {
+            display: flex;
+            gap: 16px;
+            background: var(--panel-bg);
+            padding: 8px;
+            border-radius: 20px;
+            box-shadow: var(--shadow-3d-inset);
+        }
+
+        .btn-tab {
+            background: transparent;
+            color: var(--azul-muted);
+            border: none;
+            padding: 12px 26px;
+            font-size: 13px;
+            font-weight: 700;
+            border-radius: 14px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-tab:hover {
+            color: var(--azul-marino);
+        }
+
+        .btn-tab.active-tab {
+            background: var(--blanco-puro);
+            color: var(--azul-marino);
+            box-shadow: 3px 3px 8px rgba(165, 175, 190, 0.4), -2px -2px 6px #ffffff;
+            transform: translateY(-1px);
+        }
+
+        .metrics-bar {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 16px;
+        }
+
+        .metric-item { font-size: 14px; color: var(--azul-muted); font-weight: 600; }
+        .metric-item span { color: var(--oro-flat); font-weight: 800; }
+
+        .progress-track { 
+            width: 220px; height: 14px; 
+            background: var(--panel-bg); 
+            border-radius: 999px; overflow: hidden; 
+            padding: 2px;
+            box-shadow: var(--shadow-3d-inset);
+            box-sizing: border-box;
+        }
+        
+        .progress-live { 
+            height: 100%; 
+            background: var(--oro-pulido); 
+            width: 0%; 
+            border-radius: 999px;
+            box-shadow: 0px 1px 3px rgba(0,0,0,0.15);
+            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1); 
+        }
+
+        /* --- PILAS CURRICULARES (KARDEX) --- */
+        .view-block { display: none; }
+        .view-block.active-block { display: block; animation: smoothUp 0.5s cubic-bezier(0.25, 1, 0.5, 1); }
+        @keyframes smoothUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+        .grid-kardex { 
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 26px;
+        }
+
+        @media (min-width: 600px) { .grid-kardex { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 950px) { .grid-kardex { grid-template-columns: repeat(3, 1fr); } }
+        @media (min-width: 1300px) { .grid-kardex { grid-template-columns: repeat(5, 1fr); } } 
+        
+        .column-semester { 
+            background: var(--panel-bg);
+            border-radius: 24px; 
+            padding: 20px;
+            border: 1px solid var(--panel-border);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            box-shadow: var(--shadow-3d-panel);
+        }
+
+        .column-semester.cursando-actual {
+            background: #e4e7f0;
+            border: 1px solid rgba(197, 160, 89, 0.4);
+        }
+        
+        .semester-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 12px;
+            border-bottom: 2px solid rgba(165, 175, 190, 0.2);
+        }
+
+        .semester-title { 
+            color: var(--azul-marino); 
+            font-weight: 800; 
+            font-size: 13px; 
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .btn-status-toggle {
+            background: var(--blanco-puro);
+            border: none;
+            color: var(--azul-muted);
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 10px;
+            text-transform: uppercase;
+            box-shadow: 2px 2px 5px rgba(165, 175, 190, 0.3), -1px -1px 3px #ffffff;
+            transition: all 0.2s;
+        }
+
+        .btn-status-toggle:hover {
+            color: var(--oro-flat);
+            transform: translateY(-1px);
+        }
+
+        .column-semester.cursando-actual .btn-status-toggle {
+            background: var(--oro-pulido);
+            color: var(--blanco-puro);
+            box-shadow: 2px 4px 8px var(--oro-glow);
+        }
+        
+        /* --- TARJETAS BLOQUE MATE 3D --- */
+        .card-materia { 
+            background: var(--blanco-puro);
+            border: 1px solid rgba(255,255,255,0.7);
+            padding: 16px; 
+            position: relative; 
+            border-radius: 16px; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: space-between; 
+            height: 110px; 
+            box-sizing: border-box; 
+            cursor: pointer; 
+            box-shadow: var(--shadow-card-materia);
+            transform: translateY(-5px);
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s ease, background 0.2s;
+        }
+
+        .card-materia:hover { 
+            transform: translateY(-7px); 
+            box-shadow: 0 10px 0px #cfd4dc, 4px 14px 20px rgba(165, 175, 190, 0.5);
+        }
+
+        .card-materia:active {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-card-active);
+        }
+        
+        .card-materia.en-curso {
+            background: #f8fafc;
+            border-left: 4px solid var(--azul-marino);
+        }
+
+        .card-materia.aprobada { 
+            background: var(--exito-soft);
+            border: 1px solid var(--exito-border);
+            box-shadow: 0 6px 0px #b4e4cd, 4px 10px 15px rgba(132, 225, 188, 0.3);
+        }
+        .card-materia.aprobada:hover {
+            box-shadow: 0 8px 0px #b4e4cd, 4px 14px 20px rgba(132, 225, 188, 0.4);
+        }
+        .card-materia.aprobada .materia-name { color: var(--exito-texto); }
+        .card-materia.aprobada .materia-code { color: var(--exito-texto); opacity: 0.7; }
+
+        .materia-code { font-size: 10px; font-weight: 700; color: var(--azul-muted); letter-spacing: 0.3px; }
+        
+        .materia-name { 
+            font-size: 12px; 
+            font-weight: 700; 
+            line-height: 1.4; 
+            margin: 4px 0;
+            color: var(--azul-marino);
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        
+        .materia-footer { display: flex; justify-content: flex-end; }
+        .materia-credits { font-size: 10px; font-weight: 700; color: var(--azul-muted); }
+        .card-materia.aprobada .materia-credits { color: var(--exito-texto); opacity: 0.8; }
+        
+        .materia-indicator {
+            position: absolute;
+            top: 14px; right: 14px;
+            font-size: 10px;
+        }
+        
+        /* --- PANEL DE COMPLEMENTOS Y AGENDA --- */
+        .panel-workspace {
+            background: var(--panel-bg);
+            border-radius: 28px;
+            padding: 35px;
+            border: 1px solid var(--panel-border);
+            box-shadow: var(--shadow-3d-panel);
+        }
+
+        .row-controls {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        select, input, button.btn-prime {
+            background: var(--blanco-puro);
+            border: 1px solid rgba(165, 175, 190, 0.2);
+            color: var(--azul-marino);
+            padding: 14px 18px;
+            border-radius: 14px;
+            font-size: 13px;
+            font-weight: 600;
+            outline: none;
+            box-shadow: 2px 2px 5px rgba(165, 175, 190, 0.2), inset 0 1px 1px #ffffff;
+            transition: all 0.25s ease;
+        }
+
+        select:focus, input:focus {
+            border-color: var(--oro-flat);
+            box-shadow: 0 0 10px var(--oro-glow);
+        }
+
+        button.btn-prime {
+            background: var(--oro-pulido);
+            color: var(--blanco-puro);
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 5px 15px var(--oro-glow), inset 0 1px 2px rgba(255,255,255,0.4);
+        }
+
+        button.btn-prime:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px var(--oro-glow);
+        }
+
+        .scroll-wrapper {
+            overflow-x: auto;
+            border-radius: 20px;
+            background: var(--blanco-puro);
+            border: 1px solid rgba(165, 175, 190, 0.2);
+            box-shadow: var(--shadow-3d-inset);
+            padding: 6px;
+        }
+
+        .table-custom {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 950px;
+            text-align: center;
+        }
+
+        .table-custom th, .table-custom td {
+            border: 1px solid #f1f5f9;
+            padding: 8px;
+            font-size: 12px;
+            height: 48px;
+        }
+
+        .table-custom th {
+            background: var(--panel-bg);
+            color: var(--azul-marino);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+            border-radius: 8px;
+        }
+
+        .table-custom td input {
+            width: 95%;
+            height: 100%;
+            background: transparent;
+            border: none;
+            text-align: center;
+            color: var(--azul-marino);
+            font-weight: 600;
+            font-size: 12px;
+            box-shadow: none;
+        }
+
+        .table-custom td input:focus {
+            background: rgba(197, 160, 89, 0.08);
+            border-radius: 8px;
+        }
+
+        /* BANDEJA DE ENTREGABLES EXECUTIVA */
+        .section-tasks h3 {
+            color: var(--azul-marino);
+            font-size: 20px;
+            margin-top: 0;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .table-tasks {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 4px 4px 15px rgba(165, 175, 190, 0.2);
+            border: 1px solid rgba(165, 175, 190, 0.2);
+        }
+
+        .table-tasks th, .table-tasks td {
+            padding: 16px;
+            text-align: left;
+            font-size: 13px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .table-tasks th {
+            background: var(--panel-bg);
+            color: var(--azul-marino);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 11px;
+        }
+
+        .table-tasks td {
+            background: var(--blanco-puro);
+        }
+
+        .btn-action-delete {
+            background: #fde8e8;
+            color: #9b1c1c;
+            border: 1px solid #f8b4b4;
+            padding: 8px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 11px;
+            text-transform: uppercase;
+            transition: all 0.2s;
+        }
+
+        .btn-action-delete:hover {
+            background: #e11d48;
+            color: white;
+            border-color: #e11d48;
+            box-shadow: 0 4px 10px rgba(225, 29, 72, 0.2);
+        }
+
+        /* --- PANTALLA DE APERTURA --- */
+        #loading-screen {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: var(--bg-ceramic); color: var(--azul-marino); display: flex; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 9999;
+            transition: opacity 0.6s ease, visibility 0.6s;
+        }
+
+        .holo-matrix-container {
+            position: relative;
+            width: 220px;
+            height: 220px;
+            margin-bottom: 40px;
             display: flex;
             justify-content: center;
-            gap: 15px;
-            padding: 12px;
-            background: rgba(13, 17, 23, 0.8);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(112, 0, 255, 0.3);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            align-items: center;
         }
 
-        .nav-item {
-            text-decoration: none;
-            font-family: 'Orbitron';
-            font-size: 0.65rem;
-            color: var(--text-dim);
-            padding: 8px 15px;
-            border: 1px solid var(--text-dim);
-            border-radius: 4px;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        .holo-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 4px solid transparent;
+            border-top-color: var(--oro-flat);
+            animation: spinCircle 2s linear infinite;
         }
 
-        .nav-item:hover {
-            background: var(--text-dim);
-            color: #000;
-            box-shadow: 0 0 15px var(--text-dim);
-        }
+        .ring-1 { width: 180px; height: 180px; border-bottom-color: var(--azul-marino); }
+        .ring-2 { width: 130px; height: 130px; border-left-color: var(--oro-flat); animation-direction: reverse; animation-duration: 1.5s; }
+        .ring-3 { width: 80px; height: 80px; border-right-color: var(--azul-muted); animation-duration: 1s; }
 
-        @keyframes chromaGamer {
-            0% { border-color: #ff0000; color: #ff0000; box-shadow: 0 0 10px rgba(255, 0, 0, 0.2); }
-            20% { border-color: #ffff00; color: #ffff00; box-shadow: 0 0 10px rgba(255, 255, 0, 0.2); }
-            40% { border-color: #00ff00; color: #00ff00; box-shadow: 0 0 10px rgba(0, 255, 0, 0.2); }
-            60% { border-color: #00f3ff; color: #00f3ff; box-shadow: 0 0 10px rgba(0, 243, 255, 0.2); }
-            80% { border-color: #7000ff; color: #7000ff; box-shadow: 0 0 10px rgba(112, 0, 255, 0.2); }
-            100% { border-color: #ff0000; color: #ff0000; box-shadow: 0 0 10px rgba(255, 0, 0, 0.2); }
-        }
+        @keyframes spinCircle { to { transform: rotate(360deg); } }
 
-        @keyframes chromaTextOnly {
-            0% { color: #ff0000; text-shadow: 0 0 10px rgba(255, 0, 0, 0.5); }
-            20% { color: #ffff00; text-shadow: 0 0 10px rgba(255, 255, 0, 0.5); }
-            40% { color: #00ff00; text-shadow: 0 0 10px rgba(0, 255, 0, 0.5); }
-            60% { color: #00f3ff; text-shadow: 0 0 10px rgba(0, 243, 255, 0.5); }
-            80% { color: #7000ff; text-shadow: 0 0 10px rgba(112, 0, 255, 0.5); }
-            100% { color: #ff0000; text-shadow: 0 0 10px rgba(255, 0, 0, 0.5); }
-        }
-
-        @keyframes rgbBody {
-            0% { background-color: #050505; }
-            33% { background-color: #050a05; }
-            66% { background-color: #05050a; }
-            100% { background-color: #050505; }
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            background-color: var(--bg-deep);
-            color: var(--text-main);
-            font-family: 'Rajdhani', sans-serif;
-            overflow-y: auto;
-            min-height: 100vh;
+        .frase-premium-box {
+            background: var(--panel-bg);
+            border-radius: 24px;
+            padding: 26px 40px;
+            max-width: 600px;
+            width: 80%;
+            min-height: 70px;
             display: flex;
-            flex-direction: column;
-            animation: rgbBody 15s infinite alternate linear;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border: 1px solid var(--panel-border);
+            box-shadow: var(--shadow-3d-panel);
         }
 
-        #particles-js { position: fixed; width: 100%; height: 100%; z-index: -1; }
-
-        .grid-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image:
-                linear-gradient(rgba(112, 0, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(112, 0, 255, 0.05) 1px, transparent 1px);
-            background-size: 40px 40px;
-            z-index: -1;
-            pointer-events: none;
+        #loading-text { 
+            font-size: 16px; 
+            font-weight: 700; 
+            line-height: 1.6;
+            transition: opacity 0.4s ease; 
+            opacity: 1;
+            color: var(--azul-marino);
         }
 
-        .header {
-            padding: 20px; text-align: center;
-            background: rgba(5, 5, 5, 0.8);
-            border-bottom: 2px solid transparent;
-            backdrop-filter: blur(15px);
-            animation: chromaGamer 12s infinite linear;
-            position: relative;
-            flex-shrink: 0;
+        /* --- VENTANAS EMERGENTES (MODALES) --- */
+        .universal-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(15, 23, 42, 0.4); display: none; justify-content: center;
+            align-items: center; z-index: 9000; backdrop-filter: blur(8px); padding: 15px; box-sizing: border-box;
         }
-
-        h1 {
-            font-family: 'Orbitron';
-            font-size: 1.4rem;
-            letter-spacing: 2px;
-            animation: chromaTextOnly 12s infinite linear;
+        .custom-modal {
+            background: var(--panel-bg);
+            padding: 32px; border-radius: 28px; text-align: center; max-width: 420px; width: 100%;
+            border: 1px solid var(--panel-border); 
+            box-shadow: 0 30px 60px rgba(15, 23, 42, 0.2), var(--shadow-3d-panel);
+            transform: scale(0.9);
+            animation: modalGrow 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
-
-        .class-card {
-            margin-top: 10px; padding: 15px; border-radius: 12px;
-            position: relative; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            cursor: pointer;
-            background: var(--card-bg);
-            border: 2px solid transparent;
-            animation: chromaGamer 12s infinite linear;
-            flex-shrink: 0;
-        }
-
-        .class-card:hover {
-            transform: translateY(-5px);
-            filter: brightness(1.3);
-        }
-
-        .progress-section {
-            padding: 15px;
-            background: var(--card-bg);
-            margin: 10px 15px;
-            border-radius: 15px;
-            border: 1px solid rgba(112, 0, 255, 0.2);
-            flex-shrink: 0;
-        }
-
-        .progress-bar-bg { width: 100%; height: 8px; background: #000; margin: 8px 0; border-radius: 10px; overflow: hidden; }
-        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent-cyber), var(--success)); width: 0%; transition: 1.5s ease; }
-
-        .schedule-container {
-            display: flex;
-            overflow-x: auto;
-            gap: 20px;
-            padding: 10px 20px 40px 20px;
-            flex-grow: 1;
-            align-items: flex-start;
-        }
-
-        .day-column {
-            min-width: 280px;
-            background: rgba(13, 17, 23, 0.4);
-            border-radius: 20px;
-            padding: 15px;
-            border: 1px solid rgba(255,255,255,0.05);
-            height: auto;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .day-name { font-family: 'Orbitron'; font-size: 1.1rem; color: var(--text-dim); display: flex; justify-content: space-between; margin-bottom: 5px; }
-        .time-tag { font-size: 0.75rem; opacity: 0.7; margin-bottom: 3px; color: #fff !important; }
-        .subject { font-weight: 700; font-size: 1rem; }
-        .teacher { font-size: 0.8rem; opacity: 0.6; margin-top: 2px; color: #fff !important; }
-
-        .task-count-badge {
-            position: absolute; top: -8px; right: -8px;
-            background: var(--danger); color: #fff; width: 20px; height: 20px;
-            display: grid; place-items: center; font-size: 0.65rem; font-weight: 900; border-radius: 50%;
-            box-shadow: 0 0 10px var(--danger);
-        }
-
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(15px); }
-        .modal-overlay.active { display: flex; }
-        .modal-content { width: 90%; max-width: 400px; background: #0d1117; border-radius: 20px; padding: 30px; border: 1px solid var(--accent-cyber); max-height: 80vh; overflow-y: auto; }
+        @keyframes modalGrow { to { transform: scale(1); } }
         
-        /* Prioridad para el Modal del PIN sobre el de Tareas */
-        #pinModal { z-index: 2000; }
-
-        .fab { position: fixed; bottom: 20px; right: 20px; width: 55px; height: 55px; background: var(--accent-cyber); border: none; border-radius: 50%; color: #fff; font-size: 1.8rem; cursor: pointer; box-shadow: 0 0 20px var(--accent-cyber); z-index: 99; }
-
-        .task-item { background: rgba(255,255,255,0.05); padding: 12px; border-radius: 10px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
-        input, select { width: 100%; background: #000; border: 1px solid #333; color: #fff; padding: 12px; border-radius: 8px; margin-top: 10px; }
-        .btn-add { width: 100%; padding: 15px; margin-top: 20px; background: var(--accent-cyber); color: #fff; border: none; border-radius: 10px; font-family: 'Orbitron'; cursor: pointer; }
+        .custom-modal h2 { margin: 0 0 14px 0; color: var(--azul-marino); font-size: 22px; font-weight: 800; text-transform: uppercase;}
+        .custom-modal p { color: var(--azul-muted); font-size: 14px; line-height: 1.6; margin-bottom: 28px; font-weight: 600; }
+        
+        .btn-modal { 
+            background: var(--oro-pulido);
+            color: var(--blanco-puro); border: none; padding: 14px; font-size: 13px; font-weight: 800; 
+            border-radius: 14px; width: 100%; cursor: pointer; text-transform: uppercase; letter-spacing: 1px;
+            box-shadow: 0 4px 12px var(--oro-glow), inset 0 1px 1px rgba(255,255,255,0.4);
+            transition: transform 0.2s;
+        }
+        .btn-modal:hover { transform: translateY(-2px); box-shadow: 0 6px 18px var(--oro-glow); }
     </style>
 </head>
 <body>
 
-    <nav class="top-navbar">
-        <a href="admin.html" class="nav-item">Recursos Tareas</a>
-        <a href="calendario.html" class="nav-item">CALENDARIO</a>
-    </nav>
-
-    <div id="particles-js"></div>
-    <div class="grid-overlay"></div>
-
-    <div class="header">
-        <p style="color: #fff; font-weight: 700; font-size: 0.6rem; letter-spacing: 2px; margin-bottom: 3px;">DIVISIÓN INGENIERÍA GESTIÓN EMPRESARIAL</p>
-        <h1>HORARIO ALEJANDRO_MADERA</h1>
+<div id="loading-screen">
+    <div class="holo-matrix-container">
+        <div class="holo-ring ring-1"></div>
+        <div class="holo-ring ring-2"></div>
+        <div class="holo-ring ring-3"></div>
     </div>
+    <div class="frase-premium-box">
+        <div id="loading-text">Cargando Tablero Integrado...</div>
+    </div>
+</div>
 
-    <div class="progress-section">
-        <div style="display:flex; justify-content:space-between;">
-            <span style="font-size: 0.75rem; font-weight: 700; color: var(--text-dim);">SYSTEM_PROGRESS</span>
-            <span id="progress-percentage" style="font-family: 'Orbitron'; color: var(--success); font-size: 0.9rem;">0%</span>
+<div id="universal-overlay-container" class="universal-overlay">
+    <div class="custom-modal">
+        <h2 id="modal-title">Sistemas</h2>
+        <p id="modal-text">Mensaje del sistema corporativo.</p>
+        <button class="btn-modal" onclick="cerrarModal()">Acceder al Sistema</button>
+    </div>
+</div>
+
+<div class="workspace-frame">
+    <header>
+        <div class="header-layout">
+            <div>
+                <h1 id="main-title">Estructura Curricular</h1>
+                <div class="metrics-bar">
+                    <div class="metric-item">Progreso General: <span id="porc">0%</span></div>
+                    <div class="progress-track"><div id="fill" class="progress-live"></div></div>
+                    <div class="metric-item">Créditos: <span id="cred">0</span> / <span id="total-cred-ui">260</span></div>
+                </div>
+            </div>
+            <div class="nav-container">
+                <button class="btn-tab active-tab" id="tab-kardex" onclick="cambiarVista('kardex')">📊 Plan de Estudios</button>
+                <button class="btn-tab" id="tab-horarios" onclick="cambiarVista('horarios')">📅 Agenda Semanal</button>
+            </div>
         </div>
-        <div class="progress-bar-bg"><div id="progress-fill" class="progress-fill"></div></div>
-        <p id="progress-stats" style="font-size: 0.65rem; opacity: 0.5;"></p>
+    </header>
+
+    <div id="view-kardex" class="view-block active-block">
+        <div class="grid-kardex" id="kardex-container"></div>
     </div>
 
-    <div class="schedule-container" id="schedule-render"></div>
+    <div id="view-horarios" class="view-block">
+        <div class="panel-workspace">
+            <div class="row-controls">
+                <select id="select-semestre-horario" onchange="cargarHorarioSemestre()">
+                    <option value="1">Semestre I</option>
+                    <option value="2">Semestre II</option>
+                    <option value="3">Semestre III</option>
+                    <option value="4">Semestre IV</option>
+                    <option value="5">Semestre V</option>
+                    <option value="6">Semestre VI</option>
+                    <option value="7">Semestre VII</option>
+                    <option value="8">Semestre VIII</option>
+                    <option value="9">Semestre IX</option>
+                </select>
+                <button class="btn-prime" onclick="guardarHorarioActual()">💾 Guardar Calendario</button>
+            </div>
 
-    <button class="fab" onclick="openAddModal()">+</button>
+            <div class="scroll-wrapper">
+                <table class="table-custom">
+                    <thead>
+                        <tr>
+                            <th style="width: 180px;">Rango Horario</th>
+                            <th>Lunes</th>
+                            <th>Martes</th>
+                            <th>Miércoles</th>
+                            <th>Jueves</th>
+                            <th>Viernes</th>
+                        </tr>
+                    </thead>
+                    <tbody id="schedule-body">
+                    </tbody>
+                </table>
+            </div>
 
-    <div class="modal-overlay" id="modalOverlay" onclick="if(event.target==this) closeModal()">
-        <div class="modal-content">
-            <h2 id="modalTitle" style="color: var(--accent-cyber); font-family: 'Orbitron'; margin-bottom: 20px; font-size: 1.1rem; text-align: center;"></h2>
-            <div id="taskList"></div>
-            <button class="btn-add" style="background: #1a1a1a;" onclick="closeModal()">REGRESAR</button>
-        </div>
-    </div>
+            <hr style="border: 0; border-top: 2px dashed rgba(165,175,190,0.2); margin: 40px 0;">
 
-    <div class="modal-overlay" id="pinModal">
-        <div class="modal-content" style="text-align:center;">
-            <h2 style="color: var(--danger); font-family: 'Orbitron'; margin-bottom:15px;">PIN_REQUIRED</h2>
-            <input type="password" id="pinCode" style="text-align: center; font-size: 1.5rem;" maxlength="4" placeholder="****">
-            <div style="display: flex; gap: 10px;">
-                <button class="btn-add" style="background: #1a1a1a;" onclick="closePinModal()">CANCEL</button>
-                <button class="btn-add" onclick="validatePin()">ACCESS</button>
+            <div class="section-tasks">
+                <h3>📋 Gestión de Entregables</h3>
+                <div class="row-controls" style="background: rgba(255, 255, 255, 0.5); padding: 20px; border-radius: 18px; border: 1px solid rgba(165,175,190,0.1)">
+                    <input type="text" id="task-materia" placeholder="Asignatura Académica" style="width: 240px;">
+                    <input type="text" id="task-desc" placeholder="Descripción del entregable o examen..." style="flex: 1; min-width: 240px;">
+                    <input type="date" id="task-date">
+                    <button class="btn-prime" onclick="agregarActividad()">➕ Registrar</button>
+                </div>
+
+                <table class="table-tasks">
+                    <thead>
+                        <tr>
+                            <th>Módulo</th>
+                            <th>Descripción</th>
+                            <th>Fecha Límite</th>
+                            <th style="width: 120px; text-align: center;">Estatus</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tasks-body">
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="modal-overlay" id="addModal" onclick="if(event.target==this) closeAddModal()">
-        <div class="modal-content">
-            <h2 style="font-family: 'Orbitron'; text-align: center;">NUEVA_TAREA</h2>
-            <input type="text" id="taskName" placeholder="Nombre de la tarea...">
-            <select id="taskSubject">
-                <option value="CÁLCULO INTEGRAL">CÁLCULO INTEGRAL</option>
-                <option value="LEGISLACIÓN LABORAL">LEGISLACIÓN LABORAL</option>
-                <option value="DINÁMICA SOCIAL">DINÁMICA SOCIAL</option>
-                <option value="CONT. ORIENTADA NEG.">CONT. ORIENTADA NEG.</option>
-                <option value="SOFT. APLIC. EJEC.">SOFT. APLIC. EJEC.</option>
-                <option value="TALLER DE ÉTICA">TALLER DE ÉTICA</option>
-            </select>
-            <input type="date" id="taskDate">
-            <button class="btn-add" onclick="saveTask()">GUARDAR</button>
-        </div>
-    </div>
+<script>
+    const TOTAL_CREDITOS = 260; 
+    document.getElementById('total-cred-ui').textContent = TOTAL_CREDITOS;
 
-    <script>
-        // Partículas
-        particlesJS("particles-js", {
-            "particles": {
-                "number": { "value": 25, "density": { "enable": false } },
-                "color": { "value": "#ff0000" },
-                "shape": { "type": "polygon", "polygon": { "nb_sides": 6 } },
-                "opacity": { "value": 0.3, "random": false },
-                "size": { "value": 4, "random": true },
-                "line_linked": { "enable": true, "distance": 200, "color": "#ff0000", "opacity": 0.2, "width": 1.5 },
-                "move": { "enable": true, "speed": 1, "out_mode": "bounce" }
-            },
-            "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": true, "mode": "grab" } } },
-            "retina_detect": true
-        });
+    const data = [
+        { s: 1, m: [["ACC0906",4,"FUND. INVESTIGACION"],["ACF2301",5,"CALCULO DIFERENCIAL"],["GEC2305",4,"DESARROLLO HUMANO"],["AEF1074",5,"FUND. DE GESTION"],["GEC0909",4,"FUND. DE FISICA"],["GEF0910",5,"FUND. DE QUIMICA"]] },
+        { s: 2, m: [["AEB1082",5,"SOFT. APLIC. EJEC."],["ACF0902",5,"CALCULO INTEGRAL"],["GED0903",5,"CONT. ORIENTADA NEG."],["AEC1014",4,"DINAMICA SOCIAL"],["ACH2307",4,"TALLER DE ETICA"],["GEE0918",4,"LEGISLACION LABORAL"]] },
+        { s: 3, m: [["AEC1078",4,"MARCO LEGAL ORGS."],["GED0921",5,"PROB. Y EST. DESC."],["GED0904",5,"COSTOS EMPRESARIALES"],["GEC0913",4,"HAB. DIRECTIVAS I"],["AEF1071",5,"ECONOMIA EMP."],["ACF0903",5,"ALGEBRA LINEAL"]] },
+        { s: 4, m: [["GEF0916",5,"ING. ECONOMICA"],["GEG0907",6,"EST. INFERENCIAL I"],["GED0917",5,"INST. PRESUP. EMP."],["GEC0914",4,"HAB. DIRECTIVAS II"],["GEF0906",5,"ENT. MACROECONOMICO"],["AEF1076",5,"INV. OPERACIONES"]] },
+        { s: 5, m: [["AEF1073",5,"FINANZAS ORGS"],["GEG0908",6,"EST. INFERENCIAL II"],["GEF0915",5,"ING. PROCESOS"],["AEG1075",6,"GESTION CAPITAL HUM."],["ACA0909",4,"TALLER INV. I"],["GEF0919",5,"MERCADOTECNIA"]] },
+        { s: 6, m: [["GEF0901",5,"ADMIN. SAL. SEG. OC."],["AED1072",5,"EMPREND. INNOVAC."],["GEC0911",4,"GESTION PROD. I"],["AED1015",5,"DISEÑO ORG."],["ACA0910",4,"TALLER INV. II"],["GED0922",5,"SIST. INFO. MERC."],["AC0950",5,"ACTIV. COMPLEM."]] },
+        { s: 7, m: [["AED1069",5,"CALIDAD G. EMP."],["GED0920",5,"PLAN NEGOCIOS"],["GEC0912",4,"GESTION PROD. II"],["AED1035",5,"GESTION ESTRATEGICA"],["ACD0908",5,"DES. SUSTENTABLE"],["AEB1045",5,"MERC. ELECTRONICA"]] },
+        { s: 8, m: [["GEF0902",5,"CAD. SUMINISTROS"],["GEA0950",10,"SERVICIO SOCIAL"]] },
+        { s: 9, m: [["RES1001",10,"RESIDENCIA PROF."]] }
+    ];
 
-        const colors = ["#ff0000", "#ffff00", "#00ff00", "#00f3ff", "#7000ff"];
-        let colorIndex = 0;
-        setInterval(() => {
-            colorIndex = (colorIndex + 1) % colors.length;
-            if (window.pJSDom && window.pJSDom[0]) {
-                const pJS = window.pJSDom[0].pJS;
-                pJS.particles.color.value = colors[colorIndex];
-                pJS.particles.line_linked.color = colors[colorIndex];
-                pJS.fn.particlesRefresh();
-            }
-        }, 2400);
+    const bancoDeFrases = [
+        "¡Tú puedes con esto y más!", "Eres grande, nunca olvides de lo que eres capaz.",
+        "Confía en ti, ya has superado retos difíciles antes.", "Tienes todas las capacidades para lograrlo, ¡no lo dudes!",
+        "Materia por materia, estás construyendo tu éxito.", "Un examen difícil no define tu potencial. ¡Tú eres fuerte!",
+        "Confía en el proceso, tienes el talento necesario.", "¡Nadie te va a parar si tú crees en ti mismo!"
+    ];
 
-        const subjectEmojis = {
-            "CÁLCULO INTEGRAL": "📐", "LEGISLACIÓN LABORAL": "⚖️",
-            "DINÁMICA SOCIAL": "👥", "CONT. ORIENTADA NEG.": "💼",
-            "SOFT. APLIC. EJEC.": "💻", "TALLER DE ÉTICA": "🧠"
-        };
+    let hitosAlcanzados = JSON.parse(localStorage.getItem('hitos_kardex_alcanzados')) || { mitad: false, completo: false };
 
-        const materiasData = [
-            { dia: "Lunes", emoji: "⚡", clases: [
-                {h: "12:00-14:00", n: "CÁLCULO INTEGRAL", t: "ALEJANDRO HERRERA MARTÍN"},
-                {h: "14:00-16:00", n: "LEGISLACIÓN LABORAL", t: "ELIZABETH DEL CARMEN RODRIGUEZ"},
-                {h: "18:00-19:00", n: "CONT. ORIENTADA NEG.", t: "MARIO ALBERTO CASTRO CORTES"}
-            ]},
-            { dia: "Martes", emoji: "🔥", clases: [
-                {h: "09:00-11:00", n: "DINÁMICA SOCIAL", t: "DRISDEL MARIELA PAT REYES"},
-                {h: "11:00-13:00", n: "TALLER DE ÉTICA", t: "GERMÁN JESÚS LEÓN LARA"},
-                {h: "14:00-17:00", n: "SOFT. APLIC. EJEC.", t: "YOLANDA DEL SOCORRO PAREDES"},
-                {h: "17:00-19:00", n: "CONT. ORIENTADA NEG.", t: "MARIO ALBERTO CASTRO CORTES"}
-            ]},
-            { dia: "Miércoles", emoji: "💎", clases: [
-                {h: "09:00-11:00", n: "DINÁMICA SOCIAL", t: "DRISDEL MARIELA PAT REYE"},
-                {h: "11:00-14:00", n: "CÁLCULO INTEGRAL", t: "ALEJANDRO HERRERA MARTÍN"},
-                {h: "16:00-18:00", n: "CONT. ORIENTADA NEG.", t: "MARIO ALBERTO CASTRO CORTES"}
-            ]},
-            { dia: "Jueves", emoji: "🎯", clases: [
-                {h: "12:00-14:00", n: "TALLER DE ÉTICA", t: "GERMÁN JESÚS LEÓN LARA"},
-                {h: "14:00-16:00", n: "LEGISLACIÓN LABORAL", t: "ELIZABETH DEL CARMEN RODRIGUEZ"},
-                {h: "16:00-18:00", n: "SOFT. APLIC. EJEC.", t: "YOLANDA DEL SOCORRO PAREDES"}
-            ]},
-            { dia: "Viernes", emoji: "🎉", clases: [] }
-        ];
+    const frasesParaMostrar = [];
+    const copiaBanco = [...bancoDeFrases];
+    for (let i = 0; i < 3; i++) {
+        const randomIndex = Math.floor(Math.random() * copiaBanco.length);
+        frasesParaMostrar.push(copiaBanco.splice(randomIndex, 1)[0]);
+    }
 
-        let db;
-        let pendingAction = null;
-        const request = indexedDB.open("CyberDB", 1);
-        request.onupgradeneeded = (e) => {
-            db = e.target.result;
-            db.createObjectStore("tareas", { keyPath: "id", autoIncrement: true });
-        };
-        request.onsuccess = (e) => {
-            db = e.target.result;
-            renderSchedule();
-            actualizarDashboard();
-        };
+    const loadingText = document.getElementById('loading-text');
+    let pasoFrase = 0;
 
-        function renderSchedule() {
-            const container = document.getElementById('schedule-render');
-            container.innerHTML = materiasData.map(d => `
-                <div class="day-column">
-                    <div class="day-name">${d.dia} <span>${d.emoji}</span></div>
-                    ${d.clases.length > 0 ? d.clases.map(c => `
-                        <div class="class-card" onclick="showTasks('${c.n}')">
-                            <div class="time-tag">${c.h}</div>
-                            <div class="subject"><span>${subjectEmojis[c.n]}</span> ${c.n}</div>
-                            <div class="teacher">${c.t}</div>
-                        </div>
-                    `).join('') : '<p style="opacity:0.2; font-size:0.7rem; text-align:center; margin-top:20px;">SIN ACTIVIDAD</p>'}
-                </div>
-            `).join('');
+    function rotarTresFrases() {
+        if (pasoFrase < 3) {
+            loadingText.style.opacity = '0'; 
+            setTimeout(() => {
+                loadingText.textContent = frasesParaMostrar[pasoFrase];
+                loadingText.style.opacity = '1'; 
+                pasoFrase++;
+            }, 400); 
         }
+    }
 
-        function actualizarDashboard() {
-            const transaction = db.transaction(["tareas"], "readonly");
-            const store = transaction.objectStore("tareas");
-            const pendientes = {};
-            let total = 0, done = 0;
-            store.openCursor().onsuccess = (e) => {
-                const cursor = e.target.result;
-                if (cursor) {
-                    total++;
-                    if (cursor.value.entregada) done++;
-                    else { pendientes[cursor.value.materia] = (pendientes[cursor.value.materia] || 0) + 1; }
-                    cursor.continue();
-                } else {
-                    document.querySelectorAll('.class-card').forEach(card => {
-                        const subjectText = Object.keys(subjectEmojis).find(key => card.querySelector('.subject').innerText.includes(key));
-                        let b = card.querySelector('.task-count-badge');
-                        if (pendientes[subjectText]) {
-                            if (!b) { b = document.createElement('span'); b.className = 'task-count-badge'; card.appendChild(b); }
-                            b.innerText = pendientes[subjectText];
-                        } else if (b) b.remove();
-                    });
-                    const porc = total > 0 ? Math.round((done/total)*100) : 0;
-                    document.getElementById('progress-fill').style.width = porc + '%';
-                    document.getElementById('progress-percentage').innerText = porc + '%';
-                    document.getElementById('progress-stats').innerText = `${done} / ${total} TAREAS FINALIZADAS`;
-                }
-            };
+    rotarTresFrases(); 
+    const intervaloFrases = setInterval(rotarTresFrases, 2600); 
+
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            clearInterval(intervaloFrases); 
+            const screen = document.getElementById('loading-screen');
+            screen.style.opacity = '0';
+            screen.style.visibility = 'hidden';
+        }, 8000); 
+    });
+
+    function cambiarVista(vista) {
+        document.querySelectorAll('.view-block').forEach(v => v.classList.remove('active-block'));
+        document.querySelectorAll('.btn-tab').forEach(b => b.classList.remove('active-tab'));
+        
+        if(vista === 'kardex') {
+            document.getElementById('view-kardex').classList.add('active-block');
+            document.getElementById('tab-kardex').classList.add('active-tab');
+            document.getElementById('main-title').textContent = "Estructura Curricular";
+        } else {
+            document.getElementById('view-horarios').classList.add('active-block');
+            document.getElementById('tab-horarios').classList.add('active-tab');
+            document.getElementById('main-title').textContent = "Módulo de Agenda";
         }
+    }
 
-        function openAddModal() { document.getElementById('addModal').classList.add('active'); }
-        function closeAddModal() { document.getElementById('addModal').classList.remove('active'); }
-        function closeModal() { document.getElementById('modalOverlay').classList.remove('active'); }
-        function closePinModal() { document.getElementById('pinModal').classList.remove('active'); document.getElementById('pinCode').value = ''; }
-
-        function showTasks(materia) {
-            document.getElementById('modalOverlay').classList.add('active');
-            document.getElementById('modalTitle').innerText = subjectEmojis[materia] + " " + materia;
-            const list = document.getElementById('taskList');
-            const transaction = db.transaction(["tareas"], "readonly");
-            const res = [];
-            transaction.objectStore("tareas").openCursor().onsuccess = (e) => {
-                const cursor = e.target.result;
-                if (cursor) {
-                    if (cursor.value.materia === materia) res.push(cursor.value);
-                    cursor.continue();
-                } else {
-                    list.innerHTML = res.length ? '' : '<p style="text-align:center; opacity:0.3; padding:20px;">SIN TAREAS</p>';
-                    res.forEach(t => {
-                        list.innerHTML += `
-                            <div class="task-item">
-                                <div style="${t.entregada ? 'text-decoration:line-through; opacity:0.5;' : ''}">
-                                    <div style="font-weight:700;">${t.nombre}</div>
-                                    <div style="font-size:0.7rem; color:var(--text-dim)">${t.fecha}</div>
-                                </div>
-                                <div class="task-actions">
-                                    <button style="background:${t.entregada ? 'var(--success)' : '#333'}; color:white; border:none; padding:5px 10px; border-radius:5px; font-size:0.7rem; cursor:pointer;" onclick="toggleTarea(${t.id}, '${materia}')">
-                                        ${t.entregada ? 'LISTO' : 'MARCAR'}
-                                    </button>
-                                    <button style="background:var(--danger); color:white; border:none; padding:5px 10px; border-radius:5px; font-size:0.7rem; cursor:pointer;" onclick="deleteTarea(${t.id}, '${materia}')">🗑️</button>
-                                </div>
+    const container = document.getElementById('kardex-container');
+    let htmlInyectar = "";
+    data.forEach(sem => {
+        htmlInyectar += `<div class="column-semester" id="sem-col-${sem.s}" data-total-materias="${sem.m.length}">
+                            <div class="semester-top-row">
+                                <div class="semester-title">Semestre 0${sem.s}</div>
+                                <button class="btn-status-toggle" onclick="marcarSemestreActual(${sem.s})">Cursando</button>
                             </div>`;
-                    });
-                }
-            };
-        }
+        sem.m.forEach((mat, i) => {
+            htmlInyectar += `<div class="card-materia" data-c="${mat[1]}" data-semestre="${sem.s}" id="m-${sem.s}-${i}">
+                        <div class="materia-indicator">⚫</div>
+                        <div class="materia-code">${mat[0]}</div>
+                        <div class="materia-name">${mat[2]}</div>
+                        <div class="materia-footer"><div class="materia-credits">${mat[1]} CR</div></div>
+                    </div>`;
+        });
+        htmlInyectar += `</div>`;
+    });
+    container.innerHTML = htmlInyectar;
 
-        // --- CAMBIO: AHORA PIDE PIN ANTES DE GUARDAR ---
-        function saveTask() {
-            const nombre = document.getElementById('taskName').value;
-            const materia = document.getElementById('taskSubject').value;
-            const fecha = document.getElementById('taskDate').value;
-            
-            if(!nombre || !fecha) {
-                alert("Completa todos los campos");
-                return;
+    document.querySelectorAll('.card-materia').forEach(card => {
+        const id = card.id; const indicator = card.querySelector('.materia-indicator');
+        if(localStorage.getItem(id)) { card.classList.add('aprobada'); indicator.textContent = "🟢"; }
+        
+        card.addEventListener('click', () => {
+            if(!card.classList.contains('aprobada')) {
+                card.classList.add('aprobada'); 
+                indicator.textContent = "🟢"; 
+                localStorage.setItem(id, '1'); 
+                evaluarEstatusYAlertas(card.dataset.semestre, true);
+            } else {
+                card.classList.remove('aprobada'); 
+                indicator.textContent = "⚫"; 
+                localStorage.removeItem(id); 
+                evaluarEstatusYAlertas(card.dataset.semestre, false);
             }
+        });
+    });
 
-            // Guardamos datos en la acción pendiente
-            pendingAction = { 
-                type: 'save', 
-                data: { nombre, materia, fecha, entregada: false } 
-            };
-            
-            // Mostramos el modal del PIN
-            document.getElementById('pinModal').classList.add('active');
+    function marcarSemestreActual(numSemestre) {
+        if (localStorage.getItem('semestre_actual_cursando') == numSemestre) { localStorage.removeItem('semestre_actual_cursando'); } 
+        else { localStorage.setItem('semestre_actual_cursando', numSemestre); }
+        actualizarEstilosSemestreActual();
+    }
+
+    function actualizarEstilosSemestreActual() {
+        const semActual = localStorage.getItem('semestre_actual_cursando');
+        document.querySelectorAll('.column-semester').forEach(col => col.classList.remove('cursando-actual'));
+        document.querySelectorAll('.card-materia').forEach(card => card.classList.remove('en-curso'));
+        if(semActual) {
+            const columna = document.getElementById(`sem-col-${semActual}`); if(columna) columna.classList.add('cursando-actual');
+            document.querySelectorAll(`.card-materia[data-semestre="${semActual}"]`).forEach(card => card.classList.add('en-curso'));
+        }
+    }
+
+    function calc() {
+        let cred = 0; 
+        document.querySelectorAll('.card-materia.aprobada').forEach(c => cred += parseInt(c.dataset.c));
+        document.getElementById('cred').textContent = cred;
+        let prog = Math.round((cred/TOTAL_CREDITOS)*100); 
+        if (prog > 100) prog = 100;
+        document.getElementById('porc').textContent = prog + '%'; 
+        document.getElementById('fill').style.width = prog + '%';
+        return prog;
+    }
+
+    function evaluarEstatusYAlertas(numSemestre, esAprobada) {
+        const progresoActual = calc();
+        
+        if (progresoActual < 50) hitosAlcanzados.mitad = false;
+        if (progresoActual < 100) hitosAlcanzados.completo = false;
+        localStorage.setItem('hitos_kardex_alcanzados', JSON.stringify(hitosAlcanzados));
+
+        if (!esAprobada) return; 
+
+        if (progresoActual === 100 && !hitosAlcanzados.completo) {
+            hitosAlcanzados.completo = true;
+            localStorage.setItem('hitos_kardex_alcanzados', JSON.stringify(hitosAlcanzados));
+            lanzarModal("🏆 ¡META COMPLETADA AL 100%! 🏆", "Has desbloqueado el mapa curricular completo. Felicidades, oficialmente has conquistado cada reto académico planteado. ¡A romperla en el mundo profesional!");
+            return;
         }
 
-        function toggleTarea(id, materia) { pendingAction = { type: 'toggle', id, materia }; document.getElementById('pinModal').classList.add('active'); }
-        function deleteTarea(id, materia) { pendingAction = { type: 'delete', id, materia }; document.getElementById('pinModal').classList.add('active'); }
+        if (progresoActual >= 50 && !hitosAlcanzados.mitad) {
+            hitosAlcanzados.mitad = true;
+            localStorage.setItem('hitos_kardex_alcanzados', JSON.stringify(hitosAlcanzados));
+            lanzarModal("🚀 ¡Llegaste a la Mitad de la Carrera! 🚀", "¡50% del camino completado! Ya cruzaste el ecuador del mapa. Lo que viene demanda enfoque, pero ya demostraste que tienes madera de líder. ¡Sigue presionando!");
+            return;
+        }
 
-        function validatePin() {
-            if (document.getElementById('pinCode').value === "9114") {
-                const transaction = db.transaction(["tareas"], "readwrite");
-                const store = transaction.objectStore("tareas");
+        const materiasAprobadasSemestre = document.querySelectorAll(`.card-materia[data-semestre="${numSemestre}"].aprobada`).length;
+        const totalMateriasSemestre = parseInt(document.getElementById(`sem-col-${numSemestre}`).dataset.totalMaterias);
 
-                if(pendingAction.type === 'save') {
-                    // Acción de guardado
-                    store.add(pendingAction.data);
-                    transaction.oncomplete = () => { 
-                        closeAddModal(); 
-                        actualizarDashboard(); 
-                        closePinModal();
-                        // Reset de campos
-                        document.getElementById('taskName').value = '';
-                        document.getElementById('taskDate').value = '';
-                    };
-                } else if(pendingAction.type === 'toggle') {
-                    // Acción de marcar como completado
-                    store.get(pendingAction.id).onsuccess = (e) => {
-                        const data = e.target.result;
-                        data.entregada = !data.entregada;
-                        store.put(data);
-                        if(data.entregada) confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
-                    };
-                    transaction.oncomplete = () => { actualizarDashboard(); showTasks(pendingAction.materia); closePinModal(); };
-                } else if(pendingAction.type === 'delete') {
-                    // Acción de borrar
-                    store.delete(pendingAction.id);
-                    transaction.oncomplete = () => { actualizarDashboard(); showTasks(pendingAction.materia); closePinModal(); };
-                }
-            } else { 
-                alert("PIN INCORRECTO"); 
-                document.getElementById('pinCode').value = '';
+        if (materiasAprobadasSemestre === totalMateriasSemestre) {
+            lanzarModal(`🌟 ¡Semestre 0${numSemestre} Concluido! 🌟`, "Has superado con éxito todos los créditos de este periodo formativo. Un paso sólido que te acerca un bloque completo más hacia tu meta.");
+            return;
+        }
+
+        const fraseAleatoria = bancoDeFrases[Math.floor(Math.random() * bancoDeFrases.length)];
+        lanzarModal("⚙️ Asignatura Registrada", fraseAleatoria);
+    }
+
+    function lanzarModal(titulo, texto) {
+        document.getElementById('modal-title').innerHTML = titulo; 
+        document.getElementById('modal-text').innerHTML = texto;
+        document.getElementById('universal-overlay-container').style.display = 'flex';
+    }
+    function cerrarModal() { document.getElementById('universal-overlay-container').style.display = 'none'; }
+
+    const dias = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes"];
+
+    // DATA MAP DE LOS HORARIOS REALES COMPLETAMENTE REVISADOS Y CORREGIDOS
+    const horariosPredefinidos = {
+        "1": {
+            // Lunes
+            "cell-7-Lunes": "Fund. Gestión Emp.\n(Kalinka Navarro - P25)",
+            "cell-8-Lunes": "Fund. Gestión Emp.\n(Kalinka Navarro - P25)",
+            "cell-9-Lunes": "Fund. de Química\n(Martha Calderón - P25)",
+            "cell-10-Lunes": "Fund. de Química\n(Martha Calderón - P25)",
+            "cell-11-Lunes": "Desarrollo Humano\n(Dawn López - P25)",
+            "cell-12-Lunes": "Desarrollo Humano\n(Dawn López - P25)",
+            // Martes
+            "cell-7-Martes": "Fund. Investigación\n(Armando Martínez - P25)",
+            "cell-8-Martes": "Fund. Investigación\n(Armando Martínez - P25)",
+            "cell-9-Martes": "Fund. de Química\n(Martha Calderón - P25)",
+            "cell-10-Martes": "Fund. de Química\n(Martha Calderón - P25)",
+            "cell-11-Martes": "Fund. de Química\n(Martha Calderón - P25)",
+            "cell-12-Martes": "Fund. de Física\n(Jorge de Jesús - P25)",
+            "cell-13-Martes": "Fund. de Física\n(Jorge de Jesús - P25)",
+            // Miércoles
+            "cell-8-Miercoles": "Fund. Investigación\n(Armando Martínez - P25)",
+            "cell-9-Miercoles": "Fund. Investigación\n(Armando Martínez - P25)",
+            "cell-10-Miercoles": "Fund. Gestión Emp.\n(Kalinka Navarro - P25)",
+            "cell-11-Miercoles": "Cálculo Diferencial\n(Alejandro Herrera - P25)",
+            "cell-12-Miercoles": "Fund. de Física\n(Jorge de Jesús - P25)",
+            "cell-13-Miercoles": "Fund. de Física\n(Jorge de Jesús - P25)",
+            // Jueves
+            "cell-9-Jueves": "Desarrollo Humano\n(Dawn López - P25)",
+            "cell-10-Jueves": "Desarrollo Humano\n(Dawn López - P25)",
+            "cell-11-Jueves": "Cálculo Diferencial\n(Alejandro Herrera - P25)",
+            "cell-12-Jueves": "Cálculo Diferencial\n(Alejandro Herrera - P25)",
+            // Viernes
+            "cell-8-Viernes": "Fund. Gestión Emp.\n(Kalinka Navarro - P25)",
+            "cell-9-Viernes": "Fund. Gestión Emp.\n(Kalinka Navarro - P25)",
+            "cell-10-Viernes": "Cálculo Diferencial\n(Alejandro Herrera - P25)",
+            "cell-11-Viernes": "Cálculo Diferencial\n(Alejandro Herrera - P25)"
+        },
+        "2": {
+            // Lunes
+            "cell-12-Lunes": "Cálculo Integral\n(Alejandro Herrera - P25)",
+            "cell-13-Lunes": "Cálculo Integral\n(Alejandro Herrera - P25)",
+            "cell-14-Lunes": "Legislación Laboral\n(Elizabeth Rodríguez - P25)",
+            "cell-15-Lunes": "Legislación Laboral\n(Elizabeth Rodríguez - P25)",
+            "cell-18-Lunes": "Cont. Orientada Neg.\n(Mario Castro - P25)",
+            // Martes
+            "cell-9-Martes": "Dinámica Social\n(Drisdel Pat Reyes - P25)",
+            "cell-10-Martes": "Dinámica Social\n(Drisdel Pat Reyes - P25)",
+            "cell-11-Martes": "Taller de Ética\n(Germán León - P25)",
+            "cell-12-Martes": "Taller de Ética\n(Germán León - P25)",
+            "cell-14-Martes": "Soft. Aplic. Ejec.\n(Yolanda Paredes - P25)",
+            "cell-15-Martes": "Soft. Aplic. Ejec.\n(Yolanda Paredes - P25)",
+            "cell-16-Martes": "Soft. Aplic. Ejec.\n(Yolanda Paredes - P25)",
+            "cell-17-Martes": "Cont. Orientada Neg.\n(Mario Castro - P25)",
+            "cell-18-Martes": "Cont. Orientada Neg.\n(Mario Castro - P25)",
+            // Miércoles
+            "cell-9-Miercoles": "Dinámica Social\n(Drisdel Pat Reyes - P25)",
+            "cell-10-Miercoles": "Dinámica Social\n(Drisdel Pat Reyes - P25)",
+            "cell-11-Miercoles": "Cálculo Integral\n(Alejandro Herrera - P25)",
+            "cell-12-Miercoles": "Cálculo Integral\n(Alejandro Herrera - P25)",
+            "cell-13-Miercoles": "Cálculo Integral\n(Alejandro Herrera - P25)",
+            "cell-16-Miercoles": "Cont. Orientada Neg.\n(Mario Castro - P25)",
+            "cell-17-Miercoles": "Cont. Orientada Neg.\n(Mario Castro - P25)",
+            // Jueves
+            "cell-12-Jueves": "Taller de Ética\n(Germán León - P25)",
+            "cell-13-Jueves": "Taller de Ética\n(Germán León - P25)",
+            "cell-14-Jueves": "Legislación Laboral\n(Elizabeth Rodríguez - P25)",
+            "cell-15-Jueves": "Legislación Laboral\n(Elizabeth Rodríguez - P25)",
+            "cell-16-Jueves": "Soft. Aplic. Ejec.\n(Yolanda Paredes - P25)",
+            "cell-17-Jueves": "Soft. Aplic. Ejec.\n(Yolanda Paredes - P25)"
+        }
+    };
+
+    function inicializarEstructuraHorario() {
+        const body = document.getElementById('schedule-body');
+        let htmlRows = "";
+        
+        for (let h = 7; h <= 21; h++) {
+            let startPeriod = h < 12 ? "a.m." : "p.m.";
+            let endPeriod = (h + 1) < 12 ? "a.m." : "p.m.";
+            let startHour = h;
+            let endHour = h + 1;
+            
+            let labelHora = `${startHour}:00 ${startPeriod} a ${endHour}:00 ${endPeriod}`;
+            
+            htmlRows += `<tr>
+                <td style="font-weight:700; background: var(--panel-bg); color: var(--azul-marino); font-size:11.5px; white-space: nowrap;">${labelHora}</td>
+                ${dias.map(d => `<td><input type="text" id="cell-${h}-${d}" placeholder="—"></td>`).join('')}
+            </tr>`;
+        }
+        body.innerHTML = htmlRows;
+
+        // Limpieza y forzado de la nueva estructura correcta en el localStorage
+        localStorage.setItem("horario_semestre_1", JSON.stringify(horariosPredefinidos["1"]));
+        localStorage.setItem("horario_semestre_2", JSON.stringify(horariosPredefinidos["2"]));
+
+        cargarHorarioSemestre();
+    }
+
+    function obtenerSemestreSeleccionado() { return document.getElementById('select-semestre-horario').value; }
+
+    function cargarHorarioSemestre() {
+        const sem = obtenerSemestreSeleccionado();
+        for (let h = 7; h <= 21; h++) {
+            dias.forEach(d => { document.getElementById(`cell-${h}-${d}`).value = ""; });
+        }
+        const horarioGuardado = localStorage.getItem(`horario_semestre_${sem}`);
+        if (horarioGuardado) {
+            const mapaCeldas = JSON.parse(horarioGuardado);
+            for (const idCaja in mapaCeldas) {
+                const elementoInput = document.getElementById(idCaja);
+                if (elementoInput) elementoInput.value = mapaCeldas[idCaja];
             }
         }
-    </script>
+    }
+
+    function guardarHorarioActual() {
+        const sem = obtenerSemestreSeleccionado();
+        const mapaCeldas = {};
+        for (let h = 7; h <= 21; h++) {
+            dias.forEach(d => {
+                const idCaja = `cell-${h}-${d}`;
+                const val = document.getElementById(idCaja).value.trim();
+                if(val) mapaCeldas[idCaja] = val;
+            });
+        }
+        localStorage.setItem(`horario_semestre_${sem}`, JSON.stringify(mapaCeldas));
+        lanzarModal("💾 Registro Guardado", `La agenda para el bloque seleccionado se sincronizó correctamente.`);
+    }
+
+    function cargarTablaActividades() {
+        const body = document.getElementById('tasks-body');
+        let listaActividades = JSON.parse(localStorage.getItem('actividades_para_realizar')) || [];
+        
+        if(listaActividades.length === 0) {
+            body.innerHTML = `<tr><td colspan="4" style="text-align:center; color: var(--azul-muted); padding:24px; font-weight:600;">No hay entregables pendientes en el registro.</td></tr>`;
+            return;
+        }
+
+        body.innerHTML = listaActividades.map((act, index) => `
+            <tr>
+                <td style="font-weight:800; color: var(--oro-flat);">${escapeHtml(act.materia)}</td>
+                <td style="font-weight:600; color: var(--azul-marino);">${escapeHtml(act.descripcion)}</td>
+                <td style="color: var(--azul-muted); font-weight: 700;">${act.fecha ? act.fecha : 'Abierta'}</td>
+                <td style="text-align:center;"><button class="btn-action-delete" onclick="eliminarActividad(${index})">Completar</button></td>
+            </tr>
+        `).join('');
+    }
+
+    function agregarActividad() {
+        const matInput = document.getElementById('task-materia');
+        const descInput = document.getElementById('task-desc');
+        const dateInput = document.getElementById('task-date');
+
+        if(!matInput.value.trim() || !descInput.value.trim()) {
+            lanzarModal("⚠️ Validación", "Por favor, complete los campos obligatorios antes de procesar.");
+            return;
+        }
+
+        let listaActividades = JSON.parse(localStorage.getItem('actividades_para_realizar')) || [];
+        listaActividades.push({ materia: matInput.value.trim(), descripcion: descInput.value.trim(), fecha: dateInput.value });
+        localStorage.setItem('actividades_para_realizar', JSON.stringify(listaActividades));
+        
+        matInput.value = ""; descInput.value = ""; dateInput.value = "";
+        cargarTablaActividades();
+    }
+
+    function eliminarActividad(index) {
+        let listaActividades = JSON.parse(localStorage.getItem('actividades_para_realizar')) || [];
+        listaActividades.splice(index, 1);
+        localStorage.setItem('actividades_para_realizar', JSON.stringify(listaActividades));
+        cargarTablaActividades();
+    }
+
+    function escapeHtml(text) {
+        return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    calc();
+    actualizarEstilosSemestreActual();
+    inicializarEstructuraHorario();
+    cargarTablaActividades();
+</script>
 </body>
 </html>
-             
-        
