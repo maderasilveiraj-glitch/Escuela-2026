@@ -645,7 +645,9 @@
             <div class="section-tasks">
                 <h3>📋 Gestión de Entregables</h3>
                 <div class="row-controls" style="background: rgba(255, 255, 255, 0.5); padding: 20px; border-radius: 18px; border: 1px solid rgba(165,175,190,0.1)">
-                    <input type="text" id="task-materia" placeholder="Asignatura Académica" style="width: 240px;">
+                    <!-- MODIFICADO: Ahora es un menú desplegable dinámico -->
+                    <select id="task-materia" style="width: 240px;"></select>
+                    
                     <input type="text" id="task-desc" placeholder="Descripción del entregable o examen..." style="flex: 1; min-width: 240px;">
                     <input type="date" id="task-date">
                     <button class="btn-prime" onclick="agregarActividad()">➕ Registrar</button>
@@ -1016,9 +1018,23 @@
     // Función auxiliar para buscar los créditos de una materia comparando con el arreglo maestro 'data'
     function obtenerCreditosMateria(nombreMateria, semNum) {
         const semestreObj = data.find(s => s.s == semNum);
-        if (!semestreObj) return 5; // Valor por defecto en caso de no hallar
+        if (!semestreObj) return 5; 
         const encontrada = semestreObj.m.find(m => m[2].trim().toUpperCase() === nombreMateria.trim().toUpperCase());
         return encontrada ? encontrada[1] : 5;
+    }
+
+    // NUEVA FUNCIÓN: Actualiza el menú desplegable de entregables según el semestre seleccionado
+    function actualizarMateriasEntregables() {
+        const sem = obtenerSemestreSeleccionado();
+        const semestreObj = data.find(s => s.s == sem);
+        const selectTask = document.getElementById('task-materia');
+        
+        if (!semestreObj) {
+            selectTask.innerHTML = '<option value="">Sin materias</option>';
+            return;
+        }
+
+        selectTask.innerHTML = semestreObj.m.map(mat => `<option value="${mat[2]}">${mat[2]}</option>`).join('');
     }
 
     function cargarHorarioSemestre() {
@@ -1034,6 +1050,9 @@
                 if (elementoInput) elementoInput.value = mapaCeldas[idCaja];
             }
         }
+
+        // Actualizar la lista de materias disponibles en el selector de entregables
+        actualizarMateriasEntregables();
 
         // Actualizar tabla de docentes inferior incluyendo Créditos y Salón asignado
         const profBody = document.getElementById('profesores-body');
@@ -1089,20 +1108,20 @@
     }
 
     function agregarActividad() {
-        const matInput = document.getElementById('task-materia');
+        const matSelect = document.getElementById('task-materia');
         const descInput = document.getElementById('task-desc');
         const dateInput = document.getElementById('task-date');
 
-        if(!matInput.value.trim() || !descInput.value.trim()) {
+        if(!matSelect.value.trim() || !descInput.value.trim()) {
             lanzarModal("⚠️ Validación", "Por favor, complete los campos obligatorios antes de procesar.");
             return;
         }
 
         let listaActividades = JSON.parse(localStorage.getItem('actividades_para_realizar')) || [];
-        listaActividades.push({ materia: matInput.value.trim(), descripcion: descInput.value.trim(), fecha: dateInput.value });
+        listaActividades.push({ materia: matSelect.value.trim(), descripcion: descInput.value.trim(), fecha: dateInput.value });
         localStorage.setItem('actividades_para_realizar', JSON.stringify(listaActividades));
         
-        matInput.value = ""; descInput.value = ""; dateInput.value = "";
+        descInput.value = ""; dateInput.value = "";
         cargarTablaActividades();
     }
 
@@ -1124,5 +1143,5 @@
 </script>
 </body>
 </html>
-        
+      
                            
