@@ -401,7 +401,7 @@
         }
 
         /* BANDEJA DE ENTREGABLES EXECUTIVA */
-        .section-tasks h3 {
+        .section-tasks h3, .section-profesores h3 {
             color: var(--azul-marino);
             font-size: 20px;
             margin-top: 0;
@@ -593,7 +593,7 @@
                 <select id="select-semestre-horario" onchange="cargarHorarioSemestre()">
                     <option value="1">Semestre I</option>
                     <option value="2">Semestre II</option>
-                    <option value="3">Semestre III</option>
+                    <option value="3" selected>Semestre III</option>
                     <option value="4">Semestre IV</option>
                     <option value="5">Semestre V</option>
                     <option value="6">Semestre VI</option>
@@ -619,6 +619,23 @@
                     <tbody id="schedule-body">
                     </tbody>
                 </table>
+            </div>
+
+            <!-- TABLA DE DOCENTE DEBAJO DEL HORARIO -->
+            <div class="section-profesores" style="margin-top: 35px;">
+                <h3>👨‍🏫 Directorio de Docentes</h3>
+                <div class="scroll-wrapper" style="margin-top: 15px;">
+                    <table class="table-custom">
+                        <thead>
+                            <tr>
+                                <th style="width: 40%;">Asignatura</th>
+                                <th>Docente Asignado</th>
+                            </tr>
+                        </thead>
+                        <tbody id="profesores-body">
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <hr style="border: 0; border-top: 2px dashed rgba(165,175,190,0.2); margin: 40px 0;">
@@ -832,75 +849,137 @@
 
     const dias = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes"];
 
-    // DATA MAP DE LOS HORARIOS REALES COMPLETAMENTE REVISADOS Y CORREGIDOS
+    // HORARIOS Y PROFESORES PARA LOS 9 SEMESTRES
     const horariosPredefinidos = {
         "1": {
-            // Lunes
-            "cell-7-Lunes": "Fund. Gestión Emp.\n(Kalinka Navarro - P25)",
-            "cell-8-Lunes": "Fund. Gestión Emp.\n(Kalinka Navarro - P25)",
-            "cell-9-Lunes": "Fund. de Química\n(Martha Calderón - P25)",
-            "cell-10-Lunes": "Fund. de Química\n(Martha Calderón - P25)",
-            "cell-11-Lunes": "Desarrollo Humano\n(Dawn López - P25)",
-            "cell-12-Lunes": "Desarrollo Humano\n(Dawn López - P25)",
-            // Martes
-            "cell-7-Martes": "Fund. Investigación\n(Armando Martínez - P25)",
-            "cell-8-Martes": "Fund. Investigación\n(Armando Martínez - P25)",
-            "cell-9-Martes": "Fund. de Química\n(Martha Calderón - P25)",
-            "cell-10-Martes": "Fund. de Química\n(Martha Calderón - P25)",
-            "cell-11-Martes": "Fund. de Química\n(Martha Calderón - P25)",
-            "cell-12-Martes": "Fund. de Física\n(Jorge de Jesús - P25)",
-            "cell-13-Martes": "Fund. de Física\n(Jorge de Jesús - P25)",
-            // Miércoles
-            "cell-8-Miercoles": "Fund. Investigación\n(Armando Martínez - P25)",
-            "cell-9-Miercoles": "Fund. Investigación\n(Armando Martínez - P25)",
-            "cell-10-Miercoles": "Fund. Gestión Emp.\n(Kalinka Navarro - P25)",
-            "cell-11-Miercoles": "Cálculo Diferencial\n(Alejandro Herrera - P25)",
-            "cell-12-Miercoles": "Fund. de Física\n(Jorge de Jesús - P25)",
-            "cell-13-Miercoles": "Fund. de Física\n(Jorge de Jesús - P25)",
-            // Jueves
-            "cell-9-Jueves": "Desarrollo Humano\n(Dawn López - P25)",
-            "cell-10-Jueves": "Desarrollo Humano\n(Dawn López - P25)",
-            "cell-11-Jueves": "Cálculo Diferencial\n(Alejandro Herrera - P25)",
-            "cell-12-Jueves": "Cálculo Diferencial\n(Alejandro Herrera - P25)",
-            // Viernes
-            "cell-8-Viernes": "Fund. Gestión Emp.\n(Kalinka Navarro - P25)",
-            "cell-9-Viernes": "Fund. Gestión Emp.\n(Kalinka Navarro - P25)",
-            "cell-10-Viernes": "Cálculo Diferencial\n(Alejandro Herrera - P25)",
-            "cell-11-Viernes": "Cálculo Diferencial\n(Alejandro Herrera - P25)"
+            "cell-7-Lunes": "Fund. Gestión Emp.", "cell-8-Lunes": "Fund. Gestión Emp.", "cell-9-Lunes": "Fund. de Química", "cell-10-Lunes": "Fund. de Química", "cell-11-Lunes": "Desarrollo Humano", "cell-12-Lunes": "Desarrollo Humano",
+            "cell-7-Martes": "Fund. Investigación", "cell-8-Martes": "Fund. Investigación", "cell-9-Martes": "Fund. de Química", "cell-10-Martes": "Fund. de Química", "cell-11-Martes": "Fund. de Química", "cell-12-Martes": "Fund. de Física", "cell-13-Martes": "Fund. de Física",
+            "cell-8-Miercoles": "Fund. Investigación", "cell-9-Miercoles": "Fund. Investigación", "cell-10-Miercoles": "Fund. Gestión Emp.", "cell-11-Miercoles": "Cálculo Diferencial", "cell-12-Miercoles": "Fund. de Física", "cell-13-Miercoles": "Fund. de Física",
+            "cell-9-Jueves": "Desarrollo Humano", "cell-10-Jueves": "Desarrollo Humano", "cell-11-Jueves": "Cálculo Diferencial", "cell-12-Jueves": "Cálculo Diferencial",
+            "cell-8-Viernes": "Fund. Gestión Emp.", "cell-9-Viernes": "Fund. Gestión Emp.", "cell-10-Viernes": "Cálculo Diferencial", "cell-11-Viernes": "Cálculo Diferencial"
         },
         "2": {
-            // Lunes
-            "cell-12-Lunes": "Cálculo Integral\n(Alejandro Herrera - P25)",
-            "cell-13-Lunes": "Cálculo Integral\n(Alejandro Herrera - P25)",
-            "cell-14-Lunes": "Legislación Laboral\n(Elizabeth Rodríguez - P25)",
-            "cell-15-Lunes": "Legislación Laboral\n(Elizabeth Rodríguez - P25)",
-            "cell-18-Lunes": "Cont. Orientada Neg.\n(Mario Castro - P25)",
-            // Martes
-            "cell-9-Martes": "Dinámica Social\n(Drisdel Pat Reyes - P25)",
-            "cell-10-Martes": "Dinámica Social\n(Drisdel Pat Reyes - P25)",
-            "cell-11-Martes": "Taller de Ética\n(Germán León - P25)",
-            "cell-12-Martes": "Taller de Ética\n(Germán León - P25)",
-            "cell-14-Martes": "Soft. Aplic. Ejec.\n(Yolanda Paredes - P25)",
-            "cell-15-Martes": "Soft. Aplic. Ejec.\n(Yolanda Paredes - P25)",
-            "cell-16-Martes": "Soft. Aplic. Ejec.\n(Yolanda Paredes - P25)",
-            "cell-17-Martes": "Cont. Orientada Neg.\n(Mario Castro - P25)",
-            "cell-18-Martes": "Cont. Orientada Neg.\n(Mario Castro - P25)",
-            // Miércoles
-            "cell-9-Miercoles": "Dinámica Social\n(Drisdel Pat Reyes - P25)",
-            "cell-10-Miercoles": "Dinámica Social\n(Drisdel Pat Reyes - P25)",
-            "cell-11-Miercoles": "Cálculo Integral\n(Alejandro Herrera - P25)",
-            "cell-12-Miercoles": "Cálculo Integral\n(Alejandro Herrera - P25)",
-            "cell-13-Miercoles": "Cálculo Integral\n(Alejandro Herrera - P25)",
-            "cell-16-Miercoles": "Cont. Orientada Neg.\n(Mario Castro - P25)",
-            "cell-17-Miercoles": "Cont. Orientada Neg.\n(Mario Castro - P25)",
-            // Jueves
-            "cell-12-Jueves": "Taller de Ética\n(Germán León - P25)",
-            "cell-13-Jueves": "Taller de Ética\n(Germán León - P25)",
-            "cell-14-Jueves": "Legislación Laboral\n(Elizabeth Rodríguez - P25)",
-            "cell-15-Jueves": "Legislación Laboral\n(Elizabeth Rodríguez - P25)",
-            "cell-16-Jueves": "Soft. Aplic. Ejec.\n(Yolanda Paredes - P25)",
-            "cell-17-Jueves": "Soft. Aplic. Ejec.\n(Yolanda Paredes - P25)"
+            "cell-12-Lunes": "Cálculo Integral", "cell-13-Lunes": "Cálculo Integral", "cell-14-Lunes": "Legislación Laboral", "cell-15-Lunes": "Legislación Laboral", "cell-18-Lunes": "Cont. Orientada Neg.",
+            "cell-9-Martes": "Dinámica Social", "cell-10-Martes": "Dinámica Social", "cell-11-Martes": "Taller de Ética", "cell-12-Martes": "Taller de Ética", "cell-14-Martes": "Soft. Aplic. Ejec.", "cell-15-Martes": "Soft. Aplic. Ejec.", "cell-16-Martes": "Soft. Aplic. Ejec.", "cell-17-Martes": "Cont. Orientada Neg.", "cell-18-Martes": "Cont. Orientada Neg.",
+            "cell-9-Miercoles": "Dinámica Social", "cell-10-Miercoles": "Dinámica Social", "cell-11-Miercoles": "Cálculo Integral", "cell-12-Miercoles": "Cálculo Integral", "cell-13-Miercoles": "Cálculo Integral", "cell-16-Miercoles": "Cont. Orientada Neg.", "cell-17-Miercoles": "Cont. Orientada Neg.",
+            "cell-12-Jueves": "Taller de Ética", "cell-13-Jueves": "Taller de Ética", "cell-14-Jueves": "Legislación Laboral", "cell-15-Jueves": "Legislación Laboral", "cell-16-Jueves": "Soft. Aplic. Ejec.", "cell-17-Jueves": "Soft. Aplic. Ejec."
+        },
+        "3": {
+            "cell-7-Lunes": "Prob. y Est. Desc.", "cell-8-Lunes": "Prob. y Est. Desc.", "cell-9-Lunes": "Hab. Directivas I", "cell-10-Lunes": "Hab. Directivas I", "cell-11-Lunes": "Economía Emp.", "cell-12-Lunes": "Economía Emp.",
+            "cell-9-Martes": "Álgebra Lineal", "cell-10-Martes": "Álgebra Lineal", "cell-11-Martes": "Costos Empresariales", "cell-12-Martes": "Costos Empresariales",
+            "cell-7-Miercoles": "Álgebra Lineal", "cell-8-Miercoles": "Álgebra Lineal", "cell-9-Miercoles": "Álgebra Lineal", "cell-10-Miercoles": "Prob. y Est. Desc.", "cell-11-Miercoles": "Costos Empresariales", "cell-12-Miercoles": "Costos Empresariales", "cell-13-Miercoles": "Costos Empresariales",
+            "cell-7-Jueves": "Marco Legal Orgs.", "cell-8-Jueves": "Marco Legal Orgs.", "cell-9-Jueves": "Hab. Directivas I", "cell-10-Jueves": "Hab. Directivas I", "cell-11-Jueves": "Economía Emp.", "cell-12-Jueves": "Economía Emp.", "cell-13-Jueves": "Economía Emp.",
+            "cell-7-Viernes": "Prob. y Est. Desc.", "cell-8-Viernes": "Prob. y Est. Desc.", "cell-9-Viernes": "Marco Legal Orgs.", "cell-10-Viernes": "Marco Legal Orgs."
+        },
+        "4": {
+            "cell-8-Lunes": "Inv. Operaciones", "cell-9-Lunes": "Inv. Operaciones", "cell-10-Lunes": "Ent. Macroeconómico", "cell-11-Lunes": "Ent. Macroeconómico",
+            "cell-8-Martes": "Est. Inferencial I", "cell-9-Martes": "Est. Inferencial I", "cell-10-Martes": "Inst. Presup. Emp.", "cell-11-Martes": "Inst. Presup. Emp.",
+            "cell-8-Miercoles": "Ing. Económica", "cell-9-Miercoles": "Ing. Económica", "cell-10-Miercoles": "Hab. Directivas II", "cell-11-Miercoles": "Hab. Directivas II",
+            "cell-8-Jueves": "Inv. Operaciones", "cell-9-Jueves": "Inv. Operaciones", "cell-10-Jueves": "Est. Inferencial I", "cell-11-Jueves": "Est. Inferencial I",
+            "cell-8-Viernes": "Ing. Económica", "cell-9-Viernes": "Ing. Económica", "cell-10-Viernes": "Ent. Macroeconómico"
+        },
+        "5": {
+            "cell-7-Lunes": "Finanzas Orgs.", "cell-8-Lunes": "Finanzas Orgs.", "cell-9-Lunes": "Ing. Procesos", "cell-10-Lunes": "Ing. Procesos",
+            "cell-7-Martes": "Est. Inferencial II", "cell-8-Martes": "Est. Inferencial II", "cell-9-Martes": "Gestión Capital Hum.", "cell-10-Martes": "Gestión Capital Hum.",
+            "cell-7-Miercoles": "Taller Inv. I", "cell-8-Miercoles": "Taller Inv. I", "cell-9-Miercoles": "Mercadotecnia", "cell-10-Miercoles": "Mercadotecnia",
+            "cell-7-Jueves": "Finanzas Orgs.", "cell-8-Jueves": "Finanzas Orgs.", "cell-9-Jueves": "Est. Inferencial II", "cell-10-Jueves": "Est. Inferencial II",
+            "cell-7-Viernes": "Ing. Procesos", "cell-8-Viernes": "Gestión Capital Hum."
+        },
+        "6": {
+            "cell-13-Lunes": "Gestión Prod. I", "cell-14-Lunes": "Gestión Prod. I", "cell-15-Lunes": "Diseño Org.", "cell-16-Lunes": "Diseño Org.",
+            "cell-13-Martes": "Emprend. Innovac.", "cell-14-Martes": "Emprend. Innovac.", "cell-15-Martes": "Sist. Info. Merc.", "cell-16-Martes": "Sist. Info. Merc.",
+            "cell-13-Miercoles": "Admin. Sal. Seg. Oc.", "cell-14-Miercoles": "Admin. Sal. Seg. Oc.", "cell-15-Miercoles": "Taller Inv. II", "cell-16-Miercoles": "Taller Inv. II",
+            "cell-13-Jueves": "Gestión Prod. I", "cell-14-Jueves": "Emprend. Innovac.", "cell-15-Jueves": "Diseño Org.",
+            "cell-13-Viernes": "Activ. Complem."
+        },
+        "7": {
+            "cell-10-Lunes": "Calidad G. Emp.", "cell-11-Lunes": "Calidad G. Emp.", "cell-12-Lunes": "Gestión Prod. II", "cell-13-Lunes": "Gestión Prod. II",
+            "cell-10-Martes": "Plan Negocios", "cell-11-Martes": "Plan Negocios", "cell-12-Martes": "Gestión Estratégica", "cell-13-Martes": "Gestión Estratégica",
+            "cell-10-Miercoles": "Des. Sustentable", "cell-11-Miercoles": "Des. Sustentable", "cell-12-Miercoles": "Merc. Electrónica", "cell-13-Miercoles": "Merc. Electrónica",
+            "cell-10-Jueves": "Calidad G. Emp.", "cell-11-Jueves": "Plan Negocios", "cell-12-Jueves": "Gestión Estratégica",
+            "cell-10-Viernes": "Des. Sustentable"
+        },
+        "8": {
+            "cell-8-Lunes": "Cad. Suministros", "cell-9-Lunes": "Cad. Suministros", "cell-10-Lunes": "Cad. Suministros",
+            "cell-8-Martes": "Servicio Social", "cell-9-Martes": "Servicio Social",
+            "cell-8-Miercoles": "Servicio Social", "cell-9-Miercoles": "Servicio Social",
+            "cell-8-Jueves": "Servicio Social",
+            "cell-8-Viernes": "Servicio Social"
+        },
+        "9": {
+            "cell-8-Lunes": "Residencia Prof.", "cell-9-Lunes": "Residencia Prof.", "cell-10-Lunes": "Residencia Prof.", "cell-11-Lunes": "Residencia Prof.", "cell-12-Lunes": "Residencia Prof.",
+            "cell-8-Martes": "Residencia Prof.", "cell-9-Martes": "Residencia Prof.", "cell-10-Martes": "Residencia Prof.",
+            "cell-8-Miercoles": "Residencia Prof.", "cell-9-Miercoles": "Residencia Prof.",
+            "cell-8-Jueves": "Residencia Prof.",
+            "cell-8-Viernes": "Residencia Prof."
         }
+    };
+
+    const profesoresSemestres = {
+        "1": [
+            { materia: "Fund. Gestión Emp.", docente: "Kalinka Navarro" },
+            { materia: "Fund. de Química", docente: "Martha Calderón" },
+            { materia: "Desarrollo Humano", docente: "Dawn López" },
+            { materia: "Fund. Investigación", docente: "Armando Martínez" },
+            { materia: "Fund. de Física", docente: "Jorge de Jesús" },
+            { materia: "Cálculo Diferencial", docente: "Alejandro Herrera" }
+        ],
+        "2": [
+            { materia: "Cálculo Integral", docente: "Alejandro Herrera" },
+            { materia: "Legislación Laboral", docente: "Elizabeth Rodríguez" },
+            { materia: "Cont. Orientada Neg.", docente: "Mario Castro" },
+            { materia: "Dinámica Social", docente: "Drisdel Pat Reyes" },
+            { materia: "Taller de Ética", docente: "Germán León" },
+            { materia: "Soft. Aplic. Ejec.", docente: "Yolanda Paredes" }
+        ],
+        "3": [
+            { materia: "Álgebra Lineal", docente: "Ramón Alberto Cupul y Díaz" },
+            { materia: "Marco Legal Orgs.", docente: "Carmen María Rodríguez" },
+            { materia: "Economía Emp.", docente: "Fernando Antonio Solís Díaz" },
+            { materia: "Hab. Directivas I", docente: "Gabriela del Socorro Herrera" },
+            { materia: "Costos Empresariales", docente: "Virginia del Carmen May" },
+            { materia: "Prob. y Est. Desc.", docente: "Raúl Alvar Rodríguez Sánchez" }
+        ],
+        "4": [
+            { materia: "Ing. Económica", docente: "Sofía Medina" },
+            { materia: "Est. Inferencial I", docente: "Héctor Gómez" },
+            { materia: "Inst. Presup. Emp.", docente: "Beatriz Adriana Chan" },
+            { materia: "Hab. Directivas II", docente: "Gabriela del Socorro Herrera" },
+            { materia: "Ent. Macroeconómico", docente: "Julio César Puc" },
+            { materia: "Inv. Operaciones", docente: "Manuel Jesús Pech" }
+        ],
+        "5": [
+            { materia: "Finanzas Orgs.", docente: "Virginia del Carmen May" },
+            { materia: "Est. Inferencial II", docente: "Héctor Gómez" },
+            { materia: "Ing. Procesos", docente: "Carlos Alberto Dzib" },
+            { materia: "Gestión Capital Hum.", docente: "Rosa María Tun" },
+            { materia: "Taller Inv. I", docente: "Armando Martínez" },
+            { materia: "Mercadotecnia", docente: "Diana Laura Zepeda" }
+        ],
+        "6": [
+            { materia: "Admin. Sal. Seg. Oc.", docente: "Elizabeth Rodríguez" },
+            { materia: "Emprend. Innovac.", docente: "Mario Castro" },
+            { materia: "Gestión Prod. I", docente: "Felipe de Jesús Ek" },
+            { materia: "Diseño Org.", docente: "Rosa María Tun" },
+            { materia: "Taller Inv. II", docente: "Armando Martínez" },
+            { materia: "Sist. Info. Merc.", docente: "Diana Laura Zepeda" },
+            { materia: "Activ. Complem.", docente: "Coordinación Académica" }
+        ],
+        "7": [
+            { materia: "Calidad G. Emp.", docente: "Felipe de Jesús Ek" },
+            { materia: "Plan Negocios", docente: "Mario Castro" },
+            { materia: "Gestión Prod. II", docente: "Felipe de Jesús Ek" },
+            { materia: "Gestión Estratégica", docente: "Fernando Antonio Solís Díaz" },
+            { materia: "Des. Sustentable", docente: "Martha Calderón" },
+            { materia: "Merc. Electrónica", docente: "Yolanda Paredes" }
+        ],
+        "8": [
+            { materia: "Cad. Suministros", docente: "Carlos Alberto Dzib" },
+            { materia: "Servicio Social", docente: "Comité de Vinculación" }
+        ],
+        "9": [
+            { materia: "Residencia Prof.", docente: "Comité de Residencias Profesionales" }
+        ]
     };
 
     function inicializarEstructuraHorario() {
@@ -922,9 +1001,12 @@
         }
         body.innerHTML = htmlRows;
 
-        // Limpieza y forzado de la nueva estructura correcta en el localStorage
-        localStorage.setItem("horario_semestre_1", JSON.stringify(horariosPredefinidos["1"]));
-        localStorage.setItem("horario_semestre_2", JSON.stringify(horariosPredefinidos["2"]));
+        // Guardar todos los semestres definidos en localStorage para persistencia
+        for (let sKey in horariosPredefinidos) {
+            if(!localStorage.getItem(`horario_semestre_${sKey}`)) {
+                localStorage.setItem(`horario_semestre_${sKey}`, JSON.stringify(horariosPredefinidos[sKey]));
+            }
+        }
 
         cargarHorarioSemestre();
     }
@@ -943,6 +1025,20 @@
                 const elementoInput = document.getElementById(idCaja);
                 if (elementoInput) elementoInput.value = mapaCeldas[idCaja];
             }
+        }
+
+        // Actualizar tabla de docentes inferior para el semestre seleccionado
+        const profBody = document.getElementById('profesores-body');
+        const listaProfs = profesoresSemestres[sem] || [];
+        if(listaProfs.length === 0) {
+            profBody.innerHTML = `<tr><td colspan="2" style="text-align:center; color: var(--azul-muted); padding:16px;">Sin profesores registrados para este periodo.</td></tr>`;
+        } else {
+            profBody.innerHTML = listaProfs.map(p => `
+                <tr>
+                    <td style="font-weight:800; color: var(--oro-flat); text-align: left; padding-left: 20px;">${escapeHtml(p.materia)}</td>
+                    <td style="font-weight:600; color: var(--azul-marino); text-align: left; padding-left: 20px;">${escapeHtml(p.docente)}</td>
+                </tr>
+            `).join('');
         }
     }
 
