@@ -621,15 +621,17 @@
                 </table>
             </div>
 
-            <!-- TABLA DE DOCENTE DEBAJO DEL HORARIO -->
+            <!-- TABLA DE DOCENTE DEBAJO DEL HORARIO (CON CRÉDITOS Y SALÓN) -->
             <div class="section-profesores" style="margin-top: 35px;">
-                <h3>👨‍🏫 Directorio de Docentes</h3>
+                <h3>👨‍🏫 Directorio de Docentes y Asignaciones</h3>
                 <div class="scroll-wrapper" style="margin-top: 15px;">
                     <table class="table-custom">
                         <thead>
                             <tr>
-                                <th style="width: 40%;">Asignatura</th>
-                                <th>Docente Asignado</th>
+                                <th style="width: 35%;">Asignatura</th>
+                                <th style="width: 15%;">Créditos</th>
+                                <th style="width: 30%;">Docente Asignado</th>
+                                <th style="width: 20%;">Salón Asignado</th>
                             </tr>
                         </thead>
                         <tbody id="profesores-body">
@@ -849,7 +851,6 @@
 
     const dias = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes"];
 
-    // HORARIOS Y PROFESORES PARA LOS 9 SEMESTRES
     const horariosPredefinidos = {
         "1": {
             "cell-7-Lunes": "Fund. Gestión Emp.", "cell-8-Lunes": "Fund. Gestión Emp.", "cell-9-Lunes": "Fund. de Química", "cell-10-Lunes": "Fund. de Química", "cell-11-Lunes": "Desarrollo Humano", "cell-12-Lunes": "Desarrollo Humano",
@@ -917,68 +918,68 @@
 
     const profesoresSemestres = {
         "1": [
-            { materia: "Fund. Gestión Emp.", docente: "Kalinka Navarro" },
-            { materia: "Fund. de Química", docente: "Martha Calderón" },
-            { materia: "Desarrollo Humano", docente: "Dawn López" },
-            { materia: "Fund. Investigación", docente: "Armando Martínez" },
-            { materia: "Fund. de Física", docente: "Jorge de Jesús" },
-            { materia: "Cálculo Diferencial", docente: "Alejandro Herrera" }
+            { materia: "FUND. DE GESTION", docente: "Kalinka Navarro", salon: "Aula P12" },
+            { materia: "FUND. DE QUIMICA", docente: "Martha Calderón", salon: "Lab Química 1" },
+            { materia: "DESARROLLO HUMANO", docente: "Dawn López", salon: "Aula P14" },
+            { materia: "FUND. INVESTIGACION", docente: "Armando Martínez", salon: "Aula P12" },
+            { materia: "FUND. DE FISICA", docente: "Jorge de Jesús", salon: "Lab Física" },
+            { materia: "CALCULO DIFERENCIAL", docente: "Alejandro Herrera", salon: "Aula P15" }
         ],
         "2": [
-            { materia: "Cálculo Integral", docente: "Alejandro Herrera" },
-            { materia: "Legislación Laboral", docente: "Elizabeth Rodríguez" },
-            { materia: "Cont. Orientada Neg.", docente: "Mario Castro" },
-            { materia: "Dinámica Social", docente: "Drisdel Pat Reyes" },
-            { materia: "Taller de Ética", docente: "Germán León" },
-            { materia: "Soft. Aplic. Ejec.", docente: "Yolanda Paredes" }
+            { materia: "CALCULO INTEGRAL", docente: "Alejandro Herrera", salon: "Aula P15" },
+            { materia: "LEGISLACION LABORAL", docente: "Elizabeth Rodríguez", salon: "Aula P11" },
+            { materia: "CONT. ORIENTADA NEG.", docente: "Mario Castro", salon: "Lab Computo 2" },
+            { materia: "DINAMICA SOCIAL", docente: "Drisdel Pat Reyes", salon: "Aula P14" },
+            { materia: "TALLER DE ETICA", docente: "Germán León", salon: "Aula P13" },
+            { materia: "SOFT. APLIC. EJEC.", docente: "Yolanda Paredes", salon: "Lab Computo 1" }
         ],
         "3": [
-            { materia: "Álgebra Lineal", docente: "Ramón Alberto Cupul y Díaz" },
-            { materia: "Marco Legal Orgs.", docente: "Carmen María Rodríguez" },
-            { materia: "Economía Emp.", docente: "Fernando Antonio Solís Díaz" },
-            { materia: "Hab. Directivas I", docente: "Gabriela del Socorro Herrera" },
-            { materia: "Costos Empresariales", docente: "Virginia del Carmen May" },
-            { materia: "Prob. y Est. Desc.", docente: "Raúl Alvar Rodríguez Sánchez" }
+            { materia: "ALGEBRA LINEAL", docente: "Ramón Alberto Cupul y Díaz", salon: "Aula B25" },
+            { materia: "MARCO LEGAL ORGS.", docente: "Carmen María Rodríguez", salon: "Aula B25" },
+            { materia: "ECONOMIA EMP.", docente: "Fernando Antonio Solís Díaz", salon: "Aula B25" },
+            { materia: "HAB. DIRECTIVAS I", docente: "Gabriela del Socorro Herrera", salon: "Aula B25" },
+            { materia: "COSTOS EMPRESARIALES", docente: "Virginia del Carmen May", salon: "Aula B25" },
+            { materia: "PROB. Y EST. DESC.", docente: "Raúl Alvar Rodríguez Sánchez", salon: "Aula B25" }
         ],
         "4": [
-            { materia: "Ing. Económica", docente: "Sofía Medina" },
-            { materia: "Est. Inferencial I", docente: "Héctor Gómez" },
-            { materia: "Inst. Presup. Emp.", docente: "Beatriz Adriana Chan" },
-            { materia: "Hab. Directivas II", docente: "Gabriela del Socorro Herrera" },
-            { materia: "Ent. Macroeconómico", docente: "Julio César Puc" },
-            { materia: "Inv. Operaciones", docente: "Manuel Jesús Pech" }
+            { materia: "ING. ECONOMICA", docente: "Sofía Medina", salon: "Aula 201" },
+            { materia: "EST. INFERENCIAL I", docente: "Héctor Gómez", salon: "Aula 202" },
+            { materia: "INST. PRESUP. EMP.", docente: "Beatriz Adriana Chan", salon: "Aula 201" },
+            { materia: "HAB. DIRECTIVAS II", docente: "Gabriela del Socorro Herrera", salon: "Aula 203" },
+            { materia: "ENT. MACROECONOMICO", docente: "Julio César Puc", salon: "Aula 202" },
+            { materia: "INV. OPERACIONES", docente: "Manuel Jesús Pech", salon: "Lab Computo 3" }
         ],
         "5": [
-            { materia: "Finanzas Orgs.", docente: "Virginia del Carmen May" },
-            { materia: "Est. Inferencial II", docente: "Héctor Gómez" },
-            { materia: "Ing. Procesos", docente: "Carlos Alberto Dzib" },
-            { materia: "Gestión Capital Hum.", docente: "Rosa María Tun" },
-            { materia: "Taller Inv. I", docente: "Armando Martínez" },
-            { materia: "Mercadotecnia", docente: "Diana Laura Zepeda" }
+            { materia: "FINANZAS ORGS.", docente: "Virginia del Carmen May", salon: "Aula 301" },
+            { materia: "EST. INFERENCIAL II", docente: "Héctor Gómez", salon: "Aula 302" },
+            { materia: "ING. PROCESOS", docente: "Carlos Alberto Dzib", salon: "Lab Industrial" },
+            { materia: "GESTION CAPITAL HUM.", docente: "Rosa María Tun", salon: "Aula 301" },
+            { materia: "TALLER INV. I", docente: "Armando Martínez", salon: "Aula 303" },
+            { materia: "MERCADOTECNIA", docente: "Diana Laura Zepeda", salon: "Aula 302" }
         ],
         "6": [
-            { materia: "Admin. Sal. Seg. Oc.", docente: "Elizabeth Rodríguez" },
-            { materia: "Emprend. Innovac.", docente: "Mario Castro" },
-            { materia: "Gestión Prod. I", docente: "Felipe de Jesús Ek" },
-            { materia: "Diseño Org.", docente: "Rosa María Tun" },
-            { materia: "Taller Inv. II", docente: "Armando Martínez" },
-            { materia: "Sist. Info. Merc.", docente: "Diana Laura Zepeda" },
-            { materia: "Activ. Complem.", docente: "Coordinación Académica" }
+            { materia: "ADMIN. SAL. SEG. OC.", docente: "Elizabeth Rodríguez", salon: "Aula 401" },
+            { materia: "EMPREND. INNOVAC.", docente: "Mario Castro", salon: "Aula 402" },
+            { materia: "GESTION PROD. I", docente: "Felipe de Jesús Ek", salon: "Lab Industrial" },
+            { materia: "DISEÑO ORG.", docente: "Rosa María Tun", salon: "Aula 401" },
+            { materia: "TALLER INV. II", docente: "Armando Martínez", salon: "Aula 403" },
+            { materia: "SIST. INFO. MERC.", docente: "Diana Laura Zepeda", salon: "Lab Computo 2" },
+            { materia: "ACTIV. COMPLEM.", docente: "Coordinación Académica", salon: "Auditorio" }
         ],
         "7": [
-            { materia: "Calidad G. Emp.", docente: "Felipe de Jesús Ek" },
-            { materia: "Plan Negocios", docente: "Mario Castro" },
-            { materia: "Gestión Prod. II", docente: "Felipe de Jesús Ek" },
-            { materia: "Gestión Estratégica", docente: "Fernando Antonio Solís Díaz" },
-            { materia: "Des. Sustentable", docente: "Martha Calderón" },
-            { materia: "Merc. Electrónica", docente: "Yolanda Paredes" }
+            { materia: "CALIDAD G. EMP.", docente: "Felipe de Jesús Ek", salon: "Aula 501" },
+            { materia: "PLAN NEGOCIOS", docente: "Mario Castro", salon: "Aula 502" },
+            { materia: "GESTION PROD. II", docente: "Felipe de Jesús Ek", salon: "Lab Industrial" },
+            { materia: "GESTION ESTRATEGICA", docente: "Fernando Antonio Solís Díaz", salon: "Aula 501" },
+            { materia: "DES. SUSTENTABLE", docente: "Martha Calderón", salon: "Aula 503" },
+            { materia: "MERC. ELECTRONICA", docente: "Yolanda Paredes", salon: "Lab Computo 1" }
         ],
         "8": [
-            { materia: "Cad. Suministros", docente: "Carlos Alberto Dzib" },
-            { materia: "Servicio Social", docente: "Comité de Vinculación" }
+            { materia: "CAD. SUMINISTROS", docente: "Carlos Alberto Dzib", salon: "Aula 601" },
+            { materia: "SERVICIO SOCIAL", docente: "Comité de Vinculación", salon: "Vinculación" }
         ],
         "9": [
-            { materia: "Residencia Prof.", docente: "Comité de Residencias Profesionales" }
+            { materia: "RESIDENCIA PROF.", docente: "Comité de Residencias Profesionales", salon: "Empresa Asignada" }
         ]
     };
 
@@ -1001,7 +1002,6 @@
         }
         body.innerHTML = htmlRows;
 
-        // Guardar todos los semestres definidos en localStorage para persistencia
         for (let sKey in horariosPredefinidos) {
             if(!localStorage.getItem(`horario_semestre_${sKey}`)) {
                 localStorage.setItem(`horario_semestre_${sKey}`, JSON.stringify(horariosPredefinidos[sKey]));
@@ -1012,6 +1012,14 @@
     }
 
     function obtenerSemestreSeleccionado() { return document.getElementById('select-semestre-horario').value; }
+
+    // Función auxiliar para buscar los créditos de una materia comparando con el arreglo maestro 'data'
+    function obtenerCreditosMateria(nombreMateria, semNum) {
+        const semestreObj = data.find(s => s.s == semNum);
+        if (!semestreObj) return 5; // Valor por defecto en caso de no hallar
+        const encontrada = semestreObj.m.find(m => m[2].trim().toUpperCase() === nombreMateria.trim().toUpperCase());
+        return encontrada ? encontrada[1] : 5;
+    }
 
     function cargarHorarioSemestre() {
         const sem = obtenerSemestreSeleccionado();
@@ -1027,18 +1035,23 @@
             }
         }
 
-        // Actualizar tabla de docentes inferior para el semestre seleccionado
+        // Actualizar tabla de docentes inferior incluyendo Créditos y Salón asignado
         const profBody = document.getElementById('profesores-body');
         const listaProfs = profesoresSemestres[sem] || [];
         if(listaProfs.length === 0) {
-            profBody.innerHTML = `<tr><td colspan="2" style="text-align:center; color: var(--azul-muted); padding:16px;">Sin profesores registrados para este periodo.</td></tr>`;
+            profBody.innerHTML = `<tr><td colspan="4" style="text-align:center; color: var(--azul-muted); padding:16px;">Sin profesores registrados para este periodo.</td></tr>`;
         } else {
-            profBody.innerHTML = listaProfs.map(p => `
-                <tr>
-                    <td style="font-weight:800; color: var(--oro-flat); text-align: left; padding-left: 20px;">${escapeHtml(p.materia)}</td>
-                    <td style="font-weight:600; color: var(--azul-marino); text-align: left; padding-left: 20px;">${escapeHtml(p.docente)}</td>
-                </tr>
-            `).join('');
+            profBody.innerHTML = listaProfs.map(p => {
+                const creditosMat = obtenerCreditosMateria(p.materia, sem);
+                return `
+                    <tr>
+                        <td style="font-weight:800; color: var(--oro-flat); text-align: left; padding-left: 15px;">${escapeHtml(p.materia)}</td>
+                        <td style="font-weight:700; color: var(--azul-marino); text-align: center;">${creditosMat} CR</td>
+                        <td style="font-weight:600; color: var(--azul-marino); text-align: left; padding-left: 15px;">${escapeHtml(p.docente)}</td>
+                        <td style="font-weight:700; color: var(--azul-muted); text-align: center;">${escapeHtml(p.salon)}</td>
+                    </tr>
+                `;
+            }).join('');
         }
     }
 
@@ -1111,3 +1124,5 @@
 </script>
 </body>
 </html>
+        
+                           
