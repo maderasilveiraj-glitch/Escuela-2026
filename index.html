@@ -569,7 +569,7 @@
     <header>
         <div class="header-layout">
             <div>
-                <h1 id="main-title">Estructura Curricular</h1>
+                <h1 id="main-title">Estructura Curricular[cite: 4]</h1>
                 <div class="metrics-bar">
                     <div class="metric-item">Progreso General: <span id="porc">0%</span></div>
                     <div class="progress-track"><div id="fill" class="progress-live"></div></div>
@@ -577,8 +577,8 @@
                 </div>
             </div>
             <div class="nav-container">
-                <button class="btn-tab active-tab" id="tab-kardex" onclick="cambiarVista('kardex')">📊 Plan de Estudios</button>
-                <button class="btn-tab" id="tab-horarios" onclick="cambiarVista('horarios')">📅 Agenda Semanal</button>
+                <button class="btn-tab active-tab" id="tab-kardex" onclick="cambiarVista('kardex')">📊 Plan de Estudios[cite: 4]</button>
+                <button class="btn-tab" id="tab-horarios" onclick="cambiarVista('horarios')">📅 Agenda Semanal[cite: 4]</button>
             </div>
         </div>
     </header>
@@ -591,29 +591,29 @@
         <div class="panel-workspace">
             <div class="row-controls">
                 <select id="select-semestre-horario" onchange="cargarHorarioSemestre()">
-                    <option value="1">Semestre I</option>
-                    <option value="2">Semestre II</option>
-                    <option value="3" selected>Semestre III</option>
-                    <option value="4">Semestre IV</option>
-                    <option value="5">Semestre V</option>
-                    <option value="6">Semestre VI</option>
-                    <option value="7">Semestre VII</option>
-                    <option value="8">Semestre VIII</option>
-                    <option value="9">Semestre IX</option>
+                    <option value="1">Semestre I[cite: 4]</option>
+                    <option value="2">Semestre II[cite: 4]</option>
+                    <option value="3" selected>Semestre III[cite: 4]</option>
+                    <option value="4">Semestre IV[cite: 4]</option>
+                    <option value="5">Semestre V[cite: 4]</option>
+                    <option value="6">Semestre VI[cite: 4]</option>
+                    <option value="7">Semestre VII[cite: 4]</option>
+                    <option value="8">Semestre VIII[cite: 4]</option>
+                    <option value="9">Semestre IX[cite: 4]</option>
                 </select>
-                <button class="btn-prime" onclick="guardarHorarioActual()">💾 Guardar Calendario</button>
+                <button class="btn-prime" onclick="guardarHorarioActual()">💾 Guardar Calendario[cite: 4]</button>
             </div>
 
             <div class="scroll-wrapper">
                 <table class="table-custom">
                     <thead>
                         <tr>
-                            <th style="width: 180px;">Rango Horario</th>
-                            <th>Lunes</th>
-                            <th>Martes</th>
-                            <th>Miércoles</th>
-                            <th>Jueves</th>
-                            <th>Viernes</th>
+                            <th style="width: 180px;">Rango Horario[cite: 4]</th>
+                            <th>Lunes[cite: 4]</th>
+                            <th>Martes[cite: 4]</th>
+                            <th>Miércoles[cite: 4]</th>
+                            <th>Jueves[cite: 4]</th>
+                            <th>Viernes[cite: 4]</th>
                         </tr>
                     </thead>
                     <tbody id="schedule-body">
@@ -621,17 +621,17 @@
                 </table>
             </div>
 
-            <!-- TABLA DE DOCENTE DEBAJO DEL HORARIO (CON CRÉDITOS Y SALÓN) -->
+            <!-- TABLA DE DOCENTE DEBAJO DEL HORARIO (MODIFICADO EL ORDEN) -->
             <div class="section-profesores" style="margin-top: 35px;">
-                <h3>👨‍🏫 Directorio de Docentes y Asignaciones</h3>
+                <h3>👨‍🏫 Directorio de Docentes y Asignaciones[cite: 4]</h3>
                 <div class="scroll-wrapper" style="margin-top: 15px;">
                     <table class="table-custom">
                         <thead>
                             <tr>
-                                <th style="width: 35%;">Asignatura</th>
-                                <th style="width: 15%;">Créditos</th>
-                                <th style="width: 30%;">Docente Asignado</th>
-                                <th style="width: 20%;">Salón Asignado</th>
+                                <th style="width: 35%;">Asignatura[cite: 4]</th>
+                                <th style="width: 30%;">Docente Asignado[cite: 4]</th>
+                                <th style="width: 15%;">Créditos[cite: 4]</th>
+                                <th style="width: 20%;">Salón Asignado[cite: 4]</th>
                             </tr>
                         </thead>
                         <tbody id="profesores-body">
@@ -643,23 +643,22 @@
             <hr style="border: 0; border-top: 2px dashed rgba(165,175,190,0.2); margin: 40px 0;">
 
             <div class="section-tasks">
-                <h3>📋 Gestión de Entregables</h3>
+                <h3>📋 Gestión de Entregables[cite: 4]</h3>
                 <div class="row-controls" style="background: rgba(255, 255, 255, 0.5); padding: 20px; border-radius: 18px; border: 1px solid rgba(165,175,190,0.1)">
-                    <!-- MODIFICADO: Ahora es un menú desplegable dinámico -->
                     <select id="task-materia" style="width: 240px;"></select>
                     
                     <input type="text" id="task-desc" placeholder="Descripción del entregable o examen..." style="flex: 1; min-width: 240px;">
                     <input type="date" id="task-date">
-                    <button class="btn-prime" onclick="agregarActividad()">➕ Registrar</button>
+                    <button class="btn-prime" onclick="agregarActividad()">➕ Registrar[cite: 4]</button>
                 </div>
 
                 <table class="table-tasks">
                     <thead>
                         <tr>
-                            <th>Módulo</th>
-                            <th>Descripción</th>
-                            <th>Fecha Límite</th>
-                            <th style="width: 120px; text-align: center;">Estatus</th>
+                            <th>Módulo[cite: 4]</th>
+                            <th>Descripción[cite: 4]</th>
+                            <th>Fecha Límite[cite: 4]</th>
+                            <th style="width: 120px; text-align: center;">Estatus[cite: 4]</th>
                         </tr>
                     </thead>
                     <tbody id="tasks-body">
@@ -671,80 +670,80 @@
 </div>
 
 <script>
-    const TOTAL_CREDITOS = 260; 
-    document.getElementById('total-cred-ui').textContent = TOTAL_CREDITOS;
+    const TOTAL_CREDITOS = 260;[cite: 4]
+    document.getElementById('total-cred-ui').textContent = TOTAL_CREDITOS;[cite: 4]
 
     const data = [
-        { s: 1, m: [["ACC0906",4,"FUND. INVESTIGACION"],["ACF2301",5,"CALCULO DIFERENCIAL"],["GEC2305",4,"DESARROLLO HUMANO"],["AEF1074",5,"FUND. DE GESTION"],["GEC0909",4,"FUND. DE FISICA"],["GEF0910",5,"FUND. DE QUIMICA"]] },
-        { s: 2, m: [["AEB1082",5,"SOFT. APLIC. EJEC."],["ACF0902",5,"CALCULO INTEGRAL"],["GED0903",5,"CONT. ORIENTADA NEG."],["AEC1014",4,"DINAMICA SOCIAL"],["ACH2307",4,"TALLER DE ETICA"],["GEE0918",4,"LEGISLACION LABORAL"]] },
-        { s: 3, m: [["AEC1078",4,"MARCO LEGAL ORGS."],["GED0921",5,"PROB. Y EST. DESC."],["GED0904",5,"COSTOS EMPRESARIALES"],["GEC0913",4,"HAB. DIRECTIVAS I"],["AEF1071",5,"ECONOMIA EMP."],["ACF0903",5,"ALGEBRA LINEAL"]] },
-        { s: 4, m: [["GEF0916",5,"ING. ECONOMICA"],["GEG0907",6,"EST. INFERENCIAL I"],["GED0917",5,"INST. PRESUP. EMP."],["GEC0914",4,"HAB. DIRECTIVAS II"],["GEF0906",5,"ENT. MACROECONOMICO"],["AEF1076",5,"INV. OPERACIONES"]] },
-        { s: 5, m: [["AEF1073",5,"FINANZAS ORGS"],["GEG0908",6,"EST. INFERENCIAL II"],["GEF0915",5,"ING. PROCESOS"],["AEG1075",6,"GESTION CAPITAL HUM."],["ACA0909",4,"TALLER INV. I"],["GEF0919",5,"MERCADOTECNIA"]] },
-        { s: 6, m: [["GEF0901",5,"ADMIN. SAL. SEG. OC."],["AED1072",5,"EMPREND. INNOVAC."],["GEC0911",4,"GESTION PROD. I"],["AED1015",5,"DISEÑO ORG."],["ACA0910",4,"TALLER INV. II"],["GED0922",5,"SIST. INFO. MERC."],["AC0950",5,"ACTIV. COMPLEM."]] },
-        { s: 7, m: [["AED1069",5,"CALIDAD G. EMP."],["GED0920",5,"PLAN NEGOCIOS"],["GEC0912",4,"GESTION PROD. II"],["AED1035",5,"GESTION ESTRATEGICA"],["ACD0908",5,"DES. SUSTENTABLE"],["AEB1045",5,"MERC. ELECTRONICA"]] },
-        { s: 8, m: [["GEF0902",5,"CAD. SUMINISTROS"],["GEA0950",10,"SERVICIO SOCIAL"]] },
-        { s: 9, m: [["RES1001",10,"RESIDENCIA PROF."]] }
+        { s: 1, m: [["ACC0906",4,"FUND. INVESTIGACION"],["ACF2301",5,"CALCULO DIFERENCIAL"],["GEC2305",4,"DESARROLLO HUMANO"],["AEF1074",5,"FUND. DE GESTION"],["GEC0909",4,"FUND. DE FISICA"],["GEF0910",5,"FUND. DE QUIMICA"]] },[cite: 4]
+        { s: 2, m: [["AEB1082",5,"SOFT. APLIC. EJEC."],["ACF0902",5,"CALCULO INTEGRAL"],["GED0903",5,"CONT. ORIENTADA NEG."],["AEC1014",4,"DINAMICA SOCIAL"],["ACH2307",4,"TALLER DE ETICA"],["GEE0918",4,"LEGISLACION LABORAL"]] },[cite: 4]
+        { s: 3, m: [["AEC1078",4,"MARCO LEGAL ORGS."],["GED0921",5,"PROB. Y EST. DESC."],["GED0904",5,"COSTOS EMPRESARIALES"],["GEC0913",4,"HAB. DIRECTIVAS I"],["AEF1071",5,"ECONOMIA EMP."],["ACF0903",5,"ALGEBRA LINEAL"]] },[cite: 4]
+        { s: 4, m: [["GEF0916",5,"ING. ECONOMICA"],["GEG0907",6,"EST. INFERENCIAL I"],["GED0917",5,"INST. PRESUP. EMP."],["GEC0914",4,"HAB. DIRECTIVAS II"],["GEF0906",5,"ENT. MACROECONOMICO"],["AEF1076",5,"INV. OPERACIONES"]] },[cite: 4]
+        { s: 5, m: [["AEF1073",5,"FINANZAS ORGS"],["GEG0908",6,"EST. INFERENCIAL II"],["GEF0915",5,"ING. PROCESOS"],["AEG1075",6,"GESTION CAPITAL HUM."],["ACA0909",4,"TALLER INV. I"],["GEF0919",5,"MERCadOTECNIA"]] },[cite: 4]
+        { s: 6, m: [["GEF0901",5,"ADMIN. SAL. SEG. OC."],["AED1072",5,"EMPREND. INNOVAC."],["GEC0911",4,"GESTION PROD. I"],["AED1015",5,"DISEÑO ORG."],["ACA0910",4,"TALLER INV. II"],["GED0922",5,"SIST. INFO. MERC."],["AC0950",5,"ACTIV. COMPLEM."]] },[cite: 4]
+        { s: 7, m: [["AED1069",5,"CALIDAD G. EMP."],["GED0920",5,"PLAN NEGOCIOS"],["GEC0912",4,"GESTION PROD. II"],["AED1035",5,"GESTION ESTRATEGICA"],["ACD0908",5,"DES. SUSTENTABLE"],["AEB1045",5,"MERC. ELECTRONICA"]] },[cite: 4]
+        { s: 8, m: [["GEF0902",5,"CAD. SUMINISTROS"],["GEA0950",10,"SERVICIO SOCIAL"]] },[cite: 4]
+        { s: 9, m: [["RES1001",10,"RESIDENCIA PROF."]] }[cite: 4]
     ];
 
     const bancoDeFrases = [
-        "¡Tú puedes con esto y más!", "Eres grande, nunca olvides de lo que eres capaz.",
-        "Confía en ti, ya has superado retos difíciles antes.", "Tienes todas las capacidades para lograrlo, ¡no lo dudes!",
-        "Materia por materia, estás construyendo tu éxito.", "Un examen difícil no define tu potencial. ¡Tú eres fuerte!",
-        "Confía en el proceso, tienes el talento necesario.", "¡Nadie te va a parar si tú crees en ti mismo!"
+        "¡Tú puedes con esto y más!", "Eres grande, nunca olvides de lo que eres capaz.",[cite: 4]
+        "Confía en ti, ya has superado retos difíciles antes.", "Tienes todas las capacidades para lograrlo, ¡no lo dudes!",[cite: 4]
+        "Materia por materia, estás construyendo tu éxito.", "Un examen difícil no define tu potencial. ¡Tú eres fuerte!",[cite: 4]
+        "Confía en el proceso, tienes el talento necesario.", "¡Nadie te va a parar si tú crees en ti mismo!"[cite: 4]
     ];
 
-    let hitosAlcanzados = JSON.parse(localStorage.getItem('hitos_kardex_alcanzados')) || { mitad: false, completo: false };
+    let hitosAlcanzados = JSON.parse(localStorage.getItem('hitos_kardex_alcanzados')) || { mitad: false, completo: false };[cite: 4]
 
-    const frasesParaMostrar = [];
-    const copiaBanco = [...bancoDeFrases];
+    const frasesParaMostrar = [];[cite: 4]
+    const copiaBanco = [...bancoDeFrases];[cite: 4]
     for (let i = 0; i < 3; i++) {
-        const randomIndex = Math.floor(Math.random() * copiaBanco.length);
-        frasesParaMostrar.push(copiaBanco.splice(randomIndex, 1)[0]);
+        const randomIndex = Math.floor(Math.random() * copiaBanco.length);[cite: 4]
+        frasesParaMostrar.push(copiaBanco.splice(randomIndex, 1)[0]);[cite: 4]
     }
 
-    const loadingText = document.getElementById('loading-text');
-    let pasoFrase = 0;
+    const loadingText = document.getElementById('loading-text');[cite: 4]
+    let pasoFrase = 0;[cite: 4]
 
     function rotarTresFrases() {
         if (pasoFrase < 3) {
-            loadingText.style.opacity = '0'; 
+            loadingText.style.opacity = '0'; [cite: 4]
             setTimeout(() => {
-                loadingText.textContent = frasesParaMostrar[pasoFrase];
-                loadingText.style.opacity = '1'; 
-                pasoFrase++;
-            }, 400); 
+                loadingText.textContent = frasesParaMostrar[pasoFrase];[cite: 4]
+                loadingText.style.opacity = '1'; [cite: 4]
+                pasoFrase++;[cite: 4]
+            }, 400); [cite: 4]
         }
     }
 
-    rotarTresFrases(); 
-    const intervaloFrases = setInterval(rotarTresFrases, 2600); 
+    rotarTresFrases();  [cite: 4]
+    const intervaloFrases = setInterval(rotarTresFrases, 2600);  [cite: 4]
 
     window.addEventListener('load', () => {
         setTimeout(() => {
-            clearInterval(intervaloFrases); 
-            const screen = document.getElementById('loading-screen');
-            screen.style.opacity = '0';
-            screen.style.visibility = 'hidden';
-        }, 8000); 
+            clearInterval(intervaloFrases); [cite: 4]
+            const screen = document.getElementById('loading-screen');[cite: 4]
+            screen.style.opacity = '0';[cite: 4]
+            screen.style.visibility = 'hidden';[cite: 4]
+        }, 8000); [cite: 4]
     });
 
     function cambiarVista(vista) {
-        document.querySelectorAll('.view-block').forEach(v => v.classList.remove('active-block'));
-        document.querySelectorAll('.btn-tab').forEach(b => b.classList.remove('active-tab'));
+        document.querySelectorAll('.view-block').forEach(v => v.classList.remove('active-block'));[cite: 4]
+        document.querySelectorAll('.btn-tab').forEach(b => b.classList.remove('active-tab'));[cite: 4]
         
         if(vista === 'kardex') {
-            document.getElementById('view-kardex').classList.add('active-block');
-            document.getElementById('tab-kardex').classList.add('active-tab');
-            document.getElementById('main-title').textContent = "Estructura Curricular";
+            document.getElementById('view-kardex').classList.add('active-block');[cite: 4]
+            document.getElementById('tab-kardex').classList.add('active-tab');[cite: 4]
+            document.getElementById('main-title').textContent = "Estructura Curricular";[cite: 4]
         } else {
-            document.getElementById('view-horarios').classList.add('active-block');
-            document.getElementById('tab-horarios').classList.add('active-tab');
-            document.getElementById('main-title').textContent = "Módulo de Agenda";
+            document.getElementById('view-horarios').classList.add('active-block');[cite: 4]
+            document.getElementById('tab-horarios').classList.add('active-tab');[cite: 4]
+            document.getElementById('main-title').textContent = "Módulo de Agenda";[cite: 4]
         }
     }
 
-    const container = document.getElementById('kardex-container');
-    let htmlInyectar = "";
+    const container = document.getElementById('kardex-container');[cite: 4]
+    let htmlInyectar = "";[cite: 4]
     data.forEach(sem => {
         htmlInyectar += `<div class="column-semester" id="sem-col-${sem.s}" data-total-materias="${sem.m.length}">
                             <div class="semester-top-row">
@@ -761,97 +760,97 @@
         });
         htmlInyectar += `</div>`;
     });
-    container.innerHTML = htmlInyectar;
+    container.innerHTML = htmlInyectar;[cite: 4]
 
     document.querySelectorAll('.card-materia').forEach(card => {
-        const id = card.id; const indicator = card.querySelector('.materia-indicator');
-        if(localStorage.getItem(id)) { card.classList.add('aprobada'); indicator.textContent = "🟢"; }
+        const id = card.id; const indicator = card.querySelector('.materia-indicator');[cite: 4]
+        if(localStorage.getItem(id)) { card.classList.add('aprobada'); indicator.textContent = "🟢"; }[cite: 4]
         
         card.addEventListener('click', () => {
             if(!card.classList.contains('aprobada')) {
-                card.classList.add('aprobada'); 
-                indicator.textContent = "🟢"; 
-                localStorage.setItem(id, '1'); 
-                evaluarEstatusYAlertas(card.dataset.semestre, true);
+                card.classList.add('aprobada'); [cite: 4]
+                indicator.textContent = "🟢"; [cite: 4]
+                localStorage.setItem(id, '1'); [cite: 4]
+                evaluarEstatusYAlertas(card.dataset.semestre, true);[cite: 4]
             } else {
-                card.classList.remove('aprobada'); 
-                indicator.textContent = "⚫"; 
-                localStorage.removeItem(id); 
-                evaluarEstatusYAlertas(card.dataset.semestre, false);
+                card.classList.remove('aprobada'); [cite: 4]
+                indicator.textContent = "⚫"; [cite: 4]
+                localStorage.removeItem(id); [cite: 4]
+                evaluarEstatusYAlertas(card.dataset.semestre, false);[cite: 4]
             }
         });
     });
 
     function marcarSemestreActual(numSemestre) {
-        if (localStorage.getItem('semestre_actual_cursando') == numSemestre) { localStorage.removeItem('semestre_actual_cursando'); } 
-        else { localStorage.setItem('semestre_actual_cursando', numSemestre); }
-        actualizarEstilosSemestreActual();
+        if (localStorage.getItem('semestre_actual_cursando') == numSemestre) { localStorage.removeItem('semestre_actual_cursando'); } [cite: 4]
+        else { localStorage.setItem('semestre_actual_cursando', numSemestre); }[cite: 4]
+        actualizarEstilosSemestreActual();[cite: 4]
     }
 
     function actualizarEstilosSemestreActual() {
-        const semActual = localStorage.getItem('semestre_actual_cursando');
-        document.querySelectorAll('.column-semester').forEach(col => col.classList.remove('cursando-actual'));
-        document.querySelectorAll('.card-materia').forEach(card => card.classList.remove('en-curso'));
+        const semActual = localStorage.getItem('semestre_actual_cursando');[cite: 4]
+        document.querySelectorAll('.column-semester').forEach(col => col.classList.remove('cursando-actual'));[cite: 4]
+        document.querySelectorAll('.card-materia').forEach(card => card.classList.remove('en-curso'));[cite: 4]
         if(semActual) {
-            const columna = document.getElementById(`sem-col-${semActual}`); if(columna) columna.classList.add('cursando-actual');
-            document.querySelectorAll(`.card-materia[data-semestre="${semActual}"]`).forEach(card => card.classList.add('en-curso'));
+            const columna = document.getElementById(`sem-col-${semActual}`); if(columna) columna.classList.add('cursando-actual');[cite: 4]
+            document.querySelectorAll(`.card-materia[data-semestre="${semActual}"]`).forEach(card => card.classList.add('en-curso'));[cite: 4]
         }
     }
 
     function calc() {
-        let cred = 0; 
-        document.querySelectorAll('.card-materia.aprobada').forEach(c => cred += parseInt(c.dataset.c));
-        document.getElementById('cred').textContent = cred;
-        let prog = Math.round((cred/TOTAL_CREDITOS)*100); 
-        if (prog > 100) prog = 100;
-        document.getElementById('porc').textContent = prog + '%'; 
-        document.getElementById('fill').style.width = prog + '%';
-        return prog;
+        let cred = 0; [cite: 4]
+        document.querySelectorAll('.card-materia.aprobada').forEach(c => cred += parseInt(c.dataset.c));[cite: 4]
+        document.getElementById('cred').textContent = cred;[cite: 4]
+        let prog = Math.round((cred/TOTAL_CREDITOS)*100); [cite: 4]
+        if (prog > 100) prog = 100;[cite: 4]
+        document.getElementById('porc').textContent = prog + '%'; [cite: 4]
+        document.getElementById('fill').style.width = prog + '%';[cite: 4]
+        return prog;[cite: 4]
     }
 
     function evaluarEstatusYAlertas(numSemestre, esAprobada) {
-        const progresoActual = calc();
+        const progresoActual = calc();[cite: 4]
         
-        if (progresoActual < 50) hitosAlcanzados.mitad = false;
-        if (progresoActual < 100) hitosAlcanzados.completo = false;
-        localStorage.setItem('hitos_kardex_alcanzados', JSON.stringify(hitosAlcanzados));
+        if (progresoActual < 50) hitosAlcanzados.mitad = false;[cite: 4]
+        if (progresoActual < 100) hitosAlcanzados.completo = false;[cite: 4]
+        localStorage.setItem('hitos_kardex_alcanzados', JSON.stringify(hitosAlcanzados));[cite: 4]
 
-        if (!esAprobada) return; 
+        if (!esAprobada) return; [cite: 4]
 
         if (progresoActual === 100 && !hitosAlcanzados.completo) {
-            hitosAlcanzados.completo = true;
-            localStorage.setItem('hitos_kardex_alcanzados', JSON.stringify(hitosAlcanzados));
-            lanzarModal("🏆 ¡META COMPLETADA AL 100%! 🏆", "Has desbloqueado el mapa curricular completo. Felicidades, oficialmente has conquistado cada reto académico planteado. ¡A romperla en el mundo profesional!");
-            return;
+            hitosAlcanzados.completo = true;[cite: 4]
+            localStorage.setItem('hitos_kardex_alcanzados', JSON.stringify(hitosAlcanzados));[cite: 4]
+            lanzarModal("🏆 ¡META COMPLETADA AL 100%! 🏆", "Has desbloqueado el mapa curricular completo. Felicidades, oficialmente has conquistado cada reto académico planteado. ¡A romperla en el mundo profesional!");[cite: 4]
+            return;[cite: 4]
         }
 
         if (progresoActual >= 50 && !hitosAlcanzados.mitad) {
-            hitosAlcanzados.mitad = true;
-            localStorage.setItem('hitos_kardex_alcanzados', JSON.stringify(hitosAlcanzados));
-            lanzarModal("🚀 ¡Llegaste a la Mitad de la Carrera! 🚀", "¡50% del camino completado! Ya cruzaste el ecuador del mapa. Lo que viene demanda enfoque, pero ya demostraste que tienes madera de líder. ¡Sigue presionando!");
-            return;
+            hitosAlcanzados.mitad = true;[cite: 4]
+            localStorage.setItem('hitos_kardex_alcanzados', JSON.stringify(hitosAlcanzados));[cite: 4]
+            lanzarModal("🚀 ¡Llegaste a la Mitad de la Carrera! 🚀", "¡50% del camino completado! Ya cruzaste el ecuador del mapa. Lo que viene demanda enfoque, pero ya demostraste que tienes madera de líder. ¡Sigue presionando!");[cite: 4]
+            return;[cite: 4]
         }
 
-        const materiasAprobadasSemestre = document.querySelectorAll(`.card-materia[data-semestre="${numSemestre}"].aprobada`).length;
-        const totalMateriasSemestre = parseInt(document.getElementById(`sem-col-${numSemestre}`).dataset.totalMaterias);
+        const materiasAprobadasSemestre = document.querySelectorAll(`.card-materia[data-semestre="${numSemestre}"].aprobada`).length;[cite: 4]
+        const totalMateriasSemestre = parseInt(document.getElementById(`sem-col-${numSemestre}`).dataset.totalMaterias);[cite: 4]
 
         if (materiasAprobadasSemestre === totalMateriasSemestre) {
-            lanzarModal(`🌟 ¡Semestre 0${numSemestre} Concluido! 🌟`, "Has superado con éxito todos los créditos de este periodo formativo. Un paso sólido que te acerca un bloque completo más hacia tu meta.");
-            return;
+            lanzarModal(`🌟 ¡Semestre 0${numSemestre} Concluido! 🌟`, "Has superado con éxito todos los créditos de este periodo formativo. Un paso sólido que te acerca un bloque completo más hacia tu meta.");[cite: 4]
+            return;[cite: 4]
         }
 
-        const fraseAleatoria = bancoDeFrases[Math.floor(Math.random() * bancoDeFrases.length)];
-        lanzarModal("⚙️ Asignatura Registrada", fraseAleatoria);
+        const fraseAleatoria = bancoDeFrases[Math.floor(Math.random() * bancoDeFrases.length)];[cite: 4]
+        lanzarModal("⚙️ Asignatura Registrada", fraseAleatoria);[cite: 4]
     }
 
     function lanzarModal(titulo, texto) {
-        document.getElementById('modal-title').innerHTML = titulo; 
-        document.getElementById('modal-text').innerHTML = texto;
-        document.getElementById('universal-overlay-container').style.display = 'flex';
+        document.getElementById('modal-title').innerHTML = titulo; [cite: 4]
+        document.getElementById('modal-text').innerHTML = texto;[cite: 4]
+        document.getElementById('universal-overlay-container').style.display = 'flex';[cite: 4]
     }
-    function cerrarModal() { document.getElementById('universal-overlay-container').style.display = 'none'; }
+    function cerrarModal() { document.getElementById('universal-overlay-container').style.display = 'none'; }[cite: 4]
 
-    const dias = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes"];
+    const dias = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes"];[cite: 4]
 
     const horariosPredefinidos = {
         "1": {
@@ -920,153 +919,150 @@
 
     const profesoresSemestres = {
         "1": [
-            { materia: "FUND. DE GESTION", docente: "Kalinka Navarro", salon: "Aula P12" },
-            { materia: "FUND. DE QUIMICA", docente: "Martha Calderón", salon: "Lab Química 1" },
-            { materia: "DESARROLLO HUMANO", docente: "Dawn López", salon: "Aula P14" },
-            { materia: "FUND. INVESTIGACION", docente: "Armando Martínez", salon: "Aula P12" },
-            { materia: "FUND. DE FISICA", docente: "Jorge de Jesús", salon: "Lab Física" },
-            { materia: "CALCULO DIFERENCIAL", docente: "Alejandro Herrera", salon: "Aula P15" }
+            { materia: "FUND. DE GESTION", docente: "Kalinka Navarro", salon: "CP25" },[cite: 4]
+            { materia: "FUND. DE QUIMICA", docente: "Martha Calderón", salon: "CP25" },[cite: 4]
+            { materia: "DESARROLLO HUMANO", docente: "Dawn López", salon: "CP25" },[cite: 4]
+            { materia: "FUND. INVESTIGACION", docente: "Armando Martínez", salon: "CP25" },[cite: 4]
+            { materia: "FUND. DE FISICA", docente: "Jorge de Jesús", salon: "CP25" },[cite: 4]
+            { materia: "CALCULO DIFERENCIAL", docente: "Alejandro Herrera", salon: "CP25" }[cite: 4]
         ],
         "2": [
-            { materia: "CALCULO INTEGRAL", docente: "Alejandro Herrera", salon: "Aula P15" },
-            { materia: "LEGISLACION LABORAL", docente: "Elizabeth Rodríguez", salon: "Aula P11" },
-            { materia: "CONT. ORIENTADA NEG.", docente: "Mario Castro", salon: "Lab Computo 2" },
-            { materia: "DINAMICA SOCIAL", docente: "Drisdel Pat Reyes", salon: "Aula P14" },
-            { materia: "TALLER DE ETICA", docente: "Germán León", salon: "Aula P13" },
-            { materia: "SOFT. APLIC. EJEC.", docente: "Yolanda Paredes", salon: "Lab Computo 1" }
+            { materia: "CALCULO INTEGRAL", docente: "Alejandro Herrera", salon: "CP25" },[cite: 4]
+            { materia: "LEGISLACION LABORAL", docente: "Elizabeth Rodríguez", salon: "CP25" },[cite: 4]
+            { materia: "CONT. ORIENTADA NEG.", docente: "Mario Castro", salon: "CP25" },[cite: 4]
+            { materia: "DINAMICA SOCIAL", docente: "Drisdel Pat Reyes", salon: "CP25" },[cite: 4]
+            { materia: "TALLER DE ETICA", docente: "Germán León", salon: "CP25" },[cite: 4]
+            { materia: "SOFT. APLIC. EJEC.", docente: "Yolanda Paredes", salon: "CP25" }[cite: 4]
         ],
         "3": [
-            { materia: "ALGEBRA LINEAL", docente: "Ramón Alberto Cupul y Díaz", salon: "Aula B25" },
-            { materia: "MARCO LEGAL ORGS.", docente: "Carmen María Rodríguez", salon: "Aula B25" },
-            { materia: "ECONOMIA EMP.", docente: "Fernando Antonio Solís Díaz", salon: "Aula B25" },
-            { materia: "HAB. DIRECTIVAS I", docente: "Gabriela del Socorro Herrera", salon: "Aula B25" },
-            { materia: "COSTOS EMPRESARIALES", docente: "Virginia del Carmen May", salon: "Aula B25" },
-            { materia: "PROB. Y EST. DESC.", docente: "Raúl Alvar Rodríguez Sánchez", salon: "Aula B25" }
+            { materia: "ALGEBRA LINEAL", docente: "Ramón Alberto Cupul y Díaz", salon: "BP1" },[cite: 4]
+            { materia: "MARCO LEGAL ORGS.", docente: "Carmen María Rodríguez", salon: "BP1" },[cite: 4]
+            { materia: "ECONOMIA EMP.", docente: "Fernando Antonio Solís Díaz", salon: "BP1" },[cite: 4]
+            { materia: "HAB. DIRECTIVAS I", docente: "Gabriela del Socorro Herrera", salon: "BP1" },[cite: 4]
+            { materia: "COSTOS EMPRESARIALES", docente: "Virginia del Carmen May", salon: "BP1" },[cite: 4]
+            { materia: "PROB. Y EST. DESC.", docente: "Raúl Alvar Rodríguez Sánchez", salon: "BP1" }[cite: 4]
         ],
         "4": [
-            { materia: "ING. ECONOMICA", docente: "Sofía Medina", salon: "Aula 201" },
-            { materia: "EST. INFERENCIAL I", docente: "Héctor Gómez", salon: "Aula 202" },
-            { materia: "INST. PRESUP. EMP.", docente: "Beatriz Adriana Chan", salon: "Aula 201" },
-            { materia: "HAB. DIRECTIVAS II", docente: "Gabriela del Socorro Herrera", salon: "Aula 203" },
-            { materia: "ENT. MACROECONOMICO", docente: "Julio César Puc", salon: "Aula 202" },
-            { materia: "INV. OPERACIONES", docente: "Manuel Jesús Pech", salon: "Lab Computo 3" }
+            { materia: "ING. ECONOMICA", docente: "Sofía Medina", salon: "Aula 201" },[cite: 4]
+            { materia: "EST. INFERENCIAL I", docente: "Héctor Gómez", salon: "Aula 202" },[cite: 4]
+            { materia: "INST. PRESUP. EMP.", docente: "Beatriz Adriana Chan", salon: "Aula 201" },[cite: 4]
+            { materia: "HAB. DIRECTIVAS II", docente: "Gabriela del Socorro Herrera", salon: "Aula 203" },[cite: 4]
+            { materia: "ENT. MACROECONOMICO", docente: "Julio César Puc", salon: "Aula 202" },[cite: 4]
+            { materia: "INV. OPERACIONES", docente: "Manuel Jesús Pech", salon: "Lab Computo 3" }[cite: 4]
         ],
         "5": [
-            { materia: "FINANZAS ORGS.", docente: "Virginia del Carmen May", salon: "Aula 301" },
-            { materia: "EST. INFERENCIAL II", docente: "Héctor Gómez", salon: "Aula 302" },
-            { materia: "ING. PROCESOS", docente: "Carlos Alberto Dzib", salon: "Lab Industrial" },
-            { materia: "GESTION CAPITAL HUM.", docente: "Rosa María Tun", salon: "Aula 301" },
-            { materia: "TALLER INV. I", docente: "Armando Martínez", salon: "Aula 303" },
-            { materia: "MERCADOTECNIA", docente: "Diana Laura Zepeda", salon: "Aula 302" }
+            { materia: "FINANZAS ORGS.", docente: "Virginia del Carmen May", salon: "Aula 301" },[cite: 4]
+            { materia: "EST. INFERENCIAL II", docente: "Héctor Gómez", salon: "Aula 302" },[cite: 4]
+            { materia: "ING. PROCESOS", docente: "Carlos Alberto Dzib", salon: "Lab Industrial" },[cite: 4]
+            { materia: "GESTION CAPITAL HUM.", docente: "Rosa María Tun", salon: "Aula 301" },[cite: 4]
+            { materia: "TALLER INV. I", docente: "Armando Martínez", salon: "Aula 303" },[cite: 4]
+            { materia: "MERCADOTECNIA", docente: "Diana Laura Zepeda", salon: "Aula 302" }[cite: 4]
         ],
         "6": [
-            { materia: "ADMIN. SAL. SEG. OC.", docente: "Elizabeth Rodríguez", salon: "Aula 401" },
-            { materia: "EMPREND. INNOVAC.", docente: "Mario Castro", salon: "Aula 402" },
-            { materia: "GESTION PROD. I", docente: "Felipe de Jesús Ek", salon: "Lab Industrial" },
-            { materia: "DISEÑO ORG.", docente: "Rosa María Tun", salon: "Aula 401" },
-            { materia: "TALLER INV. II", docente: "Armando Martínez", salon: "Aula 403" },
-            { materia: "SIST. INFO. MERC.", docente: "Diana Laura Zepeda", salon: "Lab Computo 2" },
-            { materia: "ACTIV. COMPLEM.", docente: "Coordinación Académica", salon: "Auditorio" }
+            { materia: "ADMIN. SAL. SEG. OC.", docente: "Elizabeth Rodríguez", salon: "Aula 401" },[cite: 4]
+            { materia: "EMPREND. INNOVAC.", docente: "Mario Castro", salon: "Aula 402" },[cite: 4]
+            { materia: "GESTION PROD. I", docente: "Felipe de Jesús Ek", salon: "Lab Industrial" },[cite: 4]
+            { materia: "DISEÑO ORG.", docente: "Rosa María Tun", salon: "Aula 401" },[cite: 4]
+            { materia: "TALLER INV. II", docente: "Armando Martínez", salon: "Aula 403" },[cite: 4]
+            { materia: "SIST. INFO. MERC.", docente: "Diana Laura Zepeda", salon: "Lab Computo 2" },[cite: 4]
+            { materia: "ACTIV. COMPLEM.", docente: "Coordinación Académica", salon: "Auditorio" }[cite: 4]
         ],
         "7": [
-            { materia: "CALIDAD G. EMP.", docente: "Felipe de Jesús Ek", salon: "Aula 501" },
-            { materia: "PLAN NEGOCIOS", docente: "Mario Castro", salon: "Aula 502" },
-            { materia: "GESTION PROD. II", docente: "Felipe de Jesús Ek", salon: "Lab Industrial" },
-            { materia: "GESTION ESTRATEGICA", docente: "Fernando Antonio Solís Díaz", salon: "Aula 501" },
-            { materia: "DES. SUSTENTABLE", docente: "Martha Calderón", salon: "Aula 503" },
-            { materia: "MERC. ELECTRONICA", docente: "Yolanda Paredes", salon: "Lab Computo 1" }
+            { materia: "CALIDAD G. EMP.", docente: "Felipe de Jesús Ek", salon: "Aula 501" },[cite: 4]
+            { materia: "PLAN NEGOCIOS", docente: "Mario Castro", salon: "Aula 502" },[cite: 4]
+            { materia: "GESTION PROD. II", docente: "Felipe de Jesús Ek", salon: "Lab Industrial" },[cite: 4]
+            { materia: "GESTION ESTRATEGICA", docente: "Fernando Antonio Solís Díaz", salon: "Aula 501" },[cite: 4]
+            { materia: "DES. SUSTENTABLE", docente: "Martha Calderón", salon: "Aula 503" },[cite: 4]
+            { materia: "MERC. ELECTRONICA", docente: "Yolanda Paredes", salon: "Lab Computo 1" }[cite: 4]
         ],
         "8": [
-            { materia: "CAD. SUMINISTROS", docente: "Carlos Alberto Dzib", salon: "Aula 601" },
-            { materia: "SERVICIO SOCIAL", docente: "Comité de Vinculación", salon: "Vinculación" }
+            { materia: "CAD. SUMINISTROS", docente: "Carlos Alberto Dzib", salon: "Aula 601" },[cite: 4]
+            { materia: "SERVICIO SOCIAL", docente: "Comité de Vinculación", salon: "Vinculación" }[cite: 4]
         ],
         "9": [
-            { materia: "RESIDENCIA PROF.", docente: "Comité de Residencias Profesionales", salon: "Empresa Asignada" }
+            { materia: "RESIDENCIA PROF.", docente: "Comité de Residencias Profesionales", salon: "Empresa Asignada" }[cite: 4]
         ]
     };
 
     function inicializarEstructuraHorario() {
-        const body = document.getElementById('schedule-body');
-        let htmlRows = "";
+        const body = document.getElementById('schedule-body');[cite: 4]
+        let htmlRows = "";[cite: 4]
         
         for (let h = 7; h <= 21; h++) {
-            let startPeriod = h < 12 ? "a.m." : "p.m.";
-            let endPeriod = (h + 1) < 12 ? "a.m." : "p.m.";
-            let startHour = h;
-            let endHour = h + 1;
+            let startPeriod = h < 12 ? "a.m." : "p.m.";[cite: 4]
+            let endPeriod = (h + 1) < 12 ? "a.m." : "p.m.";[cite: 4]
+            let startHour = h;[cite: 4]
+            let endHour = h + 1;[cite: 4]
             
-            let labelHora = `${startHour}:00 ${startPeriod} a ${endHour}:00 ${endPeriod}`;
+            let labelHora = `${startHour}:00 ${startPeriod} a ${endHour}:00 ${endPeriod}`;[cite: 4]
             
             htmlRows += `<tr>
                 <td style="font-weight:700; background: var(--panel-bg); color: var(--azul-marino); font-size:11.5px; white-space: nowrap;">${labelHora}</td>
                 ${dias.map(d => `<td><input type="text" id="cell-${h}-${d}" placeholder="—"></td>`).join('')}
             </tr>`;
         }
-        body.innerHTML = htmlRows;
+        body.innerHTML = htmlRows;[cite: 4]
 
         for (let sKey in horariosPredefinidos) {
             if(!localStorage.getItem(`horario_semestre_${sKey}`)) {
-                localStorage.setItem(`horario_semestre_${sKey}`, JSON.stringify(horariosPredefinidos[sKey]));
+                localStorage.setItem(`horario_semestre_${sKey}`, JSON.stringify(horariosPredefinidos[sKey]));[cite: 4]
             }
         }
 
-        cargarHorarioSemestre();
+        cargarHorarioSemestre();[cite: 4]
     }
 
-    function obtenerSemestreSeleccionado() { return document.getElementById('select-semestre-horario').value; }
+    function obtenerSemestreSeleccionado() { return document.getElementById('select-semestre-horario').value; }[cite: 4]
 
-    // Función auxiliar para buscar los créditos de una materia comparando con el arreglo maestro 'data'
     function obtenerCreditosMateria(nombreMateria, semNum) {
-        const semestreObj = data.find(s => s.s == semNum);
-        if (!semestreObj) return 5; 
-        const encontrada = semestreObj.m.find(m => m[2].trim().toUpperCase() === nombreMateria.trim().toUpperCase());
-        return encontrada ? encontrada[1] : 5;
+        const semestreObj = data.find(s => s.s == semNum);[cite: 4]
+        if (!semestreObj) return 5; [cite: 4]
+        const encontrada = semestreObj.m.find(m => m[2].trim().toUpperCase() === nombreMateria.trim().toUpperCase());[cite: 4]
+        return encontrada ? encontrada[1] : 5;[cite: 4]
     }
 
-    // NUEVA FUNCIÓN: Actualiza el menú desplegable de entregables según el semestre seleccionado
     function actualizarMateriasEntregables() {
-        const sem = obtenerSemestreSeleccionado();
-        const semestreObj = data.find(s => s.s == sem);
-        const selectTask = document.getElementById('task-materia');
+        const sem = obtenerSemestreSeleccionado();[cite: 4]
+        const semestreObj = data.find(s => s.s == sem);[cite: 4]
+        const selectTask = document.getElementById('task-materia');[cite: 4]
         
         if (!semestreObj) {
-            selectTask.innerHTML = '<option value="">Sin materias</option>';
-            return;
+            selectTask.innerHTML = '<option value="">Sin materias</option>';[cite: 4]
+            return;[cite: 4]
         }
 
-        selectTask.innerHTML = semestreObj.m.map(mat => `<option value="${mat[2]}">${mat[2]}</option>`).join('');
+        selectTask.innerHTML = semestreObj.m.map(mat => `<option value="${mat[2]}">${mat[2]}</option>`).join('');[cite: 4]
     }
 
     function cargarHorarioSemestre() {
-        const sem = obtenerSemestreSeleccionado();
+        const sem = obtenerSemestreSeleccionado();[cite: 4]
         for (let h = 7; h <= 21; h++) {
-            dias.forEach(d => { document.getElementById(`cell-${h}-${d}`).value = ""; });
+            dias.forEach(d => { document.getElementById(`cell-${h}-${d}`).value = ""; });[cite: 4]
         }
-        const horarioGuardado = localStorage.getItem(`horario_semestre_${sem}`);
+        const horarioGuardado = localStorage.getItem(`horario_semestre_${sem}`);[cite: 4]
         if (horarioGuardado) {
-            const mapaCeldas = JSON.parse(horarioGuardado);
+            const mapaCeldas = JSON.parse(horarioGuardado);[cite: 4]
             for (const idCaja in mapaCeldas) {
-                const elementoInput = document.getElementById(idCaja);
-                if (elementoInput) elementoInput.value = mapaCeldas[idCaja];
+                const elementoInput = document.getElementById(idCaja);[cite: 4]
+                if (elementoInput) elementoInput.value = mapaCeldas[idCaja];[cite: 4]
             }
         }
 
-        // Actualizar la lista de materias disponibles en el selector de entregables
-        actualizarMateriasEntregables();
+        actualizarMateriasEntregables();[cite: 4]
 
-        // Actualizar tabla de docentes inferior incluyendo Créditos y Salón asignado
-        const profBody = document.getElementById('profesores-body');
-        const listaProfs = profesoresSemestres[sem] || [];
+        // Actualizar tabla de docentes inferior (Orden actualizado: Asignatura -> Docente -> Créditos -> Salón)
+        const profBody = document.getElementById('profesores-body');[cite: 4]
+        const listaProfs = profesoresSemestres[sem] || [];[cite: 4]
         if(listaProfs.length === 0) {
-            profBody.innerHTML = `<tr><td colspan="4" style="text-align:center; color: var(--azul-muted); padding:16px;">Sin profesores registrados para este periodo.</td></tr>`;
+            profBody.innerHTML = `<tr><td colspan="4" style="text-align:center; color: var(--azul-muted); padding:16px;">Sin profesores registrados para este periodo.</td></tr>`;[cite: 4]
         } else {
             profBody.innerHTML = listaProfs.map(p => {
-                const creditosMat = obtenerCreditosMateria(p.materia, sem);
+                const creditosMat = obtenerCreditosMateria(p.materia, sem);[cite: 4]
                 return `
                     <tr>
                         <td style="font-weight:800; color: var(--oro-flat); text-align: left; padding-left: 15px;">${escapeHtml(p.materia)}</td>
-                        <td style="font-weight:700; color: var(--azul-marino); text-align: center;">${creditosMat} CR</td>
                         <td style="font-weight:600; color: var(--azul-marino); text-align: left; padding-left: 15px;">${escapeHtml(p.docente)}</td>
+                        <td style="font-weight:700; color: var(--azul-marino); text-align: center;">${creditosMat} CR</td>
                         <td style="font-weight:700; color: var(--azul-muted); text-align: center;">${escapeHtml(p.salon)}</td>
                     </tr>
                 `;
@@ -1075,26 +1071,26 @@
     }
 
     function guardarHorarioActual() {
-        const sem = obtenerSemestreSeleccionado();
-        const mapaCeldas = {};
+        const sem = obtenerSemestreSeleccionado();[cite: 4]
+        const mapaCeldas = {};[cite: 4]
         for (let h = 7; h <= 21; h++) {
             dias.forEach(d => {
-                const idCaja = `cell-${h}-${d}`;
-                const val = document.getElementById(idCaja).value.trim();
-                if(val) mapaCeldas[idCaja] = val;
+                const idCaja = `cell-${h}-${d}`;[cite: 4]
+                const val = document.getElementById(idCaja).value.trim();[cite: 4]
+                if(val) mapaCeldas[idCaja] = val;[cite: 4]
             });
         }
-        localStorage.setItem(`horario_semestre_${sem}`, JSON.stringify(mapaCeldas));
-        lanzarModal("💾 Registro Guardado", `La agenda para el bloque seleccionado se sincronizó correctamente.`);
+        localStorage.setItem(`horario_semestre_${sem}`, JSON.stringify(mapaCeldas));[cite: 4]
+        lanzarModal("💾 Registro Guardado", `La agenda para el bloque seleccionado se sincronizó correctamente.`);[cite: 4]
     }
 
     function cargarTablaActividades() {
-        const body = document.getElementById('tasks-body');
-        let listaActividades = JSON.parse(localStorage.getItem('actividades_para_realizar')) || [];
+        const body = document.getElementById('tasks-body');[cite: 4]
+        let listaActividades = JSON.parse(localStorage.getItem('actividades_para_realizar')) || [];[cite: 4]
         
         if(listaActividades.length === 0) {
-            body.innerHTML = `<tr><td colspan="4" style="text-align:center; color: var(--azul-muted); padding:24px; font-weight:600;">No hay entregables pendientes en el registro.</td></tr>`;
-            return;
+            body.innerHTML = `<tr><td colspan="4" style="text-align:center; color: var(--azul-muted); padding:24px; font-weight:600;">No hay entregables pendientes en el registro.</td></tr>`;[cite: 4]
+            return;[cite: 4]
         }
 
         body.innerHTML = listaActividades.map((act, index) => `
@@ -1104,43 +1100,42 @@
                 <td style="color: var(--azul-muted); font-weight: 700;">${act.fecha ? act.fecha : 'Abierta'}</td>
                 <td style="text-align:center;"><button class="btn-action-delete" onclick="eliminarActividad(${index})">Completar</button></td>
             </tr>
-        `).join('');
+        `).join('');[cite: 4]
     }
 
     function agregarActividad() {
-        const matSelect = document.getElementById('task-materia');
-        const descInput = document.getElementById('task-desc');
-        const dateInput = document.getElementById('task-date');
+        const matSelect = document.getElementById('task-materia');[cite: 4]
+        const descInput = document.getElementById('task-desc');[cite: 4]
+        const dateInput = document.getElementById('task-date');[cite: 4]
 
         if(!matSelect.value.trim() || !descInput.value.trim()) {
-            lanzarModal("⚠️ Validación", "Por favor, complete los campos obligatorios antes de procesar.");
-            return;
+            lanzarModal("⚠️ Validación", "Por favor, complete los campos obligatorios antes de procesar.");[cite: 4]
+            return;[cite: 4]
         }
 
-        let listaActividades = JSON.parse(localStorage.getItem('actividades_para_realizar')) || [];
-        listaActividades.push({ materia: matSelect.value.trim(), descripcion: descInput.value.trim(), fecha: dateInput.value });
-        localStorage.setItem('actividades_para_realizar', JSON.stringify(listaActividades));
+        let listaActividades = JSON.parse(localStorage.getItem('actividades_para_realizar')) || [];[cite: 4]
+        listaActividades.push({ materia: matSelect.value.trim(), descripcion: descInput.value.trim(), fecha: dateInput.value });[cite: 4]
+        localStorage.setItem('actividades_para_realizar', JSON.stringify(listaActividades));[cite: 4]
         
-        descInput.value = ""; dateInput.value = "";
-        cargarTablaActividades();
+        descInput.value = ""; dateInput.value = "";[cite: 4]
+        cargarTablaActividades();[cite: 4]
     }
 
     function eliminarActividad(index) {
-        let listaActividades = JSON.parse(localStorage.getItem('actividades_para_realizar')) || [];
-        listaActividades.splice(index, 1);
-        localStorage.setItem('actividades_para_realizar', JSON.stringify(listaActividades));
-        cargarTablaActividades();
+        let listaActividades = JSON.parse(localStorage.getItem('actividades_para_realizar')) || [];[cite: 4]
+        listaActividades.splice(index, 1);[cite: 4]
+        localStorage.setItem('actividades_para_realizar', JSON.stringify(listaActividades));[cite: 4]
+        cargarTablaActividades();[cite: 4]
     }
 
     function escapeHtml(text) {
-        return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");[cite: 4]
     }
 
-    calc();
-    actualizarEstilosSemestreActual();
-    inicializarEstructuraHorario();
-    cargarTablaActividades();
+    calc();[cite: 4]
+    actualizarEstilosSemestreActual();[cite: 4]
+    inicializarEstructuraHorario();[cite: 4]
+    cargarTablaActividades();[cite: 4]
 </script>
 </body>
 </html>
- 
