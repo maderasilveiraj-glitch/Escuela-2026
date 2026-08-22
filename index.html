@@ -21,6 +21,9 @@
             --exito-soft: #def7ec;
             --exito-texto: #03543f;
             --exito-border: #84e1bc;
+
+            --alerta-soft: #fde8e8;
+            --alerta-texto: #9b1c1c;
             
             /* Sombras Neomórficas 3D de alta definición */
             --shadow-3d-panel: 
@@ -97,19 +100,21 @@
 
         .nav-container {
             display: flex;
-            gap: 16px;
+            gap: 10px;
             background: var(--panel-bg);
             padding: 8px;
             border-radius: 20px;
             box-shadow: var(--shadow-3d-inset);
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .btn-tab {
             background: transparent;
             color: var(--azul-muted);
             border: none;
-            padding: 12px 26px;
-            font-size: 13px;
+            padding: 10px 18px;
+            font-size: 12px;
             font-weight: 700;
             border-radius: 14px;
             cursor: pointer;
@@ -159,7 +164,7 @@
             transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1); 
         }
 
-        /* --- PILAS CURRICULARES (KARDEX) --- */
+        /* --- VISTAS GENERALES --- */
         .view-block { display: none; }
         .view-block.active-block { display: block; animation: smoothUp 0.5s cubic-bezier(0.25, 1, 0.5, 1); }
         @keyframes smoothUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
@@ -400,16 +405,212 @@
             border-radius: 8px;
         }
 
-        /* BANDEJA DE ENTREGABLES EXECUTIVA */
-        .section-tasks h3, .section-profesores h3 {
+        /* --- NUEVAS SECCIONES EXECUTIVAS --- */
+        .section-title {
             color: var(--azul-marino);
             font-size: 20px;
             margin-top: 0;
+            margin-bottom: 20px;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
+        /* Calculadora Predictiva */
+        .predictive-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        @media(min-width: 768px) {
+            .predictive-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        .calc-card {
+            background: var(--blanco-puro);
+            padding: 24px;
+            border-radius: 20px;
+            border: 1px solid rgba(165,175,190,0.2);
+            box-shadow: 4px 4px 15px rgba(165, 175, 190, 0.15);
+        }
+
+        .calc-result-box {
+            margin-top: 20px;
+            background: var(--panel-bg);
+            padding: 16px;
+            border-radius: 14px;
+            font-weight: 700;
+            text-align: center;
+            color: var(--azul-marino);
+            border: 1px dashed var(--oro-flat);
+        }
+
+        /* Asistencias */
+        .attendance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .attendance-card {
+            background: var(--blanco-puro);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid rgba(165,175,190,0.2);
+            box-shadow: 4px 4px 15px rgba(165, 175, 190, 0.15);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .attendance-card h4 {
+            margin: 0;
+            font-size: 14px;
+            color: var(--azul-marino);
+            font-weight: 800;
+        }
+
+        .attendance-counters {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--azul-muted);
+        }
+
+        .attendance-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-att {
+            flex: 1;
+            padding: 8px;
+            border-radius: 10px;
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 11px;
+            text-transform: uppercase;
+        }
+
+        .btn-att-asis { background: var(--exito-soft); color: var(--exito-texto); border: 1px solid var(--exito-border); }
+        .btn-att-falta { background: var(--alerta-soft); color: var(--alerta-texto); border: 1px solid #f8b4b4; }
+
+        /* Recursos y Archivos Útiles */
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .resource-card {
+            background: var(--blanco-puro);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid rgba(165,175,190,0.2);
+            box-shadow: 4px 4px 15px rgba(165, 175, 190, 0.15);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .resource-card input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px 14px;
+            font-size: 12px;
+        }
+
+        .resource-links {
+            display: flex;
+            gap: 10px;
+            margin-top: 4px;
+        }
+
+        .btn-link-action {
+            flex: 1;
+            text-align: center;
+            padding: 8px;
+            border-radius: 10px;
+            background: var(--panel-bg);
+            color: var(--azul-marino);
+            font-size: 11px;
+            font-weight: 700;
+            text-decoration: none;
+            border: 1px solid rgba(165,175,190,0.3);
+            display: inline-block;
+        }
+        .btn-link-action:hover { background: var(--oro-pulido); color: white; }
+
+        /* Calendario mensual / semanal (Vista de Agenda Interactiva) */
+        .calendar-container {
+            background: var(--blanco-puro);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid rgba(165,175,190,0.2);
+            box-shadow: var(--shadow-3d-inset);
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            text-align: center;
+        }
+
+        .calendar-day-name {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--azul-muted);
+            text-transform: uppercase;
+            padding: 8px 0;
+        }
+
+        .calendar-cell {
+            background: var(--panel-bg);
+            min-height: 80px;
+            border-radius: 12px;
+            padding: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--azul-marino);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            border: 1px solid rgba(165,175,190,0.1);
+            overflow-y: auto;
+            max-height: 90px;
+        }
+
+        .calendar-cell.today {
+            border: 2px solid var(--oro-flat);
+            background: #fdfbf7;
+        }
+
+        .cal-task-tag {
+            background: var(--oro-pulido);
+            color: white;
+            font-size: 9px;
+            padding: 2px 4px;
+            border-radius: 4px;
+            margin-top: 2px;
+            width: 100%;
+            text-align: left;
+            box-sizing: border-box;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* BANDEJA DE ENTREGABLES EXECUTIVA */
         .table-tasks {
             width: 100%;
             border-collapse: collapse;
@@ -578,19 +779,24 @@
             </div>
             <div class="nav-container">
                 <button class="btn-tab active-tab" id="tab-kardex" onclick="cambiarVista('kardex')">📊 Plan de Estudios</button>
-                <button class="btn-tab" id="tab-horarios" onclick="cambiarVista('horarios')">📅 Agenda Semanal</button>
+                <button class="btn-tab" id="tab-horarios" onclick="cambiarVista('horarios')">📅 Agenda</button>
+                <button class="btn-tab" id="tab-predictivo" onclick="cambiarVista('predictivo')">📈 Kardex Predictivo</button>
+                <button class="btn-tab" id="tab-asistencias" onclick="cambiarVista('asistencias')">📉 Faltas</button>
+                <button class="btn-tab" id="tab-recursos" onclick="cambiarVista('recursos')">📂 Enlaces / Sílabos</button>
             </div>
         </div>
     </header>
 
+    <!-- VISTA 1: PLAN DE ESTUDIOS -->
     <div id="view-kardex" class="view-block active-block">
         <div class="grid-kardex" id="kardex-container"></div>
     </div>
 
+    <!-- VISTA 2: AGENDA Y HORARIOS -->
     <div id="view-horarios" class="view-block">
         <div class="panel-workspace">
             <div class="row-controls">
-                <select id="select-semestre-horario" onchange="cargarHorarioSemestre()">
+                <select id="select-semestre-horario" onchange="cargarDatosSemestreCompleto()">
                     <option value="1">Semestre I</option>
                     <option value="2">Semestre II</option>
                     <option value="3" selected>Semestre III</option>
@@ -621,9 +827,9 @@
                 </table>
             </div>
 
-            <!-- TABLA DE DOCENTE DEBAJO DEL HORARIO (CON CRÉDITOS Y SALÓN) -->
+            <!-- DIRECTORIO DE DOCENTES -->
             <div class="section-profesores" style="margin-top: 35px;">
-                <h3>👨‍🏫 Directorio de Docentes y Asignaciones</h3>
+                <h3 class="section-title">👨‍🏫 Directorio de Docentes y Asignaciones</h3>
                 <div class="scroll-wrapper" style="margin-top: 15px;">
                     <table class="table-custom">
                         <thead>
@@ -642,8 +848,31 @@
 
             <hr style="border: 0; border-top: 2px dashed rgba(165,175,190,0.2); margin: 40px 0;">
 
+            <!-- VISTA DE CALENDARIO MENSUAL DE ENTREGABLES -->
+            <div style="margin-bottom: 40px;">
+                <h3 class="section-title">🗓️ Vista de Calendario (Exámenes y Entregas)</h3>
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <h4 id="calendar-month-title" style="margin:0; color:var(--azul-marino); font-size:16px;">Mes Actual</h4>
+                        <span style="font-size:12px; color:var(--azul-muted); font-weight:700;">Recordatorios Activos 🔔</span>
+                    </div>
+                    <div class="calendar-grid">
+                        <div class="calendar-day-name">Lun</div>
+                        <div class="calendar-day-name">Mar</div>
+                        <div class="calendar-day-name">Mié</div>
+                        <div class="calendar-day-name">Jue</div>
+                        <div class="calendar-day-name">Vie</div>
+                        <div class="calendar-day-name">Sáb</div>
+                        <div class="calendar-day-name">Dom</div>
+                    </div>
+                    <div class="calendar-grid" id="calendar-days-grid" style="margin-top: 8px;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- GESTIÓN DE ENTREGABLES -->
             <div class="section-tasks">
-                <h3>📋 Gestión de Entregables</h3>
+                <h3 class="section-title">📋 Gestión de Entregables</h3>
                 <div class="row-controls" style="background: rgba(255, 255, 255, 0.5); padding: 20px; border-radius: 18px; border: 1px solid rgba(165,175,190,0.1)">
                     <select id="task-materia" style="width: 240px;"></select>
                     <input type="text" id="task-desc" placeholder="Descripción del entregable o examen..." style="flex: 1; min-width: 240px;">
@@ -666,6 +895,63 @@
             </div>
         </div>
     </div>
+
+    <!-- VISTA 3: KARDEX PREDICTIVO (Calculadora de calificaciones) -->
+    <div id="view-predictivo" class="view-block">
+        <div class="panel-workspace">
+            <h3 class="section-title">🧮 Calculadora de Calificaciones y Promedio (Kardex Predictivo)</h3>
+            <p style="color:var(--azul-muted); font-weight:600; font-size:13px; margin-bottom:25px;">Ingresa tus notas parciales acumuladas y el valor porcentual que representan para calcular cuánto necesitas obtener en el examen final para aprobar la materia.</p>
+            
+            <div class="predictive-grid">
+                <div class="calc-card">
+                    <h4 style="margin-top:0; color:var(--azul-marino);">Parámetros de Evaluación</h4>
+                    <div style="display:flex; flex-direction:column; gap:14px; margin-top:15px;">
+                        <label style="font-size:12px; font-weight:700; color:var(--azul-muted);">Calificación Objetivo para Pasar (Ej: 70 o 70%):
+                            <input type="number" id="calc-meta" value="70" style="width:100%; margin-top:6px; box-sizing:border-box;">
+                        </label>
+                        <label style="font-size:12px; font-weight:700; color:var(--azul-muted);">Suma Actual de Notas Ponderadas (Ej: si llevas 50 puntos acumulados de tus parciales):
+                            <input type="number" id="calc-acumulado" placeholder="Ej. 45" style="width:100%; margin-top:6px; box-sizing:border-box;">
+                        </label>
+                        <label style="font-size:12px; font-weight:700; color:var(--azul-muted);">Valor Porcentual del Examen Final (Ej: 40%):
+                            <input type="number" id="calc-peso-final" placeholder="Ej. 40" style="width:100%; margin-top:6px; box-sizing:border-box;">
+                        </label>
+                        <button class="btn-prime" onclick="calcularNotaNecesaria()" style="margin-top:10px;">Calcular Examen Final</button>
+                    </div>
+                </div>
+                <div class="calc-card" style="display:flex; flex-direction:column; justify-content:center;">
+                    <h4 style="margin-top:0; color:var(--azul-marino);">Resultado Predictivo</h4>
+                    <div class="calc-result-box" id="calc-resultado-text">
+                        Configura los parámetros a la izquierda para conocer la calificación requerida.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VISTA 4: HISTORIAL DE ASISTENCIAS -->
+    <div id="view-asistencias" class="view-block">
+        <div class="panel-workspace">
+            <h3 class="section-title">📊 Control de Asistencias e Inasistencias</h3>
+            <p style="color:var(--azul-muted); font-weight:600; font-size:13px; margin-bottom:25px;">Controla tus faltas por materia. Al superar el límite (por ejemplo, 20%), el sistema te alertará sobre riesgo de examen extraordinario.</p>
+            
+            <div class="attendance-grid" id="attendance-container">
+                <!-- Inyectado dinámicamente según el semestre activo -->
+            </div>
+        </div>
+    </div>
+
+    <!-- VISTA 5: GESTIÓN DE ARCHIVOS Y ENLACES ÚTILES -->
+    <div id="view-recursos" class="view-block">
+        <div class="panel-workspace">
+            <h3 class="section-title">📁 Enlaces Útiles, Google Drive y Sílabos por Materia</h3>
+            <p style="color:var(--azul-muted); font-weight:600; font-size:13px; margin-bottom:25px;">Guarda los enlaces del grupo de Google Drive, links de clases en línea o programas de estudio entregados por tus profesores.</p>
+            
+            <div class="resources-grid" id="resources-container">
+                <!-- Inyectado dinámicamente según el semestre activo -->
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <script>
@@ -723,6 +1009,7 @@
             const screen = document.getElementById('loading-screen');
             screen.style.opacity = '0';
             screen.style.visibility = 'hidden';
+            verificarNotificacionesProximas();
         }, 8000); 
     });
 
@@ -734,10 +1021,24 @@
             document.getElementById('view-kardex').classList.add('active-block');
             document.getElementById('tab-kardex').classList.add('active-tab');
             document.getElementById('main-title').textContent = "Estructura Curricular";
-        } else {
+        } else if(vista === 'horarios') {
             document.getElementById('view-horarios').classList.add('active-block');
             document.getElementById('tab-horarios').classList.add('active-tab');
             document.getElementById('main-title').textContent = "Módulo de Agenda";
+        } else if(vista === 'predictivo') {
+            document.getElementById('view-predictivo').classList.add('active-block');
+            document.getElementById('tab-predictivo').classList.add('active-tab');
+            document.getElementById('main-title').textContent = "Kardex Predictivo";
+        } else if(vista === 'asistencias') {
+            document.getElementById('view-asistencias').classList.add('active-block');
+            document.getElementById('tab-asistencias').classList.add('active-tab');
+            document.getElementById('main-title').textContent = "Control de Asistencias";
+            renderizarAsistencias();
+        } else if(vista === 'recursos') {
+            document.getElementById('view-recursos').classList.add('active-block');
+            document.getElementById('tab-recursos').classList.add('active-tab');
+            document.getElementById('main-title').textContent = "Recursos y Enlaces Útiles";
+            renderizarRecursos();
         }
     }
 
@@ -1008,7 +1309,7 @@
             }
         }
 
-        cargarHorarioSemestre();
+        cargarDatosSemestreCompleto();
     }
 
     function obtenerSemestreSeleccionado() { return document.getElementById('select-semestre-horario').value; }
@@ -1033,7 +1334,7 @@
         selectTask.innerHTML = semestreObj.m.map(mat => `<option value="${mat[2]}">${mat[2]}</option>`).join('');
     }
 
-    function cargarHorarioSemestre() {
+    function cargarDatosSemestreCompleto() {
         const sem = obtenerSemestreSeleccionado();
         for (let h = 7; h <= 21; h++) {
             dias.forEach(d => { document.getElementById(`cell-${h}-${d}`).value = ""; });
@@ -1088,6 +1389,7 @@
         
         if(listaActividades.length === 0) {
             body.innerHTML = `<tr><td colspan="4" style="text-align:center; color: var(--azul-muted); padding:24px; font-weight:600;">No hay entregables pendientes en el registro.</td></tr>`;
+            renderizarCalendarioMensual([]);
             return;
         }
 
@@ -1099,6 +1401,8 @@
                 <td style="text-align:center;"><button class="btn-action-delete" onclick="eliminarActividad(${index})">Completar</button></td>
             </tr>
         `).join('');
+
+        renderizarCalendarioMensual(listaActividades);
     }
 
     function agregarActividad() {
@@ -1117,6 +1421,7 @@
         
         descInput.value = ""; dateInput.value = "";
         cargarTablaActividades();
+        verificarNotificacionesProximas();
     }
 
     function eliminarActividad(index) {
@@ -1124,6 +1429,179 @@
         listaActividades.splice(index, 1);
         localStorage.setItem('actividades_para_realizar', JSON.stringify(listaActividades));
         cargarTablaActividades();
+    }
+
+    // --- FUNCIONALIDAD: CALCULADORA PREDICTIVA ---
+    function calcularNotaNecesaria() {
+        const meta = parseFloat(document.getElementById('calc-meta').value) || 70;
+        const acumulado = parseFloat(document.getElementById('calc-acumulado').value) || 0;
+        const pesoFinal = parseFloat(document.getElementById('calc-peso-final').value) || 0;
+
+        const resultadoBox = document.getElementById('calc-resultado-text');
+
+        if (pesoFinal <= 0) {
+            resultadoBox.innerHTML = "⚠️ El peso porcentual del examen final debe ser mayor a 0.";
+            return;
+        }
+
+        const puntosFaltantes = meta - acumulado;
+        const notaExamenRequerida = (puntosFaltantes / pesoFinal) * 100;
+
+        if (puntosFaltantes <= 0) {
+            resultadoBox.innerHTML = "🎉 ¡Felicidades! Con tu acumulado actual **ya has alcanzado o superado la meta** para pasar la materia.";
+        } else if (notaExamenRequerida > 100) {
+            resultadoBox.innerHTML = `⚠️ Estás en situación crítica. Para alcanzar los ${meta} puntos requeridos, necesitarías sacar **${notaExamenRequerida.toFixed(1)}** en el examen final (supera el 100%).`;
+        } else {
+            resultadoBox.innerHTML = `🎯 Para pasar la materia con **${meta}**, necesitas obtener al menos **${notaExamenRequerida.toFixed(1)}** en tu examen final (que vale un ${pesoFinal}%).`;
+        }
+    }
+
+    // --- FUNCIONALIDAD: CONTROL DE ASISTENCIAS ---
+    function renderizarAsistencias() {
+        const sem = obtenerSemestreSeleccionado();
+        const semestreObj = data.find(s => s.s == sem);
+        const containerAtt = document.getElementById('attendance-container');
+
+        if (!semestreObj) return;
+
+        let asistenciasData = JSON.parse(localStorage.getItem('registro_asistencias_materias')) || {};
+
+        containerAtt.innerHTML = semestreObj.m.map(mat => {
+            const key = `mat_${sem}_${mat[0]}`;
+            const info = asistenciasData[key] || { asistidas: 0, faltas: 0 };
+            const totalClases = info.asistidas + info.faltas;
+            const porcentajeFaltas = totalClases > 0 ? (info.faltas / totalClases) * 100 : 0;
+            const enRiesgo = porcentajeFaltas > 20 && totalClases >= 5;
+
+            return `
+                <div class="attendance-card" style="${enRiesgo ? 'border: 2px solid #e11d48; background: #fff5f5;' : ''}">
+                    <h4>${escapeHtml(mat[2])}</h4>
+                    <div class="attendance-counters">
+                        <span>Asistencias: <strong style="color:var(--exito-texto);">${info.asistidas}</strong></span>
+                        <span>Faltas: <strong style="color:var(--alerta-texto);">${info.faltas}</strong></span>
+                    </div>
+                    ${enRiesgo ? '<div style="font-size:10px; color:#e11d48; font-weight:800; text-transform:uppercase;">⚠️ ¡Alerta: +20% de inasistencias (Riesgo de Extraordinario)!</div>' : ''}
+                    <div class="attendance-actions">
+                        <button class="btn-att btn-att-asis" onclick="modificarAsistencia('${key}', 'asistida')">✓ Asistió</button>
+                        <button class="btn-att btn-att-falta" onclick="modificarAsistencia('${key}', 'falta')">✕ Faltó</button>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    function modificarAsistencia(key, tipo) {
+        let asistenciasData = JSON.parse(localStorage.getItem('registro_asistencias_materias')) || {};
+        if (!asistenciasData[key]) asistenciasData[key] = { asistidas: 0, faltas: 0 };
+
+        if (tipo === 'asistida') asistenciasData[key].asistidas++;
+        else asistenciasData[key].faltas++;
+
+        localStorage.setItem('registro_asistencias_materias', JSON.stringify(asistenciasData));
+        renderizarAsistencias();
+    }
+
+    // --- FUNCIONALIDAD: RECURSOS, GOOGLE DRIVE Y SÍLABOS ---
+    function renderizarRecursos() {
+        const sem = obtenerSemestreSeleccionado();
+        const semestreObj = data.find(s => s.s == sem);
+        const containerRes = document.getElementById('resources-container');
+
+        if (!semestreObj) return;
+
+        let recursosData = JSON.parse(localStorage.getItem('recursos_materias_core')) || {};
+
+        containerRes.innerHTML = semestreObj.m.map(mat => {
+            const key = `rec_${sem}_${mat[0]}`;
+            const info = recursosData[key] || { drive: '', clase: '', silabo: '' };
+
+            return `
+                <div class="resource-card">
+                    <h4>${escapeHtml(mat[2])}</h4>
+                    <label style="font-size:11px; font-weight:700; color:var(--azul-muted);">Link de Google Drive / Carpeta:
+                        <input type="text" id="drive-${key}" value="${info.drive}" placeholder="https://drive.google.com/..." oninput="guardarRecurso('${key}')">
+                    </label>
+                    <label style="font-size:11px; font-weight:700; color:var(--azul-muted);">Link de Clases en Línea / Meet / Zoom:
+                        <input type="text" id="clase-${key}" value="${info.clase}" placeholder="https://meet.google.com/..." oninput="guardarRecurso('${key}')">
+                    </label>
+                    <label style="font-size:11px; font-weight:700; color:var(--azul-muted);">Enlace del Sílabo / Programa:
+                        <input type="text" id="silabo-${key}" value="${info.silabo}" placeholder="Link al PDF del sílabo..." oninput="guardarRecurso('${key}')">
+                    </label>
+                    <div class="resource-links">
+                        ${info.drive ? `<a href="${info.drive}" target="_blank" class="btn-link-action">📁 Abrir Drive</a>` : ''}
+                        ${info.clase ? `<a href="${info.clase}" target="_blank" class="btn-link-action">💻 Clase Online</a>` : ''}
+                        ${info.silabo ? `<a href="${info.silabo}" target="_blank" class="btn-link-action">📄 Sílabo</a>` : ''}
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    function guardarRecurso(key) {
+        let recursosData = JSON.parse(localStorage.getItem('recursos_materias_core')) || {};
+        const driveVal = document.getElementById(`drive-${key}`).value.trim();
+        const claseVal = document.getElementById(`clase-${key}`).value.trim();
+        const silaboVal = document.getElementById(`silabo-${key}`).value.trim();
+
+        recursosData[key] = { drive: driveVal, clase: claseVal, silabo: silaboVal };
+        localStorage.setItem('recursos_materias_core', JSON.stringify(recursosData));
+    }
+
+    // --- FUNCIONALIDAD: CALENDARIO MENSUAL / SEMANAL Y NOTIFICACIONES LOCALES ---
+    function renderizarCalendarioMensual(listaActividades) {
+        const grid = document.getElementById('calendar-days-grid');
+        const titleMonth = document.getElementById('calendar-month-title');
+        
+        const ahora = new Date();
+        const año = ahora.getFullYear();
+        const mes = ahora.getMonth();
+        
+        const nombresMeses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+        titleMonth.textContent = `${nombresMeses[mes]} ${año}`;
+
+        const primerDiaMes = new Date(año, mes, 1).getDay();
+        const totalDiasMes = new Date(año, mes + 1, 0).getDate();
+        
+        // Ajuste para iniciar semana en lunes (0 = Lunes, ..., 6 = Domingo)
+        let offset = primerDiaMes === 0 ? 6 : primerDiaMes - 1;
+
+        let htmlCells = "";
+        for (let i = 0; i < offset; i++) {
+            htmlCells += `<div class="calendar-cell" style="background:transparent; border:none;"></div>`;
+        }
+
+        for (let dia = 1; dia <= totalDiasMes; dia++) {
+            let fechaStr = `${año}-${String(mes + 1).padStart(2, '0')}-${String(dia).padStart(2, '0')}`;
+            let esHoy = dia === ahora.getDate();
+
+            let tareasDia = listaActividades.filter(act => act.fecha === fechaStr);
+
+            htmlCells += `
+                <div class="calendar-cell ${esHoy ? 'today' : ''}">
+                    <span style="font-size:11px; font-weight:800;">${dia}</span>
+                    ${tareasDia.map(t => `<div class="cal-task-tag" title="${escapeHtml(t.materia)}: ${escapeHtml(t.descripcion)}">${escapeHtml(t.materia)}</div>`).join('')}
+                </div>
+            `;
+        }
+
+        grid.innerHTML = htmlCells;
+    }
+
+    function verificarNotificacionesProximas() {
+        let listaActividades = JSON.parse(localStorage.getItem('actividades_para_realizar')) || [];
+        if (listaActividades.length === 0) return;
+
+        const hoyStr = new Date().toISOString().split('T')[0];
+
+        const tareasParaHoyOmañana = listaActividades.filter(act => {
+            if (!act.fecha) return false;
+            return act.fecha === hoyStr;
+        });
+
+        if (tareasParaHoyOmañana.length > 0) {
+            const descripciones = tareasParaHoyOmañana.map(t => `• ${t.materia}: ${t.descripcion}`).join('<br>');
+            lanzarModal("🔔 ¡Alerta de Entrega Inminente!", `Tienes tareas o exámenes programados para entrega próxima:<br><br>${descripciones}`);
+        }
     }
 
     function escapeHtml(text) {
