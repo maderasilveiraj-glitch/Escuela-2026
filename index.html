@@ -39,130 +39,304 @@
                 4px 10px 15px rgba(165, 175, 190, 0.4);
         }
 
-        /* --- TEMA 1: OBSIDIANO Y ORO (MODO OSCURO CLÁSICO) --- */
-        body.theme-obsidian {
-            --bg-ceramic: #0b0f19;
-            --panel-bg: #131c2e;
-            --panel-border: #1e293b;
-            --azul-marino: #f1f5f9;
-            --azul-muted: #94a3b8;
-            --oro-pulido: linear-gradient(135deg, #d4af37 0%, #f3e5ab 50%, #aa8c2c 100%);
-            --oro-flat: #d4af37;
-            --oro-glow: rgba(212, 175, 55, 0.25);
-            --blanco-puro: #172033;
-            --exito-soft: #064e3b;
-            --exito-texto: #34d399;
-            --exito-border: #059669;
-            --alerta-soft: #7f1d1d;
-            --alerta-texto: #fca5a5;
-            --shadow-3d-panel: 8px 8px 16px #07090f, -8px -8px 16px #1f2d47, inset 1px 1px 0px #1f2d47;
-            --shadow-3d-inset: inset 4px 4px 8px #07090f, inset -4px -4px 8px #1f2d47;
-            --shadow-card-materia: 0 6px 0px #07090f, 4px 10px 15px rgba(0, 0, 0, 0.5);
-        }
-
-        /* --- TEMA 2: NEÓN CYBERPUNK (VIOLETA / CIAN) --- */
-        body.theme-cyberpunk {
-            --bg-ceramic: #05050a;
-            --panel-bg: #100f1c;
-            --panel-border: #2b254c;
-            --azul-marino: #00f0ff;
-            --azul-muted: #a78bfa;
-            --oro-pulido: linear-gradient(135deg, #ff007f 0%, #7928ca 100%);
-            --oro-flat: #ff007f;
-            --oro-glow: rgba(255, 0, 127, 0.4);
-            --blanco-puro: #18152e;
-            --exito-soft: #022c22;
-            --exito-texto: #2dd4bf;
-            --exito-border: #115e59;
-            --alerta-soft: #4c0519;
-            --alerta-texto: #fb7185;
-            --shadow-3d-panel: 8px 8px 16px #020204, -8px -8px 16px #1e1b38, inset 1px 1px 0px #2b254c;
-            --shadow-3d-inset: inset 4px 4px 8px #020204, inset -4px -4px 8px #1e1b38;
-            --shadow-card-materia: 0 6px 0px #020204, 4px 10px 15px rgba(255, 0, 127, 0.2);
-        }
-
-        /* --- TEMA 3: ESMERALDA BOSQUE (TONOS VERDES Y TIERRA) --- */
-        body.theme-emerald {
-            --bg-ceramic: #06130b;
-            --panel-bg: #0d2114;
-            --panel-border: #1b3b24;
-            --azul-marino: #ecfdf5;
-            --azul-muted: #6ee7b7;
-            --oro-pulido: linear-gradient(135deg, #10b981 0%, #34d399 50%, #059669 100%);
-            --oro-flat: #10b981;
-            --oro-glow: rgba(16, 185, 129, 0.25);
-            --blanco-puro: #112a1a;
-            --exito-soft: #064e3b;
-            --exito-texto: #6ee7b7;
-            --exito-border: #047857;
-            --alerta-soft: #7f1d1d;
-            --alerta-texto: #fca5a5;
-            --shadow-3d-panel: 8px 8px 16px #030a06, -8px -8px 16px #153420, inset 1px 1px 0px #1b3b24;
-            --shadow-3d-inset: inset 4px 4px 8px #030a06, inset -4px -4px 8px #153420;
-            --shadow-card-materia: 0 6px 0px #030a06, 4px 10px 15px rgba(0, 0, 0, 0.4);
-        }
-
-        /* --- TEMA 4: SOLARIS MAGMA (NEGRO Y TONOS ROJOS/FUEGO) --- */
-        body.theme-magma {
-            --bg-ceramic: #140707;
-            --panel-bg: #210d0d;
-            --panel-border: #3d1515;
-            --azul-marino: #fff1f2;
-            --azul-muted: #fda4af;
-            --oro-pulido: linear-gradient(135deg, #f43f5e 0%, #fb923c 100%);
-            --oro-flat: #f43f5e;
-            --oro-glow: rgba(244, 63, 94, 0.3);
-            --blanco-puro: #2a1111;
-            --exito-soft: #064e3b;
-            --exito-texto: #34d399;
-            --exito-border: #059669;
-            --alerta-soft: #581c87;
-            --alerta-texto: #e879f9;
-            --shadow-3d-panel: 8px 8px 16px #0a0303, -8px -8px 16px #381313, inset 1px 1px 0px #3d1515;
-            --shadow-3d-inset: inset 4px 4px 8px #0a0303, inset -4px -4px 8px #381313;
-            --shadow-card-materia: 0 6px 0px #0a0303, 4px 10px 15px rgba(244, 63, 94, 0.25);
-        }
-
-        /* --- TEMA 5: ÁRTICO GLACIAL (AZUL HIELO Y BLANCOS LUMINOSOS) --- */
-        body.theme-glacial {
-            --bg-ceramic: #f0fdf4;
-            --panel-bg: #e0f2fe;
-            --panel-border: #bae6fd;
-            --azul-marino: #0369a1;
-            --azul-muted: #0284c7;
-            --oro-pulido: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%);
-            --oro-flat: #0284c7;
-            --oro-glow: rgba(2, 132, 199, 0.2);
+        /* --- TEMA: CERÁMICO --- */
+        body.theme-ceramico {
+            --bg-ceramic: #fff7ed;
+            --panel-bg: #fffaf5;
+            --panel-border: #fed7aa;
+            --azul-marino: #7c2d12;
+            --azul-muted: #9a3412;
+            --oro-pulido: linear-gradient(135deg, #ea580c 0%, #f59e0b 55%, #14b8a6 100%);
+            --oro-flat: #ea580c;
             --blanco-puro: #ffffff;
-            --exito-soft: #e0f2fe;
-            --exito-texto: #0369a1;
-            --exito-border: #7dd3fc;
-            --alerta-soft: #fee2e2;
-            --alerta-texto: #991b1b;
-            --shadow-3d-panel: 8px 8px 16px #cbe4f4, -8px -8px 16px #ffffff, inset 1px 1px 0px #ffffff;
-            --shadow-3d-inset: inset 4px 4px 8px #cbe4f4, inset -4px -4px 8px #ffffff;
-            --shadow-card-materia: 0 6px 0px #bae6fd, 4px 10px 15px rgba(2, 132, 199, 0.15);
+            --shadow-3d-panel: 8px 8px 16px rgba(100, 80, 120, 0.16), -8px -8px 16px rgba(255,255,255,0.92), inset 1px 1px 0 rgba(255,255,255,0.85);
+            --shadow-3d-inset: inset 4px 4px 8px rgba(100,80,120,0.13), inset -4px -4px 8px rgba(255,255,255,0.88);
+            --shadow-card-materia: 0 6px 0 #fed7aa, 4px 10px 15px rgba(60,50,90,0.14);
         }
 
-        /* --- TEMA 6: LAVANDA PURPURA (TONOS PASTEL OSCUROS Y LILAS) --- */
-        body.theme-lavender {
-            --bg-ceramic: #0f0c1b;
-            --panel-bg: #18142c;
-            --panel-border: #282148;
-            --azul-marino: #f3e8ff;
-            --azul-muted: #c084fc;
-            --oro-pulido: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+        /* --- TEMA: GLACIAL --- */
+        body.theme-glacial {
+            --bg-ceramic: #ecfeff;
+            --panel-bg: #f0fdfa;
+            --panel-border: #a5f3fc;
+            --azul-marino: #164e63;
+            --azul-muted: #0e7490;
+            --oro-pulido: linear-gradient(135deg, #06b6d4 0%, #3b82f6 55%, #8b5cf6 100%);
+            --oro-flat: #06b6d4;
+            --blanco-puro: #ffffff;
+            --shadow-3d-panel: 8px 8px 16px rgba(100, 80, 120, 0.16), -8px -8px 16px rgba(255,255,255,0.92), inset 1px 1px 0 rgba(255,255,255,0.85);
+            --shadow-3d-inset: inset 4px 4px 8px rgba(100,80,120,0.13), inset -4px -4px 8px rgba(255,255,255,0.88);
+            --shadow-card-materia: 0 6px 0 #a5f3fc, 4px 10px 15px rgba(60,50,90,0.14);
+        }
+
+        /* --- TEMA: TROPICAL --- */
+        body.theme-tropical {
+            --bg-ceramic: #fffde7;
+            --panel-bg: #f0fdf4;
+            --panel-border: #bbf7d0;
+            --azul-marino: #14532d;
+            --azul-muted: #15803d;
+            --oro-pulido: linear-gradient(135deg, #16a34a 0%, #f59e0b 55%, #ec4899 100%);
+            --oro-flat: #16a34a;
+            --blanco-puro: #ffffff;
+            --shadow-3d-panel: 8px 8px 16px rgba(100, 80, 120, 0.16), -8px -8px 16px rgba(255,255,255,0.92), inset 1px 1px 0 rgba(255,255,255,0.85);
+            --shadow-3d-inset: inset 4px 4px 8px rgba(100,80,120,0.13), inset -4px -4px 8px rgba(255,255,255,0.88);
+            --shadow-card-materia: 0 6px 0 #bbf7d0, 4px 10px 15px rgba(60,50,90,0.14);
+        }
+
+        /* --- TEMA: ARCOÍRIS --- */
+        body.theme-arcoiris {
+            --bg-ceramic: #fff7fb;
+            --panel-bg: #fdf4ff;
+            --panel-border: #f5d0fe;
+            --azul-marino: #581c87;
+            --azul-muted: #7e22ce;
+            --oro-pulido: linear-gradient(135deg, #a855f7 0%, #06b6d4 55%, #f97316 100%);
             --oro-flat: #a855f7;
-            --oro-glow: rgba(168, 85, 247, 0.3);
-            --blanco-puro: #201a38;
-            --exito-soft: #064e3b;
-            --exito-texto: #34d399;
-            --exito-border: #059669;
-            --alerta-soft: #4c0519;
-            --alerta-texto: #fb7185;
-            --shadow-3d-panel: 8px 8px 16px #08060f, -8px -8px 16px #282247, inset 1px 1px 0px #282148;
-            --shadow-3d-inset: inset 4px 4px 8px #08060f, inset -4px -4px 8px #282247;
-            --shadow-card-materia: 0 6px 0px #08060f, 4px 10px 15px rgba(168, 85, 247, 0.2);
+            --blanco-puro: #ffffff;
+            --shadow-3d-panel: 8px 8px 16px rgba(100, 80, 120, 0.16), -8px -8px 16px rgba(255,255,255,0.92), inset 1px 1px 0 rgba(255,255,255,0.85);
+            --shadow-3d-inset: inset 4px 4px 8px rgba(100,80,120,0.13), inset -4px -4px 8px rgba(255,255,255,0.88);
+            --shadow-card-materia: 0 6px 0 #f5d0fe, 4px 10px 15px rgba(60,50,90,0.14);
+        }
+
+        /* --- TEMA: JARDÍN --- */
+        body.theme-jardin {
+            --bg-ceramic: #f7fee7;
+            --panel-bg: #ecfccb;
+            --panel-border: #bef264;
+            --azul-marino: #365314;
+            --azul-muted: #4d7c0f;
+            --oro-pulido: linear-gradient(135deg, #84cc16 0%, #eab308 55%, #14b8a6 100%);
+            --oro-flat: #84cc16;
+            --blanco-puro: #ffffff;
+            --shadow-3d-panel: 8px 8px 16px rgba(100, 80, 120, 0.16), -8px -8px 16px rgba(255,255,255,0.92), inset 1px 1px 0 rgba(255,255,255,0.85);
+            --shadow-3d-inset: inset 4px 4px 8px rgba(100,80,120,0.13), inset -4px -4px 8px rgba(255,255,255,0.88);
+            --shadow-card-materia: 0 6px 0 #bef264, 4px 10px 15px rgba(60,50,90,0.14);
+        }
+
+        /* --- TEMA: OCÉANO CORAL --- */
+        body.theme-oceano {
+            --bg-ceramic: #eff6ff;
+            --panel-bg: #ecfeff;
+            --panel-border: #a5f3fc;
+            --azul-marino: #164e63;
+            --azul-muted: #0369a1;
+            --oro-pulido: linear-gradient(135deg, #0891b2 0%, #fb7185 55%, #8b5cf6 100%);
+            --oro-flat: #0891b2;
+            --blanco-puro: #ffffff;
+            --shadow-3d-panel: 8px 8px 16px rgba(100, 80, 120, 0.16), -8px -8px 16px rgba(255,255,255,0.92), inset 1px 1px 0 rgba(255,255,255,0.85);
+            --shadow-3d-inset: inset 4px 4px 8px rgba(100,80,120,0.13), inset -4px -4px 8px rgba(255,255,255,0.88);
+            --shadow-card-materia: 0 6px 0 #a5f3fc, 4px 10px 15px rgba(60,50,90,0.14);
+        }
+
+        /* --- TEMA: ATARDECER --- */
+        body.theme-atardecer {
+            --bg-ceramic: #fff7ed;
+            --panel-bg: #fef2f2;
+            --panel-border: #fecaca;
+            --azul-marino: #7f1d1d;
+            --azul-muted: #c2410c;
+            --oro-pulido: linear-gradient(135deg, #f97316 0%, #ec4899 55%, #8b5cf6 100%);
+            --oro-flat: #f97316;
+            --blanco-puro: #ffffff;
+            --shadow-3d-panel: 8px 8px 16px rgba(100, 80, 120, 0.16), -8px -8px 16px rgba(255,255,255,0.92), inset 1px 1px 0 rgba(255,255,255,0.85);
+            --shadow-3d-inset: inset 4px 4px 8px rgba(100,80,120,0.13), inset -4px -4px 8px rgba(255,255,255,0.88);
+            --shadow-card-materia: 0 6px 0 #fecaca, 4px 10px 15px rgba(60,50,90,0.14);
+        }
+
+        /* --- TEMA: MENTA --- */
+        body.theme-menta {
+            --bg-ceramic: #f0fdfa;
+            --panel-bg: #ecfdf5;
+            --panel-border: #99f6e4;
+            --azul-marino: #134e4a;
+            --azul-muted: #0f766e;
+            --oro-pulido: linear-gradient(135deg, #14b8a6 0%, #84cc16 55%, #06b6d4 100%);
+            --oro-flat: #14b8a6;
+            --blanco-puro: #ffffff;
+            --shadow-3d-panel: 8px 8px 16px rgba(100, 80, 120, 0.16), -8px -8px 16px rgba(255,255,255,0.92), inset 1px 1px 0 rgba(255,255,255,0.85);
+            --shadow-3d-inset: inset 4px 4px 8px rgba(100,80,120,0.13), inset -4px -4px 8px rgba(255,255,255,0.88);
+            --shadow-card-materia: 0 6px 0 #99f6e4, 4px 10px 15px rgba(60,50,90,0.14);
+        }
+
+        /* --- TEMA: LIMÓN ELÉCTRICO --- */
+        body.theme-limon {
+            --bg-ceramic: #fffff0;
+            --panel-bg: #f7fee7;
+            --panel-border: #d9f99d;
+            --azul-marino: #365314;
+            --azul-muted: #65a30d;
+            --oro-pulido: linear-gradient(135deg, #a3e635 0%, #f59e0b 55%, #06b6d4 100%);
+            --oro-flat: #a3e635;
+            --blanco-puro: #ffffff;
+            --shadow-3d-panel: 8px 8px 16px rgba(100, 80, 120, 0.16), -8px -8px 16px rgba(255,255,255,0.92), inset 1px 1px 0 rgba(255,255,255,0.85);
+            --shadow-3d-inset: inset 4px 4px 8px rgba(100,80,120,0.13), inset -4px -4px 8px rgba(255,255,255,0.88);
+            --shadow-card-materia: 0 6px 0 #d9f99d, 4px 10px 15px rgba(60,50,90,0.14);
+        }
+
+        /* --- TEMA: CIELO ALGODÓN --- */
+        body.theme-cielo {
+            --bg-ceramic: #f0f9ff;
+            --panel-bg: #eff6ff;
+            --panel-border: #bae6fd;
+            --azul-marino: #0c4a6e;
+            --azul-muted: #0369a1;
+            --oro-pulido: linear-gradient(135deg, #38bdf8 0%, #818cf8 55%, #f472b6 100%);
+            --oro-flat: #38bdf8;
+            --blanco-puro: #ffffff;
+            --shadow-3d-panel: 8px 8px 16px rgba(100, 80, 120, 0.16), -8px -8px 16px rgba(255,255,255,0.92), inset 1px 1px 0 rgba(255,255,255,0.85);
+            --shadow-3d-inset: inset 4px 4px 8px rgba(100,80,120,0.13), inset -4px -4px 8px rgba(255,255,255,0.88);
+            --shadow-card-materia: 0 6px 0 #bae6fd, 4px 10px 15px rgba(60,50,90,0.14);
+        }
+
+        /* --- TEMA: CORAL --- */
+        body.theme-coral {
+            --bg-ceramic: #fff1f2;
+            --panel-bg: #fff7ed;
+            --panel-border: #fecdd3;
+            --azul-marino: #881337;
+            --azul-muted: #be123c;
+            --oro-pulido: linear-gradient(135deg, #fb7185 0%, #f97316 55%, #facc15 100%);
+            --oro-flat: #fb7185;
+            --blanco-puro: #ffffff;
+            --shadow-3d-panel: 8px 8px 16px rgba(100, 80, 120, 0.16), -8px -8px 16px rgba(255,255,255,0.92), inset 1px 1px 0 rgba(255,255,255,0.85);
+            --shadow-3d-inset: inset 4px 4px 8px rgba(100,80,120,0.13), inset -4px -4px 8px rgba(255,255,255,0.88);
+            --shadow-card-materia: 0 6px 0 #fecdd3, 4px 10px 15px rgba(60,50,90,0.14);
+        }
+
+        /* --- TEMA: LAVANDA FLORAL --- */
+        body.theme-lavanda_clara {
+            --bg-ceramic: #faf5ff;
+            --panel-bg: #fdf4ff;
+            --panel-border: #e9d5ff;
+            --azul-marino: #581c87;
+            --azul-muted: #7e22ce;
+            --oro-pulido: linear-gradient(135deg, #c084fc 0%, #ec4899 55%, #06b6d4 100%);
+            --oro-flat: #c084fc;
+            --blanco-puro: #ffffff;
+            --shadow-3d-panel: 8px 8px 16px rgba(100, 80, 120, 0.16), -8px -8px 16px rgba(255,255,255,0.92), inset 1px 1px 0 rgba(255,255,255,0.85);
+            --shadow-3d-inset: inset 4px 4px 8px rgba(100,80,120,0.13), inset -4px -4px 8px rgba(255,255,255,0.88);
+            --shadow-card-materia: 0 6px 0 #e9d5ff, 4px 10px 15px rgba(60,50,90,0.14);
+        }
+
+        /* --- TEMA: ROYAL --- */
+        body.theme-azul_royal {
+            --bg-ceramic: #eef2ff;
+            --panel-bg: #eff6ff;
+            --panel-border: #c7d2fe;
+            --azul-marino: #312e81;
+            --azul-muted: #4338ca;
+            --oro-pulido: linear-gradient(135deg, #6366f1 0%, #06b6d4 55%, #f59e0b 100%);
+            --oro-flat: #6366f1;
+            --blanco-puro: #ffffff;
+            --shadow-3d-panel: 8px 8px 16px rgba(100, 80, 120, 0.16), -8px -8px 16px rgba(255,255,255,0.92), inset 1px 1px 0 rgba(255,255,255,0.85);
+            --shadow-3d-inset: inset 4px 4px 8px rgba(100,80,120,0.13), inset -4px -4px 8px rgba(255,255,255,0.88);
+            --shadow-card-materia: 0 6px 0 #c7d2fe, 4px 10px 15px rgba(60,50,90,0.14);
+        }
+
+        /* --- TEMA: MELOCOTÓN --- */
+        body.theme-melocoton {
+            --bg-ceramic: #fff7ed;
+            --panel-bg: #fff1f2;
+            --panel-border: #fed7aa;
+            --azul-marino: #7c2d12;
+            --azul-muted: #c2410c;
+            --oro-pulido: linear-gradient(135deg, #fb923c 0%, #f43f5e 55%, #facc15 100%);
+            --oro-flat: #fb923c;
+            --blanco-puro: #ffffff;
+            --shadow-3d-panel: 8px 8px 16px rgba(100, 80, 120, 0.16), -8px -8px 16px rgba(255,255,255,0.92), inset 1px 1px 0 rgba(255,255,255,0.85);
+            --shadow-3d-inset: inset 4px 4px 8px rgba(100,80,120,0.13), inset -4px -4px 8px rgba(255,255,255,0.88);
+            --shadow-card-materia: 0 6px 0 #fed7aa, 4px 10px 15px rgba(60,50,90,0.14);
+        }
+
+        /* --- TEMA: FIESTA --- */
+        body.theme-fiesta {
+            --bg-ceramic: #fffbeb;
+            --panel-bg: #fefce8;
+            --panel-border: #fde68a;
+            --azul-marino: #713f12;
+            --azul-muted: #b45309;
+            --oro-pulido: linear-gradient(135deg, #f59e0b 0%, #ec4899 55%, #8b5cf6 100%);
+            --oro-flat: #f59e0b;
+            --blanco-puro: #ffffff;
+            --shadow-3d-panel: 8px 8px 16px rgba(100, 80, 120, 0.16), -8px -8px 16px rgba(255,255,255,0.92), inset 1px 1px 0 rgba(255,255,255,0.85);
+            --shadow-3d-inset: inset 4px 4px 8px rgba(100,80,120,0.13), inset -4px -4px 8px rgba(255,255,255,0.88);
+            --shadow-card-materia: 0 6px 0 #fde68a, 4px 10px 15px rgba(60,50,90,0.14);
+        }
+
+        /* --- TEMA: TURQUESA --- */
+        body.theme-turquesa {
+            --bg-ceramic: #ecfeff;
+            --panel-bg: #f0fdfa;
+            --panel-border: #99f6e4;
+            --azul-marino: #134e4a;
+            --azul-muted: #0f766e;
+            --oro-pulido: linear-gradient(135deg, #14b8a6 0%, #3b82f6 55%, #f472b6 100%);
+            --oro-flat: #14b8a6;
+            --blanco-puro: #ffffff;
+            --shadow-3d-panel: 8px 8px 16px rgba(100, 80, 120, 0.16), -8px -8px 16px rgba(255,255,255,0.92), inset 1px 1px 0 rgba(255,255,255,0.85);
+            --shadow-3d-inset: inset 4px 4px 8px rgba(100,80,120,0.13), inset -4px -4px 8px rgba(255,255,255,0.88);
+            --shadow-card-materia: 0 6px 0 #99f6e4, 4px 10px 15px rgba(60,50,90,0.14);
+        }
+
+        /* --- TEMA: PRIMAVERA --- */
+        body.theme-primavera {
+            --bg-ceramic: #f0fdf4;
+            --panel-bg: #fdf4ff;
+            --panel-border: #bbf7d0;
+            --azul-marino: #14532d;
+            --azul-muted: #15803d;
+            --oro-pulido: linear-gradient(135deg, #22c55e 0%, #a855f7 55%, #f59e0b 100%);
+            --oro-flat: #22c55e;
+            --blanco-puro: #ffffff;
+            --shadow-3d-panel: 8px 8px 16px rgba(100, 80, 120, 0.16), -8px -8px 16px rgba(255,255,255,0.92), inset 1px 1px 0 rgba(255,255,255,0.85);
+            --shadow-3d-inset: inset 4px 4px 8px rgba(100,80,120,0.13), inset -4px -4px 8px rgba(255,255,255,0.88);
+            --shadow-card-materia: 0 6px 0 #bbf7d0, 4px 10px 15px rgba(60,50,90,0.14);
+        }
+
+        /* --- TEMA: FUCSIA POP --- */
+        body.theme-fucsia {
+            --bg-ceramic: #fdf2f8;
+            --panel-bg: #fff1f2;
+            --panel-border: #f9a8d4;
+            --azul-marino: #831843;
+            --azul-muted: #be185d;
+            --oro-pulido: linear-gradient(135deg, #ec4899 0%, #8b5cf6 55%, #06b6d4 100%);
+            --oro-flat: #ec4899;
+            --blanco-puro: #ffffff;
+            --shadow-3d-panel: 8px 8px 16px rgba(100, 80, 120, 0.16), -8px -8px 16px rgba(255,255,255,0.92), inset 1px 1px 0 rgba(255,255,255,0.85);
+            --shadow-3d-inset: inset 4px 4px 8px rgba(100,80,120,0.13), inset -4px -4px 8px rgba(255,255,255,0.88);
+            --shadow-card-materia: 0 6px 0 #f9a8d4, 4px 10px 15px rgba(60,50,90,0.14);
+        }
+
+        /* --- TEMA: GALAXIA CLARA --- */
+        body.theme-galaxia_clara {
+            --bg-ceramic: #f5f3ff;
+            --panel-bg: #eef2ff;
+            --panel-border: #ddd6fe;
+            --azul-marino: #312e81;
+            --azul-muted: #4f46e5;
+            --oro-pulido: linear-gradient(135deg, #8b5cf6 0%, #ec4899 55%, #06b6d4 100%);
+            --oro-flat: #8b5cf6;
+            --blanco-puro: #ffffff;
+            --shadow-3d-panel: 8px 8px 16px rgba(100, 80, 120, 0.16), -8px -8px 16px rgba(255,255,255,0.92), inset 1px 1px 0 rgba(255,255,255,0.85);
+            --shadow-3d-inset: inset 4px 4px 8px rgba(100,80,120,0.13), inset -4px -4px 8px rgba(255,255,255,0.88);
+            --shadow-card-materia: 0 6px 0 #ddd6fe, 4px 10px 15px rgba(60,50,90,0.14);
+        }
+
+        /* --- TEMA: BOSQUE --- */
+        body.theme-bosque {
+            --bg-ceramic: #f0fdf4;
+            --panel-bg: #f7fee7;
+            --panel-border: #bbf7d0;
+            --azul-marino: #14532d;
+            --azul-muted: #166534;
+            --oro-pulido: linear-gradient(135deg, #16a34a 0%, #ca8a04 55%, #0891b2 100%);
+            --oro-flat: #16a34a;
+            --blanco-puro: #ffffff;
+            --shadow-3d-panel: 8px 8px 16px rgba(100, 80, 120, 0.16), -8px -8px 16px rgba(255,255,255,0.92), inset 1px 1px 0 rgba(255,255,255,0.85);
+            --shadow-3d-inset: inset 4px 4px 8px rgba(100,80,120,0.13), inset -4px -4px 8px rgba(255,255,255,0.88);
+            --shadow-card-materia: 0 6px 0 #bbf7d0, 4px 10px 15px rgba(60,50,90,0.14);
         }
 
         body { 
@@ -208,14 +382,14 @@
         }
 
         .nav-container {
-            display: flex; gap: 10px; background: var(--panel-bg); padding: 8px;
-            border-radius: 20px; box-shadow: var(--shadow-3d-inset); flex-wrap: wrap; justify-content: center;
+            display: flex; gap: 6px; background: var(--panel-bg); padding: 5px;
+            border-radius: 16px; box-shadow: var(--shadow-3d-inset); flex-wrap: wrap; justify-content: center;
             align-items: center;
         }
 
         .btn-tab {
-            background: transparent; color: var(--azul-muted); border: none; padding: 10px 18px;
-            font-size: 12px; font-weight: 700; border-radius: 14px; cursor: pointer;
+            background: transparent; color: var(--azul-muted); border: none; padding: 7px 11px;
+            font-size: 10px; font-weight: 700; border-radius: 10px; cursor: pointer;
             text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.25s;
         }
         .btn-tab:hover { color: var(--azul-marino); }
@@ -224,8 +398,8 @@
             background: var(--blanco-puro);
             color: var(--azul-marino);
             border: 1px solid rgba(165, 175, 190, 0.3);
-            padding: 10px 14px;
-            font-size: 12px;
+            padding: 7px 10px;
+            font-size: 10px;
             font-weight: 800;
             border-radius: 14px;
             cursor: pointer;
@@ -276,6 +450,11 @@
             box-shadow: 2px 2px 5px rgba(0,0,0,0.1); transition: all 0.2s;
         }
         .btn-tool-exec:hover { border-color: var(--oro-flat); transform: translateY(-1px); }
+        .nav-container .btn-tool-exec {
+            padding: 7px 10px;
+            font-size: 10px;
+            border-radius: 10px;
+        }
 
         .view-block { display: none; }
         .view-block.active-block { display: block; animation: smoothUp 0.5s cubic-bezier(0.25, 1, 0.5, 1); }
@@ -708,13 +887,26 @@
 
     // --- GESTIÓN DE TEMAS MÚLTIPLES ---
     const listaDeTemas = [
-        { clase: '', nombre: 'Cerámico' },
-        { clase: 'theme-obsidian', nombre: 'Obsidiano' },
-        { clase: 'theme-cyberpunk', nombre: 'Cyberpunk' },
-        { clase: 'theme-emerald', nombre: 'Esmeralda' },
-        { clase: 'theme-magma', nombre: 'Magma' },
+        { clase: 'theme-ceramico', nombre: 'Cerámico' },
         { clase: 'theme-glacial', nombre: 'Glacial' },
-        { clase: 'theme-lavender', nombre: 'Lavanda' }
+        { clase: 'theme-tropical', nombre: 'Tropical' },
+        { clase: 'theme-arcoiris', nombre: 'Arcoíris' },
+        { clase: 'theme-jardin', nombre: 'Jardín' },
+        { clase: 'theme-oceano', nombre: 'Océano Coral' },
+        { clase: 'theme-atardecer', nombre: 'Atardecer' },
+        { clase: 'theme-menta', nombre: 'Menta' },
+        { clase: 'theme-limon', nombre: 'Limón Eléctrico' },
+        { clase: 'theme-cielo', nombre: 'Cielo Algodón' },
+        { clase: 'theme-coral', nombre: 'Coral' },
+        { clase: 'theme-lavanda_clara', nombre: 'Lavanda Floral' },
+        { clase: 'theme-azul_royal', nombre: 'Royal' },
+        { clase: 'theme-melocoton', nombre: 'Melocotón' },
+        { clase: 'theme-fiesta', nombre: 'Fiesta' },
+        { clase: 'theme-turquesa', nombre: 'Turquesa' },
+        { clase: 'theme-primavera', nombre: 'Primavera' },
+        { clase: 'theme-fucsia', nombre: 'Fucsia Pop' },
+        { clase: 'theme-galaxia_clara', nombre: 'Galaxia Clara' },
+        { clase: 'theme-bosque', nombre: 'Bosque' }
     ];
 
     let indiceTemaActual = parseInt(localStorage.getItem('indice_tema_actual')) || 0;
@@ -1525,4 +1717,3 @@
 </script>
 </body>
 </html>
-   
