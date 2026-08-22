@@ -210,6 +210,7 @@
         .nav-container {
             display: flex; gap: 10px; background: var(--panel-bg); padding: 8px;
             border-radius: 20px; box-shadow: var(--shadow-3d-inset); flex-wrap: wrap; justify-content: center;
+            align-items: center;
         }
 
         .btn-tab {
@@ -218,6 +219,32 @@
             text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.25s;
         }
         .btn-tab:hover { color: var(--azul-marino); }
+        /* BOTÓN DE TEMA: integrado en la franja principal de navegación */
+        .btn-theme-nav {
+            background: var(--blanco-puro);
+            color: var(--azul-marino);
+            border: 1px solid rgba(165, 175, 190, 0.3);
+            padding: 10px 14px;
+            font-size: 12px;
+            font-weight: 800;
+            border-radius: 14px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.08);
+            transition: all 0.25s ease;
+            white-space: nowrap;
+        }
+        .btn-theme-nav:hover {
+            border-color: var(--oro-flat);
+            color: var(--azul-marino);
+            transform: translateY(-1px);
+            box-shadow: 3px 4px 9px rgba(0,0,0,0.12);
+        }
+        .btn-theme-nav:active {
+            transform: translateY(0);
+        }
+
         .btn-tab.active-tab {
             background: var(--blanco-puro); color: var(--azul-marino);
             box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.15), -2px -2px 6px var(--panel-border);
@@ -489,7 +516,6 @@
 <div class="workspace-frame">
     <header>
         <div class="top-global-tools">
-            <button class="btn-tool-exec" onclick="ciclarTemas()" id="btn-theme-toggle">🎨 Tema: Cerámico</button>
             <button class="btn-tool-exec" onclick="solicitarPermisoNotificaciones()">🔔 Activar Push</button>
             <input type="text" id="global-search-input" placeholder="🔍 Buscar materia o docente..." oninput="filtrarGlobalSistema()" style="padding: 10px 16px; border-radius: 12px; font-size: 12px; width: 220px;">
             <button class="btn-tool-exec" onclick="exportarDatosJSON()">📤 Exportar</button>
@@ -513,6 +539,7 @@
                 <button class="btn-tab" id="tab-predictivo" onclick="cambiarVista('predictivo')">📈 Kardex Predictivo</button>
                 <button class="btn-tab" id="tab-asistencias" onclick="cambiarVista('asistencias')">📉 Faltas</button>
                 <button class="btn-tab" id="tab-recursos" onclick="cambiarVista('recursos')">📂 Enlaces / Notas</button>
+                <button class="btn-theme-nav" onclick="ciclarTemas()" id="btn-theme-toggle" title="Cambiar tema visual" aria-label="Cambiar tema visual">🎨 Tema: Cerámico</button>
             </div>
         </div>
     </header>
@@ -709,7 +736,10 @@
         if (temaObj.clase) {
             document.body.classList.add(temaObj.clase);
         }
-        document.getElementById('btn-theme-toggle').textContent = `🎨 Tema: ${temaObj.nombre}`;
+        const botonTema = document.getElementById('btn-theme-toggle');
+        if (botonTema) {
+            botonTema.textContent = `🎨 Tema: ${temaObj.nombre}`;
+        }
     }
 
     const frasesParaMostrar = [];
@@ -1495,3 +1525,4 @@
 </script>
 </body>
 </html>
+           
