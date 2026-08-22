@@ -39,317 +39,679 @@
                 4px 10px 15px rgba(165, 175, 190, 0.4);
         }
 
-        /* --- TEMA MULTICOLOR: CERÁMICO --- */
+        /* --- TEMA ULTRA COLORIDO: CERAMICO --- */
         body.theme-ceramico {
-            --bg-ceramic: #fff8f0;
-            --panel-bg: #fffdf8;
-            --panel-border: #f6d6b8;
-            --azul-marino: #713f12;
-            --azul-muted: #a16207;
-            --oro-pulido: linear-gradient(135deg, #e76f51 0%, #2a9d8f 35%, #e9c46a 68%, #f4a261 100%);
-            --oro-flat: #e76f51;
+            --bg-ceramic: #fff7ed;
+            --panel-bg: #fffdf7;
+            --panel-border: #fed7aa;
+            --azul-marino: #7c2d12;
+            --azul-muted: #14b8a6;
+            --oro-pulido: linear-gradient(120deg, #ea580c 0%, #14b8a6 18%, #f59e0b 38%, #ef476f 58%, #8b5cf6 78%, #06b6d4 100%);
+            --oro-flat: #ea580c;
             --blanco-puro: #ffffff;
-            --shadow-3d-panel: 8px 8px 16px rgba(80,60,110,.14), -8px -8px 16px rgba(255,255,255,.95), inset 1px 1px 0 rgba(255,255,255,.9);
-            --shadow-3d-inset: inset 4px 4px 8px rgba(80,60,110,.10), inset -4px -4px 8px rgba(255,255,255,.9);
-            --shadow-card-materia: 0 6px 0 #f6d6b8, 4px 10px 15px rgba(70,50,100,.14);
+            --shadow-3d-panel: 8px 8px 18px color-mix(in srgb, #ef476f 18%, transparent), -8px -8px 18px rgba(255,255,255,.95), inset 1px 1px 0 rgba(255,255,255,.95);
+            --shadow-3d-inset: inset 4px 4px 9px color-mix(in srgb, #14b8a6 18%, transparent), inset -4px -4px 9px rgba(255,255,255,.92);
+            --shadow-card-materia: 0 6px 0 #f59e0b, 4px 10px 16px color-mix(in srgb, #8b5cf6 18%, transparent);
         }
 
-        /* --- TEMA MULTICOLOR: GLACIAL --- */
+        body.theme-ceramico .panel,
+        body.theme-ceramico .card,
+        body.theme-ceramico .materia-card,
+        body.theme-ceramico .metric-card {
+            background-image:
+                linear-gradient(135deg, color-mix(in srgb, #14b8a6 10%, transparent), transparent 42%),
+                linear-gradient(315deg, color-mix(in srgb, #ef476f 9%, transparent), transparent 45%);
+        }
+
+        body.theme-ceramico .btn-tab.active-tab,
+        body.theme-ceramico .btn-theme-nav,
+        body.theme-ceramico .btn-tool-exec {
+            background: linear-gradient(120deg, #ea580c, #14b8a6, #ef476f);
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 5px 12px color-mix(in srgb, #ef476f 25%, transparent);
+        }
+
+        /* --- TEMA ULTRA COLORIDO: GLACIAL --- */
         body.theme-glacial {
-            --bg-ceramic: #effcff;
-            --panel-bg: #f4f0ff;
-            --panel-border: #bde7f5;
+            --bg-ceramic: #ecfeff;
+            --panel-bg: #f0f9ff;
+            --panel-border: #bae6fd;
             --azul-marino: #164e63;
             --azul-muted: #2563eb;
-            --oro-pulido: linear-gradient(135deg, #00b4d8 0%, #48cae4 35%, #90be6d 68%, #9b5de5 100%);
+            --oro-pulido: linear-gradient(120deg, #00b4d8 0%, #2563eb 18%, #8b5cf6 38%, #06d6a0 58%, #f72585 78%, #facc15 100%);
             --oro-flat: #00b4d8;
             --blanco-puro: #ffffff;
-            --shadow-3d-panel: 8px 8px 16px rgba(80,60,110,.14), -8px -8px 16px rgba(255,255,255,.95), inset 1px 1px 0 rgba(255,255,255,.9);
-            --shadow-3d-inset: inset 4px 4px 8px rgba(80,60,110,.10), inset -4px -4px 8px rgba(255,255,255,.9);
-            --shadow-card-materia: 0 6px 0 #bde7f5, 4px 10px 15px rgba(70,50,100,.14);
+            --shadow-3d-panel: 8px 8px 18px color-mix(in srgb, #06d6a0 18%, transparent), -8px -8px 18px rgba(255,255,255,.95), inset 1px 1px 0 rgba(255,255,255,.95);
+            --shadow-3d-inset: inset 4px 4px 9px color-mix(in srgb, #2563eb 18%, transparent), inset -4px -4px 9px rgba(255,255,255,.92);
+            --shadow-card-materia: 0 6px 0 #8b5cf6, 4px 10px 16px color-mix(in srgb, #f72585 18%, transparent);
         }
 
-        /* --- TEMA MULTICOLOR: TROPICAL --- */
+        body.theme-glacial .panel,
+        body.theme-glacial .card,
+        body.theme-glacial .materia-card,
+        body.theme-glacial .metric-card {
+            background-image:
+                linear-gradient(135deg, color-mix(in srgb, #2563eb 10%, transparent), transparent 42%),
+                linear-gradient(315deg, color-mix(in srgb, #06d6a0 9%, transparent), transparent 45%);
+        }
+
+        body.theme-glacial .btn-tab.active-tab,
+        body.theme-glacial .btn-theme-nav,
+        body.theme-glacial .btn-tool-exec {
+            background: linear-gradient(120deg, #00b4d8, #2563eb, #06d6a0);
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 5px 12px color-mix(in srgb, #06d6a0 25%, transparent);
+        }
+
+        /* --- TEMA ULTRA COLORIDO: TROPICAL --- */
         body.theme-tropical {
-            --bg-ceramic: #fffbe6;
+            --bg-ceramic: #fffde7;
             --panel-bg: #effdf5;
-            --panel-border: #b7efc5;
+            --panel-border: #bbf7d0;
             --azul-marino: #14532d;
-            --azul-muted: #15803d;
-            --oro-pulido: linear-gradient(135deg, #ff6b35 0%, #06b6d4 35%, #facc15 68%, #ec4899 100%);
+            --azul-muted: #06b6d4;
+            --oro-pulido: linear-gradient(120deg, #ff6b35 0%, #06b6d4 18%, #facc15 38%, #ec4899 58%, #8b5cf6 78%, #22c55e 100%);
             --oro-flat: #ff6b35;
             --blanco-puro: #ffffff;
-            --shadow-3d-panel: 8px 8px 16px rgba(80,60,110,.14), -8px -8px 16px rgba(255,255,255,.95), inset 1px 1px 0 rgba(255,255,255,.9);
-            --shadow-3d-inset: inset 4px 4px 8px rgba(80,60,110,.10), inset -4px -4px 8px rgba(255,255,255,.9);
-            --shadow-card-materia: 0 6px 0 #b7efc5, 4px 10px 15px rgba(70,50,100,.14);
+            --shadow-3d-panel: 8px 8px 18px color-mix(in srgb, #ec4899 18%, transparent), -8px -8px 18px rgba(255,255,255,.95), inset 1px 1px 0 rgba(255,255,255,.95);
+            --shadow-3d-inset: inset 4px 4px 9px color-mix(in srgb, #06b6d4 18%, transparent), inset -4px -4px 9px rgba(255,255,255,.92);
+            --shadow-card-materia: 0 6px 0 #facc15, 4px 10px 16px color-mix(in srgb, #8b5cf6 18%, transparent);
         }
 
-        /* --- TEMA MULTICOLOR: ARCOÍRIS --- */
+        body.theme-tropical .panel,
+        body.theme-tropical .card,
+        body.theme-tropical .materia-card,
+        body.theme-tropical .metric-card {
+            background-image:
+                linear-gradient(135deg, color-mix(in srgb, #06b6d4 10%, transparent), transparent 42%),
+                linear-gradient(315deg, color-mix(in srgb, #ec4899 9%, transparent), transparent 45%);
+        }
+
+        body.theme-tropical .btn-tab.active-tab,
+        body.theme-tropical .btn-theme-nav,
+        body.theme-tropical .btn-tool-exec {
+            background: linear-gradient(120deg, #ff6b35, #06b6d4, #ec4899);
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 5px 12px color-mix(in srgb, #ec4899 25%, transparent);
+        }
+
+        /* --- TEMA ULTRA COLORIDO: ARCOIRIS --- */
         body.theme-arcoiris {
             --bg-ceramic: #fff7fb;
-            --panel-bg: #f5f3ff;
+            --panel-bg: #f7f2ff;
             --panel-border: #f5bde6;
             --azul-marino: #581c87;
-            --azul-muted: #7c3aed;
-            --oro-pulido: linear-gradient(135deg, #ef476f 0%, #ffd166 35%, #06d6a0 68%, #118ab2 100%);
+            --azul-muted: #ffd166;
+            --oro-pulido: linear-gradient(120deg, #ef476f 0%, #ffd166 18%, #06d6a0 38%, #118ab2 58%, #8338ec 78%, #fb5607 100%);
             --oro-flat: #ef476f;
             --blanco-puro: #ffffff;
-            --shadow-3d-panel: 8px 8px 16px rgba(80,60,110,.14), -8px -8px 16px rgba(255,255,255,.95), inset 1px 1px 0 rgba(255,255,255,.9);
-            --shadow-3d-inset: inset 4px 4px 8px rgba(80,60,110,.10), inset -4px -4px 8px rgba(255,255,255,.9);
-            --shadow-card-materia: 0 6px 0 #f5bde6, 4px 10px 15px rgba(70,50,100,.14);
+            --shadow-3d-panel: 8px 8px 18px color-mix(in srgb, #118ab2 18%, transparent), -8px -8px 18px rgba(255,255,255,.95), inset 1px 1px 0 rgba(255,255,255,.95);
+            --shadow-3d-inset: inset 4px 4px 9px color-mix(in srgb, #ffd166 18%, transparent), inset -4px -4px 9px rgba(255,255,255,.92);
+            --shadow-card-materia: 0 6px 0 #06d6a0, 4px 10px 16px color-mix(in srgb, #8338ec 18%, transparent);
         }
 
-        /* --- TEMA MULTICOLOR: JARDÍN --- */
+        body.theme-arcoiris .panel,
+        body.theme-arcoiris .card,
+        body.theme-arcoiris .materia-card,
+        body.theme-arcoiris .metric-card {
+            background-image:
+                linear-gradient(135deg, color-mix(in srgb, #ffd166 10%, transparent), transparent 42%),
+                linear-gradient(315deg, color-mix(in srgb, #118ab2 9%, transparent), transparent 45%);
+        }
+
+        body.theme-arcoiris .btn-tab.active-tab,
+        body.theme-arcoiris .btn-theme-nav,
+        body.theme-arcoiris .btn-tool-exec {
+            background: linear-gradient(120deg, #ef476f, #ffd166, #118ab2);
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 5px 12px color-mix(in srgb, #118ab2 25%, transparent);
+        }
+
+        /* --- TEMA ULTRA COLORIDO: JARDIN --- */
         body.theme-jardin {
-            --bg-ceramic: #f4ffe9;
-            --panel-bg: #fffbea;
-            --panel-border: #c9ef9b;
+            --bg-ceramic: #f7fee7;
+            --panel-bg: #effff3;
+            --panel-border: #bef264;
             --azul-marino: #365314;
-            --azul-muted: #4d7c0f;
-            --oro-pulido: linear-gradient(135deg, #65a30d 0%, #eab308 35%, #14b8a6 68%, #ec4899 100%);
-            --oro-flat: #65a30d;
+            --azul-muted: #eab308;
+            --oro-pulido: linear-gradient(120deg, #84cc16 0%, #eab308 18%, #14b8a6 38%, #ec4899 58%, #8b5cf6 78%, #f97316 100%);
+            --oro-flat: #84cc16;
             --blanco-puro: #ffffff;
-            --shadow-3d-panel: 8px 8px 16px rgba(80,60,110,.14), -8px -8px 16px rgba(255,255,255,.95), inset 1px 1px 0 rgba(255,255,255,.9);
-            --shadow-3d-inset: inset 4px 4px 8px rgba(80,60,110,.10), inset -4px -4px 8px rgba(255,255,255,.9);
-            --shadow-card-materia: 0 6px 0 #c9ef9b, 4px 10px 15px rgba(70,50,100,.14);
+            --shadow-3d-panel: 8px 8px 18px color-mix(in srgb, #ec4899 18%, transparent), -8px -8px 18px rgba(255,255,255,.95), inset 1px 1px 0 rgba(255,255,255,.95);
+            --shadow-3d-inset: inset 4px 4px 9px color-mix(in srgb, #eab308 18%, transparent), inset -4px -4px 9px rgba(255,255,255,.92);
+            --shadow-card-materia: 0 6px 0 #14b8a6, 4px 10px 16px color-mix(in srgb, #8b5cf6 18%, transparent);
         }
 
-        /* --- TEMA MULTICOLOR: OCÉANO CORAL --- */
+        body.theme-jardin .panel,
+        body.theme-jardin .card,
+        body.theme-jardin .materia-card,
+        body.theme-jardin .metric-card {
+            background-image:
+                linear-gradient(135deg, color-mix(in srgb, #eab308 10%, transparent), transparent 42%),
+                linear-gradient(315deg, color-mix(in srgb, #ec4899 9%, transparent), transparent 45%);
+        }
+
+        body.theme-jardin .btn-tab.active-tab,
+        body.theme-jardin .btn-theme-nav,
+        body.theme-jardin .btn-tool-exec {
+            background: linear-gradient(120deg, #84cc16, #eab308, #ec4899);
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 5px 12px color-mix(in srgb, #ec4899 25%, transparent);
+        }
+
+        /* --- TEMA ULTRA COLORIDO: OCEANO --- */
         body.theme-oceano {
             --bg-ceramic: #effaff;
-            --panel-bg: #f0fdfa;
-            --panel-border: #a7e8f0;
+            --panel-bg: #ecfeff;
+            --panel-border: #a5f3fc;
             --azul-marino: #164e63;
-            --azul-muted: #0369a1;
-            --oro-pulido: linear-gradient(135deg, #0077b6 0%, #00b4d8 35%, #ff6b6b 68%, #f9c74f 100%);
+            --azul-muted: #00b4d8;
+            --oro-pulido: linear-gradient(120deg, #0077b6 0%, #00b4d8 18%, #06d6a0 38%, #ff6b6b 58%, #f9c74f 78%, #9b5de5 100%);
             --oro-flat: #0077b6;
             --blanco-puro: #ffffff;
-            --shadow-3d-panel: 8px 8px 16px rgba(80,60,110,.14), -8px -8px 16px rgba(255,255,255,.95), inset 1px 1px 0 rgba(255,255,255,.9);
-            --shadow-3d-inset: inset 4px 4px 8px rgba(80,60,110,.10), inset -4px -4px 8px rgba(255,255,255,.9);
-            --shadow-card-materia: 0 6px 0 #a7e8f0, 4px 10px 15px rgba(70,50,100,.14);
+            --shadow-3d-panel: 8px 8px 18px color-mix(in srgb, #ff6b6b 18%, transparent), -8px -8px 18px rgba(255,255,255,.95), inset 1px 1px 0 rgba(255,255,255,.95);
+            --shadow-3d-inset: inset 4px 4px 9px color-mix(in srgb, #00b4d8 18%, transparent), inset -4px -4px 9px rgba(255,255,255,.92);
+            --shadow-card-materia: 0 6px 0 #06d6a0, 4px 10px 16px color-mix(in srgb, #f9c74f 18%, transparent);
         }
 
-        /* --- TEMA MULTICOLOR: ATARDECER --- */
+        body.theme-oceano .panel,
+        body.theme-oceano .card,
+        body.theme-oceano .materia-card,
+        body.theme-oceano .metric-card {
+            background-image:
+                linear-gradient(135deg, color-mix(in srgb, #00b4d8 10%, transparent), transparent 42%),
+                linear-gradient(315deg, color-mix(in srgb, #ff6b6b 9%, transparent), transparent 45%);
+        }
+
+        body.theme-oceano .btn-tab.active-tab,
+        body.theme-oceano .btn-theme-nav,
+        body.theme-oceano .btn-tool-exec {
+            background: linear-gradient(120deg, #0077b6, #00b4d8, #ff6b6b);
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 5px 12px color-mix(in srgb, #ff6b6b 25%, transparent);
+        }
+
+        /* --- TEMA ULTRA COLORIDO: ATARDECER --- */
         body.theme-atardecer {
-            --bg-ceramic: #fff8ef;
+            --bg-ceramic: #fff7ed;
             --panel-bg: #fff1f2;
-            --panel-border: #ffd0b5;
+            --panel-border: #fecaca;
             --azul-marino: #7f1d1d;
-            --azul-muted: #c2410c;
-            --oro-pulido: linear-gradient(135deg, #ff7b00 0%, #f94144 35%, #f3722c 68%, #9b5de5 100%);
+            --azul-muted: #f94144;
+            --oro-pulido: linear-gradient(120deg, #ff7b00 0%, #f94144 18%, #f3722c 38%, #9b5de5 58%, #00b4d8 78%, #f9c74f 100%);
             --oro-flat: #ff7b00;
             --blanco-puro: #ffffff;
-            --shadow-3d-panel: 8px 8px 16px rgba(80,60,110,.14), -8px -8px 16px rgba(255,255,255,.95), inset 1px 1px 0 rgba(255,255,255,.9);
-            --shadow-3d-inset: inset 4px 4px 8px rgba(80,60,110,.10), inset -4px -4px 8px rgba(255,255,255,.9);
-            --shadow-card-materia: 0 6px 0 #ffd0b5, 4px 10px 15px rgba(70,50,100,.14);
+            --shadow-3d-panel: 8px 8px 18px color-mix(in srgb, #9b5de5 18%, transparent), -8px -8px 18px rgba(255,255,255,.95), inset 1px 1px 0 rgba(255,255,255,.95);
+            --shadow-3d-inset: inset 4px 4px 9px color-mix(in srgb, #f94144 18%, transparent), inset -4px -4px 9px rgba(255,255,255,.92);
+            --shadow-card-materia: 0 6px 0 #f3722c, 4px 10px 16px color-mix(in srgb, #00b4d8 18%, transparent);
         }
 
-        /* --- TEMA MULTICOLOR: MENTA --- */
+        body.theme-atardecer .panel,
+        body.theme-atardecer .card,
+        body.theme-atardecer .materia-card,
+        body.theme-atardecer .metric-card {
+            background-image:
+                linear-gradient(135deg, color-mix(in srgb, #f94144 10%, transparent), transparent 42%),
+                linear-gradient(315deg, color-mix(in srgb, #9b5de5 9%, transparent), transparent 45%);
+        }
+
+        body.theme-atardecer .btn-tab.active-tab,
+        body.theme-atardecer .btn-theme-nav,
+        body.theme-atardecer .btn-tool-exec {
+            background: linear-gradient(120deg, #ff7b00, #f94144, #9b5de5);
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 5px 12px color-mix(in srgb, #9b5de5 25%, transparent);
+        }
+
+        /* --- TEMA ULTRA COLORIDO: MENTA --- */
         body.theme-menta {
             --bg-ceramic: #edfffa;
-            --panel-bg: #f5fff0;
-            --panel-border: #a7ead5;
+            --panel-bg: #f2fff0;
+            --panel-border: #99f6e4;
             --azul-marino: #134e4a;
-            --azul-muted: #0f766e;
-            --oro-pulido: linear-gradient(135deg, #00b894 0%, #55efc4 35%, #a3e635 68%, #6c5ce7 100%);
+            --azul-muted: #55efc4;
+            --oro-pulido: linear-gradient(120deg, #00b894 0%, #55efc4 18%, #a3e635 38%, #6c5ce7 58%, #ff6b9d 78%, #06b6d4 100%);
             --oro-flat: #00b894;
             --blanco-puro: #ffffff;
-            --shadow-3d-panel: 8px 8px 16px rgba(80,60,110,.14), -8px -8px 16px rgba(255,255,255,.95), inset 1px 1px 0 rgba(255,255,255,.9);
-            --shadow-3d-inset: inset 4px 4px 8px rgba(80,60,110,.10), inset -4px -4px 8px rgba(255,255,255,.9);
-            --shadow-card-materia: 0 6px 0 #a7ead5, 4px 10px 15px rgba(70,50,100,.14);
+            --shadow-3d-panel: 8px 8px 18px color-mix(in srgb, #6c5ce7 18%, transparent), -8px -8px 18px rgba(255,255,255,.95), inset 1px 1px 0 rgba(255,255,255,.95);
+            --shadow-3d-inset: inset 4px 4px 9px color-mix(in srgb, #55efc4 18%, transparent), inset -4px -4px 9px rgba(255,255,255,.92);
+            --shadow-card-materia: 0 6px 0 #a3e635, 4px 10px 16px color-mix(in srgb, #ff6b9d 18%, transparent);
         }
 
-        /* --- TEMA MULTICOLOR: LIMÓN ELÉCTRICO --- */
+        body.theme-menta .panel,
+        body.theme-menta .card,
+        body.theme-menta .materia-card,
+        body.theme-menta .metric-card {
+            background-image:
+                linear-gradient(135deg, color-mix(in srgb, #55efc4 10%, transparent), transparent 42%),
+                linear-gradient(315deg, color-mix(in srgb, #6c5ce7 9%, transparent), transparent 45%);
+        }
+
+        body.theme-menta .btn-tab.active-tab,
+        body.theme-menta .btn-theme-nav,
+        body.theme-menta .btn-tool-exec {
+            background: linear-gradient(120deg, #00b894, #55efc4, #6c5ce7);
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 5px 12px color-mix(in srgb, #6c5ce7 25%, transparent);
+        }
+
+        /* --- TEMA ULTRA COLORIDO: LIMON --- */
         body.theme-limon {
-            --bg-ceramic: #ffffe8;
-            --panel-bg: #f3ffe8;
+            --bg-ceramic: #ffffed;
+            --panel-bg: #f7fee7;
             --panel-border: #d9f99d;
             --azul-marino: #365314;
-            --azul-muted: #4d7c0f;
-            --oro-pulido: linear-gradient(135deg, #d9ed00 0%, #f4a261 35%, #00b4d8 68%, #e76f51 100%);
+            --azul-muted: #f4a261;
+            --oro-pulido: linear-gradient(120deg, #d9ed00 0%, #f4a261 18%, #00b4d8 38%, #ef476f 58%, #8b5cf6 78%, #14b8a6 100%);
             --oro-flat: #d9ed00;
             --blanco-puro: #ffffff;
-            --shadow-3d-panel: 8px 8px 16px rgba(80,60,110,.14), -8px -8px 16px rgba(255,255,255,.95), inset 1px 1px 0 rgba(255,255,255,.9);
-            --shadow-3d-inset: inset 4px 4px 8px rgba(80,60,110,.10), inset -4px -4px 8px rgba(255,255,255,.9);
-            --shadow-card-materia: 0 6px 0 #d9f99d, 4px 10px 15px rgba(70,50,100,.14);
+            --shadow-3d-panel: 8px 8px 18px color-mix(in srgb, #ef476f 18%, transparent), -8px -8px 18px rgba(255,255,255,.95), inset 1px 1px 0 rgba(255,255,255,.95);
+            --shadow-3d-inset: inset 4px 4px 9px color-mix(in srgb, #f4a261 18%, transparent), inset -4px -4px 9px rgba(255,255,255,.92);
+            --shadow-card-materia: 0 6px 0 #00b4d8, 4px 10px 16px color-mix(in srgb, #8b5cf6 18%, transparent);
         }
 
-        /* --- TEMA MULTICOLOR: CIELO ALGODÓN --- */
+        body.theme-limon .panel,
+        body.theme-limon .card,
+        body.theme-limon .materia-card,
+        body.theme-limon .metric-card {
+            background-image:
+                linear-gradient(135deg, color-mix(in srgb, #f4a261 10%, transparent), transparent 42%),
+                linear-gradient(315deg, color-mix(in srgb, #ef476f 9%, transparent), transparent 45%);
+        }
+
+        body.theme-limon .btn-tab.active-tab,
+        body.theme-limon .btn-theme-nav,
+        body.theme-limon .btn-tool-exec {
+            background: linear-gradient(120deg, #d9ed00, #f4a261, #ef476f);
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 5px 12px color-mix(in srgb, #ef476f 25%, transparent);
+        }
+
+        /* --- TEMA ULTRA COLORIDO: CIELO --- */
         body.theme-cielo {
             --bg-ceramic: #eefaff;
             --panel-bg: #f7f5ff;
-            --panel-border: #bde0fe;
+            --panel-border: #bae6fd;
             --azul-marino: #0c4a6e;
-            --azul-muted: #0369a1;
-            --oro-pulido: linear-gradient(135deg, #48cae4 0%, #90be6d 35%, #ffafcc 68%, #9b5de5 100%);
+            --azul-muted: #4361ee;
+            --oro-pulido: linear-gradient(120deg, #48cae4 0%, #4361ee 18%, #ffafcc 38%, #9b5de5 58%, #ffd166 78%, #06d6a0 100%);
             --oro-flat: #48cae4;
             --blanco-puro: #ffffff;
-            --shadow-3d-panel: 8px 8px 16px rgba(80,60,110,.14), -8px -8px 16px rgba(255,255,255,.95), inset 1px 1px 0 rgba(255,255,255,.9);
-            --shadow-3d-inset: inset 4px 4px 8px rgba(80,60,110,.10), inset -4px -4px 8px rgba(255,255,255,.9);
-            --shadow-card-materia: 0 6px 0 #bde0fe, 4px 10px 15px rgba(70,50,100,.14);
+            --shadow-3d-panel: 8px 8px 18px color-mix(in srgb, #9b5de5 18%, transparent), -8px -8px 18px rgba(255,255,255,.95), inset 1px 1px 0 rgba(255,255,255,.95);
+            --shadow-3d-inset: inset 4px 4px 9px color-mix(in srgb, #4361ee 18%, transparent), inset -4px -4px 9px rgba(255,255,255,.92);
+            --shadow-card-materia: 0 6px 0 #ffafcc, 4px 10px 16px color-mix(in srgb, #ffd166 18%, transparent);
         }
 
-        /* --- TEMA MULTICOLOR: CORAL --- */
+        body.theme-cielo .panel,
+        body.theme-cielo .card,
+        body.theme-cielo .materia-card,
+        body.theme-cielo .metric-card {
+            background-image:
+                linear-gradient(135deg, color-mix(in srgb, #4361ee 10%, transparent), transparent 42%),
+                linear-gradient(315deg, color-mix(in srgb, #9b5de5 9%, transparent), transparent 45%);
+        }
+
+        body.theme-cielo .btn-tab.active-tab,
+        body.theme-cielo .btn-theme-nav,
+        body.theme-cielo .btn-tool-exec {
+            background: linear-gradient(120deg, #48cae4, #4361ee, #9b5de5);
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 5px 12px color-mix(in srgb, #9b5de5 25%, transparent);
+        }
+
+        /* --- TEMA ULTRA COLORIDO: CORAL --- */
         body.theme-coral {
-            --bg-ceramic: #fff4f4;
+            --bg-ceramic: #fff1f2;
             --panel-bg: #fff8ed;
-            --panel-border: #ffc4c4;
+            --panel-border: #fecdd3;
             --azul-marino: #881337;
-            --azul-muted: #be123c;
-            --oro-pulido: linear-gradient(135deg, #ff6b6b 0%, #ff9f1c 35%, #f72585 68%, #8338ec 100%);
+            --azul-muted: #ff9f1c;
+            --oro-pulido: linear-gradient(120deg, #ff6b6b 0%, #ff9f1c 18%, #f72585 38%, #8338ec 58%, #00b4d8 78%, #fee440 100%);
             --oro-flat: #ff6b6b;
             --blanco-puro: #ffffff;
-            --shadow-3d-panel: 8px 8px 16px rgba(80,60,110,.14), -8px -8px 16px rgba(255,255,255,.95), inset 1px 1px 0 rgba(255,255,255,.9);
-            --shadow-3d-inset: inset 4px 4px 8px rgba(80,60,110,.10), inset -4px -4px 8px rgba(255,255,255,.9);
-            --shadow-card-materia: 0 6px 0 #ffc4c4, 4px 10px 15px rgba(70,50,100,.14);
+            --shadow-3d-panel: 8px 8px 18px color-mix(in srgb, #8338ec 18%, transparent), -8px -8px 18px rgba(255,255,255,.95), inset 1px 1px 0 rgba(255,255,255,.95);
+            --shadow-3d-inset: inset 4px 4px 9px color-mix(in srgb, #ff9f1c 18%, transparent), inset -4px -4px 9px rgba(255,255,255,.92);
+            --shadow-card-materia: 0 6px 0 #f72585, 4px 10px 16px color-mix(in srgb, #00b4d8 18%, transparent);
         }
 
-        /* --- TEMA MULTICOLOR: LAVANDA FLORAL --- */
+        body.theme-coral .panel,
+        body.theme-coral .card,
+        body.theme-coral .materia-card,
+        body.theme-coral .metric-card {
+            background-image:
+                linear-gradient(135deg, color-mix(in srgb, #ff9f1c 10%, transparent), transparent 42%),
+                linear-gradient(315deg, color-mix(in srgb, #8338ec 9%, transparent), transparent 45%);
+        }
+
+        body.theme-coral .btn-tab.active-tab,
+        body.theme-coral .btn-theme-nav,
+        body.theme-coral .btn-tool-exec {
+            background: linear-gradient(120deg, #ff6b6b, #ff9f1c, #8338ec);
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 5px 12px color-mix(in srgb, #8338ec 25%, transparent);
+        }
+
+        /* --- TEMA ULTRA COLORIDO: LAVANDA_CLARA --- */
         body.theme-lavanda_clara {
             --bg-ceramic: #fbf5ff;
             --panel-bg: #fff3fb;
-            --panel-border: #e5c7ff;
+            --panel-border: #e9d5ff;
             --azul-marino: #581c87;
-            --azul-muted: #7e22ce;
-            --oro-pulido: linear-gradient(135deg, #9b5de5 0%, #f15bb5 35%, #fee440 68%, #00bbf9 100%);
+            --azul-muted: #f15bb5;
+            --oro-pulido: linear-gradient(120deg, #9b5de5 0%, #f15bb5 18%, #fee440 38%, #00bbf9 58%, #06d6a0 78%, #ff7b00 100%);
             --oro-flat: #9b5de5;
             --blanco-puro: #ffffff;
-            --shadow-3d-panel: 8px 8px 16px rgba(80,60,110,.14), -8px -8px 16px rgba(255,255,255,.95), inset 1px 1px 0 rgba(255,255,255,.9);
-            --shadow-3d-inset: inset 4px 4px 8px rgba(80,60,110,.10), inset -4px -4px 8px rgba(255,255,255,.9);
-            --shadow-card-materia: 0 6px 0 #e5c7ff, 4px 10px 15px rgba(70,50,100,.14);
+            --shadow-3d-panel: 8px 8px 18px color-mix(in srgb, #00bbf9 18%, transparent), -8px -8px 18px rgba(255,255,255,.95), inset 1px 1px 0 rgba(255,255,255,.95);
+            --shadow-3d-inset: inset 4px 4px 9px color-mix(in srgb, #f15bb5 18%, transparent), inset -4px -4px 9px rgba(255,255,255,.92);
+            --shadow-card-materia: 0 6px 0 #fee440, 4px 10px 16px color-mix(in srgb, #06d6a0 18%, transparent);
         }
 
-        /* --- TEMA MULTICOLOR: ROYAL --- */
+        body.theme-lavanda_clara .panel,
+        body.theme-lavanda_clara .card,
+        body.theme-lavanda_clara .materia-card,
+        body.theme-lavanda_clara .metric-card {
+            background-image:
+                linear-gradient(135deg, color-mix(in srgb, #f15bb5 10%, transparent), transparent 42%),
+                linear-gradient(315deg, color-mix(in srgb, #00bbf9 9%, transparent), transparent 45%);
+        }
+
+        body.theme-lavanda_clara .btn-tab.active-tab,
+        body.theme-lavanda_clara .btn-theme-nav,
+        body.theme-lavanda_clara .btn-tool-exec {
+            background: linear-gradient(120deg, #9b5de5, #f15bb5, #00bbf9);
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 5px 12px color-mix(in srgb, #00bbf9 25%, transparent);
+        }
+
+        /* --- TEMA ULTRA COLORIDO: AZUL_ROYAL --- */
         body.theme-azul_royal {
-            --bg-ceramic: #f1f4ff;
+            --bg-ceramic: #eef2ff;
             --panel-bg: #effaff;
-            --panel-border: #c4d4ff;
+            --panel-border: #c7d2fe;
             --azul-marino: #312e81;
-            --azul-muted: #4338ca;
-            --oro-pulido: linear-gradient(135deg, #4361ee 0%, #4cc9f0 35%, #f72585 68%, #fca311 100%);
+            --azul-muted: #4cc9f0;
+            --oro-pulido: linear-gradient(120deg, #4361ee 0%, #4cc9f0 18%, #f72585 38%, #fca311 58%, #06d6a0 78%, #9b5de5 100%);
             --oro-flat: #4361ee;
             --blanco-puro: #ffffff;
-            --shadow-3d-panel: 8px 8px 16px rgba(80,60,110,.14), -8px -8px 16px rgba(255,255,255,.95), inset 1px 1px 0 rgba(255,255,255,.9);
-            --shadow-3d-inset: inset 4px 4px 8px rgba(80,60,110,.10), inset -4px -4px 8px rgba(255,255,255,.9);
-            --shadow-card-materia: 0 6px 0 #c4d4ff, 4px 10px 15px rgba(70,50,100,.14);
+            --shadow-3d-panel: 8px 8px 18px color-mix(in srgb, #fca311 18%, transparent), -8px -8px 18px rgba(255,255,255,.95), inset 1px 1px 0 rgba(255,255,255,.95);
+            --shadow-3d-inset: inset 4px 4px 9px color-mix(in srgb, #4cc9f0 18%, transparent), inset -4px -4px 9px rgba(255,255,255,.92);
+            --shadow-card-materia: 0 6px 0 #f72585, 4px 10px 16px color-mix(in srgb, #06d6a0 18%, transparent);
         }
 
-        /* --- TEMA MULTICOLOR: MELOCOTÓN --- */
+        body.theme-azul_royal .panel,
+        body.theme-azul_royal .card,
+        body.theme-azul_royal .materia-card,
+        body.theme-azul_royal .metric-card {
+            background-image:
+                linear-gradient(135deg, color-mix(in srgb, #4cc9f0 10%, transparent), transparent 42%),
+                linear-gradient(315deg, color-mix(in srgb, #fca311 9%, transparent), transparent 45%);
+        }
+
+        body.theme-azul_royal .btn-tab.active-tab,
+        body.theme-azul_royal .btn-theme-nav,
+        body.theme-azul_royal .btn-tool-exec {
+            background: linear-gradient(120deg, #4361ee, #4cc9f0, #fca311);
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 5px 12px color-mix(in srgb, #fca311 25%, transparent);
+        }
+
+        /* --- TEMA ULTRA COLORIDO: MELOCOTON --- */
         body.theme-melocoton {
             --bg-ceramic: #fff8f0;
             --panel-bg: #fff2f5;
-            --panel-border: #ffd0ad;
+            --panel-border: #fed7aa;
             --azul-marino: #7c2d12;
-            --azul-muted: #c2410c;
-            --oro-pulido: linear-gradient(135deg, #ff9f68 0%, #ff6b9d 35%, #ffd166 68%, #8338ec 100%);
+            --azul-muted: #ff6b9d;
+            --oro-pulido: linear-gradient(120deg, #ff9f68 0%, #ff6b9d 18%, #ffd166 38%, #8338ec 58%, #06b6d4 78%, #22c55e 100%);
             --oro-flat: #ff9f68;
             --blanco-puro: #ffffff;
-            --shadow-3d-panel: 8px 8px 16px rgba(80,60,110,.14), -8px -8px 16px rgba(255,255,255,.95), inset 1px 1px 0 rgba(255,255,255,.9);
-            --shadow-3d-inset: inset 4px 4px 8px rgba(80,60,110,.10), inset -4px -4px 8px rgba(255,255,255,.9);
-            --shadow-card-materia: 0 6px 0 #ffd0ad, 4px 10px 15px rgba(70,50,100,.14);
+            --shadow-3d-panel: 8px 8px 18px color-mix(in srgb, #8338ec 18%, transparent), -8px -8px 18px rgba(255,255,255,.95), inset 1px 1px 0 rgba(255,255,255,.95);
+            --shadow-3d-inset: inset 4px 4px 9px color-mix(in srgb, #ff6b9d 18%, transparent), inset -4px -4px 9px rgba(255,255,255,.92);
+            --shadow-card-materia: 0 6px 0 #ffd166, 4px 10px 16px color-mix(in srgb, #06b6d4 18%, transparent);
         }
 
-        /* --- TEMA MULTICOLOR: FIESTA --- */
+        body.theme-melocoton .panel,
+        body.theme-melocoton .card,
+        body.theme-melocoton .materia-card,
+        body.theme-melocoton .metric-card {
+            background-image:
+                linear-gradient(135deg, color-mix(in srgb, #ff6b9d 10%, transparent), transparent 42%),
+                linear-gradient(315deg, color-mix(in srgb, #8338ec 9%, transparent), transparent 45%);
+        }
+
+        body.theme-melocoton .btn-tab.active-tab,
+        body.theme-melocoton .btn-theme-nav,
+        body.theme-melocoton .btn-tool-exec {
+            background: linear-gradient(120deg, #ff9f68, #ff6b9d, #8338ec);
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 5px 12px color-mix(in srgb, #8338ec 25%, transparent);
+        }
+
+        /* --- TEMA ULTRA COLORIDO: FIESTA --- */
         body.theme-fiesta {
             --bg-ceramic: #fffbea;
             --panel-bg: #fff3fb;
-            --panel-border: #f9df8b;
+            --panel-border: #fde68a;
             --azul-marino: #713f12;
-            --azul-muted: #b45309;
-            --oro-pulido: linear-gradient(135deg, #ffbe0b 0%, #fb5607 35%, #ff006e 68%, #8338ec 100%);
+            --azul-muted: #fb5607;
+            --oro-pulido: linear-gradient(120deg, #ffbe0b 0%, #fb5607 18%, #ff006e 38%, #8338ec 58%, #3a86ff 78%, #06d6a0 100%);
             --oro-flat: #ffbe0b;
             --blanco-puro: #ffffff;
-            --shadow-3d-panel: 8px 8px 16px rgba(80,60,110,.14), -8px -8px 16px rgba(255,255,255,.95), inset 1px 1px 0 rgba(255,255,255,.9);
-            --shadow-3d-inset: inset 4px 4px 8px rgba(80,60,110,.10), inset -4px -4px 8px rgba(255,255,255,.9);
-            --shadow-card-materia: 0 6px 0 #f9df8b, 4px 10px 15px rgba(70,50,100,.14);
+            --shadow-3d-panel: 8px 8px 18px color-mix(in srgb, #8338ec 18%, transparent), -8px -8px 18px rgba(255,255,255,.95), inset 1px 1px 0 rgba(255,255,255,.95);
+            --shadow-3d-inset: inset 4px 4px 9px color-mix(in srgb, #fb5607 18%, transparent), inset -4px -4px 9px rgba(255,255,255,.92);
+            --shadow-card-materia: 0 6px 0 #ff006e, 4px 10px 16px color-mix(in srgb, #3a86ff 18%, transparent);
         }
 
-        /* --- TEMA MULTICOLOR: TURQUESA --- */
+        body.theme-fiesta .panel,
+        body.theme-fiesta .card,
+        body.theme-fiesta .materia-card,
+        body.theme-fiesta .metric-card {
+            background-image:
+                linear-gradient(135deg, color-mix(in srgb, #fb5607 10%, transparent), transparent 42%),
+                linear-gradient(315deg, color-mix(in srgb, #8338ec 9%, transparent), transparent 45%);
+        }
+
+        body.theme-fiesta .btn-tab.active-tab,
+        body.theme-fiesta .btn-theme-nav,
+        body.theme-fiesta .btn-tool-exec {
+            background: linear-gradient(120deg, #ffbe0b, #fb5607, #8338ec);
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 5px 12px color-mix(in srgb, #8338ec 25%, transparent);
+        }
+
+        /* --- TEMA ULTRA COLORIDO: TURQUESA --- */
         body.theme-turquesa {
             --bg-ceramic: #edffff;
             --panel-bg: #f0fff9;
-            --panel-border: #9ee7df;
+            --panel-border: #99f6e4;
             --azul-marino: #134e4a;
-            --azul-muted: #0f766e;
-            --oro-pulido: linear-gradient(135deg, #00b4d8 0%, #00f5d4 35%, #f15bb5 68%, #fee440 100%);
+            --azul-muted: #00f5d4;
+            --oro-pulido: linear-gradient(120deg, #00b4d8 0%, #00f5d4 18%, #f15bb5 38%, #fee440 58%, #8338ec 78%, #fb5607 100%);
             --oro-flat: #00b4d8;
             --blanco-puro: #ffffff;
-            --shadow-3d-panel: 8px 8px 16px rgba(80,60,110,.14), -8px -8px 16px rgba(255,255,255,.95), inset 1px 1px 0 rgba(255,255,255,.9);
-            --shadow-3d-inset: inset 4px 4px 8px rgba(80,60,110,.10), inset -4px -4px 8px rgba(255,255,255,.9);
-            --shadow-card-materia: 0 6px 0 #9ee7df, 4px 10px 15px rgba(70,50,100,.14);
+            --shadow-3d-panel: 8px 8px 18px color-mix(in srgb, #fee440 18%, transparent), -8px -8px 18px rgba(255,255,255,.95), inset 1px 1px 0 rgba(255,255,255,.95);
+            --shadow-3d-inset: inset 4px 4px 9px color-mix(in srgb, #00f5d4 18%, transparent), inset -4px -4px 9px rgba(255,255,255,.92);
+            --shadow-card-materia: 0 6px 0 #f15bb5, 4px 10px 16px color-mix(in srgb, #8338ec 18%, transparent);
         }
 
-        /* --- TEMA MULTICOLOR: PRIMAVERA --- */
+        body.theme-turquesa .panel,
+        body.theme-turquesa .card,
+        body.theme-turquesa .materia-card,
+        body.theme-turquesa .metric-card {
+            background-image:
+                linear-gradient(135deg, color-mix(in srgb, #00f5d4 10%, transparent), transparent 42%),
+                linear-gradient(315deg, color-mix(in srgb, #fee440 9%, transparent), transparent 45%);
+        }
+
+        body.theme-turquesa .btn-tab.active-tab,
+        body.theme-turquesa .btn-theme-nav,
+        body.theme-turquesa .btn-tool-exec {
+            background: linear-gradient(120deg, #00b4d8, #00f5d4, #fee440);
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 5px 12px color-mix(in srgb, #fee440 25%, transparent);
+        }
+
+        /* --- TEMA ULTRA COLORIDO: PRIMAVERA --- */
         body.theme-primavera {
             --bg-ceramic: #f0fff5;
             --panel-bg: #fff5ff;
-            --panel-border: #bcefc8;
+            --panel-border: #bbf7d0;
             --azul-marino: #14532d;
-            --azul-muted: #166534;
-            --oro-pulido: linear-gradient(135deg, #2dc653 0%, #9b5de5 35%, #ffca3a 68%, #00b4d8 100%);
+            --azul-muted: #9b5de5;
+            --oro-pulido: linear-gradient(120deg, #2dc653 0%, #9b5de5 18%, #ffca3a 38%, #00b4d8 58%, #f72585 78%, #fb5607 100%);
             --oro-flat: #2dc653;
             --blanco-puro: #ffffff;
-            --shadow-3d-panel: 8px 8px 16px rgba(80,60,110,.14), -8px -8px 16px rgba(255,255,255,.95), inset 1px 1px 0 rgba(255,255,255,.9);
-            --shadow-3d-inset: inset 4px 4px 8px rgba(80,60,110,.10), inset -4px -4px 8px rgba(255,255,255,.9);
-            --shadow-card-materia: 0 6px 0 #bcefc8, 4px 10px 15px rgba(70,50,100,.14);
+            --shadow-3d-panel: 8px 8px 18px color-mix(in srgb, #00b4d8 18%, transparent), -8px -8px 18px rgba(255,255,255,.95), inset 1px 1px 0 rgba(255,255,255,.95);
+            --shadow-3d-inset: inset 4px 4px 9px color-mix(in srgb, #9b5de5 18%, transparent), inset -4px -4px 9px rgba(255,255,255,.92);
+            --shadow-card-materia: 0 6px 0 #ffca3a, 4px 10px 16px color-mix(in srgb, #f72585 18%, transparent);
         }
 
-        /* --- TEMA MULTICOLOR: FUCSIA POP --- */
+        body.theme-primavera .panel,
+        body.theme-primavera .card,
+        body.theme-primavera .materia-card,
+        body.theme-primavera .metric-card {
+            background-image:
+                linear-gradient(135deg, color-mix(in srgb, #9b5de5 10%, transparent), transparent 42%),
+                linear-gradient(315deg, color-mix(in srgb, #00b4d8 9%, transparent), transparent 45%);
+        }
+
+        body.theme-primavera .btn-tab.active-tab,
+        body.theme-primavera .btn-theme-nav,
+        body.theme-primavera .btn-tool-exec {
+            background: linear-gradient(120deg, #2dc653, #9b5de5, #00b4d8);
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 5px 12px color-mix(in srgb, #00b4d8 25%, transparent);
+        }
+
+        /* --- TEMA ULTRA COLORIDO: FUCSIA --- */
         body.theme-fucsia {
             --bg-ceramic: #fff2fa;
             --panel-bg: #f5f0ff;
-            --panel-border: #f7b1dc;
+            --panel-border: #f9a8d4;
             --azul-marino: #831843;
-            --azul-muted: #be185d;
-            --oro-pulido: linear-gradient(135deg, #f72585 0%, #7209b7 35%, #4cc9f0 68%, #fee440 100%);
+            --azul-muted: #7209b7;
+            --oro-pulido: linear-gradient(120deg, #f72585 0%, #7209b7 18%, #4cc9f0 38%, #fee440 58%, #06d6a0 78%, #ff7b00 100%);
             --oro-flat: #f72585;
             --blanco-puro: #ffffff;
-            --shadow-3d-panel: 8px 8px 16px rgba(80,60,110,.14), -8px -8px 16px rgba(255,255,255,.95), inset 1px 1px 0 rgba(255,255,255,.9);
-            --shadow-3d-inset: inset 4px 4px 8px rgba(80,60,110,.10), inset -4px -4px 8px rgba(255,255,255,.9);
-            --shadow-card-materia: 0 6px 0 #f7b1dc, 4px 10px 15px rgba(70,50,100,.14);
+            --shadow-3d-panel: 8px 8px 18px color-mix(in srgb, #fee440 18%, transparent), -8px -8px 18px rgba(255,255,255,.95), inset 1px 1px 0 rgba(255,255,255,.95);
+            --shadow-3d-inset: inset 4px 4px 9px color-mix(in srgb, #7209b7 18%, transparent), inset -4px -4px 9px rgba(255,255,255,.92);
+            --shadow-card-materia: 0 6px 0 #4cc9f0, 4px 10px 16px color-mix(in srgb, #06d6a0 18%, transparent);
         }
 
-        /* --- TEMA MULTICOLOR: GALAXIA CLARA --- */
+        body.theme-fucsia .panel,
+        body.theme-fucsia .card,
+        body.theme-fucsia .materia-card,
+        body.theme-fucsia .metric-card {
+            background-image:
+                linear-gradient(135deg, color-mix(in srgb, #7209b7 10%, transparent), transparent 42%),
+                linear-gradient(315deg, color-mix(in srgb, #fee440 9%, transparent), transparent 45%);
+        }
+
+        body.theme-fucsia .btn-tab.active-tab,
+        body.theme-fucsia .btn-theme-nav,
+        body.theme-fucsia .btn-tool-exec {
+            background: linear-gradient(120deg, #f72585, #7209b7, #fee440);
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 5px 12px color-mix(in srgb, #fee440 25%, transparent);
+        }
+
+        /* --- TEMA ULTRA COLORIDO: GALAXIA_CLARA --- */
         body.theme-galaxia_clara {
             --bg-ceramic: #f7f4ff;
             --panel-bg: #eef8ff;
-            --panel-border: #d5c8ff;
+            --panel-border: #ddd6fe;
             --azul-marino: #312e81;
-            --azul-muted: #4f46e5;
-            --oro-pulido: linear-gradient(135deg, #7209b7 0%, #f72585 35%, #4cc9f0 68%, #fee440 100%);
+            --azul-muted: #f72585;
+            --oro-pulido: linear-gradient(120deg, #7209b7 0%, #f72585 18%, #4cc9f0 38%, #fee440 58%, #06d6a0 78%, #ff7b00 100%);
             --oro-flat: #7209b7;
             --blanco-puro: #ffffff;
-            --shadow-3d-panel: 8px 8px 16px rgba(80,60,110,.14), -8px -8px 16px rgba(255,255,255,.95), inset 1px 1px 0 rgba(255,255,255,.9);
-            --shadow-3d-inset: inset 4px 4px 8px rgba(80,60,110,.10), inset -4px -4px 8px rgba(255,255,255,.9);
-            --shadow-card-materia: 0 6px 0 #d5c8ff, 4px 10px 15px rgba(70,50,100,.14);
+            --shadow-3d-panel: 8px 8px 18px color-mix(in srgb, #fee440 18%, transparent), -8px -8px 18px rgba(255,255,255,.95), inset 1px 1px 0 rgba(255,255,255,.95);
+            --shadow-3d-inset: inset 4px 4px 9px color-mix(in srgb, #f72585 18%, transparent), inset -4px -4px 9px rgba(255,255,255,.92);
+            --shadow-card-materia: 0 6px 0 #4cc9f0, 4px 10px 16px color-mix(in srgb, #06d6a0 18%, transparent);
         }
 
-        /* --- TEMA MULTICOLOR: BOSQUE --- */
+        body.theme-galaxia_clara .panel,
+        body.theme-galaxia_clara .card,
+        body.theme-galaxia_clara .materia-card,
+        body.theme-galaxia_clara .metric-card {
+            background-image:
+                linear-gradient(135deg, color-mix(in srgb, #f72585 10%, transparent), transparent 42%),
+                linear-gradient(315deg, color-mix(in srgb, #fee440 9%, transparent), transparent 45%);
+        }
+
+        body.theme-galaxia_clara .btn-tab.active-tab,
+        body.theme-galaxia_clara .btn-theme-nav,
+        body.theme-galaxia_clara .btn-tool-exec {
+            background: linear-gradient(120deg, #7209b7, #f72585, #fee440);
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 5px 12px color-mix(in srgb, #fee440 25%, transparent);
+        }
+
+        /* --- TEMA ULTRA COLORIDO: BOSQUE --- */
         body.theme-bosque {
             --bg-ceramic: #f0fff3;
             --panel-bg: #f8ffe8;
-            --panel-border: #bce8b8;
+            --panel-border: #bbf7d0;
             --azul-marino: #14532d;
-            --azul-muted: #166534;
-            --oro-pulido: linear-gradient(135deg, #2a9d8f 0%, #84cc16 35%, #e9c46a 68%, #f4a261 100%);
+            --azul-muted: #84cc16;
+            --oro-pulido: linear-gradient(120deg, #2a9d8f 0%, #84cc16 18%, #e9c46a 38%, #f4a261 58%, #9b5de5 78%, #06b6d4 100%);
             --oro-flat: #2a9d8f;
             --blanco-puro: #ffffff;
-            --shadow-3d-panel: 8px 8px 16px rgba(80,60,110,.14), -8px -8px 16px rgba(255,255,255,.95), inset 1px 1px 0 rgba(255,255,255,.9);
-            --shadow-3d-inset: inset 4px 4px 8px rgba(80,60,110,.10), inset -4px -4px 8px rgba(255,255,255,.9);
-            --shadow-card-materia: 0 6px 0 #bce8b8, 4px 10px 15px rgba(70,50,100,.14);
+            --shadow-3d-panel: 8px 8px 18px color-mix(in srgb, #f4a261 18%, transparent), -8px -8px 18px rgba(255,255,255,.95), inset 1px 1px 0 rgba(255,255,255,.95);
+            --shadow-3d-inset: inset 4px 4px 9px color-mix(in srgb, #84cc16 18%, transparent), inset -4px -4px 9px rgba(255,255,255,.92);
+            --shadow-card-materia: 0 6px 0 #e9c46a, 4px 10px 16px color-mix(in srgb, #9b5de5 18%, transparent);
+        }
+
+        body.theme-bosque .panel,
+        body.theme-bosque .card,
+        body.theme-bosque .materia-card,
+        body.theme-bosque .metric-card {
+            background-image:
+                linear-gradient(135deg, color-mix(in srgb, #84cc16 10%, transparent), transparent 42%),
+                linear-gradient(315deg, color-mix(in srgb, #f4a261 9%, transparent), transparent 45%);
+        }
+
+        body.theme-bosque .btn-tab.active-tab,
+        body.theme-bosque .btn-theme-nav,
+        body.theme-bosque .btn-tool-exec {
+            background: linear-gradient(120deg, #2a9d8f, #84cc16, #f4a261);
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 5px 12px color-mix(in srgb, #f4a261 25%, transparent);
         }
 
         body { 
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
             background-color: var(--bg-ceramic);
-            background-image: 
-                radial-gradient(at 0% 0%, rgba(236, 238, 243, 0.05) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(197, 160, 89, 0.05) 0px, transparent 50%);
+            background-image:
+                radial-gradient(circle at 5% 8%, color-mix(in srgb, var(--oro-flat) 24%, transparent), transparent 24%),
+                radial-gradient(circle at 92% 8%, color-mix(in srgb, var(--azul-muted) 20%, transparent), transparent 25%),
+                radial-gradient(circle at 18% 92%, rgba(236,72,153,.15), transparent 24%),
+                radial-gradient(circle at 88% 88%, rgba(6,182,212,.15), transparent 25%),
+                radial-gradient(circle at 52% 5%, rgba(250,204,21,.10), transparent 20%);
             padding: 30px 20px; 
             margin: 0; 
-            color: var(--azul-marino);
-            -webkit-tap-highlight-color: transparent;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            color: var(--azul-marino); 
+            min-height: 100vh;
         }
 
         .workspace-frame { max-width: 1440px; margin: 0 auto; }
@@ -456,6 +818,20 @@
             border-radius: 10px;
         }
 
+
+        .btn-tab.active-tab,
+        .btn-theme-nav,
+        .btn-tool-exec:hover,
+        .btn-pomodoro:hover {
+            background-image: var(--oro-pulido);
+        }
+        .progress-bar-fill,
+        .holo-ring,
+        .ring-1,
+        .ring-2,
+        .ring-3 {
+            filter: saturate(1.35);
+        }
         .view-block { display: none; }
         .view-block.active-block { display: block; animation: smoothUp 0.5s cubic-bezier(0.25, 1, 0.5, 1); }
         @keyframes smoothUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
