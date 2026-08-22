@@ -39,130 +39,293 @@
                 4px 10px 15px rgba(165, 175, 190, 0.4);
         }
 
-        /* --- TEMA 1: OBSIDIANO Y ORO (MODO OSCURO CLÁSICO) --- */
-        body.theme-obsidian {
-            --bg-ceramic: #0b0f19;
-            --panel-bg: #131c2e;
-            --panel-border: #1e293b;
-            --azul-marino: #f1f5f9;
-            --azul-muted: #94a3b8;
-            --oro-pulido: linear-gradient(135deg, #d4af37 0%, #f3e5ab 50%, #aa8c2c 100%);
-            --oro-flat: #d4af37;
-            --oro-glow: rgba(212, 175, 55, 0.25);
-            --blanco-puro: #172033;
-            --exito-soft: #064e3b;
-            --exito-texto: #34d399;
-            --exito-border: #059669;
-            --alerta-soft: #7f1d1d;
-            --alerta-texto: #fca5a5;
-            --shadow-3d-panel: 8px 8px 16px #07090f, -8px -8px 16px #1f2d47, inset 1px 1px 0px #1f2d47;
-            --shadow-3d-inset: inset 4px 4px 8px #07090f, inset -4px -4px 8px #1f2d47;
-            --shadow-card-materia: 0 6px 0px #07090f, 4px 10px 15px rgba(0, 0, 0, 0.5);
+        /* ============================================================
+           SISTEMA DE 20 TEMAS VISUALES
+           Cada tema redefine la misma paleta de variables para que
+           toda la interfaz conserve su funcionalidad y cambie de look.
+           ============================================================ */
+
+        /* 01 — CERÁMICO */
+        body.theme-ceramico {
+            --bg-ceramic:#eef1f5; --panel-bg:#e3e7ee; --panel-border:#ffffff;
+            --azul-marino:#243047; --azul-muted:#64748b;
+            --oro-pulido:linear-gradient(135deg,#b8894a,#f0d39a,#9b6b31);
+            --oro-flat:#b8894a; --oro-glow:rgba(184,137,74,.24); --blanco-puro:#ffffff;
+            --exito-soft:#dcfce7; --exito-texto:#166534; --exito-border:#86efac;
+            --alerta-soft:#fee2e2; --alerta-texto:#991b1b;
+            --shadow-3d-panel:8px 8px 18px #c9ced7,-8px -8px 18px #fff,inset 1px 1px 0 #fff;
+            --shadow-3d-inset:inset 4px 4px 8px #c9ced7,inset -4px -4px 8px #fff;
+            --shadow-card-materia:0 6px 0 #cbd1da,4px 10px 16px rgba(100,116,139,.25);
+            background-image:radial-gradient(at 10% 10%,rgba(255,255,255,.9),transparent 42%),radial-gradient(at 90% 90%,rgba(184,137,74,.09),transparent 45%);
         }
 
-        /* --- TEMA 2: NEÓN CYBERPUNK (VIOLETA / CIAN) --- */
-        body.theme-cyberpunk {
-            --bg-ceramic: #05050a;
-            --panel-bg: #100f1c;
-            --panel-border: #2b254c;
-            --azul-marino: #00f0ff;
-            --azul-muted: #a78bfa;
-            --oro-pulido: linear-gradient(135deg, #ff007f 0%, #7928ca 100%);
-            --oro-flat: #ff007f;
-            --oro-glow: rgba(255, 0, 127, 0.4);
-            --blanco-puro: #18152e;
-            --exito-soft: #022c22;
-            --exito-texto: #2dd4bf;
-            --exito-border: #115e59;
-            --alerta-soft: #4c0519;
-            --alerta-texto: #fb7185;
-            --shadow-3d-panel: 8px 8px 16px #020204, -8px -8px 16px #1e1b38, inset 1px 1px 0px #2b254c;
-            --shadow-3d-inset: inset 4px 4px 8px #020204, inset -4px -4px 8px #1e1b38;
-            --shadow-card-materia: 0 6px 0px #020204, 4px 10px 15px rgba(255, 0, 127, 0.2);
-        }
-
-        /* --- TEMA 3: ESMERALDA BOSQUE (TONOS VERDES Y TIERRA) --- */
-        body.theme-emerald {
-            --bg-ceramic: #06130b;
-            --panel-bg: #0d2114;
-            --panel-border: #1b3b24;
-            --azul-marino: #ecfdf5;
-            --azul-muted: #6ee7b7;
-            --oro-pulido: linear-gradient(135deg, #10b981 0%, #34d399 50%, #059669 100%);
-            --oro-flat: #10b981;
-            --oro-glow: rgba(16, 185, 129, 0.25);
-            --blanco-puro: #112a1a;
-            --exito-soft: #064e3b;
-            --exito-texto: #6ee7b7;
-            --exito-border: #047857;
-            --alerta-soft: #7f1d1d;
-            --alerta-texto: #fca5a5;
-            --shadow-3d-panel: 8px 8px 16px #030a06, -8px -8px 16px #153420, inset 1px 1px 0px #1b3b24;
-            --shadow-3d-inset: inset 4px 4px 8px #030a06, inset -4px -4px 8px #153420;
-            --shadow-card-materia: 0 6px 0px #030a06, 4px 10px 15px rgba(0, 0, 0, 0.4);
-        }
-
-        /* --- TEMA 4: SOLARIS MAGMA (NEGRO Y TONOS ROJOS/FUEGO) --- */
-        body.theme-magma {
-            --bg-ceramic: #140707;
-            --panel-bg: #210d0d;
-            --panel-border: #3d1515;
-            --azul-marino: #fff1f2;
-            --azul-muted: #fda4af;
-            --oro-pulido: linear-gradient(135deg, #f43f5e 0%, #fb923c 100%);
-            --oro-flat: #f43f5e;
-            --oro-glow: rgba(244, 63, 94, 0.3);
-            --blanco-puro: #2a1111;
-            --exito-soft: #064e3b;
-            --exito-texto: #34d399;
-            --exito-border: #059669;
-            --alerta-soft: #581c87;
-            --alerta-texto: #e879f9;
-            --shadow-3d-panel: 8px 8px 16px #0a0303, -8px -8px 16px #381313, inset 1px 1px 0px #3d1515;
-            --shadow-3d-inset: inset 4px 4px 8px #0a0303, inset -4px -4px 8px #381313;
-            --shadow-card-materia: 0 6px 0px #0a0303, 4px 10px 15px rgba(244, 63, 94, 0.25);
-        }
-
-        /* --- TEMA 5: ÁRTICO GLACIAL (AZUL HIELO Y BLANCOS LUMINOSOS) --- */
+        /* 02 — GLACIAL */
         body.theme-glacial {
-            --bg-ceramic: #f0fdf4;
-            --panel-bg: #e0f2fe;
-            --panel-border: #bae6fd;
-            --azul-marino: #0369a1;
-            --azul-muted: #0284c7;
-            --oro-pulido: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%);
-            --oro-flat: #0284c7;
-            --oro-glow: rgba(2, 132, 199, 0.2);
-            --blanco-puro: #ffffff;
-            --exito-soft: #e0f2fe;
-            --exito-texto: #0369a1;
-            --exito-border: #7dd3fc;
-            --alerta-soft: #fee2e2;
-            --alerta-texto: #991b1b;
-            --shadow-3d-panel: 8px 8px 16px #cbe4f4, -8px -8px 16px #ffffff, inset 1px 1px 0px #ffffff;
-            --shadow-3d-inset: inset 4px 4px 8px #cbe4f4, inset -4px -4px 8px #ffffff;
-            --shadow-card-materia: 0 6px 0px #bae6fd, 4px 10px 15px rgba(2, 132, 199, 0.15);
+            --bg-ceramic:#061525; --panel-bg:#0b2238; --panel-border:#1d4967;
+            --azul-marino:#e6faff; --azul-muted:#8bd9f5;
+            --oro-pulido:linear-gradient(135deg,#38bdf8,#dffcff,#67e8f9);
+            --oro-flat:#38bdf8; --oro-glow:rgba(56,189,248,.32); --blanco-puro:#102d45;
+            --exito-soft:#083b4a; --exito-texto:#67e8f9; --exito-border:#0891b2;
+            --alerta-soft:#4a1721; --alerta-texto:#fda4af;
+            --shadow-3d-panel:8px 8px 18px #020a12,-8px -8px 18px #123b59,inset 1px 1px 0 #1d4967;
+            --shadow-3d-inset:inset 4px 4px 8px #020a12,inset -4px -4px 8px #123b59;
+            --shadow-card-materia:0 6px 0 #020a12,4px 10px 18px rgba(56,189,248,.2);
+            background-image:radial-gradient(circle at 20% 15%,rgba(103,232,249,.16),transparent 28%),radial-gradient(circle at 80% 85%,rgba(56,189,248,.13),transparent 32%);
         }
 
-        /* --- TEMA 6: LAVANDA PURPURA (TONOS PASTEL OSCUROS Y LILAS) --- */
-        body.theme-lavender {
-            --bg-ceramic: #0f0c1b;
-            --panel-bg: #18142c;
-            --panel-border: #282148;
-            --azul-marino: #f3e8ff;
-            --azul-muted: #c084fc;
-            --oro-pulido: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
-            --oro-flat: #a855f7;
-            --oro-glow: rgba(168, 85, 247, 0.3);
-            --blanco-puro: #201a38;
-            --exito-soft: #064e3b;
-            --exito-texto: #34d399;
-            --exito-border: #059669;
-            --alerta-soft: #4c0519;
-            --alerta-texto: #fb7185;
-            --shadow-3d-panel: 8px 8px 16px #08060f, -8px -8px 16px #282247, inset 1px 1px 0px #282148;
-            --shadow-3d-inset: inset 4px 4px 8px #08060f, inset -4px -4px 8px #282247;
-            --shadow-card-materia: 0 6px 0px #08060f, 4px 10px 15px rgba(168, 85, 247, 0.2);
+        /* 03 — CYBERPUNK */
+        body.theme-cyberpunk {
+            --bg-ceramic:#05030d; --panel-bg:#100b1f; --panel-border:#35205b;
+            --azul-marino:#eaffff; --azul-muted:#a78bfa;
+            --oro-pulido:linear-gradient(135deg,#00f5ff,#8b5cf6,#ff0080);
+            --oro-flat:#ff0080; --oro-glow:rgba(255,0,128,.35); --blanco-puro:#18112d;
+            --exito-soft:#042f2e; --exito-texto:#5eead4; --exito-border:#0f766e;
+            --alerta-soft:#4c0519; --alerta-texto:#fb7185;
+            --shadow-3d-panel:8px 8px 18px #010107,-8px -8px 18px #28164a,inset 1px 1px 0 #35205b;
+            --shadow-3d-inset:inset 4px 4px 8px #010107,inset -4px -4px 8px #28164a;
+            --shadow-card-materia:0 6px 0 #010107,4px 10px 18px rgba(255,0,128,.22);
+            background-image:linear-gradient(rgba(0,245,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,0,128,.025) 1px,transparent 1px),radial-gradient(circle at 50% 0%,rgba(139,92,246,.16),transparent 45%);
+            background-size:32px 32px,32px 32px,100% 100%;
+        }
+
+        /* 04 — OBSIDIANA */
+        body.theme-obsidiana {
+            --bg-ceramic:#080a0f; --panel-bg:#11151d; --panel-border:#303946;
+            --azul-marino:#f8fafc; --azul-muted:#a7b0bf;
+            --oro-pulido:linear-gradient(135deg,#e5e7eb,#ffffff,#737b89);
+            --oro-flat:#d7dce4; --oro-glow:rgba(226,232,240,.2); --blanco-puro:#171c25;
+            --exito-soft:#052e1a; --exito-texto:#4ade80; --exito-border:#15803d;
+            --alerta-soft:#450a0a; --alerta-texto:#fca5a5;
+            --shadow-3d-panel:8px 8px 18px #030406,-8px -8px 18px #1d2633,inset 1px 1px 0 #303946;
+            --shadow-3d-inset:inset 4px 4px 8px #030406,inset -4px -4px 8px #1d2633;
+            --shadow-card-materia:0 6px 0 #030406,4px 10px 18px rgba(0,0,0,.5);
+            background-image:radial-gradient(circle at 15% 15%,rgba(255,255,255,.055),transparent 30%),radial-gradient(circle at 90% 90%,rgba(148,163,184,.04),transparent 35%);
+        }
+
+        /* 05 — AURORA BOREAL */
+        body.theme-aurora {
+            --bg-ceramic:#03141a; --panel-bg:#08252a; --panel-border:#155e63;
+            --azul-marino:#ecfeff; --azul-muted:#67e8f9;
+            --oro-pulido:linear-gradient(135deg,#22d3ee,#34d399,#a3e635);
+            --oro-flat:#34d399; --oro-glow:rgba(52,211,153,.3); --blanco-puro:#0d3034;
+            --exito-soft:#064e3b; --exito-texto:#86efac; --exito-border:#059669;
+            --alerta-soft:#431407; --alerta-texto:#fdba74;
+            --shadow-3d-panel:8px 8px 18px #010b0e,-8px -8px 18px #12434a,inset 1px 1px 0 #155e63;
+            --shadow-3d-inset:inset 4px 4px 8px #010b0e,inset -4px -4px 8px #12434a;
+            --shadow-card-materia:0 6px 0 #010b0e,4px 10px 18px rgba(34,211,238,.16);
+            background-image:radial-gradient(ellipse at 20% 0%,rgba(34,211,238,.22),transparent 35%),radial-gradient(ellipse at 85% 100%,rgba(163,230,53,.15),transparent 38%);
+        }
+
+        /* 06 — PLASMA */
+        body.theme-plasma {
+            --bg-ceramic:#12031f; --panel-bg:#210538; --panel-border:#5b21b6;
+            --azul-marino:#fdf4ff; --azul-muted:#d8b4fe;
+            --oro-pulido:linear-gradient(135deg,#f0abfc,#c084fc,#7c3aed);
+            --oro-flat:#c026d3; --oro-glow:rgba(192,38,211,.34); --blanco-puro:#2d0a49;
+            --exito-soft:#3b0764; --exito-texto:#f0abfc; --exito-border:#a855f7;
+            --alerta-soft:#500724; --alerta-texto:#fda4af;
+            --shadow-3d-panel:8px 8px 18px #07010d,-8px -8px 18px #3c1260,inset 1px 1px 0 #5b21b6;
+            --shadow-3d-inset:inset 4px 4px 8px #07010d,inset -4px -4px 8px #3c1260;
+            --shadow-card-materia:0 6px 0 #07010d,4px 10px 18px rgba(192,38,211,.24);
+            background-image:radial-gradient(circle at 20% 20%,rgba(240,171,252,.2),transparent 28%),radial-gradient(circle at 80% 80%,rgba(124,58,237,.22),transparent 30%);
+        }
+
+        /* 07 — NEÓN TOKYO */
+        body.theme-tokyo {
+            --bg-ceramic:#090d0b; --panel-bg:#111a16; --panel-border:#264a3b;
+            --azul-marino:#f0fdf4; --azul-muted:#86efac;
+            --oro-pulido:linear-gradient(135deg,#facc15,#fb7185,#f472b6);
+            --oro-flat:#fb7185; --oro-glow:rgba(251,113,133,.3); --blanco-puro:#17231d;
+            --exito-soft:#052e16; --exito-texto:#86efac; --exito-border:#16a34a;
+            --alerta-soft:#4c0519; --alerta-texto:#fda4af;
+            --shadow-3d-panel:8px 8px 18px #030504,-8px -8px 18px #20382d,inset 1px 1px 0 #264a3b;
+            --shadow-3d-inset:inset 4px 4px 8px #030504,inset -4px -4px 8px #20382d;
+            --shadow-card-materia:0 6px 0 #030504,4px 10px 18px rgba(251,113,133,.18);
+            background-image:linear-gradient(135deg,rgba(250,204,21,.035),transparent 40%),radial-gradient(circle at 85% 15%,rgba(251,113,133,.18),transparent 28%);
+        }
+
+        /* 08 — GALÁCTICO */
+        body.theme-galactico {
+            --bg-ceramic:#050616; --panel-bg:#0d1030; --panel-border:#29336f;
+            --azul-marino:#eef2ff; --azul-muted:#a5b4fc;
+            --oro-pulido:linear-gradient(135deg,#60a5fa,#818cf8,#c084fc);
+            --oro-flat:#818cf8; --oro-glow:rgba(129,140,248,.32); --blanco-puro:#151943;
+            --exito-soft:#0c2348; --exito-texto:#93c5fd; --exito-border:#2563eb;
+            --alerta-soft:#4c0519; --alerta-texto:#fda4af;
+            --shadow-3d-panel:8px 8px 18px #01020a,-8px -8px 18px #1a2452,inset 1px 1px 0 #29336f;
+            --shadow-3d-inset:inset 4px 4px 8px #01020a,inset -4px -4px 8px #1a2452;
+            --shadow-card-materia:0 6px 0 #01020a,4px 10px 18px rgba(129,140,248,.2);
+            background-image:radial-gradient(circle at 15% 25%,rgba(96,165,250,.18) 0 2px,transparent 3px),radial-gradient(circle at 80% 10%,rgba(192,132,252,.16) 0 2px,transparent 3px),radial-gradient(circle at 65% 80%,rgba(129,140,248,.12) 0 1px,transparent 2px);
+            background-size:180px 180px,240px 240px,140px 140px;
+        }
+
+        /* 09 — LAVA */
+        body.theme-lava {
+            --bg-ceramic:#170605; --panel-bg:#2a0b08; --panel-border:#6b1d12;
+            --azul-marino:#fff7ed; --azul-muted:#fdba74;
+            --oro-pulido:linear-gradient(135deg,#ef4444,#f97316,#facc15);
+            --oro-flat:#f97316; --oro-glow:rgba(249,115,22,.34); --blanco-puro:#38110b;
+            --exito-soft:#052e16; --exito-texto:#86efac; --exito-border:#16a34a;
+            --alerta-soft:#450a0a; --alerta-texto:#fca5a5;
+            --shadow-3d-panel:8px 8px 18px #070201,-8px -8px 18px #542016,inset 1px 1px 0 #6b1d12;
+            --shadow-3d-inset:inset 4px 4px 8px #070201,inset -4px -4px 8px #542016;
+            --shadow-card-materia:0 6px 0 #070201,4px 10px 18px rgba(249,115,22,.22);
+            background-image:radial-gradient(circle at 20% 80%,rgba(239,68,68,.18),transparent 30%),radial-gradient(circle at 80% 20%,rgba(250,204,21,.12),transparent 28%);
+        }
+
+        /* 10 — BOSQUE NOCTURNO */
+        body.theme-bosque {
+            --bg-ceramic:#06120a; --panel-bg:#0c2114; --panel-border:#245c35;
+            --azul-marino:#ecfdf5; --azul-muted:#86efac;
+            --oro-pulido:linear-gradient(135deg,#65a30d,#22c55e,#a3e635);
+            --oro-flat:#65a30d; --oro-glow:rgba(101,163,13,.28); --blanco-puro:#12301c;
+            --exito-soft:#064e3b; --exito-texto:#86efac; --exito-border:#059669;
+            --alerta-soft:#451a03; --alerta-texto:#fdba74;
+            --shadow-3d-panel:8px 8px 18px #020703,-8px -8px 18px #173c24,inset 1px 1px 0 #245c35;
+            --shadow-3d-inset:inset 4px 4px 8px #020703,inset -4px -4px 8px #173c24;
+            --shadow-card-materia:0 6px 0 #020703,4px 10px 18px rgba(34,197,94,.14);
+            background-image:radial-gradient(ellipse at 10% 100%,rgba(101,163,13,.2),transparent 35%),radial-gradient(ellipse at 90% 0%,rgba(34,197,94,.12),transparent 35%);
+        }
+
+        /* 11 — DESIERTO SOLAR */
+        body.theme-solar {
+            --bg-ceramic:#241507; --panel-bg:#38210b; --panel-border:#7c4a16;
+            --azul-marino:#fff7ed; --azul-muted:#fdba74;
+            --oro-pulido:linear-gradient(135deg,#f59e0b,#fde68a,#ea580c);
+            --oro-flat:#f59e0b; --oro-glow:rgba(245,158,11,.3); --blanco-puro:#4a2a0b;
+            --exito-soft:#052e16; --exito-texto:#86efac; --exito-border:#16a34a;
+            --alerta-soft:#450a0a; --alerta-texto:#fca5a5;
+            --shadow-3d-panel:8px 8px 18px #0e0802,-8px -8px 18px #5b3710,inset 1px 1px 0 #7c4a16;
+            --shadow-3d-inset:inset 4px 4px 8px #0e0802,inset -4px -4px 8px #5b3710;
+            --shadow-card-materia:0 6px 0 #0e0802,4px 10px 18px rgba(245,158,11,.2);
+            background-image:radial-gradient(circle at 50% 0%,rgba(253,230,138,.16),transparent 35%),linear-gradient(155deg,rgba(245,158,11,.08),transparent 50%);
+        }
+
+        /* 12 — ACUARELA ÁRTICA */
+        body.theme-acuarela {
+            --bg-ceramic:#e9f8ff; --panel-bg:#d9f1fb; --panel-border:#ffffff;
+            --azul-marino:#164e63; --azul-muted:#0e7490;
+            --oro-pulido:linear-gradient(135deg,#06b6d4,#67e8f9,#38bdf8);
+            --oro-flat:#0891b2; --oro-glow:rgba(8,145,178,.2); --blanco-puro:#f8fdff;
+            --exito-soft:#d1fae5; --exito-texto:#065f46; --exito-border:#6ee7b7;
+            --alerta-soft:#ffe4e6; --alerta-texto:#9f1239;
+            --shadow-3d-panel:8px 8px 18px #b8d9e5,-8px -8px 18px #fff,inset 1px 1px 0 #fff;
+            --shadow-3d-inset:inset 4px 4px 8px #b8d9e5,inset -4px -4px 8px #fff;
+            --shadow-card-materia:0 6px 0 #b8d9e5,4px 10px 16px rgba(8,145,178,.15);
+            background-image:radial-gradient(circle at 15% 20%,rgba(103,232,249,.3),transparent 30%),radial-gradient(circle at 85% 75%,rgba(129,140,248,.14),transparent 35%);
+        }
+
+        /* 13 — RUBÍ */
+        body.theme-rubi {
+            --bg-ceramic:#16050c; --panel-bg:#2a0916; --panel-border:#671d35;
+            --azul-marino:#fff1f2; --azul-muted:#fda4af;
+            --oro-pulido:linear-gradient(135deg,#e11d48,#fb7185,#f43f5e);
+            --oro-flat:#f43f5e; --oro-glow:rgba(244,63,94,.34); --blanco-puro:#3b1020;
+            --exito-soft:#052e16; --exito-texto:#86efac; --exito-border:#16a34a;
+            --alerta-soft:#500724; --alerta-texto:#fda4af;
+            --shadow-3d-panel:8px 8px 18px #070204,-8px -8px 18px #55182c,inset 1px 1px 0 #671d35;
+            --shadow-3d-inset:inset 4px 4px 8px #070204,inset -4px -4px 8px #55182c;
+            --shadow-card-materia:0 6px 0 #070204,4px 10px 18px rgba(244,63,94,.2);
+            background-image:radial-gradient(circle at 20% 15%,rgba(251,113,133,.18),transparent 30%),radial-gradient(circle at 85% 90%,rgba(225,29,72,.15),transparent 32%);
+        }
+
+        /* 14 — OCÉANO ABISAL */
+        body.theme-abisal {
+            --bg-ceramic:#020c17; --panel-bg:#061b2b; --panel-border:#0e4c6d;
+            --azul-marino:#e0f2fe; --azul-muted:#7dd3fc;
+            --oro-pulido:linear-gradient(135deg,#0ea5e9,#06b6d4,#22d3ee);
+            --oro-flat:#06b6d4; --oro-glow:rgba(6,182,212,.3); --blanco-puro:#09263a;
+            --exito-soft:#043b3b; --exito-texto:#67e8f9; --exito-border:#0891b2;
+            --alerta-soft:#4c0519; --alerta-texto:#fb7185;
+            --shadow-3d-panel:8px 8px 18px #010407,-8px -8px 18px #0b3349,inset 1px 1px 0 #0e4c6d;
+            --shadow-3d-inset:inset 4px 4px 8px #010407,inset -4px -4px 8px #0b3349;
+            --shadow-card-materia:0 6px 0 #010407,4px 10px 18px rgba(6,182,212,.18);
+            background-image:radial-gradient(ellipse at 50% 110%,rgba(6,182,212,.2),transparent 45%),radial-gradient(circle at 20% 20%,rgba(14,165,233,.1),transparent 30%);
+        }
+
+        /* 15 — CANDY NOIR */
+        body.theme-candy {
+            --bg-ceramic:#110812; --panel-bg:#211020; --panel-border:#58244f;
+            --azul-marino:#fff1f2; --azul-muted:#f9a8d4;
+            --oro-pulido:linear-gradient(135deg,#fb7185,#f472b6,#c084fc);
+            --oro-flat:#f472b6; --oro-glow:rgba(244,114,182,.32); --blanco-puro:#30152e;
+            --exito-soft:#052e16; --exito-texto:#86efac; --exito-border:#16a34a;
+            --alerta-soft:#500724; --alerta-texto:#fda4af;
+            --shadow-3d-panel:8px 8px 18px #050205,-8px -8px 18px #47203f,inset 1px 1px 0 #58244f;
+            --shadow-3d-inset:inset 4px 4px 8px #050205,inset -4px -4px 8px #47203f;
+            --shadow-card-materia:0 6px 0 #050205,4px 10px 18px rgba(244,114,182,.22);
+            background-image:radial-gradient(circle at 15% 15%,rgba(251,113,133,.18),transparent 30%),radial-gradient(circle at 85% 80%,rgba(192,132,252,.18),transparent 30%);
+        }
+
+        /* 16 — SYNTHWAVE */
+        body.theme-synthwave {
+            --bg-ceramic:#090016; --panel-bg:#16002b; --panel-border:#5b167d;
+            --azul-marino:#fdf4ff; --azul-muted:#d8b4fe;
+            --oro-pulido:linear-gradient(135deg,#22d3ee,#ec4899,#f97316);
+            --oro-flat:#ec4899; --oro-glow:rgba(236,72,153,.34); --blanco-puro:#22063e;
+            --exito-soft:#042f2e; --exito-texto:#5eead4; --exito-border:#0f766e;
+            --alerta-soft:#500724; --alerta-texto:#fda4af;
+            --shadow-3d-panel:8px 8px 18px #020004,-8px -8px 18px #43145e,inset 1px 1px 0 #5b167d;
+            --shadow-3d-inset:inset 4px 4px 8px #020004,inset -4px -4px 8px #43145e;
+            --shadow-card-materia:0 6px 0 #020004,4px 10px 18px rgba(236,72,153,.22);
+            background-image:linear-gradient(transparent 92%,rgba(34,211,238,.07) 93%),linear-gradient(90deg,transparent 92%,rgba(236,72,153,.06) 93%),radial-gradient(ellipse at 50% 0%,rgba(236,72,153,.18),transparent 45%);
+            background-size:42px 42px,42px 42px,100% 100%;
+        }
+
+        /* 17 — ESMERALDA */
+        body.theme-esmeralda {
+            --bg-ceramic:#04120f; --panel-bg:#09251d; --panel-border:#17634d;
+            --azul-marino:#ecfdf5; --azul-muted:#6ee7b7;
+            --oro-pulido:linear-gradient(135deg,#10b981,#34d399,#a7f3d0);
+            --oro-flat:#10b981; --oro-glow:rgba(16,185,129,.3); --blanco-puro:#0e3228;
+            --exito-soft:#064e3b; --exito-texto:#86efac; --exito-border:#059669;
+            --alerta-soft:#450a0a; --alerta-texto:#fca5a5;
+            --shadow-3d-panel:8px 8px 18px #010604,-8px -8px 18px #124533,inset 1px 1px 0 #17634d;
+            --shadow-3d-inset:inset 4px 4px 8px #010604,inset -4px -4px 8px #124533;
+            --shadow-card-materia:0 6px 0 #010604,4px 10px 18px rgba(16,185,129,.17);
+            background-image:radial-gradient(circle at 25% 20%,rgba(167,243,208,.12),transparent 28%),radial-gradient(circle at 75% 85%,rgba(16,185,129,.16),transparent 30%);
+        }
+
+        /* 18 — COBRE INDUSTRIAL */
+        body.theme-cobre {
+            --bg-ceramic:#17110d; --panel-bg:#251a14; --panel-border:#62402e;
+            --azul-marino:#fff7ed; --azul-muted:#d6b49b;
+            --oro-pulido:linear-gradient(135deg,#c2410c,#ea580c,#fbbf24);
+            --oro-flat:#ea580c; --oro-glow:rgba(234,88,12,.28); --blanco-puro:#34241a;
+            --exito-soft:#052e16; --exito-texto:#86efac; --exito-border:#16a34a;
+            --alerta-soft:#450a0a; --alerta-texto:#fca5a5;
+            --shadow-3d-panel:8px 8px 18px #080503,-8px -8px 18px #493021,inset 1px 1px 0 #62402e;
+            --shadow-3d-inset:inset 4px 4px 8px #080503,inset -4px -4px 8px #493021;
+            --shadow-card-materia:0 6px 0 #080503,4px 10px 18px rgba(234,88,12,.18);
+            background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.018) 0 1px,transparent 1px 4px),radial-gradient(circle at 80% 20%,rgba(251,191,36,.1),transparent 30%);
+        }
+
+        /* 19 — ECLIPSE */
+        body.theme-eclipse {
+            --bg-ceramic:#050505; --panel-bg:#101010; --panel-border:#343434;
+            --azul-marino:#fafafa; --azul-muted:#a3a3a3;
+            --oro-pulido:linear-gradient(135deg,#737373,#e5e5e5,#525252);
+            --oro-flat:#d4d4d4; --oro-glow:rgba(212,212,212,.2); --blanco-puro:#181818;
+            --exito-soft:#052e16; --exito-texto:#86efac; --exito-border:#16a34a;
+            --alerta-soft:#450a0a; --alerta-texto:#fca5a5;
+            --shadow-3d-panel:8px 8px 18px #000,-8px -8px 18px #202020,inset 1px 1px 0 #343434;
+            --shadow-3d-inset:inset 4px 4px 8px #000,inset -4px -4px 8px #202020;
+            --shadow-card-materia:0 6px 0 #000,4px 10px 18px rgba(0,0,0,.6);
+            background-image:radial-gradient(circle at 50% 50%,rgba(255,255,255,.045),transparent 30%),radial-gradient(circle at 10% 10%,rgba(255,255,255,.03),transparent 20%);
+        }
+
+        /* 20 — MIAMI VICE */
+        body.theme-miami {
+            --bg-ceramic:#070b19; --panel-bg:#10172c; --panel-border:#263b70;
+            --azul-marino:#f0f9ff; --azul-muted:#7dd3fc;
+            --oro-pulido:linear-gradient(135deg,#22d3ee,#f472b6,#fb7185);
+            --oro-flat:#22d3ee; --oro-glow:rgba(34,211,238,.3); --blanco-puro:#17223e;
+            --exito-soft:#042f2e; --exito-texto:#5eead4; --exito-border:#0f766e;
+            --alerta-soft:#500724; --alerta-texto:#fda4af;
+            --shadow-3d-panel:8px 8px 18px #02030a,-8px -8px 18px #1b2d54,inset 1px 1px 0 #263b70;
+            --shadow-3d-inset:inset 4px 4px 8px #02030a,inset -4px -4px 8px #1b2d54;
+            --shadow-card-materia:0 6px 0 #02030a,4px 10px 18px rgba(34,211,238,.18);
+            background-image:linear-gradient(145deg,rgba(34,211,238,.12),transparent 42%),linear-gradient(325deg,rgba(244,114,182,.12),transparent 42%);
         }
 
         body { 
@@ -708,16 +871,30 @@
 
     // --- GESTIÓN DE TEMAS MÚLTIPLES ---
     const listaDeTemas = [
-        { clase: '', nombre: 'Cerámico' },
-        { clase: 'theme-obsidian', nombre: 'Obsidiano' },
-        { clase: 'theme-cyberpunk', nombre: 'Cyberpunk' },
-        { clase: 'theme-emerald', nombre: 'Esmeralda' },
-        { clase: 'theme-magma', nombre: 'Magma' },
+        { clase: 'theme-ceramico', nombre: 'Cerámico' },
         { clase: 'theme-glacial', nombre: 'Glacial' },
-        { clase: 'theme-lavender', nombre: 'Lavanda' }
+        { clase: 'theme-cyberpunk', nombre: 'Cyberpunk' },
+        { clase: 'theme-obsidiana', nombre: 'Obsidiana' },
+        { clase: 'theme-aurora', nombre: 'Aurora Boreal' },
+        { clase: 'theme-plasma', nombre: 'Plasma' },
+        { clase: 'theme-tokyo', nombre: 'Neón Tokyo' },
+        { clase: 'theme-galactico', nombre: 'Galáctico' },
+        { clase: 'theme-lava', nombre: 'Lava' },
+        { clase: 'theme-bosque', nombre: 'Bosque Nocturno' },
+        { clase: 'theme-solar', nombre: 'Desierto Solar' },
+        { clase: 'theme-acuarela', nombre: 'Acuarela Ártica' },
+        { clase: 'theme-rubi', nombre: 'Rubí' },
+        { clase: 'theme-abisal', nombre: 'Océano Abisal' },
+        { clase: 'theme-candy', nombre: 'Candy Noir' },
+        { clase: 'theme-synthwave', nombre: 'Synthwave' },
+        { clase: 'theme-esmeralda', nombre: 'Esmeralda' },
+        { clase: 'theme-cobre', nombre: 'Cobre Industrial' },
+        { clase: 'theme-eclipse', nombre: 'Eclipse' },
+        { clase: 'theme-miami', nombre: 'Miami Vice' }
     ];
 
     let indiceTemaActual = parseInt(localStorage.getItem('indice_tema_actual')) || 0;
+    if (indiceTemaActual < 0 || indiceTemaActual >= listaDeTemas.length) indiceTemaActual = 0;
     aplicarTemaActual();
 
     function ciclarTemas() {
@@ -1525,4 +1702,3 @@
 </script>
 </body>
 </html>
-           
