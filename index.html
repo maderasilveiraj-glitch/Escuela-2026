@@ -482,6 +482,7 @@
         .attendance-actions {
             display: flex;
             gap: 8px;
+            flex-wrap: wrap;
         }
 
         .btn-att {
@@ -497,6 +498,25 @@
 
         .btn-att-asis { background: var(--exito-soft); color: var(--exito-texto); border: 1px solid var(--exito-border); }
         .btn-att-falta { background: var(--alerta-soft); color: var(--alerta-texto); border: 1px solid #f8b4b4; }
+        
+        .btn-reiniciar {
+            width: 100%;
+            background: var(--panel-bg);
+            color: var(--azul-marino);
+            border: 1px solid rgba(165,175,190,0.3);
+            padding: 8px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 11px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.2s;
+        }
+        .btn-reiniciar:hover {
+            background: var(--alerta-soft);
+            color: var(--alerta-texto);
+            border-color: #f8b4b4;
+        }
 
         /* Recursos y Archivos Útiles */
         .resources-grid {
@@ -1260,7 +1280,7 @@
             { materia: "ING. PROCESOS", docente: "Carlos Alberto Dzib", salon: "Lab Industrial" },
             { materia: "GESTION CAPITAL HUM.", docente: "Rosa María Tun", salon: "Aula 301" },
             { materia: "TALLER INV. I", docente: "Armando Martínez", salon: "Aula 303" },
-            { materia: "MERCADOTECNIA", docente: "Diana Laura Zepeda", salon: "Aula 302" }
+            { materia: "MERCadOTECNIA", docente: "Diana Laura Zepeda", salon: "Aula 302" }
         ],
         "6": [
             { materia: "ADMIN. SAL. SEG. OC.", docente: "Elizabeth Rodríguez", salon: "Aula 401" },
@@ -1489,17 +1509,26 @@
                 <div class="attendance-card" style="${enRiesgo ? 'border: 2px solid #e11d48; background: #fff5f5;' : ''}">
                     <h4>${escapeHtml(mat[2])}</h4>
                     <div class="attendance-counters">
-                        <span>Asistencias: <strong style="color:var(--exito-texto);">${info.asistidas}</strong></span>
-                        <span>Faltas: <strong style="color:var(--alerta-texto);">${info.faltas}</strong></span>
+                        <span>Asistencias: <strong id="asistencias-${key}" style="color:var(--exito-texto);">${info.asistidas}</strong></span>
+                        <span>Inasistencias: <strong id="inasistencias-${key}" style="color:var(--alerta-texto);">${info.faltas}</strong></span>
                     </div>
                     ${enRiesgo ? '<div style="font-size:10px; color:#e11d48; font-weight:800; text-transform:uppercase;">⚠️ ¡Alerta: +20% de inasistencias (Riesgo de Extraordinario)!</div>' : ''}
                     <div class="attendance-actions">
-                        <button class="btn-att btn-att-asis" onclick="modificarAsistencia('${key}', 'asistida')">✓ Asistió</button>
-                        <button class="btn-att btn-att-falta" onclick="modificarAsistencia('${key}', 'falta')">✕ Faltó</button>
+                        <button class="btn-att btn-att-asis" onclick="incrementarAsistencia('${key}')">✓ Asistió</button>
+                        <button class="btn-att btn-att-falta" onclick="incrementarInasistencia('${key}')">✕ Faltó</button>
                     </div>
+                    <button class="btn-reiniciar" onclick="reiniciarAsistencias('${key}', '${escapeHtml(mat[2])}')">Reiniciar Registros</button>
                 </div>
             `;
         }).join('');
+    }
+
+    function incrementarAsistencia(key) {
+        modificarAsistencia(key, 'asistida');
+    }
+
+    function incrementarInasistencia(key) {
+        modificarAsistencia(key, 'falta');
     }
 
     function modificarAsistencia(key, tipo) {
@@ -1510,7 +1539,36 @@
         else asistenciasData[key].faltas++;
 
         localStorage.setItem('registro_asistencias_materias', JSON.stringify(asistenciasData));
+        
+        // Actualizar interfaz visualmente con la función solicitada
+        actualizarInterfazMateria(key, asistenciasData[key].asistidas, asistenciasData[key].faltas);
         renderizarAsistencias();
+    }
+
+    function reiniciarAsistencias(materiaKey, materiaNombre) {
+        if (!confirm(`¿Estás seguro de que deseas reiniciar las asistencias de ${materiaNombre}?`)) {
+            return;
+        }
+
+        let registros = JSON.parse(localStorage.getItem('registro_asistencias_materias')) || {};
+
+        registros[materiaKey] = {
+            asistidas: 0,
+            faltas: 0
+        };
+
+        localStorage.setItem('registro_asistencias_materias', JSON.stringify(registros));
+
+        actualizarInterfazMateria(materiaKey, 0, 0);
+        renderizarAsistencias();
+    }
+
+    function actualizarInterfazMateria(materia, asistencias, inasistencias) {
+        const spanAsistencias = document.getElementById(`asistencias-${materia}`);
+        const spanInasistencias = document.getElementById(`inasistencias-${materia}`);
+
+        if (spanAsistencias) spanAsistencias.textContent = asistencias;
+        if (spanInasistencias) spanInasistencias.textContent = inasistencias;
     }
 
     // --- FUNCIONALIDAD: RECURSOS, GOOGLE DRIVE Y SÍLABOS ---
