@@ -6,7 +6,7 @@
     <title>Core Académico - Interfaz Ejecutiva 3D</title>
     <style>
         :root {
-            /* Paleta Cerámica y Oro Pulido */
+            /* Paleta Cerámica y Oro Pulido (Modo Claro por Defecto) */
             --bg-ceramic: #f4f5f8;
             --panel-bg: #eceef3;
             --panel-border: #ffffff;
@@ -25,7 +25,6 @@
             --alerta-soft: #fde8e8;
             --alerta-texto: #9b1c1c;
             
-            /* Sombras Neomórficas 3D de alta definición */
             --shadow-3d-panel: 
                 8px 8px 16px #d1d5db, 
                 -8px -8px 16px #ffffff,
@@ -38,30 +37,149 @@
             --shadow-card-materia: 
                 0 6px 0px #cfd4dc, 
                 4px 10px 15px rgba(165, 175, 190, 0.4);
-                
-            --shadow-card-active: 
-                0 2px 0px #cfd4dc, 
-                2px 4px 6px rgba(165, 175, 190, 0.4);
+        }
+
+        /* --- TEMA 1: OBSIDIANO Y ORO (MODO OSCURO CLÁSICO) --- */
+        body.theme-obsidian {
+            --bg-ceramic: #0b0f19;
+            --panel-bg: #131c2e;
+            --panel-border: #1e293b;
+            --azul-marino: #f1f5f9;
+            --azul-muted: #94a3b8;
+            --oro-pulido: linear-gradient(135deg, #d4af37 0%, #f3e5ab 50%, #aa8c2c 100%);
+            --oro-flat: #d4af37;
+            --oro-glow: rgba(212, 175, 55, 0.25);
+            --blanco-puro: #172033;
+            --exito-soft: #064e3b;
+            --exito-texto: #34d399;
+            --exito-border: #059669;
+            --alerta-soft: #7f1d1d;
+            --alerta-texto: #fca5a5;
+            --shadow-3d-panel: 8px 8px 16px #07090f, -8px -8px 16px #1f2d47, inset 1px 1px 0px #1f2d47;
+            --shadow-3d-inset: inset 4px 4px 8px #07090f, inset -4px -4px 8px #1f2d47;
+            --shadow-card-materia: 0 6px 0px #07090f, 4px 10px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        /* --- TEMA 2: NEÓN CYBERPUNK (VIOLETA / CIAN) --- */
+        body.theme-cyberpunk {
+            --bg-ceramic: #05050a;
+            --panel-bg: #100f1c;
+            --panel-border: #2b254c;
+            --azul-marino: #00f0ff;
+            --azul-muted: #a78bfa;
+            --oro-pulido: linear-gradient(135deg, #ff007f 0%, #7928ca 100%);
+            --oro-flat: #ff007f;
+            --oro-glow: rgba(255, 0, 127, 0.4);
+            --blanco-puro: #18152e;
+            --exito-soft: #022c22;
+            --exito-texto: #2dd4bf;
+            --exito-border: #115e59;
+            --alerta-soft: #4c0519;
+            --alerta-texto: #fb7185;
+            --shadow-3d-panel: 8px 8px 16px #020204, -8px -8px 16px #1e1b38, inset 1px 1px 0px #2b254c;
+            --shadow-3d-inset: inset 4px 4px 8px #020204, inset -4px -4px 8px #1e1b38;
+            --shadow-card-materia: 0 6px 0px #020204, 4px 10px 15px rgba(255, 0, 127, 0.2);
+        }
+
+        /* --- TEMA 3: ESMERALDA BOSQUE (TONOS VERDES Y TIERRA) --- */
+        body.theme-emerald {
+            --bg-ceramic: #06130b;
+            --panel-bg: #0d2114;
+            --panel-border: #1b3b24;
+            --azul-marino: #ecfdf5;
+            --azul-muted: #6ee7b7;
+            --oro-pulido: linear-gradient(135deg, #10b981 0%, #34d399 50%, #059669 100%);
+            --oro-flat: #10b981;
+            --oro-glow: rgba(16, 185, 129, 0.25);
+            --blanco-puro: #112a1a;
+            --exito-soft: #064e3b;
+            --exito-texto: #6ee7b7;
+            --exito-border: #047857;
+            --alerta-soft: #7f1d1d;
+            --alerta-texto: #fca5a5;
+            --shadow-3d-panel: 8px 8px 16px #030a06, -8px -8px 16px #153420, inset 1px 1px 0px #1b3b24;
+            --shadow-3d-inset: inset 4px 4px 8px #030a06, inset -4px -4px 8px #153420;
+            --shadow-card-materia: 0 6px 0px #030a06, 4px 10px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        /* --- TEMA 4: SOLARIS MAGMA (NEGRO Y TONOS ROJOS/FUEGO) --- */
+        body.theme-magma {
+            --bg-ceramic: #140707;
+            --panel-bg: #210d0d;
+            --panel-border: #3d1515;
+            --azul-marino: #fff1f2;
+            --azul-muted: #fda4af;
+            --oro-pulido: linear-gradient(135deg, #f43f5e 0%, #fb923c 100%);
+            --oro-flat: #f43f5e;
+            --oro-glow: rgba(244, 63, 94, 0.3);
+            --blanco-puro: #2a1111;
+            --exito-soft: #064e3b;
+            --exito-texto: #34d399;
+            --exito-border: #059669;
+            --alerta-soft: #581c87;
+            --alerta-texto: #e879f9;
+            --shadow-3d-panel: 8px 8px 16px #0a0303, -8px -8px 16px #381313, inset 1px 1px 0px #3d1515;
+            --shadow-3d-inset: inset 4px 4px 8px #0a0303, inset -4px -4px 8px #381313;
+            --shadow-card-materia: 0 6px 0px #0a0303, 4px 10px 15px rgba(244, 63, 94, 0.25);
+        }
+
+        /* --- TEMA 5: ÁRTICO GLACIAL (AZUL HIELO Y BLANCOS LUMINOSOS) --- */
+        body.theme-glacial {
+            --bg-ceramic: #f0fdf4;
+            --panel-bg: #e0f2fe;
+            --panel-border: #bae6fd;
+            --azul-marino: #0369a1;
+            --azul-muted: #0284c7;
+            --oro-pulido: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%);
+            --oro-flat: #0284c7;
+            --oro-glow: rgba(2, 132, 199, 0.2);
+            --blanco-puro: #ffffff;
+            --exito-soft: #e0f2fe;
+            --exito-texto: #0369a1;
+            --exito-border: #7dd3fc;
+            --alerta-soft: #fee2e2;
+            --alerta-texto: #991b1b;
+            --shadow-3d-panel: 8px 8px 16px #cbe4f4, -8px -8px 16px #ffffff, inset 1px 1px 0px #ffffff;
+            --shadow-3d-inset: inset 4px 4px 8px #cbe4f4, inset -4px -4px 8px #ffffff;
+            --shadow-card-materia: 0 6px 0px #bae6fd, 4px 10px 15px rgba(2, 132, 199, 0.15);
+        }
+
+        /* --- TEMA 6: LAVANDA PURPURA (TONOS PASTEL OSCUROS Y LILAS) --- */
+        body.theme-lavender {
+            --bg-ceramic: #0f0c1b;
+            --panel-bg: #18142c;
+            --panel-border: #282148;
+            --azul-marino: #f3e8ff;
+            --azul-muted: #c084fc;
+            --oro-pulido: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+            --oro-flat: #a855f7;
+            --oro-glow: rgba(168, 85, 247, 0.3);
+            --blanco-puro: #201a38;
+            --exito-soft: #064e3b;
+            --exito-texto: #34d399;
+            --exito-border: #059669;
+            --alerta-soft: #4c0519;
+            --alerta-texto: #fb7185;
+            --shadow-3d-panel: 8px 8px 16px #08060f, -8px -8px 16px #282247, inset 1px 1px 0px #282148;
+            --shadow-3d-inset: inset 4px 4px 8px #08060f, inset -4px -4px 8px #282247;
+            --shadow-card-materia: 0 6px 0px #08060f, 4px 10px 15px rgba(168, 85, 247, 0.2);
         }
 
         body { 
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
             background-color: var(--bg-ceramic);
             background-image: 
-                radial-gradient(at 0% 0%, rgba(236, 238, 243, 0.5) 0px, transparent 50%),
+                radial-gradient(at 0% 0%, rgba(236, 238, 243, 0.05) 0px, transparent 50%),
                 radial-gradient(at 100% 100%, rgba(197, 160, 89, 0.05) 0px, transparent 50%);
             padding: 30px 20px; 
             margin: 0; 
             color: var(--azul-marino);
             -webkit-tap-highlight-color: transparent;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        .workspace-frame {
-            max-width: 1440px;
-            margin: 0 auto;
-        }
+        .workspace-frame { max-width: 1440px; margin: 0 auto; }
 
-        /* --- CUADRO DE MANDO SUPERIOR (HEADER 3D) --- */
         header { 
             background: var(--panel-bg);
             padding: 26px 36px; 
@@ -81,689 +199,260 @@
         }
 
         @media (min-width: 768px) {
-            .header-layout {
-                flex-direction: row;
-                justify-content: space-between;
-                text-align: left;
-            }
+            .header-layout { flex-direction: row; justify-content: space-between; text-align: left; }
         }
 
         header h1 { 
-            margin: 0; 
-            font-size: 28px; 
-            font-weight: 800; 
-            letter-spacing: -0.5px;
-            text-transform: uppercase;
-            color: var(--azul-marino);
-            text-shadow: 1px 1px 0px #ffffff;
+            margin: 0; font-size: 28px; font-weight: 800; letter-spacing: -0.5px;
+            text-transform: uppercase; color: var(--azul-marino);
         }
 
         .nav-container {
-            display: flex;
-            gap: 10px;
-            background: var(--panel-bg);
-            padding: 8px;
-            border-radius: 20px;
-            box-shadow: var(--shadow-3d-inset);
-            flex-wrap: wrap;
-            justify-content: center;
+            display: flex; gap: 10px; background: var(--panel-bg); padding: 8px;
+            border-radius: 20px; box-shadow: var(--shadow-3d-inset); flex-wrap: wrap; justify-content: center;
         }
 
         .btn-tab {
-            background: transparent;
-            color: var(--azul-muted);
-            border: none;
-            padding: 10px 18px;
-            font-size: 12px;
-            font-weight: 700;
-            border-radius: 14px;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            background: transparent; color: var(--azul-muted); border: none; padding: 10px 18px;
+            font-size: 12px; font-weight: 700; border-radius: 14px; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.25s;
         }
-
-        .btn-tab:hover {
-            color: var(--azul-marino);
-        }
-
+        .btn-tab:hover { color: var(--azul-marino); }
         .btn-tab.active-tab {
-            background: var(--blanco-puro);
-            color: var(--azul-marino);
-            box-shadow: 3px 3px 8px rgba(165, 175, 190, 0.4), -2px -2px 6px #ffffff;
+            background: var(--blanco-puro); color: var(--azul-marino);
+            box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.15), -2px -2px 6px var(--panel-border);
             transform: translateY(-1px);
         }
 
-        .metrics-bar {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-top: 16px;
-        }
-
+        .metrics-bar { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 16px; }
         .metric-item { font-size: 14px; color: var(--azul-muted); font-weight: 600; }
         .metric-item span { color: var(--oro-flat); font-weight: 800; }
 
         .progress-track { 
-            width: 220px; height: 14px; 
-            background: var(--panel-bg); 
-            border-radius: 999px; overflow: hidden; 
-            padding: 2px;
-            box-shadow: var(--shadow-3d-inset);
-            box-sizing: border-box;
+            width: 220px; height: 14px; background: var(--panel-bg); 
+            border-radius: 999px; overflow: hidden; padding: 2px;
+            box-shadow: var(--shadow-3d-inset); box-sizing: border-box;
         }
-        
         .progress-live { 
-            height: 100%; 
-            background: var(--oro-pulido); 
-            width: 0%; 
-            border-radius: 999px;
-            box-shadow: 0px 1px 3px rgba(0,0,0,0.15);
+            height: 100%; background: var(--oro-pulido); width: 0%; border-radius: 999px;
             transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1); 
         }
 
-        /* --- VISTAS GENERALES --- */
+        .top-global-tools {
+            display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; justify-content: flex-end; align-items: center;
+        }
+
+        .btn-tool-exec {
+            background: var(--blanco-puro); border: 1px solid rgba(165, 175, 190, 0.3);
+            color: var(--azul-marino); padding: 10px 16px; border-radius: 12px;
+            font-size: 12px; font-weight: 700; cursor: pointer; text-transform: uppercase;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1); transition: all 0.2s;
+        }
+        .btn-tool-exec:hover { border-color: var(--oro-flat); transform: translateY(-1px); }
+
         .view-block { display: none; }
         .view-block.active-block { display: block; animation: smoothUp 0.5s cubic-bezier(0.25, 1, 0.5, 1); }
         @keyframes smoothUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 
-        .grid-kardex { 
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 26px;
-        }
-
+        .grid-kardex { display: grid; grid-template-columns: 1fr; gap: 26px; }
         @media (min-width: 600px) { .grid-kardex { grid-template-columns: repeat(2, 1fr); } }
         @media (min-width: 950px) { .grid-kardex { grid-template-columns: repeat(3, 1fr); } }
         @media (min-width: 1300px) { .grid-kardex { grid-template-columns: repeat(5, 1fr); } } 
         
         .column-semester { 
-            background: var(--panel-bg);
-            border-radius: 24px; 
-            padding: 20px;
-            border: 1px solid var(--panel-border);
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            box-shadow: var(--shadow-3d-panel);
+            background: var(--panel-bg); border-radius: 24px; padding: 20px;
+            border: 1px solid var(--panel-border); display: flex; flex-direction: column;
+            gap: 16px; box-shadow: var(--shadow-3d-panel);
         }
-
         .column-semester.cursando-actual {
-            background: #e4e7f0;
-            border: 1px solid rgba(197, 160, 89, 0.4);
+            background: var(--blanco-puro);
+            border: 1px solid rgba(197, 160, 89, 0.5);
         }
         
-        .semester-top-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-bottom: 12px;
-            border-bottom: 2px solid rgba(165, 175, 190, 0.2);
-        }
-
-        .semester-title { 
-            color: var(--azul-marino); 
-            font-weight: 800; 
-            font-size: 13px; 
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
+        .semester-top-row { display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 2px solid rgba(165, 175, 190, 0.2); }
+        .semester-title { color: var(--azul-marino); font-weight: 800; font-size: 13px; text-transform: uppercase; }
 
         .btn-status-toggle {
-            background: var(--blanco-puro);
-            border: none;
-            color: var(--azul-muted);
-            cursor: pointer;
-            font-size: 11px;
-            font-weight: 700;
-            padding: 6px 14px;
-            border-radius: 10px;
-            text-transform: uppercase;
-            box-shadow: 2px 2px 5px rgba(165, 175, 190, 0.3), -1px -1px 3px #ffffff;
-            transition: all 0.2s;
+            background: var(--blanco-puro); border: none; color: var(--azul-muted);
+            cursor: pointer; font-size: 11px; font-weight: 700; padding: 6px 14px;
+            border-radius: 10px; text-transform: uppercase;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1); transition: all 0.2s;
         }
-
-        .btn-status-toggle:hover {
-            color: var(--oro-flat);
-            transform: translateY(-1px);
-        }
-
         .column-semester.cursando-actual .btn-status-toggle {
-            background: var(--oro-pulido);
-            color: var(--blanco-puro);
-            box-shadow: 2px 4px 8px var(--oro-glow);
+            background: var(--oro-pulido); color: var(--blanco-puro); box-shadow: 2px 4px 8px var(--oro-glow);
         }
         
-        /* --- TARJETAS BLOQUE MATE 3D --- */
         .card-materia { 
-            background: var(--blanco-puro);
-            border: 1px solid rgba(255,255,255,0.7);
-            padding: 16px; 
-            position: relative; 
-            border-radius: 16px; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: space-between; 
-            height: 110px; 
-            box-sizing: border-box; 
-            cursor: pointer; 
-            box-shadow: var(--shadow-card-materia);
-            transform: translateY(-5px);
-            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s ease, background 0.2s;
+            background: var(--blanco-puro); border: 1px solid rgba(255,255,255,0.05);
+            padding: 16px; position: relative; border-radius: 16px; display: flex; 
+            flex-direction: column; justify-content: space-between; min-height: 115px; 
+            box-sizing: border-box; box-shadow: var(--shadow-card-materia);
+            transform: translateY(-5px); transition: transform 0.2s;
         }
-
-        .card-materia:hover { 
-            transform: translateY(-7px); 
-            box-shadow: 0 10px 0px #cfd4dc, 4px 14px 20px rgba(165, 175, 190, 0.5);
-        }
-
-        .card-materia:active {
-            transform: translateY(-1px);
-            box-shadow: var(--shadow-card-active);
-        }
-        
-        .card-materia.en-curso {
-            background: #f8fafc;
-            border-left: 4px solid var(--azul-marino);
-        }
-
+        .card-materia:hover { transform: translateY(-7px); }
+        .card-materia.en-curso { border-left: 4px solid var(--oro-flat); }
         .card-materia.aprobada { 
             background: var(--exito-soft);
             border: 1px solid var(--exito-border);
-            box-shadow: 0 6px 0px #b4e4cd, 4px 10px 15px rgba(132, 225, 188, 0.3);
         }
-        .card-materia.aprobada:hover {
-            box-shadow: 0 8px 0px #b4e4cd, 4px 14px 20px rgba(132, 225, 188, 0.4);
-        }
-        .card-materia.aprobada .materia-name { color: var(--exito-texto); }
-        .card-materia.aprobada .materia-code { color: var(--exito-texto); opacity: 0.7; }
+        .card-materia.aprobada .materia-name, .card-materia.aprobada .materia-code, .card-materia.aprobada .materia-credits { color: var(--exito-texto); }
 
-        .materia-code { font-size: 10px; font-weight: 700; color: var(--azul-muted); letter-spacing: 0.3px; }
-        
+        .materia-code { font-size: 10px; font-weight: 700; color: var(--azul-muted); }
         .materia-name { 
-            font-size: 12px; 
-            font-weight: 700; 
-            line-height: 1.4; 
-            margin: 4px 0;
-            color: var(--azul-marino);
-            overflow: hidden;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
+            font-size: 12px; font-weight: 700; line-height: 1.4; margin: 4px 0; color: var(--azul-marino);
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
         }
         
-        .materia-footer { display: flex; justify-content: flex-end; }
+        .materia-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; }
         .materia-credits { font-size: 10px; font-weight: 700; color: var(--azul-muted); }
-        .card-materia.aprobada .materia-credits { color: var(--exito-texto); opacity: 0.8; }
-        
-        .materia-indicator {
-            position: absolute;
-            top: 14px; right: 14px;
-            font-size: 10px;
+        .materia-indicator { position: absolute; top: 14px; right: 14px; font-size: 10px; cursor: pointer; }
+
+        .grade-input-container { display: flex; align-items: center; gap: 4px; }
+        .input-grade-num {
+            width: 45px; padding: 3px 6px; font-size: 11px; font-weight: 700; text-align: center;
+            border-radius: 8px; border: 1px solid var(--exito-border); background: var(--blanco-puro); color: var(--exito-texto); outline: none;
         }
         
-        /* --- PANEL DE COMPLEMENTOS Y AGENDA --- */
         .panel-workspace {
-            background: var(--panel-bg);
-            border-radius: 28px;
-            padding: 35px;
-            border: 1px solid var(--panel-border);
-            box-shadow: var(--shadow-3d-panel);
+            background: var(--panel-bg); border-radius: 28px; padding: 35px;
+            border: 1px solid var(--panel-border); box-shadow: var(--shadow-3d-panel);
         }
 
-        .row-controls {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            align-items: center;
-        }
+        .row-controls { display: flex; gap: 16px; margin-bottom: 30px; flex-wrap: wrap; align-items: center; }
 
-        select, input, button.btn-prime {
-            background: var(--blanco-puro);
-            border: 1px solid rgba(165, 175, 190, 0.2);
-            color: var(--azul-marino);
-            padding: 14px 18px;
-            border-radius: 14px;
-            font-size: 13px;
-            font-weight: 600;
-            outline: none;
-            box-shadow: 2px 2px 5px rgba(165, 175, 190, 0.2), inset 0 1px 1px #ffffff;
-            transition: all 0.25s ease;
+        select, input, textarea, button.btn-prime {
+            background: var(--blanco-puro); border: 1px solid rgba(165, 175, 190, 0.2);
+            color: var(--azul-marino); padding: 14px 18px; border-radius: 14px;
+            font-size: 13px; font-weight: 600; outline: none; box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+            transition: all 0.25s;
         }
-
-        select:focus, input:focus {
-            border-color: var(--oro-flat);
-            box-shadow: 0 0 10px var(--oro-glow);
-        }
+        select:focus, input:focus, textarea:focus { border-color: var(--oro-flat); box-shadow: 0 0 10px var(--oro-glow); }
 
         button.btn-prime {
-            background: var(--oro-pulido);
-            color: var(--blanco-puro);
-            font-weight: 700;
-            border: none;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            box-shadow: 0 5px 15px var(--oro-glow), inset 0 1px 2px rgba(255,255,255,0.4);
+            background: var(--oro-pulido); color: var(--blanco-puro); font-weight: 700; border: none;
+            cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px;
+            box-shadow: 0 5px 15px var(--oro-glow);
         }
-
-        button.btn-prime:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px var(--oro-glow);
-        }
+        button.btn-prime:hover { transform: translateY(-2px); box-shadow: 0 8px 20px var(--oro-glow); }
 
         .scroll-wrapper {
-            overflow-x: auto;
-            border-radius: 20px;
-            background: var(--blanco-puro);
-            border: 1px solid rgba(165, 175, 190, 0.2);
-            box-shadow: var(--shadow-3d-inset);
-            padding: 6px;
+            overflow-x: auto; border-radius: 20px; background: var(--blanco-puro);
+            border: 1px solid rgba(165, 175, 190, 0.2); box-shadow: var(--shadow-3d-inset); padding: 6px;
         }
 
-        .table-custom {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 950px;
-            text-align: center;
-        }
+        .table-custom { width: 100%; border-collapse: collapse; min-width: 950px; text-align: center; }
+        .table-custom th, .table-custom td { border: 1px solid rgba(165,175,190,0.1); padding: 8px; font-size: 12px; height: 48px; }
+        .table-custom th { background: var(--panel-bg); color: var(--azul-marino); font-weight: 700; text-transform: uppercase; font-size: 11px; border-radius: 8px; }
+        .table-custom td input { width: 95%; height: 100%; background: transparent; border: none; text-align: center; color: var(--azul-marino); font-weight: 600; font-size: 12px; box-shadow: none; }
 
-        .table-custom th, .table-custom td {
-            border: 1px solid #f1f5f9;
-            padding: 8px;
-            font-size: 12px;
-            height: 48px;
-        }
+        .section-title { color: var(--azul-marino); font-size: 20px; margin-top: 0; margin-bottom: 20px; font-weight: 800; text-transform: uppercase; }
 
-        .table-custom th {
-            background: var(--panel-bg);
-            color: var(--azul-marino);
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 11px;
-            letter-spacing: 0.5px;
-            border-radius: 8px;
-        }
-
-        .table-custom td input {
-            width: 95%;
-            height: 100%;
-            background: transparent;
-            border: none;
-            text-align: center;
-            color: var(--azul-marino);
-            font-weight: 600;
-            font-size: 12px;
-            box-shadow: none;
-        }
-
-        .table-custom td input:focus {
-            background: rgba(197, 160, 89, 0.08);
-            border-radius: 8px;
-        }
-
-        /* --- NUEVAS SECCIONES EJECUTIVAS --- */
-        .section-title {
-            color: var(--azul-marino);
-            font-size: 20px;
-            margin-top: 0;
-            margin-bottom: 20px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* Calculadora Predictiva Por Unidades */
-        .predictive-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-        }
+        .predictive-grid, .sim-grid, .notes-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
         @media(min-width: 768px) {
-            .predictive-grid { grid-template-columns: repeat(2, 1fr); }
+            .predictive-grid, .sim-grid, .notes-grid { grid-template-columns: repeat(2, 1fr); }
         }
 
-        .calc-card {
-            background: var(--blanco-puro);
-            padding: 24px;
-            border-radius: 20px;
-            border: 1px solid rgba(165,175,190,0.2);
-            box-shadow: 4px 4px 15px rgba(165, 175, 190, 0.15);
+        .calc-card, .note-card {
+            background: var(--blanco-puro); padding: 24px; border-radius: 20px;
+            border: 1px solid rgba(165,175,190,0.2); box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.05);
         }
-
         .calc-result-box {
-            margin-top: 20px;
-            background: var(--panel-bg);
-            padding: 16px;
-            border-radius: 14px;
-            font-weight: 700;
-            text-align: center;
-            color: var(--azul-marino);
-            border: 1px dashed var(--oro-flat);
-            line-height: 1.5;
+            margin-top: 20px; background: var(--panel-bg); padding: 16px; border-radius: 14px;
+            font-weight: 700; text-align: center; color: var(--azul-marino); border: 1px dashed var(--oro-flat); line-height: 1.5;
         }
 
-        /* Asistencias */
-        .attendance-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
+        .attendance-grid, .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+        .attendance-card, .resource-card {
+            background: var(--blanco-puro); border-radius: 20px; padding: 20px;
+            border: 1px solid rgba(165,175,190,0.2); box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.05); display: flex; flex-direction: column; gap: 12px;
         }
-
-        .attendance-card {
-            background: var(--blanco-puro);
-            border-radius: 20px;
-            padding: 20px;
-            border: 1px solid rgba(165,175,190,0.2);
-            box-shadow: 4px 4px 15px rgba(165, 175, 190, 0.15);
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .attendance-card h4 {
-            margin: 0;
-            font-size: 14px;
-            color: var(--azul-marino);
-            font-weight: 800;
-        }
-
-        .attendance-counters {
-            display: flex;
-            justify-content: space-between;
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--azul-muted);
-        }
-
-        .attendance-actions {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .btn-att {
-            flex: 1;
-            padding: 8px;
-            border-radius: 10px;
-            border: none;
-            font-weight: 700;
-            cursor: pointer;
-            font-size: 11px;
-            text-transform: uppercase;
-        }
-
+        .attendance-card h4, .resource-card h4, .note-card h4 { margin: 0; font-size: 14px; color: var(--azul-marino); font-weight: 800; }
+        .attendance-counters { display: flex; justify-content: space-between; font-size: 13px; font-weight: 700; color: var(--azul-muted); }
+        .attendance-actions { display: flex; gap: 8px; }
+        .btn-att { flex: 1; padding: 8px; border-radius: 10px; border: none; font-weight: 700; cursor: pointer; font-size: 11px; text-transform: uppercase; }
         .btn-att-asis { background: var(--exito-soft); color: var(--exito-texto); border: 1px solid var(--exito-border); }
         .btn-att-falta { background: var(--alerta-soft); color: var(--alerta-texto); border: 1px solid #f8b4b4; }
-        
-        .btn-reiniciar {
-            width: 100%;
-            background: var(--panel-bg);
-            color: var(--azul-marino);
-            border: 1px solid rgba(165,175,190,0.3);
-            padding: 8px;
-            border-radius: 10px;
-            font-weight: 700;
-            font-size: 11px;
-            cursor: pointer;
-            text-transform: uppercase;
-            transition: all 0.2s;
-        }
-        .btn-reiniciar:hover {
-            background: var(--alerta-soft);
-            color: var(--alerta-texto);
-            border-color: #f8b4b4;
-        }
 
-        /* Recursos y Archivos Útiles */
-        .resources-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        .resource-card {
-            background: var(--blanco-puro);
-            border-radius: 20px;
-            padding: 20px;
-            border: 1px solid rgba(165,175,190,0.2);
-            box-shadow: 4px 4px 15px rgba(165, 175, 190, 0.15);
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .resource-card input {
-            width: 100%;
-            box-sizing: border-box;
-            padding: 10px 14px;
-            font-size: 12px;
-        }
-
-        .resource-links {
-            display: flex;
-            gap: 10px;
-            margin-top: 4px;
-        }
-
+        .resource-card input { width: 100%; box-sizing: border-box; padding: 10px 14px; font-size: 12px; }
+        .resource-links { display: flex; gap: 10px; margin-top: 4px; }
         .btn-link-action {
-            flex: 1;
-            text-align: center;
-            padding: 8px;
-            border-radius: 10px;
-            background: var(--panel-bg);
-            color: var(--azul-marino);
-            font-size: 11px;
-            font-weight: 700;
-            text-decoration: none;
-            border: 1px solid rgba(165,175,190,0.3);
-            display: inline-block;
+            flex: 1; text-align: center; padding: 8px; border-radius: 10px; background: var(--panel-bg);
+            color: var(--azul-marino); font-size: 11px; font-weight: 700; text-decoration: none; border: 1px solid rgba(165,175,190,0.3);
         }
         .btn-link-action:hover { background: var(--oro-pulido); color: white; }
 
-        /* Calendario mensual / semanal (Vista de Agenda Interactiva) */
-        .calendar-container {
-            background: var(--blanco-puro);
-            border-radius: 20px;
-            padding: 20px;
-            border: 1px solid rgba(165,175,190,0.2);
-            box-shadow: var(--shadow-3d-inset);
-        }
-
-        .calendar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 8px;
-            text-align: center;
-        }
-
-        .calendar-day-name {
-            font-size: 11px;
-            font-weight: 800;
-            color: var(--azul-muted);
-            text-transform: uppercase;
-            padding: 8px 0;
-        }
-
+        .calendar-container { background: var(--blanco-puro); border-radius: 20px; padding: 20px; border: 1px solid rgba(165,175,190,0.2); box-shadow: var(--shadow-3d-inset); }
+        .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; text-align: center; }
+        .calendar-day-name { font-size: 11px; font-weight: 800; color: var(--azul-muted); text-transform: uppercase; padding: 8px 0; }
         .calendar-cell {
-            background: var(--panel-bg);
-            min-height: 80px;
-            border-radius: 12px;
-            padding: 6px;
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--azul-marino);
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            border: 1px solid rgba(165,175,190,0.1);
-            overflow-y: auto;
-            max-height: 90px;
+            background: var(--panel-bg); min-height: 80px; border-radius: 12px; padding: 6px;
+            font-size: 11px; font-weight: 700; color: var(--azul-marino); display: flex; flex-direction: column; align-items: flex-start;
+            border: 1px solid rgba(165,175,190,0.1); max-height: 90px; overflow-y: auto;
         }
-
-        .calendar-cell.today {
-            border: 2px solid var(--oro-flat);
-            background: #fdfbf7;
-        }
-
+        .calendar-cell.today { border: 2px solid var(--oro-flat); }
         .cal-task-tag {
-            background: var(--oro-pulido);
-            color: white;
-            font-size: 9px;
-            padding: 2px 4px;
-            border-radius: 4px;
-            margin-top: 2px;
-            width: 100%;
-            text-align: left;
-            box-sizing: border-box;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            background: var(--oro-pulido); color: white; font-size: 9px; padding: 2px 4px;
+            border-radius: 4px; margin-top: 2px; width: 100%; text-align: left; box-sizing: border-box; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
 
-        /* BANDEJA DE ENTREGABLES EJECUTIVA */
-        .table-tasks {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 4px 4px 15px rgba(165, 175, 190, 0.2);
-            border: 1px solid rgba(165, 175, 190, 0.2);
-        }
-
-        .table-tasks th, .table-tasks td {
-            padding: 16px;
-            text-align: left;
-            font-size: 13px;
-            border-bottom: 1px solid #f1f5f9;
-        }
-
-        .table-tasks th {
-            background: var(--panel-bg);
-            color: var(--azul-marino);
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 11px;
-        }
-
-        .table-tasks td {
-            background: var(--blanco-puro);
-        }
+        .table-tasks { width: 100%; border-collapse: collapse; margin-top: 20px; border-radius: 20px; overflow: hidden; border: 1px solid rgba(165, 175, 190, 0.2); }
+        .table-tasks th, .table-tasks td { padding: 16px; text-align: left; font-size: 13px; border-bottom: 1px solid rgba(165,175,190,0.1); }
+        .table-tasks th { background: var(--panel-bg); color: var(--azul-marino); font-weight: 700; text-transform: uppercase; font-size: 11px; }
+        .table-tasks td { background: var(--blanco-puro); }
 
         .btn-action-delete {
-            background: #fde8e8;
-            color: #9b1c1c;
-            border: 1px solid #f8b4b4;
-            padding: 8px 16px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: 700;
-            font-size: 11px;
-            text-transform: uppercase;
-            transition: all 0.2s;
+            background: var(--alerta-soft); color: var(--alerta-texto); border: 1px solid #f8b4b4;
+            padding: 8px 16px; border-radius: 10px; cursor: pointer; font-weight: 700; font-size: 11px; text-transform: uppercase;
         }
+        .btn-action-delete:hover { background: #e11d48; color: white; border-color: #e11d48; }
 
-        .btn-action-delete:hover {
-            background: #e11d48;
-            color: white;
-            border-color: #e11d48;
-            box-shadow: 0 4px 10px rgba(225, 29, 72, 0.2);
+        .pomodoro-widget {
+            position: fixed; bottom: 25px; right: 25px; background: var(--panel-bg); border: 1px solid var(--panel-border);
+            padding: 18px; border-radius: 22px; box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), var(--shadow-3d-panel);
+            z-index: 800; display: flex; flex-direction: column; align-items: center; gap: 10px; width: 220px;
         }
+        .pomodoro-title { font-size: 11px; font-weight: 800; color: var(--azul-marino); text-transform: uppercase; margin: 0; }
+        .pomodoro-timer { font-size: 26px; font-weight: 800; color: var(--oro-flat); font-variant-numeric: tabular-nums; }
+        .pomodoro-controls { display: flex; gap: 6px; width: 100%; }
+        .btn-pomodoro {
+            flex: 1; padding: 6px; font-size: 10px; font-weight: 700; border-radius: 10px; border: none;
+            cursor: pointer; text-transform: uppercase; background: var(--blanco-puro); color: var(--azul-marino); box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+        }
+        .btn-pomodoro:hover { background: var(--oro-pulido); color: white; }
 
-        /* --- PANTALLA DE APERTURA --- */
         #loading-screen {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: var(--bg-ceramic); color: var(--azul-marino); display: flex; flex-direction: column;
-            justify-content: center; align-items: center; z-index: 9999;
-            transition: opacity 0.6s ease, visibility 0.6s;
+            justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.6s ease, visibility 0.6s;
         }
-
-        .holo-matrix-container {
-            position: relative;
-            width: 220px;
-            height: 220px;
-            margin-bottom: 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .holo-ring {
-            position: absolute;
-            border-radius: 50%;
-            border: 4px solid transparent;
-            border-top-color: var(--oro-flat);
-            animation: spinCircle 2s linear infinite;
-        }
-
+        .holo-matrix-container { position: relative; width: 220px; height: 220px; margin-bottom: 40px; display: flex; justify-content: center; align-items: center; }
+        .holo-ring { position: absolute; border-radius: 50%; border: 4px solid transparent; border-top-color: var(--oro-flat); animation: spinCircle 2s linear infinite; }
         .ring-1 { width: 180px; height: 180px; border-bottom-color: var(--azul-marino); }
         .ring-2 { width: 130px; height: 130px; border-left-color: var(--oro-flat); animation-direction: reverse; animation-duration: 1.5s; }
         .ring-3 { width: 80px; height: 80px; border-right-color: var(--azul-muted); animation-duration: 1s; }
-
         @keyframes spinCircle { to { transform: rotate(360deg); } }
 
         .frase-premium-box {
-            background: var(--panel-bg);
-            border-radius: 24px;
-            padding: 26px 40px;
-            max-width: 600px;
-            width: 80%;
-            min-height: 70px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            border: 1px solid var(--panel-border);
-            box-shadow: var(--shadow-3d-panel);
+            background: var(--panel-bg); border-radius: 24px; padding: 26px 40px; max-width: 600px; width: 80%;
+            display: flex; justify-content: center; align-items: center; text-align: center; border: 1px solid var(--panel-border); box-shadow: var(--shadow-3d-panel);
         }
+        #loading-text { font-size: 16px; font-weight: 700; line-height: 1.6; transition: opacity 0.4s ease; color: var(--azul-marino); }
 
-        #loading-text { 
-            font-size: 16px; 
-            font-weight: 700; 
-            line-height: 1.6;
-            transition: opacity 0.4s ease; 
-            opacity: 1;
-            color: var(--azul-marino);
-        }
-
-        /* --- VENTANAS EMERGENTES (MODALES) --- */
         .universal-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(15, 23, 42, 0.4); display: none; justify-content: center;
-            align-items: center; z-index: 9000; backdrop-filter: blur(8px); padding: 15px; box-sizing: border-box;
+            background: rgba(0, 0, 0, 0.6); display: none; justify-content: center; align-items: center; z-index: 9000; backdrop-filter: blur(8px); padding: 15px; box-sizing: border-box;
         }
         .custom-modal {
-            background: var(--panel-bg);
-            padding: 32px; border-radius: 28px; text-align: center; max-width: 420px; width: 100%;
-            border: 1px solid var(--panel-border); 
-            box-shadow: 0 30px 60px rgba(15, 23, 42, 0.2), var(--shadow-3d-panel);
-            transform: scale(0.9);
-            animation: modalGrow 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            background: var(--panel-bg); padding: 32px; border-radius: 28px; text-align: center; max-width: 420px; width: 100%;
+            border: 1px solid var(--panel-border); box-shadow: 0 30px 60px rgba(0,0,0,0.3);
         }
-        @keyframes modalGrow { to { transform: scale(1); } }
-        
-        .custom-modal h2 { margin: 0 0 14px 0; color: var(--azul-marino); font-size: 22px; font-weight: 800; text-transform: uppercase;}
+        .custom-modal h2 { margin: 0 0 14px 0; color: var(--azul-marino); font-size: 22px; font-weight: 800; text-transform: uppercase; }
         .custom-modal p { color: var(--azul-muted); font-size: 14px; line-height: 1.6; margin-bottom: 28px; font-weight: 600; }
-        
-        .btn-modal { 
-            background: var(--oro-pulido);
-            color: var(--blanco-puro); border: none; padding: 14px; font-size: 13px; font-weight: 800; 
+        .btn-modal {
+            background: var(--oro-pulido); color: var(--blanco-puro); border: none; padding: 14px; font-size: 13px; font-weight: 800;
             border-radius: 14px; width: 100%; cursor: pointer; text-transform: uppercase; letter-spacing: 1px;
-            box-shadow: 0 4px 12px var(--oro-glow), inset 0 1px 1px rgba(255,255,255,0.4);
-            transition: transform 0.2s;
         }
-        .btn-modal:hover { transform: translateY(-2px); box-shadow: 0 6px 18px var(--oro-glow); }
     </style>
 </head>
 <body>
@@ -787,8 +476,27 @@
     </div>
 </div>
 
+<!-- WIDGET FLOTANTE POMODORO -->
+<div class="pomodoro-widget">
+    <p class="pomodoro-title">🍅 Pomodoro Enfoque</p>
+    <div class="pomodoro-timer" id="pomo-display">25:00</div>
+    <div class="pomodoro-controls">
+        <button class="btn-pomodoro" onclick="togglePomodoro()" id="pomo-btn-toggle">Iniciar</button>
+        <button class="btn-pomodoro" onclick="resetPomodoro()">Reiniciar</button>
+    </div>
+</div>
+
 <div class="workspace-frame">
     <header>
+        <div class="top-global-tools">
+            <button class="btn-tool-exec" onclick="ciclarTemas()" id="btn-theme-toggle">🎨 Tema: Cerámico</button>
+            <button class="btn-tool-exec" onclick="solicitarPermisoNotificaciones()">🔔 Activar Push</button>
+            <input type="text" id="global-search-input" placeholder="🔍 Buscar materia o docente..." oninput="filtrarGlobalSistema()" style="padding: 10px 16px; border-radius: 12px; font-size: 12px; width: 220px;">
+            <button class="btn-tool-exec" onclick="exportarDatosJSON()">📤 Exportar</button>
+            <button class="btn-tool-exec" onclick="document.getElementById('import-file-input').click()">📥 Importar</button>
+            <input type="file" id="import-file-input" style="display: none;" accept=".json" onchange="importarDatosJSON(event)">
+        </div>
+
         <div class="header-layout">
             <div>
                 <h1 id="main-title">Estructura Curricular</h1>
@@ -796,6 +504,7 @@
                     <div class="metric-item">Progreso General: <span id="porc">0%</span></div>
                     <div class="progress-track"><div id="fill" class="progress-live"></div></div>
                     <div class="metric-item">Créditos: <span id="cred">0</span> / <span id="total-cred-ui">260</span></div>
+                    <div class="metric-item">GPA / Promedio: <span id="gpa-val">0.0</span></div>
                 </div>
             </div>
             <div class="nav-container">
@@ -803,7 +512,7 @@
                 <button class="btn-tab" id="tab-horarios" onclick="cambiarVista('horarios')">📅 Agenda</button>
                 <button class="btn-tab" id="tab-predictivo" onclick="cambiarVista('predictivo')">📈 Kardex Predictivo</button>
                 <button class="btn-tab" id="tab-asistencias" onclick="cambiarVista('asistencias')">📉 Faltas</button>
-                <button class="btn-tab" id="tab-recursos" onclick="cambiarVista('recursos')">📂 Enlaces / Sílabos</button>
+                <button class="btn-tab" id="tab-recursos" onclick="cambiarVista('recursos')">📂 Enlaces / Notas</button>
             </div>
         </div>
     </header>
@@ -818,14 +527,10 @@
         <div class="panel-workspace">
             <div class="row-controls">
                 <select id="select-semestre-horario" onchange="cargarDatosSemestreCompleto()">
-                    <option value="1">Semestre I</option>
-                    <option value="2">Semestre II</option>
-                    <option value="3" selected>Semestre III</option>
-                    <option value="4">Semestre IV</option>
-                    <option value="5">Semestre V</option>
-                    <option value="6">Semestre VI</option>
-                    <option value="7">Semestre VII</option>
-                    <option value="8">Semestre VIII</option>
+                    <option value="1">Semestre I</option><option value="2">Semestre II</option>
+                    <option value="3" selected>Semestre III</option><option value="4">Semestre IV</option>
+                    <option value="5">Semestre V</option><option value="6">Semestre VI</option>
+                    <option value="7">Semestre VII</option><option value="8">Semestre VIII</option>
                     <option value="9">Semestre IX</option>
                 </select>
                 <button class="btn-prime" onclick="guardarHorarioActual()">💾 Guardar Calendario</button>
@@ -833,121 +538,93 @@
 
             <div class="scroll-wrapper">
                 <table class="table-custom">
-                    <thead>
-                        <tr>
-                            <th style="width: 180px;">Rango Horario</th>
-                            <th>Lunes</th>
-                            <th>Martes</th>
-                            <th>Miércoles</th>
-                            <th>Jueves</th>
-                            <th>Viernes</th>
-                        </tr>
-                    </thead>
-                    <tbody id="schedule-body">
-                    </tbody>
+                    <thead><tr><th style="width: 180px;">Rango Horario</th><th>Lunes</th><th>Martes</th><th>Miércoles</th><th>Jueves</th><th>Viernes</th></tr></thead>
+                    <tbody id="schedule-body"></tbody>
                 </table>
             </div>
 
-            <!-- DIRECTORIO DE DOCENTES -->
             <div class="section-profesores" style="margin-top: 35px;">
                 <h3 class="section-title">👨‍🏫 Directorio de Docentes y Asignaciones</h3>
                 <div class="scroll-wrapper" style="margin-top: 15px;">
                     <table class="table-custom">
-                        <thead>
-                            <tr>
-                                <th style="width: 35%;">Asignatura</th>
-                                <th style="width: 30%;">Docente Asignado</th>
-                                <th style="width: 15%;">Créditos</th>
-                                <th style="width: 20%;">Salón Asignado</th>
-                            </tr>
-                        </thead>
-                        <tbody id="profesores-body">
-                        </tbody>
+                        <thead><tr><th style="width: 35%;">Asignatura</th><th style="width: 30%;">Docente Asignado</th><th style="width: 15%;">Créditos</th><th style="width: 20%;">Salón</th></tr></thead>
+                        <tbody id="profesores-body"></tbody>
                     </table>
                 </div>
             </div>
 
             <hr style="border: 0; border-top: 2px dashed rgba(165,175,190,0.2); margin: 40px 0;">
 
-            <!-- VISTA DE CALENDARIO MENSUAL DE ENTREGABLES -->
             <div style="margin-bottom: 40px;">
                 <h3 class="section-title">🗓️ Vista de Calendario (Exámenes y Entregas)</h3>
                 <div class="calendar-container">
                     <div class="calendar-header">
                         <h4 id="calendar-month-title" style="margin:0; color:var(--azul-marino); font-size:16px;">Mes Actual</h4>
-                        <span style="font-size:12px; color:var(--azul-muted); font-weight:700;">Recordatorios Activos 🔔</span>
+                        <span style="font-size:12px; color:var(--azul-muted); font-weight:700;">Recordatorios 🔔</span>
                     </div>
                     <div class="calendar-grid">
-                        <div class="calendar-day-name">Lun</div>
-                        <div class="calendar-day-name">Mar</div>
-                        <div class="calendar-day-name">Mié</div>
-                        <div class="calendar-day-name">Jue</div>
-                        <div class="calendar-day-name">Vie</div>
-                        <div class="calendar-day-name">Sáb</div>
-                        <div class="calendar-day-name">Dom</div>
+                        <div class="calendar-day-name">Lun</div><div class="calendar-day-name">Mar</div><div class="calendar-day-name">Mié</div>
+                        <div class="calendar-day-name">Jue</div><div class="calendar-day-name">Vie</div><div class="calendar-day-name">Sáb</div><div class="calendar-day-name">Dom</div>
                     </div>
-                    <div class="calendar-grid" id="calendar-days-grid" style="margin-top: 8px;">
-                    </div>
+                    <div class="calendar-grid" id="calendar-days-grid" style="margin-top: 8px;"></div>
                 </div>
             </div>
 
-            <!-- GESTIÓN DE ENTREGABLES -->
             <div class="section-tasks">
                 <h3 class="section-title">📋 Gestión de Entregables</h3>
-                <div class="row-controls" style="background: rgba(255, 255, 255, 0.5); padding: 20px; border-radius: 18px; border: 1px solid rgba(165,175,190,0.1)">
+                <div class="row-controls" style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 18px; border: 1px solid rgba(165,175,190,0.1)">
                     <select id="task-materia" style="width: 240px;"></select>
                     <input type="text" id="task-desc" placeholder="Descripción del entregable o examen..." style="flex: 1; min-width: 240px;">
                     <input type="date" id="task-date">
                     <button class="btn-prime" onclick="agregarActividad()">➕ Registrar</button>
                 </div>
-
                 <table class="table-tasks">
-                    <thead>
-                        <tr>
-                            <th>Módulo</th>
-                            <th>Descripción</th>
-                            <th>Fecha Límite</th>
-                            <th style="width: 120px; text-align: center;">Estatus</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tasks-body">
-                    </tbody>
+                    <thead><tr><th>Módulo</th><th>Descripción</th><th>Fecha Límite</th><th style="width: 120px; text-align: center;">Estatus</th></tr></thead>
+                    <tbody id="tasks-body"></tbody>
                 </table>
             </div>
         </div>
     </div>
 
-    <!-- VISTA 3: KARDEX PREDICTIVO POR UNIDADES -->
+    <!-- VISTA 3: KARDEX PREDICTIVO & SIMULADOR WHAT-IF -->
     <div id="view-predictivo" class="view-block">
         <div class="panel-workspace">
-            <h3 class="section-title">🧮 Kardex Predictivo por Unidades (Calificación Mínima: 70)</h3>
-            <p style="color:var(--azul-muted); font-weight:600; font-size:13px; margin-bottom:25px;">Selecciona el total de unidades de tu materia, indica cuántas unidades ya evaluaste y el promedio que llevas en ellas para calcular cuánto necesitas en las unidades restantes para pasar todas con al menos 70.</p>
+            <h3 class="section-title">🧮 Kardex Predictivo y Simulador What-If GPA</h3>
+            <p style="color:var(--azul-muted); font-weight:600; font-size:13px; margin-bottom:25px;">Calcula lo que necesitas para aprobar por unidades o simula tus notas globales futuras en tiempo real.</p>
             
             <div class="predictive-grid">
                 <div class="calc-card">
-                    <h4 style="margin-top:0; color:var(--azul-marino);">Parámetros de la Materia</h4>
+                    <h4 style="margin-top:0; color:var(--azul-marino);">Predictivo por Unidades (Mín. 70)</h4>
                     <div style="display:flex; flex-direction:column; gap:14px; margin-top:15px;">
-                        <label style="font-size:12px; font-weight:700; color:var(--azul-muted);">Estructura de la Materia:
+                        <label style="font-size:12px; font-weight:700; color:var(--azul-muted);">Estructura:
                             <select id="calc-total-unidades" style="width:100%; margin-top:6px; box-sizing:border-box;">
-                                <option value="4">Materia de 4 Unidades</option>
-                                <option value="6">Materia de 6 Unidades</option>
+                                <option value="4">4 Unidades</option><option value="6">6 Unidades</option>
                             </select>
                         </label>
-                        <label style="font-size:12px; font-weight:700; color:var(--azul-muted);">¿Cuántas unidades ya tienes evaluadas?:
-                            <input type="number" id="calc-unidades-cursadas" min="1" max="5" value="2" style="width:100%; margin-top:6px; box-sizing:border-box;" placeholder="Ej. 2">
+                        <label style="font-size:12px; font-weight:700; color:var(--azul-muted);">Unidades ya evaluadas:
+                            <input type="number" id="calc-unidades-cursadas" min="1" max="5" value="2" style="width:100%; margin-top:6px; box-sizing:border-box;">
                         </label>
-                        <label style="font-size:12px; font-weight:700; color:var(--azul-muted);">Promedio actual en esas unidades cursadas (Escala de 0 a 100):
+                        <label style="font-size:12px; font-weight:700; color:var(--azul-muted);">Promedio actual (0 a 100):
                             <input type="number" id="calc-promedio-actual" style="width:100%; margin-top:6px; box-sizing:border-box;" placeholder="Ej. 75">
                         </label>
-                        <button class="btn-prime" onclick="calcularPredictivoUnidades()" style="margin-top:10px;">Calcular Unidades Restantes</button>
+                        <button class="btn-prime" onclick="calcularPredictivoUnidades()" style="margin-top:10px;">Calcular Restantes</button>
                     </div>
                 </div>
                 <div class="calc-card" style="display:flex; flex-direction:column; justify-content:center;">
                     <h4 style="margin-top:0; color:var(--azul-marino);">Resultado Predictivo</h4>
-                    <div class="calc-result-box" id="calc-resultado-text">
-                        Configura los parámetros a la izquierda para conocer la calificación requerida por unidad.
-                    </div>
+                    <div class="calc-result-box" id="calc-resultado-text">Configura los parámetros a la izquierda.</div>
                 </div>
+            </div>
+
+            <!-- 1. Simulador What-If GPA Global -->
+            <div class="calc-card" style="margin-top: 30px;">
+                <h4 style="margin-top:0; color:var(--azul-marino);">🎯 Simulador What-If GPA General</h4>
+                <p style="font-size: 12px; color: var(--azul-muted);">Ingresa notas hipotéticas para tus próximos exámenes y proyecta tu promedio general instantáneamente.</p>
+                <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center; margin-top: 15px;">
+                    <input type="number" id="whatif-grade" min="0" max="100" placeholder="Cal. hipotética (0-100)" style="width: 200px;">
+                    <button class="btn-prime" onclick="simularWhatIfGPA()">Simular Impacto GPA</button>
+                </div>
+                <div class="calc-result-box" id="whatif-result-text" style="margin-top: 15px;">Sin simulaciones activas.</div>
             </div>
         </div>
     </div>
@@ -956,26 +633,25 @@
     <div id="view-asistencias" class="view-block">
         <div class="panel-workspace">
             <h3 class="section-title">📊 Control de Asistencias e Inasistencias</h3>
-            <p style="color:var(--azul-muted); font-weight:600; font-size:13px; margin-bottom:25px;">Controla tus faltas por materia. Al superar el límite (por ejemplo, 20%), el sistema te alertará sobre riesgo de examen extraordinario.</p>
-            
-            <div class="attendance-grid" id="attendance-container">
-                <!-- Inyectado dinámicamente según el semestre activo -->
-            </div>
+            <p style="color:var(--azul-muted); font-weight:600; font-size:13px; margin-bottom:25px;">Controla tus faltas. Al superar el 20%, se marca alerta de extraordinario.</p>
+            <div class="attendance-grid" id="attendance-container"></div>
         </div>
     </div>
 
-    <!-- VISTA 5: GESTIÓN DE ARCHIVOS Y ENLACES ÚTILES -->
+    <!-- VISTA 5: RECURSOS, SÍLABOS Y BLOC DE NOTAS -->
     <div id="view-recursos" class="view-block">
         <div class="panel-workspace">
-            <h3 class="section-title">📁 Enlaces Útiles, Google Drive y Sílabos por Materia</h3>
-            <p style="color:var(--azul-muted); font-weight:600; font-size:13px; margin-bottom:25px;">Guarda los enlaces del grupo de Google Drive, links de clases en línea o programas de estudio entregados por tus profesores.</p>
+            <h3 class="section-title">📁 Enlaces Útiles, Google Drive y Sílabos</h3>
+            <p style="color:var(--azul-muted); font-weight:600; font-size:13px; margin-bottom:25px;">Guarda accesos directos y notas rápidas de cada asignatura.</p>
             
-            <div class="resources-grid" id="resources-container">
-                <!-- Inyectado dinámicamente según el semestre activo -->
+            <div class="resources-grid" id="resources-container"></div>
+
+            <div style="margin-top: 40px;">
+                <h3 class="section-title">📝 Bloc de Notas Rápidas por Materia</h3>
+                <div class="notes-grid" id="notes-container"></div>
             </div>
         </div>
     </div>
-
 </div>
 
 <script>
@@ -1003,6 +679,39 @@
 
     let hitosAlcanzados = JSON.parse(localStorage.getItem('hitos_kardex_alcanzados')) || { mitad: false, completo: false };
 
+    // --- GESTIÓN DE TEMAS MÚLTIPLES ---
+    const listaDeTemas = [
+        { clase: '', nombre: 'Cerámico' },
+        { clase: 'theme-obsidian', nombre: 'Obsidiano' },
+        { clase: 'theme-cyberpunk', nombre: 'Cyberpunk' },
+        { clase: 'theme-emerald', nombre: 'Esmeralda' },
+        { clase: 'theme-magma', nombre: 'Magma' },
+        { clase: 'theme-glacial', nombre: 'Glacial' },
+        { clase: 'theme-lavender', nombre: 'Lavanda' }
+    ];
+
+    let indiceTemaActual = parseInt(localStorage.getItem('indice_tema_actual')) || 0;
+    aplicarTemaActual();
+
+    function ciclarTemas() {
+        indiceTemaActual = (indiceTemaActual + 1) % listaDeTemas.length;
+        localStorage.setItem('indice_tema_actual', indiceTemaActual);
+        aplicarTemaActual();
+    }
+
+    function aplicarTemaActual() {
+        // Remover todas las clases de temas previos
+        listaDeTemas.forEach(t => {
+            if (t.clase) document.body.classList.remove(t.clase);
+        });
+        
+        const temaObj = listaDeTemas[indiceTemaActual];
+        if (temaObj.clase) {
+            document.body.classList.add(temaObj.clase);
+        }
+        document.getElementById('btn-theme-toggle').textContent = `🎨 Tema: ${temaObj.nombre}`;
+    }
+
     const frasesParaMostrar = [];
     const copiaBanco = [...bancoDeFrases];
     for (let i = 0; i < 3; i++) {
@@ -1012,7 +721,6 @@
 
     const loadingText = document.getElementById('loading-text');
     let pasoFrase = 0;
-
     function rotarTresFrases() {
         if (pasoFrase < 3) {
             loadingText.style.opacity = '0'; 
@@ -1023,7 +731,6 @@
             }, 400); 
         }
     }
-
     rotarTresFrases(); 
     const intervaloFrases = setInterval(rotarTresFrases, 2600); 
 
@@ -1036,6 +743,27 @@
             verificarNotificacionesProximas();
         }, 8000); 
     });
+
+    function solicitarPermisoNotificaciones() {
+        if (!("Notification" in window)) {
+            lanzarModal("⚠️ Navegador", "Tu navegador no soporta notificaciones nativas.");
+            return;
+        }
+        Notification.requestPermission().then(permission => {
+            if (permission === "granted") {
+                lanzarModal("🔔 Permiso Concedido", "Las notificaciones nativas del navegador han sido activadas con éxito.");
+                new Notification("Core Académico", { body: "Sistema de avisos push vinculado correctamente." });
+            } else {
+                lanzarModal("⚠️ Permiso Denegado", "No se otorgaron permisos para enviar notificaciones push.");
+            }
+        });
+    }
+
+    function dispararNotificacionPush(titulo, cuerpo) {
+        if ("Notification" in window && Notification.permission === "granted") {
+            new Notification(titulo, { body: cuerpo, icon: "" });
+        }
+    }
 
     function cambiarVista(vista) {
         document.querySelectorAll('.view-block').forEach(v => v.classList.remove('active-block'));
@@ -1052,7 +780,7 @@
         } else if(vista === 'predictivo') {
             document.getElementById('view-predictivo').classList.add('active-block');
             document.getElementById('tab-predictivo').classList.add('active-tab');
-            document.getElementById('main-title').textContent = "Kardex Predictivo";
+            document.getElementById('main-title').textContent = "Kardex Predictivo y Simulador";
         } else if(vista === 'asistencias') {
             document.getElementById('view-asistencias').classList.add('active-block');
             document.getElementById('tab-asistencias').classList.add('active-tab');
@@ -1061,8 +789,9 @@
         } else if(vista === 'recursos') {
             document.getElementById('view-recursos').classList.add('active-block');
             document.getElementById('tab-recursos').classList.add('active-tab');
-            document.getElementById('main-title').textContent = "Recursos y Enlaces Útiles";
+            document.getElementById('main-title').textContent = "Recursos y Bloc de Notas";
             renderizarRecursos();
+            renderizarBlocNotas();
         }
     }
 
@@ -1076,10 +805,15 @@
                             </div>`;
         sem.m.forEach((mat, i) => {
             htmlInyectar += `<div class="card-materia" data-c="${mat[1]}" data-semestre="${sem.s}" id="m-${sem.s}-${i}">
-                        <div class="materia-indicator">⚫</div>
+                        <div class="materia-indicator" onclick="toggleAprobadaCard('${sem.s}', ${i})">⚫</div>
                         <div class="materia-code">${mat[0]}</div>
                         <div class="materia-name">${mat[2]}</div>
-                        <div class="materia-footer"><div class="materia-credits">${mat[1]} CR</div></div>
+                        <div class="materia-footer">
+                            <div class="materia-credits">${mat[1]} CR</div>
+                            <div class="grade-input-container" id="container-grade-${sem.s}-${i}" style="display:none;">
+                                <input type="number" min="0" max="100" class="input-grade-num" id="grade-${sem.s}-${i}" placeholder="Cal." oninput="guardarCalificacionMateria('${sem.s}', ${i})">
+                            </div>
+                        </div>
                     </div>`;
         });
         htmlInyectar += `</div>`;
@@ -1087,23 +821,55 @@
     container.innerHTML = htmlInyectar;
 
     document.querySelectorAll('.card-materia').forEach(card => {
-        const id = card.id; const indicator = card.querySelector('.materia-indicator');
-        if(localStorage.getItem(id)) { card.classList.add('aprobada'); indicator.textContent = "🟢"; }
-        
-        card.addEventListener('click', () => {
-            if(!card.classList.contains('aprobada')) {
-                card.classList.add('aprobada'); 
-                indicator.textContent = "🟢"; 
-                localStorage.setItem(id, '1'); 
-                evaluarEstatusYAlertas(card.dataset.semestre, true);
-            } else {
-                card.classList.remove('aprobada'); 
-                indicator.textContent = "⚫"; 
-                localStorage.removeItem(id); 
-                evaluarEstatusYAlertas(card.dataset.semestre, false);
-            }
-        });
+        const id = card.id; 
+        const [_, semNum, indexMat] = id.split('-');
+        const indicator = card.querySelector('.materia-indicator');
+        const gradeContainer = document.getElementById(`container-grade-${semNum}-${indexMat}`);
+        const gradeInput = document.getElementById(`grade-${semNum}-${indexMat}`);
+
+        if(localStorage.getItem(id)) { 
+            card.classList.add('aprobada'); 
+            indicator.textContent = "🟢"; 
+            gradeContainer.style.display = 'flex';
+            const savedGrade = localStorage.getItem(`grade_val_${semNum}_${indexMat}`);
+            if(savedGrade) gradeInput.value = savedGrade;
+        }
     });
+
+    function toggleAprobadaCard(semNum, indexMat) {
+        const cardId = `m-${semNum}-${indexMat}`;
+        const card = document.getElementById(cardId);
+        const indicator = card.querySelector('.materia-indicator');
+        const gradeContainer = document.getElementById(`container-grade-${semNum}-${indexMat}`);
+        const gradeInput = document.getElementById(`grade-${semNum}-${indexMat}`);
+
+        if(!card.classList.contains('aprobada')) {
+            card.classList.add('aprobada'); 
+            indicator.textContent = "🟢"; 
+            gradeContainer.style.display = 'flex';
+            localStorage.setItem(cardId, '1');
+            if(!gradeInput.value) {
+                gradeInput.value = "70";
+                localStorage.setItem(`grade_val_${semNum}_${indexMat}`, "70");
+            }
+            evaluarEstatusYAlertas(semNum, true);
+        } else {
+            card.classList.remove('aprobada'); 
+            indicator.textContent = "⚫"; 
+            gradeContainer.style.display = 'none';
+            gradeInput.value = "";
+            localStorage.removeItem(cardId);
+            localStorage.removeItem(`grade_val_${semNum}_${indexMat}`);
+            evaluarEstatusYAlertas(semNum, false);
+        }
+        calc();
+    }
+
+    function guardarCalificacionMateria(semNum, indexMat) {
+        const gradeInput = document.getElementById(`grade-${semNum}-${indexMat}`);
+        localStorage.setItem(`grade_val_${semNum}_${indexMat}`, gradeInput.value);
+        calc();
+    }
 
     function marcarSemestreActual(numSemestre) {
         if (localStorage.getItem('semestre_actual_cursando') == numSemestre) { localStorage.removeItem('semestre_actual_cursando'); } 
@@ -1123,17 +889,35 @@
 
     function calc() {
         let cred = 0; 
-        document.querySelectorAll('.card-materia.aprobada').forEach(c => cred += parseInt(c.dataset.c));
+        let sumaPonderada = 0;
+        let creditosPonderacionTotal = 0;
+
+        document.querySelectorAll('.card-materia.aprobada').forEach(c => {
+            const creditos = parseInt(c.dataset.c);
+            cred += creditos;
+
+            const [_, semNum, indexMat] = c.id.split('-');
+            const gradeInput = document.getElementById(`grade-${semNum}-${indexMat}`);
+            const calificacion = parseFloat(gradeInput ? gradeInput.value : 0) || 0;
+
+            sumaPonderada += (calificacion * creditos);
+            creditosPonderacionTotal += creditos;
+        });
+
         document.getElementById('cred').textContent = cred;
         let prog = Math.round((cred/TOTAL_CREDITOS)*100); 
         if (prog > 100) prog = 100;
         document.getElementById('porc').textContent = prog + '%'; 
         document.getElementById('fill').style.width = prog + '%';
-        return prog;
+
+        const gpa = creditosPonderacionTotal > 0 ? (sumaPonderada / creditosPonderacionTotal) : 0;
+        document.getElementById('gpa-val').textContent = gpa.toFixed(2);
+        return gpa;
     }
 
     function evaluarEstatusYAlertas(numSemestre, esAprobada) {
-        const progresoActual = calc();
+        const creds = parseInt(document.getElementById('cred').textContent);
+        const progresoActual = Math.round((creds/TOTAL_CREDITOS)*100);
         
         if (progresoActual < 50) hitosAlcanzados.mitad = false;
         if (progresoActual < 100) hitosAlcanzados.completo = false;
@@ -1144,27 +928,16 @@
         if (progresoActual === 100 && !hitosAlcanzados.completo) {
             hitosAlcanzados.completo = true;
             localStorage.setItem('hitos_kardex_alcanzados', JSON.stringify(hitosAlcanzados));
-            lanzarModal("🏆 ¡META COMPLETADA AL 100%! 🏆", "Has desbloqueado el mapa curricular completo. Felicidades, oficialmente has conquistado cada reto académico planteado. ¡A romperla en el mundo profesional!");
+            lanzarModal("🏆 ¡META COMPLETADA AL 100%! 🏆", "Has desbloqueado el mapa curricular completo.");
             return;
         }
 
         if (progresoActual >= 50 && !hitosAlcanzados.mitad) {
             hitosAlcanzados.mitad = true;
             localStorage.setItem('hitos_kardex_alcanzados', JSON.stringify(hitosAlcanzados));
-            lanzarModal("🚀 ¡Llegaste a la Mitad de la Carrera! 🚀", "¡50% del camino completado! Ya cruzaste el ecuador del mapa. Lo que viene demanda enfoque, pero ya demostraste que tienes madera de líder. ¡Sigue presionando!");
+            lanzarModal("🚀 ¡Mitad de Carrera Alcanzada! 🚀", "¡50% del camino completado! Sigue adelante.");
             return;
         }
-
-        const materiasAprobadasSemestre = document.querySelectorAll(`.card-materia[data-semestre="${numSemestre}"].aprobada`).length;
-        const totalMateriasSemestre = parseInt(document.getElementById(`sem-col-${numSemestre}`).dataset.totalMaterias);
-
-        if (materiasAprobadasSemestre === totalMateriasSemestre) {
-            lanzarModal(`🌟 ¡Semestre 0${numSemestre} Concluido! 🌟`, "Has superado con éxito todos los créditos de este periodo formativo. Un paso sólido que te acerca un bloque completo más hacia tu meta.");
-            return;
-        }
-
-        const fraseAleatoria = bancoDeFrases[Math.floor(Math.random() * bancoDeFrases.length)];
-        lanzarModal("⚙️ Asignatura Registrada", fraseAleatoria);
     }
 
     function lanzarModal(titulo, texto) {
@@ -1280,7 +1053,7 @@
             { materia: "ING. PROCESOS", docente: "Carlos Alberto Dzib", salon: "Lab Industrial" },
             { materia: "GESTION CAPITAL HUM.", docente: "Rosa María Tun", salon: "Aula 301" },
             { materia: "TALLER INV. I", docente: "Armando Martínez", salon: "Aula 303" },
-            { materia: "MERCadOTECNIA", docente: "Diana Laura Zepeda", salon: "Aula 302" }
+            { materia: "MERCADOTECNIA", docente: "Diana Laura Zepeda", salon: "Aula 302" }
         ],
         "6": [
             { materia: "ADMIN. SAL. SEG. OC.", docente: "Elizabeth Rodríguez", salon: "Aula 401" },
@@ -1311,28 +1084,21 @@
     function inicializarEstructuraHorario() {
         const body = document.getElementById('schedule-body');
         let htmlRows = "";
-        
         for (let h = 7; h <= 21; h++) {
             let startPeriod = h < 12 ? "a.m." : "p.m.";
             let endPeriod = (h + 1) < 12 ? "a.m." : "p.m.";
-            let startHour = h;
-            let endHour = h + 1;
-            
-            let labelHora = `${startHour}:00 ${startPeriod} a ${endHour}:00 ${endPeriod}`;
-            
+            let labelHora = `${h}:00 ${startPeriod} a ${h + 1}:00 ${endPeriod}`;
             htmlRows += `<tr>
                 <td style="font-weight:700; background: var(--panel-bg); color: var(--azul-marino); font-size:11.5px; white-space: nowrap;">${labelHora}</td>
                 ${dias.map(d => `<td><input type="text" id="cell-${h}-${d}" placeholder="—"></td>`).join('')}
             </tr>`;
         }
         body.innerHTML = htmlRows;
-
         for (let sKey in horariosPredefinidos) {
             if(!localStorage.getItem(`horario_semestre_${sKey}`)) {
                 localStorage.setItem(`horario_semestre_${sKey}`, JSON.stringify(horariosPredefinidos[sKey]));
             }
         }
-
         cargarDatosSemestreCompleto();
     }
 
@@ -1349,12 +1115,7 @@
         const sem = obtenerSemestreSeleccionado();
         const semestreObj = data.find(s => s.s == sem);
         const selectTask = document.getElementById('task-materia');
-        
-        if (!semestreObj) {
-            selectTask.innerHTML = '<option value="">Sin materias</option>';
-            return;
-        }
-
+        if (!semestreObj) { selectTask.innerHTML = '<option value="">Sin materias</option>'; return; }
         selectTask.innerHTML = semestreObj.m.map(mat => `<option value="${mat[2]}">${mat[2]}</option>`).join('');
     }
 
@@ -1371,24 +1132,21 @@
                 if (elementoInput) elementoInput.value = mapaCeldas[idCaja];
             }
         }
-
         actualizarMateriasEntregables();
 
         const profBody = document.getElementById('profesores-body');
         const listaProfs = profesoresSemestres[sem] || [];
         if(listaProfs.length === 0) {
-            profBody.innerHTML = `<tr><td colspan="4" style="text-align:center; color: var(--azul-muted); padding:16px;">Sin profesores registrados para este periodo.</td></tr>`;
+            profBody.innerHTML = `<tr><td colspan="4" style="text-align:center; color: var(--azul-muted); padding:16px;">Sin profesores registrados.</td></tr>`;
         } else {
             profBody.innerHTML = listaProfs.map(p => {
                 const creditosMat = obtenerCreditosMateria(p.materia, sem);
-                return `
-                    <tr>
-                        <td style="font-weight:800; color: var(--oro-flat); text-align: left; padding-left: 15px;">${escapeHtml(p.materia)}</td>
-                        <td style="font-weight:600; color: var(--azul-marino); text-align: left; padding-left: 15px;">${escapeHtml(p.docente)}</td>
-                        <td style="font-weight:700; color: var(--azul-marino); text-align: center;">${creditosMat} CR</td>
-                        <td style="font-weight:700; color: var(--azul-muted); text-align: center;">${escapeHtml(p.salon)}</td>
-                    </tr>
-                `;
+                return `<tr>
+                    <td style="font-weight:800; color: var(--oro-flat); text-align: left; padding-left: 15px;">${escapeHtml(p.materia)}</td>
+                    <td style="font-weight:600; color: var(--azul-marino); text-align: left; padding-left: 15px;">${escapeHtml(p.docente)}</td>
+                    <td style="font-weight:700; color: var(--azul-marino); text-align: center;">${creditosMat} CR</td>
+                    <td style="font-weight:700; color: var(--azul-muted); text-align: center;">${escapeHtml(p.salon)}</td>
+                </tr>`;
             }).join('');
         }
     }
@@ -1404,19 +1162,17 @@
             });
         }
         localStorage.setItem(`horario_semestre_${sem}`, JSON.stringify(mapaCeldas));
-        lanzarModal("💾 Registro Guardado", `La agenda para el bloque seleccionado se sincronizó correctamente.`);
+        lanzarModal("💾 Registro Guardado", `La agenda para el periodo seleccionado se sincronizó con éxito.`);
     }
 
     function cargarTablaActividades() {
         const body = document.getElementById('tasks-body');
         let listaActividades = JSON.parse(localStorage.getItem('actividades_para_realizar')) || [];
-        
         if(listaActividades.length === 0) {
-            body.innerHTML = `<tr><td colspan="4" style="text-align:center; color: var(--azul-muted); padding:24px; font-weight:600;">No hay entregables pendientes en el registro.</td></tr>`;
+            body.innerHTML = `<tr><td colspan="4" style="text-align:center; color: var(--azul-muted); padding:24px; font-weight:600;">No hay entregables pendientes.</td></tr>`;
             renderizarCalendarioMensual([]);
             return;
         }
-
         body.innerHTML = listaActividades.map((act, index) => `
             <tr>
                 <td style="font-weight:800; color: var(--oro-flat);">${escapeHtml(act.materia)}</td>
@@ -1425,7 +1181,6 @@
                 <td style="text-align:center;"><button class="btn-action-delete" onclick="eliminarActividad(${index})">Completar</button></td>
             </tr>
         `).join('');
-
         renderizarCalendarioMensual(listaActividades);
     }
 
@@ -1433,16 +1188,13 @@
         const matSelect = document.getElementById('task-materia');
         const descInput = document.getElementById('task-desc');
         const dateInput = document.getElementById('task-date');
-
         if(!matSelect.value.trim() || !descInput.value.trim()) {
-            lanzarModal("⚠️ Validación", "Por favor, complete los campos obligatorios antes de procesar.");
+            lanzarModal("⚠️ Validación", "Por favor complete los campos requeridos.");
             return;
         }
-
         let listaActividades = JSON.parse(localStorage.getItem('actividades_para_realizar')) || [];
         listaActividades.push({ materia: matSelect.value.trim(), descripcion: descInput.value.trim(), fecha: dateInput.value });
         localStorage.setItem('actividades_para_realizar', JSON.stringify(listaActividades));
-        
         descInput.value = ""; dateInput.value = "";
         cargarTablaActividades();
         verificarNotificacionesProximas();
@@ -1455,47 +1207,144 @@
         cargarTablaActividades();
     }
 
-    // --- FUNCIONALIDAD: CALCULADORA PREDICTIVA POR UNIDADES ---
+    function exportarDatosJSON() {
+        const datosBackup = {};
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            datosBackup[key] = localStorage.getItem(key);
+        }
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(datosBackup, null, 2));
+        const downloadAnchor = document.createElement('a');
+        downloadAnchor.setAttribute("href", dataStr);
+        downloadAnchor.setAttribute("download", `backup_core_academico_${new Date().toISOString().split('T')[0]}.json`);
+        document.body.appendChild(downloadAnchor);
+        downloadAnchor.click();
+        downloadAnchor.remove();
+    }
+
+    function importarDatosJSON(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const datosRestaurados = JSON.parse(e.target.result);
+                localStorage.clear();
+                for (const key in datosRestaurados) { localStorage.setItem(key, datosRestaurados[key]); }
+                lanzarModal("📥 Datos Restaurados", "El respaldo se cargó con éxito. Se recargará el entorno.");
+                setTimeout(() => location.reload(), 2000);
+            } catch (err) {
+                lanzarModal("⚠️ Error", "Archivo JSON inválido.");
+            }
+        };
+        reader.readAsText(file);
+    }
+
+    function filtrarGlobalSistema() {
+        const query = document.getElementById('global-search-input').value.toLowerCase().trim();
+        document.querySelectorAll('#profesores-body tr').forEach(fila => {
+            fila.style.display = (!query || fila.textContent.toLowerCase().includes(query)) ? "" : "none";
+        });
+        document.querySelectorAll('.card-materia').forEach(card => {
+            const textCard = card.textContent.toLowerCase();
+            card.style.opacity = (!query || textCard.includes(query)) ? "1" : "0.2";
+        });
+    }
+
+    let pomoTiempoRestante = 25 * 60;
+    let pomoIntervalo = null;
+    let pomoActivo = false;
+
+    function actualizarDisplayPomodoro() {
+        const minutos = Math.floor(pomoTiempoRestante / 60);
+        const segundos = pomoTiempoRestante % 60;
+        document.getElementById('pomo-display').textContent = `${String(minutos).padStart(2, '0')}:${String(segundos).padStart(2, '0')}`;
+    }
+
+    function togglePomodoro() {
+        const btnToggle = document.getElementById('pomo-btn-toggle');
+        if (!pomoActivo) {
+            pomoActivo = true;
+            btnToggle.textContent = "Pausar";
+            pomoIntervalo = setInterval(() => {
+                if (pomoTiempoRestante > 0) {
+                    pomoTiempoRestante--;
+                    actualizarDisplayPomodoro();
+                } else {
+                    clearInterval(pomoIntervalo);
+                    pomoActivo = false;
+                    btnToggle.textContent = "Iniciar";
+                    lanzarModal("🍅 ¡Pomodoro Concluido!", "Excelente sesión de estudio. Tómate 5 minutos.");
+                    dispararNotificacionPush("Pomodoro Finalizado", "Tómate 5 minutos de descanso.");
+                }
+            }, 1000);
+        } else {
+            pomoActivo = false;
+            clearInterval(pomoIntervalo);
+            btnToggle.textContent = "Reanudar";
+        }
+    }
+
+    function resetPomodoro() {
+        clearInterval(pomoIntervalo);
+        pomoActivo = false;
+        pomoTiempoRestante = 25 * 60;
+        document.getElementById('pomo-btn-toggle').textContent = "Iniciar";
+        actualizarDisplayPomodoro();
+    }
+
     function calcularPredictivoUnidades() {
         const totalUnidades = parseInt(document.getElementById('calc-total-unidades').value);
         const unidadesCursadas = parseInt(document.getElementById('calc-unidades-cursadas').value);
         const promedioActual = parseFloat(document.getElementById('calc-promedio-actual').value);
         const resultadoBox = document.getElementById('calc-resultado-text');
-        const calificacionMinima = 70;
-
-        if (isNaN(unidadesCursadas) || isNaN(promedioActual)) {
-            resultadoBox.innerHTML = "⚠️ Por favor, ingresa valores válidos en los campos.";
-            return;
-        }
-
-        if (unidadesCursadas >= totalUnidades) {
-            resultadoBox.innerHTML = "⚠️ El número de unidades cursadas debe ser menor al total de unidades de la materia.";
-            return;
-        }
+        if (isNaN(unidadesCursadas) || isNaN(promedioActual)) { resultadoBox.innerHTML = "⚠️ Ingresa valores válidos."; return; }
+        if (unidadesCursadas >= totalUnidades) { resultadoBox.innerHTML = "⚠️ Las unidades cursadas deben ser menores al total."; return; }
 
         const unidadesRestantes = totalUnidades - unidadesCursadas;
-        const puntosTotalesRequeridos = totalUnidades * calificacionMinima;
-        const puntosAcumulados = unidadesCursadas * promedioActual;
-        const puntosFaltantes = puntosTotalesRequeridos - puntosAcumulados;
-        const notaNecesariaRestantes = puntosFaltantes / unidadesRestantes;
+        const puntosFaltantes = (totalUnidades * 70) - (unidadesCursadas * promedioActual);
+        const notaNecesaria = puntosFaltantes / unidadesRestantes;
 
         if (puntosFaltantes <= 0) {
-            resultadoBox.innerHTML = `🎉 ¡Excelente! Con tu promedio actual en estas ${unidadesCursadas} unidades, ya aseguras pasar la materia con al menos 70.`;
-        } else if (notaNecesariaRestantes > 100) {
-            resultadoBox.innerHTML = `⚠️ Situación Crítica: Para alcanzar el promedio mínimo de 70 en las ${totalUnidades} unidades, necesitarías un promedio de <strong>${notaNecesariaRestantes.toFixed(1)}</strong> en las ${unidadesRestantes} unidades restantes (supera el 100).`;
+            resultadoBox.innerHTML = `🎉 ¡Ya aseguras aprobar la materia con al menos 70!`;
+        } else if (notaNecesaria > 100) {
+            resultadoBox.innerHTML = `⚠️ Situación Crítica: Requerirías un promedio de <strong>${notaNecesaria.toFixed(1)}</strong> en lo que resta (supera el 100).`;
         } else {
-            resultadoBox.innerHTML = `🎯 Para obtener una calificación aprobatoria de <strong>70</strong> en cada unidad (o en promedio final), necesitas obtener un promedio de al menos <strong>${notaNecesariaRestantes.toFixed(1)}</strong> en las <strong>${unidadesRestantes} unidades restantes</strong>.`;
+            resultadoBox.innerHTML = `🎯 Necesitas un promedio mínimo de <strong>${notaNecesaria.toFixed(1)}</strong> en las <strong>${unidadesRestantes} unidades restantes</strong>.`;
         }
     }
 
-    // --- FUNCIONALIDAD: CONTROL DE ASISTENCIAS ---
+    function simularWhatIfGPA() {
+        const valHip = parseFloat(document.getElementById('whatif-grade').value);
+        const resBox = document.getElementById('whatif-result-text');
+        if(isNaN(valHip) || valHip < 0 || valHip > 100) {
+            resBox.innerHTML = "⚠️ Ingresa una calificación hipotética válida (0-100).";
+            return;
+        }
+
+        let credsAprobados = 0;
+        let sumaPonderada = 0;
+        document.querySelectorAll('.card-materia.aprobada').forEach(c => {
+            const creditos = parseInt(c.dataset.c);
+            credsAprobados += creditos;
+            const [_, sN, iM] = c.id.split('-');
+            const cal = parseFloat(document.getElementById(`grade-${sN}-${iM}`).value) || 70;
+            sumaPonderada += (cal * creditos);
+        });
+
+        const creditosSimulados = credsAprobados + 5;
+        const sumaSimulada = sumaPonderada + (valHip * 5);
+        const nuevoGPA = sumaSimulada / creditosSimulados;
+        const gpaActual = credsAprobados > 0 ? (sumaPonderada / credsAprobados) : 0;
+
+        resBox.innerHTML = `📊 Con una nota hipotética de <strong>${valHip}</strong> en tu siguiente materia (5 CR), tu GPA general cambiaría de <strong>${gpaActual.toFixed(2)}</strong> a <strong>${nuevoGPA.toFixed(2)}</strong>.`;
+    }
+
     function renderizarAsistencias() {
         const sem = obtenerSemestreSeleccionado();
         const semestreObj = data.find(s => s.s == sem);
         const containerAtt = document.getElementById('attendance-container');
-
         if (!semestreObj) return;
-
         let asistenciasData = JSON.parse(localStorage.getItem('registro_asistencias_materias')) || {};
 
         containerAtt.innerHTML = semestreObj.m.map(mat => {
@@ -1505,176 +1354,138 @@
             const porcentajeFaltas = totalClases > 0 ? (info.faltas / totalClases) * 100 : 0;
             const enRiesgo = porcentajeFaltas > 20 && totalClases >= 5;
 
-            return `
-                <div class="attendance-card" style="${enRiesgo ? 'border: 2px solid #e11d48; background: #fff5f5;' : ''}">
-                    <h4>${escapeHtml(mat[2])}</h4>
-                    <div class="attendance-counters">
-                        <span>Asistencias: <strong id="asistencias-${key}" style="color:var(--exito-texto);">${info.asistidas}</strong></span>
-                        <span>Inasistencias: <strong id="inasistencias-${key}" style="color:var(--alerta-texto);">${info.faltas}</strong></span>
-                    </div>
-                    ${enRiesgo ? '<div style="font-size:10px; color:#e11d48; font-weight:800; text-transform:uppercase;">⚠️ ¡Alerta: +20% de inasistencias (Riesgo de Extraordinario)!</div>' : ''}
-                    <div class="attendance-actions">
-                        <button class="btn-att btn-att-asis" onclick="incrementarAsistencia('${key}')">✓ Asistió</button>
-                        <button class="btn-att btn-att-falta" onclick="incrementarInasistencia('${key}')">✕ Faltó</button>
-                    </div>
-                    <button class="btn-reiniciar" onclick="reiniciarAsistencias('${key}', '${escapeHtml(mat[2])}')">Reiniciar Registros</button>
+            return `<div class="attendance-card" style="${enRiesgo ? 'border: 2px solid #e11d48;' : ''}">
+                <h4>${escapeHtml(mat[2])}</h4>
+                <div class="attendance-counters">
+                    <span>Asistencias: <strong style="color:var(--exito-texto);">${info.asistidas}</strong></span>
+                    <span>Faltas: <strong style="color:var(--alerta-texto);">${info.faltas}</strong></span>
                 </div>
-            `;
+                ${enRiesgo ? '<div style="font-size:10px; color:#e11d48; font-weight:800; text-transform:uppercase;">⚠️ Riesgo de Extraordinario (>20%)</div>' : ''}
+                <div class="attendance-actions">
+                    <button class="btn-att btn-att-asis" onclick="modificarAsistencia('${key}', 'asistida')">✓ Asistió</button>
+                    <button class="btn-att btn-att-falta" onclick="modificarAsistencia('${key}', 'falta')">✕ Faltó</button>
+                </div>
+            </div>`;
         }).join('');
-    }
-
-    function incrementarAsistencia(key) {
-        modificarAsistencia(key, 'asistida');
-    }
-
-    function incrementarInasistencia(key) {
-        modificarAsistencia(key, 'falta');
     }
 
     function modificarAsistencia(key, tipo) {
         let asistenciasData = JSON.parse(localStorage.getItem('registro_asistencias_materias')) || {};
         if (!asistenciasData[key]) asistenciasData[key] = { asistidas: 0, faltas: 0 };
-
         if (tipo === 'asistida') asistenciasData[key].asistidas++;
         else asistenciasData[key].faltas++;
-
         localStorage.setItem('registro_asistencias_materias', JSON.stringify(asistenciasData));
-        
-        // Actualizar interfaz visualmente con la función solicitada
-        actualizarInterfazMateria(key, asistenciasData[key].asistidas, asistenciasData[key].faltas);
         renderizarAsistencias();
     }
 
-    function reiniciarAsistencias(materiaKey, materiaNombre) {
-        if (!confirm(`¿Estás seguro de que deseas reiniciar las asistencias de ${materiaNombre}?`)) {
-            return;
-        }
-
-        let registros = JSON.parse(localStorage.getItem('registro_asistencias_materias')) || {};
-
-        registros[materiaKey] = {
-            asistidas: 0,
-            faltas: 0
-        };
-
-        localStorage.setItem('registro_asistencias_materias', JSON.stringify(registros));
-
-        actualizarInterfazMateria(materiaKey, 0, 0);
-        renderizarAsistencias();
-    }
-
-    function actualizarInterfazMateria(materia, asistencias, inasistencias) {
-        const spanAsistencias = document.getElementById(`asistencias-${materia}`);
-        const spanInasistencias = document.getElementById(`inasistencias-${materia}`);
-
-        if (spanAsistencias) spanAsistencias.textContent = asistencias;
-        if (spanInasistencias) spanInasistencias.textContent = inasistencias;
-    }
-
-    // --- FUNCIONALIDAD: RECURSOS, GOOGLE DRIVE Y SÍLABOS ---
     function renderizarRecursos() {
         const sem = obtenerSemestreSeleccionado();
         const semestreObj = data.find(s => s.s == sem);
         const containerRes = document.getElementById('resources-container');
-
         if (!semestreObj) return;
-
         let recursosData = JSON.parse(localStorage.getItem('recursos_materias_core')) || {};
 
         containerRes.innerHTML = semestreObj.m.map(mat => {
             const key = `rec_${sem}_${mat[0]}`;
             const info = recursosData[key] || { drive: '', clase: '', silabo: '' };
-
-            return `
-                <div class="resource-card">
-                    <h4>${escapeHtml(mat[2])}</h4>
-                    <label style="font-size:11px; font-weight:700; color:var(--azul-muted);">Link de Google Drive / Carpeta:
-                        <input type="text" id="drive-${key}" value="${info.drive}" placeholder="https://drive.google.com/..." oninput="guardarRecurso('${key}')">
-                    </label>
-                    <label style="font-size:11px; font-weight:700; color:var(--azul-muted);">Link de Clases en Línea / Meet / Zoom:
-                        <input type="text" id="clase-${key}" value="${info.clase}" placeholder="https://meet.google.com/..." oninput="guardarRecurso('${key}')">
-                    </label>
-                    <label style="font-size:11px; font-weight:700; color:var(--azul-muted);">Enlace del Sílabo / Programa:
-                        <input type="text" id="silabo-${key}" value="${info.silabo}" placeholder="Link al PDF del sílabo..." oninput="guardarRecurso('${key}')">
-                    </label>
-                    <div class="resource-links">
-                        ${info.drive ? `<a href="${info.drive}" target="_blank" class="btn-link-action">📁 Abrir Drive</a>` : ''}
-                        ${info.clase ? `<a href="${info.clase}" target="_blank" class="btn-link-action">💻 Clase Online</a>` : ''}
-                        ${info.silabo ? `<a href="${info.silabo}" target="_blank" class="btn-link-action">📄 Sílabo</a>` : ''}
-                    </div>
+            return `<div class="resource-card">
+                <h4>${escapeHtml(mat[2])}</h4>
+                <label style="font-size:11px; font-weight:700; color:var(--azul-muted);">Drive / Carpeta:
+                    <input type="text" id="drive-${key}" value="${info.drive}" placeholder="https://drive.google.com/..." oninput="guardarRecurso('${key}')">
+                </label>
+                <label style="font-size:11px; font-weight:700; color:var(--azul-muted);">Clase Online (Meet/Zoom):
+                    <input type="text" id="clase-${key}" value="${info.clase}" placeholder="https://meet.google.com/..." oninput="guardarRecurso('${key}')">
+                </label>
+                <label style="font-size:11px; font-weight:700; color:var(--azul-muted);">Sílabo / Programa:
+                    <input type="text" id="silabo-${key}" value="${info.silabo}" placeholder="Link al PDF..." oninput="guardarRecurso('${key}')">
+                </label>
+                <div class="resource-links">
+                    ${info.drive ? `<a href="${info.drive}" target="_blank" class="btn-link-action">📁 Drive</a>` : ''}
+                    ${info.clase ? `<a href="${info.clase}" target="_blank" class="btn-link-action">💻 Online</a>` : ''}
+                    ${info.silabo ? `<a href="${info.silabo}" target="_blank" class="btn-link-action">📄 Sílabo</a>` : ''}
                 </div>
-            `;
+            </div>`;
         }).join('');
     }
 
     function guardarRecurso(key) {
         let recursosData = JSON.parse(localStorage.getItem('recursos_materias_core')) || {};
-        const driveVal = document.getElementById(`drive-${key}`).value.trim();
-        const claseVal = document.getElementById(`clase-${key}`).value.trim();
-        const silaboVal = document.getElementById(`silabo-${key}`).value.trim();
-
-        recursosData[key] = { drive: driveVal, clase: claseVal, silabo: silaboVal };
+        recursosData[key] = {
+            drive: document.getElementById(`drive-${key}`).value.trim(),
+            clase: document.getElementById(`clase-${key}`).value.trim(),
+            silabo: document.getElementById(`silabo-${key}`).value.trim()
+        };
         localStorage.setItem('recursos_materias_core', JSON.stringify(recursosData));
     }
 
-    // --- FUNCIONALIDAD: CALENDARIO MENSUAL Y NOTIFICACIONES LOCALES ---
+    function renderizarBlocNotas() {
+        const sem = obtenerSemestreSeleccionado();
+        const semestreObj = data.find(s => s.s == sem);
+        const containerNotes = document.getElementById('notes-container');
+        if (!semestreObj) return;
+        let notasData = JSON.parse(localStorage.getItem('bloc_notas_materias_core')) || {};
+
+        containerNotes.innerHTML = semestreObj.m.map(mat => {
+            const key = `note_${sem}_${mat[0]}`;
+            const notaVal = notasData[key] || '';
+            return `<div class="note-card">
+                <h4>📝 ${escapeHtml(mat[2])}</h4>
+                <textarea id="${key}" placeholder="Apuntes rápidos, contraseñas o fórmulas clave..." style="width:100%; height:80px; box-sizing:border-box; margin-top:8px; border-radius:12px; padding:10px; font-size:12px; resize:vertical;" oninput="guardarNotaRapida('${key}')">${escapeHtml(notaVal)}</textarea>
+            </div>`;
+        }).join('');
+    }
+
+    function guardarNotaRapida(key) {
+        let notasData = JSON.parse(localStorage.getItem('bloc_notas_materias_core')) || {};
+        notasData[key] = document.getElementById(key).value;
+        localStorage.setItem('bloc_notas_materias_core', JSON.stringify(notasData));
+    }
+
     function renderizarCalendarioMensual(listaActividades) {
         const grid = document.getElementById('calendar-days-grid');
         const titleMonth = document.getElementById('calendar-month-title');
-        
         const ahora = new Date();
         const año = ahora.getFullYear();
         const mes = ahora.getMonth();
-        
         const nombresMeses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
         titleMonth.textContent = `${nombresMeses[mes]} ${año}`;
 
         const primerDiaMes = new Date(año, mes, 1).getDay();
         const totalDiasMes = new Date(año, mes + 1, 0).getDate();
-        
         let offset = primerDiaMes === 0 ? 6 : primerDiaMes - 1;
 
         let htmlCells = "";
         for (let i = 0; i < offset; i++) {
             htmlCells += `<div class="calendar-cell" style="background:transparent; border:none;"></div>`;
         }
-
         for (let dia = 1; dia <= totalDiasMes; dia++) {
             let fechaStr = `${año}-${String(mes + 1).padStart(2, '0')}-${String(dia).padStart(2, '0')}`;
             let esHoy = dia === ahora.getDate();
-
             let tareasDia = listaActividades.filter(act => act.fecha === fechaStr);
 
-            htmlCells += `
-                <div class="calendar-cell ${esHoy ? 'today' : ''}">
-                    <span style="font-size:11px; font-weight:800;">${dia}</span>
-                    ${tareasDia.map(t => `<div class="cal-task-tag" title="${escapeHtml(t.materia)}: ${escapeHtml(t.descripcion)}">${escapeHtml(t.materia)}</div>`).join('')}
-                </div>
-            `;
+            htmlCells += `<div class="calendar-cell ${esHoy ? 'today' : ''}">
+                <span style="font-size:11px; font-weight:800;">${dia}</span>
+                ${tareasDia.map(t => `<div class="cal-task-tag" title="${escapeHtml(t.materia)}">${escapeHtml(t.materia)}</div>`).join('')}
+            </div>`;
         }
-
         grid.innerHTML = htmlCells;
     }
 
     function verificarNotificacionesProximas() {
         let listaActividades = JSON.parse(localStorage.getItem('actividades_para_realizar')) || [];
         if (listaActividades.length === 0) return;
-
         const hoyStr = new Date().toISOString().split('T')[0];
+        const tareasHoy = listaActividades.filter(act => act.fecha === hoyStr);
 
-        const tareasParaHoyOmañana = listaActividades.filter(act => {
-            if (!act.fecha) return false;
-            return act.fecha === hoyStr;
-        });
-
-        if (tareasParaHoyOmañana.length > 0) {
-            const descripciones = tareasParaHoyOmañana.map(t => `• ${t.materia}: ${t.descripcion}`).join('<br>');
-            lanzarModal("🔔 ¡Alerta de Entrega Inminente!", `Tienes tareas o exámenes programados para entrega próxima:<br><br>${descripciones}`);
+        if (tareasHoy.length > 0) {
+            const descripciones = tareasHoy.map(t => `• ${t.materia}: ${t.descripcion}`).join('\n');
+            lanzarModal("🔔 ¡Entregas para Hoy!", `Tienes tareas o exámenes programados para el día de hoy:<br><br>${descripciones.replace(/\n/g, '<br>')}`);
+            dispararNotificacionPush("Entregas Pendientes", "Tienes actividades programadas para el día de hoy.");
         }
     }
 
     function escapeHtml(text) {
-        return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        return text ? text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") : '';
     }
 
     calc();
