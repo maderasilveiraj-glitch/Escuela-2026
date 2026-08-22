@@ -647,6 +647,31 @@
         .ring-3 {
             filter: saturate(1.35);
         }
+
+        /* Todos los botones del menú comparten el acabado blanco original */
+        .nav-container .btn-tab,
+        .nav-container .btn-tab.active-tab,
+        .nav-container .btn-theme-nav,
+        .nav-container .btn-tool-exec {
+            background: var(--blanco-puro);
+            color: var(--azul-marino);
+            border: 1px solid rgba(165, 175, 190, 0.3);
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.08);
+        }
+
+        .nav-container .btn-tab:hover,
+        .nav-container .btn-theme-nav:hover,
+        .nav-container .btn-tool-exec:hover {
+            background: var(--blanco-puro);
+            color: var(--azul-marino);
+            border-color: var(--oro-flat);
+            transform: translateY(-1px);
+        }
+
+        .nav-container .btn-tab.active-tab {
+            box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.15), -2px -2px 6px var(--panel-border);
+        }
+
         .view-block { display: none; }
         .view-block.active-block { display: block; animation: smoothUp 0.5s cubic-bezier(0.25, 1, 0.5, 1); }
         @keyframes smoothUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
@@ -1908,3 +1933,5 @@
 </script>
 </body>
 </html>
+
+        
