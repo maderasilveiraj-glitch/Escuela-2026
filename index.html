@@ -405,7 +405,7 @@
             border-radius: 8px;
         }
 
-        /* --- NUEVAS SECCIONES EXECUTIVAS --- */
+        /* --- NUEVAS SECCIONES EJECUTIVAS --- */
         .section-title {
             color: var(--azul-marino);
             font-size: 20px;
@@ -416,7 +416,7 @@
             letter-spacing: 0.5px;
         }
 
-        /* Calculadora Predictiva */
+        /* Calculadora Predictiva Por Unidades */
         .predictive-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -443,6 +443,7 @@
             text-align: center;
             color: var(--azul-marino);
             border: 1px dashed var(--oro-flat);
+            line-height: 1.5;
         }
 
         /* Asistencias */
@@ -610,7 +611,7 @@
             text-overflow: ellipsis;
         }
 
-        /* BANDEJA DE ENTREGABLES EXECUTIVA */
+        /* BANDEJA DE ENTREGABLES EJECUTIVA */
         .table-tasks {
             width: 100%;
             border-collapse: collapse;
@@ -896,32 +897,35 @@
         </div>
     </div>
 
-    <!-- VISTA 3: KARDEX PREDICTIVO (Calculadora de calificaciones) -->
+    <!-- VISTA 3: KARDEX PREDICTIVO POR UNIDADES -->
     <div id="view-predictivo" class="view-block">
         <div class="panel-workspace">
-            <h3 class="section-title">🧮 Calculadora de Calificaciones y Promedio (Kardex Predictivo)</h3>
-            <p style="color:var(--azul-muted); font-weight:600; font-size:13px; margin-bottom:25px;">Ingresa tus notas parciales acumuladas y el valor porcentual que representan para calcular cuánto necesitas obtener en el examen final para aprobar la materia.</p>
+            <h3 class="section-title">🧮 Kardex Predictivo por Unidades (Calificación Mínima: 70)</h3>
+            <p style="color:var(--azul-muted); font-weight:600; font-size:13px; margin-bottom:25px;">Selecciona el total de unidades de tu materia, indica cuántas unidades ya evaluaste y el promedio que llevas en ellas para calcular cuánto necesitas en las unidades restantes para pasar todas con al menos 70.</p>
             
             <div class="predictive-grid">
                 <div class="calc-card">
-                    <h4 style="margin-top:0; color:var(--azul-marino);">Parámetros de Evaluación</h4>
+                    <h4 style="margin-top:0; color:var(--azul-marino);">Parámetros de la Materia</h4>
                     <div style="display:flex; flex-direction:column; gap:14px; margin-top:15px;">
-                        <label style="font-size:12px; font-weight:700; color:var(--azul-muted);">Calificación Objetivo para Pasar (Ej: 70 o 70%):
-                            <input type="number" id="calc-meta" value="70" style="width:100%; margin-top:6px; box-sizing:border-box;">
+                        <label style="font-size:12px; font-weight:700; color:var(--azul-muted);">Estructura de la Materia:
+                            <select id="calc-total-unidades" style="width:100%; margin-top:6px; box-sizing:border-box;">
+                                <option value="4">Materia de 4 Unidades</option>
+                                <option value="6">Materia de 6 Unidades</option>
+                            </select>
                         </label>
-                        <label style="font-size:12px; font-weight:700; color:var(--azul-muted);">Suma Actual de Notas Ponderadas (Ej: si llevas 50 puntos acumulados de tus parciales):
-                            <input type="number" id="calc-acumulado" placeholder="Ej. 45" style="width:100%; margin-top:6px; box-sizing:border-box;">
+                        <label style="font-size:12px; font-weight:700; color:var(--azul-muted);">¿Cuántas unidades ya tienes evaluadas?:
+                            <input type="number" id="calc-unidades-cursadas" min="1" max="5" value="2" style="width:100%; margin-top:6px; box-sizing:border-box;" placeholder="Ej. 2">
                         </label>
-                        <label style="font-size:12px; font-weight:700; color:var(--azul-muted);">Valor Porcentual del Examen Final (Ej: 40%):
-                            <input type="number" id="calc-peso-final" placeholder="Ej. 40" style="width:100%; margin-top:6px; box-sizing:border-box;">
+                        <label style="font-size:12px; font-weight:700; color:var(--azul-muted);">Promedio actual en esas unidades cursadas (Escala de 0 a 100):
+                            <input type="number" id="calc-promedio-actual" style="width:100%; margin-top:6px; box-sizing:border-box;" placeholder="Ej. 75">
                         </label>
-                        <button class="btn-prime" onclick="calcularNotaNecesaria()" style="margin-top:10px;">Calcular Examen Final</button>
+                        <button class="btn-prime" onclick="calcularPredictivoUnidades()" style="margin-top:10px;">Calcular Unidades Restantes</button>
                     </div>
                 </div>
                 <div class="calc-card" style="display:flex; flex-direction:column; justify-content:center;">
                     <h4 style="margin-top:0; color:var(--azul-marino);">Resultado Predictivo</h4>
                     <div class="calc-result-box" id="calc-resultado-text">
-                        Configura los parámetros a la izquierda para conocer la calificación requerida.
+                        Configura los parámetros a la izquierda para conocer la calificación requerida por unidad.
                     </div>
                 </div>
             </div>
@@ -1431,28 +1435,36 @@
         cargarTablaActividades();
     }
 
-    // --- FUNCIONALIDAD: CALCULADORA PREDICTIVA ---
-    function calcularNotaNecesaria() {
-        const meta = parseFloat(document.getElementById('calc-meta').value) || 70;
-        const acumulado = parseFloat(document.getElementById('calc-acumulado').value) || 0;
-        const pesoFinal = parseFloat(document.getElementById('calc-peso-final').value) || 0;
-
+    // --- FUNCIONALIDAD: CALCULADORA PREDICTIVA POR UNIDADES ---
+    function calcularPredictivoUnidades() {
+        const totalUnidades = parseInt(document.getElementById('calc-total-unidades').value);
+        const unidadesCursadas = parseInt(document.getElementById('calc-unidades-cursadas').value);
+        const promedioActual = parseFloat(document.getElementById('calc-promedio-actual').value);
         const resultadoBox = document.getElementById('calc-resultado-text');
+        const calificacionMinima = 70;
 
-        if (pesoFinal <= 0) {
-            resultadoBox.innerHTML = "⚠️ El peso porcentual del examen final debe ser mayor a 0.";
+        if (isNaN(unidadesCursadas) || isNaN(promedioActual)) {
+            resultadoBox.innerHTML = "⚠️ Por favor, ingresa valores válidos en los campos.";
             return;
         }
 
-        const puntosFaltantes = meta - acumulado;
-        const notaExamenRequerida = (puntosFaltantes / pesoFinal) * 100;
+        if (unidadesCursadas >= totalUnidades) {
+            resultadoBox.innerHTML = "⚠️ El número de unidades cursadas debe ser menor al total de unidades de la materia.";
+            return;
+        }
+
+        const unidadesRestantes = totalUnidades - unidadesCursadas;
+        const puntosTotalesRequeridos = totalUnidades * calificacionMinima;
+        const puntosAcumulados = unidadesCursadas * promedioActual;
+        const puntosFaltantes = puntosTotalesRequeridos - puntosAcumulados;
+        const notaNecesariaRestantes = puntosFaltantes / unidadesRestantes;
 
         if (puntosFaltantes <= 0) {
-            resultadoBox.innerHTML = "🎉 ¡Felicidades! Con tu acumulado actual **ya has alcanzado o superado la meta** para pasar la materia.";
-        } else if (notaExamenRequerida > 100) {
-            resultadoBox.innerHTML = `⚠️ Estás en situación crítica. Para alcanzar los ${meta} puntos requeridos, necesitarías sacar **${notaExamenRequerida.toFixed(1)}** en el examen final (supera el 100%).`;
+            resultadoBox.innerHTML = `🎉 ¡Excelente! Con tu promedio actual en estas ${unidadesCursadas} unidades, ya aseguras pasar la materia con al menos 70.`;
+        } else if (notaNecesariaRestantes > 100) {
+            resultadoBox.innerHTML = `⚠️ Situación Crítica: Para alcanzar el promedio mínimo de 70 en las ${totalUnidades} unidades, necesitarías un promedio de <strong>${notaNecesariaRestantes.toFixed(1)}</strong> en las ${unidadesRestantes} unidades restantes (supera el 100).`;
         } else {
-            resultadoBox.innerHTML = `🎯 Para pasar la materia con **${meta}**, necesitas obtener al menos **${notaExamenRequerida.toFixed(1)}** en tu examen final (que vale un ${pesoFinal}%).`;
+            resultadoBox.innerHTML = `🎯 Para obtener una calificación aprobatoria de <strong>70</strong> en cada unidad (o en promedio final), necesitas obtener un promedio de al menos <strong>${notaNecesariaRestantes.toFixed(1)}</strong> en las <strong>${unidadesRestantes} unidades restantes</strong>.`;
         }
     }
 
@@ -1547,7 +1559,7 @@
         localStorage.setItem('recursos_materias_core', JSON.stringify(recursosData));
     }
 
-    // --- FUNCIONALIDAD: CALENDARIO MENSUAL / SEMANAL Y NOTIFICACIONES LOCALES ---
+    // --- FUNCIONALIDAD: CALENDARIO MENSUAL Y NOTIFICACIONES LOCALES ---
     function renderizarCalendarioMensual(listaActividades) {
         const grid = document.getElementById('calendar-days-grid');
         const titleMonth = document.getElementById('calendar-month-title');
@@ -1562,7 +1574,6 @@
         const primerDiaMes = new Date(año, mes, 1).getDay();
         const totalDiasMes = new Date(año, mes + 1, 0).getDate();
         
-        // Ajuste para iniciar semana en lunes (0 = Lunes, ..., 6 = Domingo)
         let offset = primerDiaMes === 0 ? 6 : primerDiaMes - 1;
 
         let htmlCells = "";
