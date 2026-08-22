@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Core Académico - Interfaz Ejecutiva 3D</title>
+    <title>Julio-Escuela</title>
     <style>
         :root {
             /* Paleta Cerámica y Oro Pulido (Modo Claro por Defecto) */
@@ -1062,15 +1062,17 @@
                 </div>
             </div>
 
-            <!-- 1. Simulador What-If GPA Global -->
+            <!-- 1. Simulador What-If GPA del semestre en curso -->
             <div class="calc-card" style="margin-top: 30px;">
-                <h4 style="margin-top:0; color:var(--azul-marino);">🎯 Simulador What-If GPA General</h4>
-                <p style="font-size: 12px; color: var(--azul-muted);">Ingresa notas hipotéticas para tus próximos exámenes y proyecta tu promedio general instantáneamente.</p>
-                <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center; margin-top: 15px;">
-                    <input type="number" id="whatif-grade" min="70" max="100" placeholder="Cal. hipotética (0-100)" style="width: 200px;">
-                    <button class="btn-prime" onclick="simularWhatIfGPA()">Simular Impacto GPA</button>
+                <h4 style="margin-top:0; color:var(--azul-marino);">🎯 Simulador de Impacto — Semestre en Curso</h4>
+                <p style="font-size: 12px; color: var(--azul-muted);">Captura la calificación hipotética de cada materia del semestre que estás cursando y calcula cómo quedaría tu promedio del semestre y tu GPA general.</p>
+                <div id="whatif-semestre-info" style="margin:15px 0 12px; font-size:13px; font-weight:800; color:var(--azul-marino);"></div>
+                <div id="whatif-materias-container" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-top:15px;"></div>
+                <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-top:18px;">
+                    <button class="btn-prime" onclick="simularWhatIfGPA()">📊 Simular impacto de todas las materias</button>
+                    <button class="btn-prime" type="button" onclick="limpiarSimuladorWhatIf()" style="background:var(--azul-marino);">↺ Limpiar simulación</button>
                 </div>
-                <div class="calc-result-box" id="whatif-result-text" style="margin-top: 15px;">Sin simulaciones activas.</div>
+                <div class="calc-result-box" id="whatif-result-text" style="margin-top: 15px;">Selecciona un semestre como <strong>Cursando</strong> para comenzar.</div>
             </div>
         </div>
     </div>
@@ -1249,6 +1251,7 @@
             document.getElementById('view-predictivo').classList.add('active-block');
             document.getElementById('tab-predictivo').classList.add('active-tab');
             document.getElementById('main-title').textContent = "Kardex Predictivo y Simulador";
+            renderizarSimuladorWhatIf();
         } else if(vista === 'asistencias') {
             document.getElementById('view-asistencias').classList.add('active-block');
             document.getElementById('tab-asistencias').classList.add('active-tab');
@@ -1893,30 +1896,132 @@
         `;
     }
 
-    function simularWhatIfGPA() {
-        const valHip = parseFloat(document.getElementById('whatif-grade').value);
+    function renderizarSimuladorWhatIf() {
+        const semActual = localStorage.getItem('semestre_actual_cursando');
+        const info = document.getElementById('whatif-semestre-info');
+        const container = document.getElementById('whatif-materias-container');
         const resBox = document.getElementById('whatif-result-text');
-        if(isNaN(valHip) || valHip < 70 || valHip > 100) {
-            resBox.innerHTML = "⚠️ La calificación hipotética debe estar entre 70 y 100."; 
+
+        if (!semActual) {
+            if (info) info.innerHTML = "⚠️ No hay semestre seleccionado como <strong>Cursando</strong>.";
+            if (container) container.innerHTML = '';
+            if (resBox) resBox.innerHTML = "Ve a <strong>Plan de Estudios</strong> y marca el semestre que estás cursando.";
             return;
         }
 
-        let credsAprobados = 0;
-        let sumaPonderada = 0;
+        const semestreObj = data.find(s => s.s == semActual);
+        if (!semestreObj) return;
+
+        info.innerHTML = `📚 Semestre <strong>0${semActual}</strong> — captura las calificaciones hipotéticas de <strong>${semestreObj.m.length} materia(s)</strong>.`;
+
+        const saved = JSON.parse(localStorage.getItem(`whatif_semestre_${semActual}`) || '{}');
+        container.innerHTML = semestreObj.m.map((mat, i) => `
+            <div style="padding:14px; border:1px solid var(--panel-border); border-radius:14px; background:var(--panel-bg); box-shadow:var(--shadow-3d-inset);">
+                <div style="font-size:11px; font-weight:800; color:var(--azul-muted);">${mat[0]} · ${mat[1]} CR</div>
+                <div style="font-size:13px; font-weight:900; color:var(--azul-marino); margin:5px 0 10px;">${mat[2]}</div>
+                <input type="number" min="0" max="100" step="0.01" id="whatif-${semActual}-${i}" placeholder="Calificación (0-100)" value="${saved[i] ?? ''}" style="width:100%; box-sizing:border-box;" oninput="guardarSimulacionWhatIf()">
+            </div>
+        `).join('');
+    }
+
+    function guardarSimulacionWhatIf() {
+        const semActual = localStorage.getItem('semestre_actual_cursando');
+        if (!semActual) return;
+        const semestreObj = data.find(s => s.s == semActual);
+        if (!semestreObj) return;
+
+        const valores = {};
+        semestreObj.m.forEach((_, i) => {
+            const input = document.getElementById(`whatif-${semActual}-${i}`);
+            if (input && input.value !== '') valores[i] = input.value;
+        });
+        localStorage.setItem(`whatif_semestre_${semActual}`, JSON.stringify(valores));
+    }
+
+    function limpiarSimuladorWhatIf() {
+        const semActual = localStorage.getItem('semestre_actual_cursando');
+        if (semActual) localStorage.removeItem(`whatif_semestre_${semActual}`);
+        renderizarSimuladorWhatIf();
+        const resBox = document.getElementById('whatif-result-text');
+        if (resBox) resBox.innerHTML = "Simulación limpia. Captura las notas hipotéticas para comenzar.";
+    }
+
+    function simularWhatIfGPA() {
+        const resBox = document.getElementById('whatif-result-text');
+        const semActual = localStorage.getItem('semestre_actual_cursando');
+
+        if (!semActual) {
+            resBox.innerHTML = "⚠️ Primero marca un semestre como <strong>Cursando</strong> en Plan de Estudios.";
+            return;
+        }
+
+        const semestreObj = data.find(s => s.s == semActual);
+        if (!semestreObj) return;
+
+        const simulaciones = [];
+        for (let i = 0; i < semestreObj.m.length; i++) {
+            const input = document.getElementById(`whatif-${semActual}-${i}`);
+            const valor = parseFloat(input?.value);
+            if (isNaN(valor) || valor < 0 || valor > 100) {
+                resBox.innerHTML = `⚠️ Captura una calificación válida de <strong>0 a 100</strong> en <strong>${semestreObj.m[i][2]}</strong>.`;
+                input?.focus();
+                return;
+            }
+            simulaciones.push(valor);
+        }
+
+        guardarSimulacionWhatIf();
+
+        // GPA histórico: toma las materias aprobadas, excluyendo el semestre
+        // que estamos simulando para no duplicar sus créditos.
+        let creditosHistoricos = 0;
+        let sumaHistorica = 0;
+
         document.querySelectorAll('.card-materia.aprobada').forEach(c => {
-            const creditos = parseInt(c.dataset.c);
-            credsAprobados += creditos;
-            const [_, sN, iM] = c.id.split('-');
-            const cal = parseFloat(document.getElementById(`grade-${sN}-${iM}`).value) || 70;
-            sumaPonderada += (cal * creditos);
+            const [, sN, iM] = c.id.split('-');
+            if (String(sN) === String(semActual)) return;
+
+            const creditos = parseInt(c.dataset.c) || 0;
+            const input = document.getElementById(`grade-${sN}-${iM}`);
+            const cal = parseFloat(input?.value);
+
+            if (!isNaN(cal)) {
+                creditosHistoricos += creditos;
+                sumaHistorica += cal * creditos;
+            }
         });
 
-        const creditosSimulados = credsAprobados + 5;
-        const sumaSimulada = sumaPonderada + (valHip * 5);
-        const nuevoGPA = sumaSimulada / creditosSimulados;
-        const gpaActual = credsAprobados > 0 ? (sumaPonderada / credsAprobados) : 0;
+        let creditosSemestre = 0;
+        let sumaSemestre = 0;
+        let detalle = '';
 
-        resBox.innerHTML = `📊 Con una nota hipotética de <strong>${valHip}</strong> en tu siguiente materia (5 CR), tu GPA general cambiaría de <strong>${gpaActual.toFixed(2)}</strong> a <strong>${nuevoGPA.toFixed(2)}</strong>.`;
+        semestreObj.m.forEach((mat, i) => {
+            const creditos = mat[1];
+            const cal = simulaciones[i];
+            creditosSemestre += creditos;
+            sumaSemestre += cal * creditos;
+            detalle += `<div style="display:flex; justify-content:space-between; gap:10px; padding:6px 0; border-bottom:1px solid var(--panel-border);"><span>${mat[2]}</span><strong>${cal.toFixed(2)}</strong></div>`;
+        });
+
+        const promedioSemestre = sumaSemestre / creditosSemestre;
+        const creditosProyectados = creditosHistoricos + creditosSemestre;
+        const sumaProyectada = sumaHistorica + sumaSemestre;
+        const gpaProyectado = creditosProyectados > 0 ? sumaProyectada / creditosProyectados : promedioSemestre;
+        const gpaActual = creditosHistoricos > 0 ? sumaHistorica / creditosHistoricos : 0;
+        const impacto = creditosHistoricos > 0 ? gpaProyectado - gpaActual : 0;
+
+        resBox.innerHTML = `
+            <div style="font-size:15px; line-height:1.65;">
+                📚 <strong>Simulación del Semestre 0${semActual}</strong><br>
+                📊 Promedio ponderado del semestre: <strong>${promedioSemestre.toFixed(2)}</strong><br>
+                ${creditosHistoricos > 0 ? `🎓 GPA actual antes del semestre: <strong>${gpaActual.toFixed(2)}</strong><br>` : ''}
+                🚀 <strong>GPA general proyectado: ${gpaProyectado.toFixed(2)}</strong><br>
+                ${creditosHistoricos > 0 ? `📈 Impacto en tu GPA: <strong>${impacto >= 0 ? '+' : ''}${impacto.toFixed(2)}</strong><br>` : ''}
+                <div style="margin-top:12px; padding-top:10px;">
+                    <strong>Calificaciones simuladas:</strong>
+                    ${detalle}
+                </div>
+            </div>`;
     }
 
     function renderizarAsistencias() {
@@ -2120,6 +2225,7 @@
 </script>
 </body>
 </html>
+         
          
 
         
