@@ -1026,8 +1026,8 @@
                         <label style="font-size:12px; font-weight:700; color:var(--azul-muted);">Unidades ya evaluadas:
                             <input type="number" id="calc-unidades-cursadas" min="1" max="5" value="2" style="width:100%; margin-top:6px; box-sizing:border-box;">
                         </label>
-                        <label style="font-size:12px; font-weight:700; color:var(--azul-muted);">Promedio actual (0 a 100):
-                            <input type="number" id="calc-promedio-actual" style="width:100%; margin-top:6px; box-sizing:border-box;" placeholder="Ej. 75">
+                        <label style="font-size:12px; font-weight:700; color:var(--azul-muted);">Promedio actual (70 a 100):
+                            <input type="number" id="calc-promedio-actual" style="width:100%; margin-top:6px; box-sizing:border-box;" placeholder="Ej. 75" min="70" max="100">
                         </label>
                         <button class="btn-prime" onclick="calcularPredictivoUnidades()" style="margin-top:10px;">Calcular Restantes</button>
                     </div>
@@ -1043,7 +1043,7 @@
                 <h4 style="margin-top:0; color:var(--azul-marino);">🎯 Simulador What-If GPA General</h4>
                 <p style="font-size: 12px; color: var(--azul-muted);">Ingresa notas hipotéticas para tus próximos exámenes y proyecta tu promedio general instantáneamente.</p>
                 <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center; margin-top: 15px;">
-                    <input type="number" id="whatif-grade" min="0" max="100" placeholder="Cal. hipotética (0-100)" style="width: 200px;">
+                    <input type="number" id="whatif-grade" min="70" max="100" placeholder="Cal. hipotética (0-100)" style="width: 200px;">
                     <button class="btn-prime" onclick="simularWhatIfGPA()">Simular Impacto GPA</button>
                 </div>
                 <div class="calc-result-box" id="whatif-result-text" style="margin-top: 15px;">Sin simulaciones activas.</div>
@@ -1054,8 +1054,14 @@
     <!-- VISTA 4: HISTORIAL DE ASISTENCIAS -->
     <div id="view-asistencias" class="view-block">
         <div class="panel-workspace">
-            <h3 class="section-title">📊 Control de Asistencias e Inasistencias</h3>
-            <p style="color:var(--azul-muted); font-weight:600; font-size:13px; margin-bottom:25px;">Controla tus faltas. Al superar el 20%, se marca alerta de extraordinario.</p>
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:15px; flex-wrap:wrap;">
+                <div>
+                    <h3 class="section-title" style="margin-bottom:6px;">📊 Control de Asistencias e Inasistencias</h3>
+                    <p style="color:var(--azul-muted); font-weight:600; font-size:13px; margin-bottom:0;">Controla tus faltas. Al superar el 20%, se marca alerta de extraordinario.</p>
+                </div>
+                <button class="btn-prime" onclick="reiniciarTodasAsistencias()">🗑️ Reiniciar asistencias</button>
+            </div>
+            <div id="attendance-semestre-info" style="margin:18px 0 12px; font-size:12px; font-weight:800; color:var(--azul-marino);"></div>
             <div class="attendance-grid" id="attendance-container"></div>
         </div>
     </div>
@@ -1249,7 +1255,7 @@
                         <div class="materia-footer">
                             <div class="materia-credits">${mat[1]} CR</div>
                             <div class="grade-input-container" id="container-grade-${sem.s}-${i}" style="display:none;">
-                                <input type="number" min="0" max="100" class="input-grade-num" id="grade-${sem.s}-${i}" placeholder="Cal." oninput="guardarCalificacionMateria('${sem.s}', ${i})">
+                                <input type="number" min="70" max="100" class="input-grade-num" id="grade-${sem.s}-${i}" placeholder="Cal." oninput="guardarCalificacionMateria('${sem.s}', ${i})">
                             </div>
                         </div>
                     </div>`;
@@ -1305,14 +1311,40 @@
 
     function guardarCalificacionMateria(semNum, indexMat) {
         const gradeInput = document.getElementById(`grade-${semNum}-${indexMat}`);
-        localStorage.setItem(`grade_val_${semNum}_${indexMat}`, gradeInput.value);
+        let valor = parseFloat(gradeInput.value);
+
+        if (isNaN(valor) || valor < 70) {
+            // Si está vacío, no obligamos a escribir 70 inmediatamente;
+            // pero cualquier número menor a 70 se corrige a 70.
+            if (!isNaN(valor) && valor < 70) {
+                valor = 70;
+                gradeInput.value = "70";
+            }
+        }
+
+        if (!isNaN(valor)) {
+            valor = Math.min(100, Math.max(70, valor));
+            gradeInput.value = valor;
+            localStorage.setItem(`grade_val_${semNum}_${indexMat}`, valor);
+        } else {
+            localStorage.removeItem(`grade_val_${semNum}_${indexMat}`);
+        }
+
         calc();
     }
 
     function marcarSemestreActual(numSemestre) {
-        if (localStorage.getItem('semestre_actual_cursando') == numSemestre) { localStorage.removeItem('semestre_actual_cursando'); } 
-        else { localStorage.setItem('semestre_actual_cursando', numSemestre); }
+        if (localStorage.getItem('semestre_actual_cursando') == numSemestre) {
+            localStorage.removeItem('semestre_actual_cursando');
+        } else {
+            localStorage.setItem('semestre_actual_cursando', numSemestre);
+        }
         actualizarEstilosSemestreActual();
+
+        // Si el usuario está viendo Faltas, actualizar inmediatamente las materias.
+        if (document.getElementById('view-asistencias')?.classList.contains('active-block')) {
+            renderizarAsistencias();
+        }
     }
 
     function actualizarEstilosSemestreActual() {
@@ -1755,8 +1787,8 @@
     function simularWhatIfGPA() {
         const valHip = parseFloat(document.getElementById('whatif-grade').value);
         const resBox = document.getElementById('whatif-result-text');
-        if(isNaN(valHip) || valHip < 0 || valHip > 100) {
-            resBox.innerHTML = "⚠️ Ingresa una calificación hipotética válida (0-100).";
+        if(isNaN(valHip) || valHip < 70 || valHip > 100) {
+            resBox.innerHTML = "⚠️ La calificación hipotética debe estar entre 70 y 100."; 
             return;
         }
 
@@ -1779,14 +1811,34 @@
     }
 
     function renderizarAsistencias() {
-        const sem = obtenerSemestreSeleccionado();
-        const semestreObj = data.find(s => s.s == sem);
+        // Las asistencias siempre corresponden al semestre marcado como "Cursando"
+        // en la página principal.
+        const semActual = localStorage.getItem('semestre_actual_cursando');
         const containerAtt = document.getElementById('attendance-container');
+        const infoSemestre = document.getElementById('attendance-semestre-info');
+
+        if (!semActual) {
+            if (infoSemestre) infoSemestre.innerHTML = "⚠️ Marca primero un semestre como <strong>Cursando</strong> en el Plan de Estudios.";
+            if (containerAtt) {
+                containerAtt.innerHTML = `
+                    <div class="calc-result-box" style="grid-column:1/-1;">
+                        No hay semestre seleccionado como cursando. Ve a <strong>Plan de Estudios</strong> y pulsa <strong>Cursando</strong> en el semestre que estás llevando.
+                    </div>`;
+            }
+            return;
+        }
+
+        const semestreObj = data.find(s => s.s == semActual);
         if (!semestreObj) return;
+
+        if (infoSemestre) {
+            infoSemestre.innerHTML = `📚 Semestre activo para asistencias: <strong>Semestre 0${semActual}</strong>`;
+        }
+
         let asistenciasData = JSON.parse(localStorage.getItem('registro_asistencias_materias')) || {};
 
         containerAtt.innerHTML = semestreObj.m.map(mat => {
-            const key = `mat_${sem}_${mat[0]}`;
+            const key = `mat_${semActual}_${mat[0]}`;
             const info = asistenciasData[key] || { asistidas: 0, faltas: 0 };
             const totalClases = info.asistidas + info.faltas;
             const porcentajeFaltas = totalClases > 0 ? (info.faltas / totalClases) * 100 : 0;
@@ -1798,10 +1850,14 @@
                     <span>Asistencias: <strong style="color:var(--exito-texto);">${info.asistidas}</strong></span>
                     <span>Faltas: <strong style="color:var(--alerta-texto);">${info.faltas}</strong></span>
                 </div>
+                <div style="font-size:11px; color:var(--azul-muted); font-weight:700; margin:8px 0;">
+                    Total de clases: ${totalClases}${totalClases > 0 ? ` · ${porcentajeFaltas.toFixed(1)}% de faltas` : ''}
+                </div>
                 ${enRiesgo ? '<div style="font-size:10px; color:#e11d48; font-weight:800; text-transform:uppercase;">⚠️ Riesgo de Extraordinario (>20%)</div>' : ''}
                 <div class="attendance-actions">
                     <button class="btn-att btn-att-asis" onclick="modificarAsistencia('${key}', 'asistida')">✓ Asistió</button>
                     <button class="btn-att btn-att-falta" onclick="modificarAsistencia('${key}', 'falta')">✕ Faltó</button>
+                    <button class="btn-att" onclick="reiniciarAsistenciaMateria('${key}')">↺ Reiniciar</button>
                 </div>
             </div>`;
         }).join('');
@@ -1810,9 +1866,24 @@
     function modificarAsistencia(key, tipo) {
         let asistenciasData = JSON.parse(localStorage.getItem('registro_asistencias_materias')) || {};
         if (!asistenciasData[key]) asistenciasData[key] = { asistidas: 0, faltas: 0 };
+
         if (tipo === 'asistida') asistenciasData[key].asistidas++;
         else asistenciasData[key].faltas++;
+
         localStorage.setItem('registro_asistencias_materias', JSON.stringify(asistenciasData));
+        renderizarAsistencias();
+    }
+
+    function reiniciarAsistenciaMateria(key) {
+        let asistenciasData = JSON.parse(localStorage.getItem('registro_asistencias_materias')) || {};
+        delete asistenciasData[key];
+        localStorage.setItem('registro_asistencias_materias', JSON.stringify(asistenciasData));
+        renderizarAsistencias();
+    }
+
+    function reiniciarTodasAsistencias() {
+        if (!confirm('¿Quieres borrar TODO el registro de asistencias e inasistencias? Esta acción no se puede deshacer.')) return;
+        localStorage.removeItem('registro_asistencias_materias');
         renderizarAsistencias();
     }
 
