@@ -39,302 +39,476 @@
                 4px 10px 15px rgba(165, 175, 190, 0.4);
         }
 
-        /* ============================================================
-   SISTEMA DE 20 TEMAS — PALETAS COMPLETAMENTE DIFERENTES
-   Cada tema cambia fondo, paneles, tarjetas, textos, bordes,
-   sombras, botones, estados y atmósfera.
-   ============================================================ */
+        /* --- TEMA 1: OBSIDIANO Y ORO (MODO OSCURO CLÁSICO) --- */
+        body.theme-obsidian {
+            --bg-ceramic: #0b0f19;
+            --panel-bg: #131c2e;
+            --panel-border: #1e293b;
+            --azul-marino: #f1f5f9;
+            --azul-muted: #94a3b8;
+            --oro-pulido: linear-gradient(135deg, #d4af37 0%, #f3e5ab 50%, #aa8c2c 100%);
+            --oro-flat: #d4af37;
+            --oro-glow: rgba(212, 175, 55, 0.25);
+            --blanco-puro: #172033;
+            --exito-soft: #064e3b;
+            --exito-texto: #34d399;
+            --exito-border: #059669;
+            --alerta-soft: #7f1d1d;
+            --alerta-texto: #fca5a5;
+            --shadow-3d-panel: 8px 8px 16px #07090f, -8px -8px 16px #1f2d47, inset 1px 1px 0px #1f2d47;
+            --shadow-3d-inset: inset 4px 4px 8px #07090f, inset -4px -4px 8px #1f2d47;
+            --shadow-card-materia: 0 6px 0px #07090f, 4px 10px 15px rgba(0, 0, 0, 0.5);
+        }
 
-body[class*="theme-"]{
-  background-color:var(--bg-ceramic)!important;
-  background-image:var(--theme-bg)!important;
-  background-attachment:fixed!important;
-  color:var(--azul-marino)!important;
-}
-body[class*="theme-"] .header{background:var(--header-bg)!important;border-color:var(--panel-border)!important;}
-body[class*="theme-"] .card-materia, body[class*="theme-"] .panel-workspace, body[class*="theme-"] .calc-card, body[class*="theme-"] .calendar-container, body[class*="theme-"] .resource-card, body[class*="theme-"] .note-card{background:var(--card-bg)!important;border-color:var(--panel-border)!important;}
-body[class*="theme-"] input,body[class*="theme-"] select,body[class*="theme-"] textarea{background:var(--input-bg)!important;color:var(--azul-marino)!important;border-color:var(--input-border)!important;}
-body[class*="theme-"] .btn-prime,body[class*="theme-"] .btn-modal{background:var(--oro-pulido)!important;color:var(--button-text)!important;box-shadow:0 8px 18px var(--oro-glow)!important;}
-body[class*="theme-"] .section-title,body[class*="theme-"] h1,body[class*="theme-"] h2,body[class*="theme-"] h3,body[class*="theme-"] h4,body[class*="theme-"] h5{color:var(--azul-marino)!important;}
-body[class*="theme-"] p,body[class*="theme-"] label,body[class*="theme-"] small{color:var(--azul-muted)!important;}
-body[class*="theme-"] .table-custom th,body[class*="theme-"] .table-tasks th{background:var(--table-head)!important;color:var(--azul-marino)!important;border-color:var(--panel-border)!important;}
-body[class*="theme-"] .table-custom td,body[class*="theme-"] .table-tasks td{border-color:var(--panel-border)!important;color:var(--azul-marino)!important;}
-body[class*="theme-"] .badge,body[class*="theme-"] .stat-value{color:var(--accent-text)!important;}
-body[class*="theme-"] .nav-btn.active{background:var(--oro-pulido)!important;color:var(--button-text)!important;border-color:transparent!important;}
-body[class*="theme-"] .progress-fill{background:var(--oro-pulido)!important;}
-body[class*="theme-"] .modal-content{background:var(--card-bg)!important;border-color:var(--panel-border)!important;}
+        /* --- TEMA 2: NEÓN CYBERPUNK (VIOLETA / CIAN) --- */
+        body.theme-cyberpunk {
+            --bg-ceramic: #05050a;
+            --panel-bg: #100f1c;
+            --panel-border: #2b254c;
+            --azul-marino: #00f0ff;
+            --azul-muted: #a78bfa;
+            --oro-pulido: linear-gradient(135deg, #ff007f 0%, #7928ca 100%);
+            --oro-flat: #ff007f;
+            --oro-glow: rgba(255, 0, 127, 0.4);
+            --blanco-puro: #18152e;
+            --exito-soft: #022c22;
+            --exito-texto: #2dd4bf;
+            --exito-border: #115e59;
+            --alerta-soft: #4c0519;
+            --alerta-texto: #fb7185;
+            --shadow-3d-panel: 8px 8px 16px #020204, -8px -8px 16px #1e1b38, inset 1px 1px 0px #2b254c;
+            --shadow-3d-inset: inset 4px 4px 8px #020204, inset -4px -4px 8px #1e1b38;
+            --shadow-card-materia: 0 6px 0px #020204, 4px 10px 15px rgba(255, 0, 127, 0.2);
+        }
 
-/* 01 — CERAMICO */
-body.theme-ceramico{
- --bg-ceramic:#f7efe4; --panel-bg:#fffaf3; --card-bg:#fff; --header-bg:#fffaf3; --theme-bg:radial-gradient(circle at 8% 12%,#d96b3b35 0 7%,transparent 27%),radial-gradient(circle at 88% 18%,#e9a36f32 0 8%,transparent 29%),radial-gradient(circle at 78% 88%,#e78f6528 0 10%,transparent 31%),linear-gradient(135deg,#f7efe4,#ffffff00 55%);
- --panel-border:#e78f65; --input-bg:#ffffff; --input-border:#e78f65; --table-head:#f7eadf;
- --azul-marino:#46372f; --azul-muted:#8a6655; --oro-pulido:linear-gradient(135deg,#e98b62,#f7c56d,#73c9c2,#9a78d8); --oro-flat:#d96b3b; --oro-glow:#d96b3b55; --blanco-puro:#ffffff; --button-text:#ffffff; --accent-text:#8b432d;
- --exito-soft:#eaf8f3; --exito-texto:#16705a; --exito-border:#8bd5bd; --alerta-soft:#fff0e8; --alerta-texto:#a74625;
- --shadow-3d-panel:8px 8px 18px #e7bfa4,-8px -8px 18px #ffffff,inset 1px 1px 0 #e78f65;
- --shadow-3d-inset:inset 4px 4px 8px #e7bfa4,inset -4px -4px 8px #ffffff;
- --shadow-card-materia:0 6px 0 #e7bfa4,4px 12px 22px #d96b3b45;
-}
+        /* --- TEMA 3: ESMERALDA BOSQUE (TONOS VERDES Y TIERRA) --- */
+        body.theme-emerald {
+            --bg-ceramic: #06130b;
+            --panel-bg: #0d2114;
+            --panel-border: #1b3b24;
+            --azul-marino: #ecfdf5;
+            --azul-muted: #6ee7b7;
+            --oro-pulido: linear-gradient(135deg, #10b981 0%, #34d399 50%, #059669 100%);
+            --oro-flat: #10b981;
+            --oro-glow: rgba(16, 185, 129, 0.25);
+            --blanco-puro: #112a1a;
+            --exito-soft: #064e3b;
+            --exito-texto: #6ee7b7;
+            --exito-border: #047857;
+            --alerta-soft: #7f1d1d;
+            --alerta-texto: #fca5a5;
+            --shadow-3d-panel: 8px 8px 16px #030a06, -8px -8px 16px #153420, inset 1px 1px 0px #1b3b24;
+            --shadow-3d-inset: inset 4px 4px 8px #030a06, inset -4px -4px 8px #153420;
+            --shadow-card-materia: 0 6px 0px #030a06, 4px 10px 15px rgba(0, 0, 0, 0.4);
+        }
 
-/* 02 — GLACIAL */
-body.theme-glacial{
- --bg-ceramic:#e9fbff; --panel-bg:#f7ffff; --card-bg:#ffffff; --header-bg:#f7ffff; --theme-bg:radial-gradient(circle at 8% 12%,#39b9e835 0 7%,transparent 27%),radial-gradient(circle at 88% 18%,#74d9ff32 0 8%,transparent 29%),radial-gradient(circle at 78% 88%,#72d8f528 0 10%,transparent 31%),linear-gradient(135deg,#e9fbff,#ffffff00 55%);
- --panel-border:#72d8f5; --input-bg:#ffffff; --input-border:#72d8f5; --table-head:#e3f7fb;
- --azul-marino:#173c57; --azul-muted:#5688a4; --oro-pulido:linear-gradient(135deg,#55d6ff,#b6f4ff,#8ff0d0,#8b7cff); --oro-flat:#39b9e8; --oro-glow:#39b9e855; --blanco-puro:#ffffff; --button-text:#ffffff; --accent-text:#17627e;
- --exito-soft:#e5fff4; --exito-texto:#16725c; --exito-border:#8fe0c6; --alerta-soft:#ffe8ef; --alerta-texto:#a23a5b;
- --shadow-3d-panel:8px 8px 18px #b9e5ee,-8px -8px 18px #ffffff,inset 1px 1px 0 #72d8f5;
- --shadow-3d-inset:inset 4px 4px 8px #b9e5ee,inset -4px -4px 8px #ffffff;
- --shadow-card-materia:0 6px 0 #b9e5ee,4px 12px 22px #39b9e845;
-}
+        /* --- TEMA 4: SOLARIS MAGMA (NEGRO Y TONOS ROJOS/FUEGO) --- */
+        body.theme-magma {
+            --bg-ceramic: #140707;
+            --panel-bg: #210d0d;
+            --panel-border: #3d1515;
+            --azul-marino: #fff1f2;
+            --azul-muted: #fda4af;
+            --oro-pulido: linear-gradient(135deg, #f43f5e 0%, #fb923c 100%);
+            --oro-flat: #f43f5e;
+            --oro-glow: rgba(244, 63, 94, 0.3);
+            --blanco-puro: #2a1111;
+            --exito-soft: #064e3b;
+            --exito-texto: #34d399;
+            --exito-border: #059669;
+            --alerta-soft: #581c87;
+            --alerta-texto: #e879f9;
+            --shadow-3d-panel: 8px 8px 16px #0a0303, -8px -8px 16px #381313, inset 1px 1px 0px #3d1515;
+            --shadow-3d-inset: inset 4px 4px 8px #0a0303, inset -4px -4px 8px #381313;
+            --shadow-card-materia: 0 6px 0px #0a0303, 4px 10px 15px rgba(244, 63, 94, 0.25);
+        }
 
-/* 03 — CYBERPUNK */
-body.theme-cyberpunk{
- --bg-ceramic:#120d25; --panel-bg:#1e143b; --card-bg:#33245b; --header-bg:#1e143b; --theme-bg:radial-gradient(circle at 8% 12%,#ff2da635 0 7%,transparent 27%),radial-gradient(circle at 88% 18%,#00eaff32 0 8%,transparent 29%),radial-gradient(circle at 78% 88%,#ff2da628 0 10%,transparent 31%),linear-gradient(135deg,#120d25,#ffffff00 55%);
- --panel-border:#ff2da6; --input-bg:#fff; --input-border:#ff2da6; --table-head:#211735;
- --azul-marino:#f7f0ff; --azul-muted:#bba9dd; --oro-pulido:linear-gradient(135deg,#00f5ff,#7c5cff,#ff2da6,#ffe600); --oro-flat:#ff2da6; --oro-glow:#ff2da655; --blanco-puro:#fff; --button-text:#ffffff; --accent-text:#ffe600;
- --exito-soft:#173d3a; --exito-texto:#6fffe9; --exito-border:#20c8ad; --alerta-soft:#4a1833; --alerta-texto:#ff8fc7;
- --shadow-3d-panel:8px 8px 18px #35264f,-8px -8px 18px #ffffff,inset 1px 1px 0 #ff2da6;
- --shadow-3d-inset:inset 4px 4px 8px #35264f,inset -4px -4px 8px #ffffff;
- --shadow-card-materia:0 6px 0 #35264f,4px 12px 22px #ff2da645;
-}
+        /* --- TEMA 5: ÁRTICO GLACIAL (AZUL HIELO Y BLANCOS LUMINOSOS) --- */
+        body.theme-glacial {
+            --bg-ceramic: #f0fdf4;
+            --panel-bg: #e0f2fe;
+            --panel-border: #bae6fd;
+            --azul-marino: #0369a1;
+            --azul-muted: #0284c7;
+            --oro-pulido: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%);
+            --oro-flat: #0284c7;
+            --oro-glow: rgba(2, 132, 199, 0.2);
+            --blanco-puro: #ffffff;
+            --exito-soft: #e0f2fe;
+            --exito-texto: #0369a1;
+            --exito-border: #7dd3fc;
+            --alerta-soft: #fee2e2;
+            --alerta-texto: #991b1b;
+            --shadow-3d-panel: 8px 8px 16px #cbe4f4, -8px -8px 16px #ffffff, inset 1px 1px 0px #ffffff;
+            --shadow-3d-inset: inset 4px 4px 8px #cbe4f4, inset -4px -4px 8px #ffffff;
+            --shadow-card-materia: 0 6px 0px #bae6fd, 4px 10px 15px rgba(2, 132, 199, 0.15);
+        }
 
-/* 04 — OBSIDIANA */
-body.theme-obsidiana{
- --bg-ceramic:#1d2330; --panel-bg:#2a3344; --card-bg:#3a4658; --header-bg:#2a3344; --theme-bg:radial-gradient(circle at 8% 12%,#ffcf5a35 0 7%,transparent 27%),radial-gradient(circle at 88% 18%,#67dcff32 0 8%,transparent 29%),radial-gradient(circle at 78% 88%,#ffcf5a28 0 10%,transparent 31%),linear-gradient(135deg,#1d2330,#ffffff00 55%);
- --panel-border:#ffcf5a; --input-bg:#fff; --input-border:#ffcf5a; --table-head:#303a4c;
- --azul-marino:#f8fbff; --azul-muted:#aebbd0; --oro-pulido:linear-gradient(135deg,#ffcf5a,#55d6ff,#ff79c6,#9d8cff); --oro-flat:#ffcf5a; --oro-glow:#ffcf5a55; --blanco-puro:#fff; --button-text:#ffffff; --accent-text:#e5a900;
- --exito-soft:#183d3a; --exito-texto:#8af0cf; --exito-border:#36c9a5; --alerta-soft:#4c2532; --alerta-texto:#ff9bb8;
- --shadow-3d-panel:8px 8px 18px #435166,-8px -8px 18px #ffffff,inset 1px 1px 0 #ffcf5a;
- --shadow-3d-inset:inset 4px 4px 8px #435166,inset -4px -4px 8px #ffffff;
- --shadow-card-materia:0 6px 0 #435166,4px 12px 22px #ffcf5a45;
-}
+        /* --- TEMA 6: LAVANDA PURPURA (TONOS PASTEL OSCUROS Y LILAS) --- */
+        body.theme-lavender {
+            --bg-ceramic: #0f0c1b;
+            --panel-bg: #18142c;
+            --panel-border: #282148;
+            --azul-marino: #f3e8ff;
+            --azul-muted: #c084fc;
+            --oro-pulido: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+            --oro-flat: #a855f7;
+            --oro-glow: rgba(168, 85, 247, 0.3);
+            --blanco-puro: #201a38;
+            --exito-soft: #064e3b;
+            --exito-texto: #34d399;
+            --exito-border: #059669;
+            --alerta-soft: #4c0519;
+            --alerta-texto: #fb7185;
+            --shadow-3d-panel: 8px 8px 16px #08060f, -8px -8px 16px #282247, inset 1px 1px 0px #282148;
+            --shadow-3d-inset: inset 4px 4px 8px #08060f, inset -4px -4px 8px #282247;
+            --shadow-card-materia: 0 6px 0px #08060f, 4px 10px 15px rgba(168, 85, 247, 0.2);
+        }
 
-/* 05 — AURORA */
-body.theme-aurora{
- --bg-ceramic:#e8fff5; --panel-bg:#f8fffc; --card-bg:#ffffff; --header-bg:#f8fffc; --theme-bg:radial-gradient(circle at 8% 12%,#4bcda735 0 7%,transparent 27%),radial-gradient(circle at 88% 18%,#8fdbff32 0 8%,transparent 29%),radial-gradient(circle at 78% 88%,#65d6b128 0 10%,transparent 31%),linear-gradient(135deg,#e8fff5,#ffffff00 55%);
- --panel-border:#65d6b1; --input-bg:#fff; --input-border:#65d6b1; --table-head:#e8faf4;
- --azul-marino:#183d3c; --azul-muted:#5d8981; --oro-pulido:linear-gradient(135deg,#52e6bd,#72c9ff,#a78bfa,#ff86bd); --oro-flat:#4bcda7; --oro-glow:#4bcda755; --blanco-puro:#fff; --button-text:#ffffff; --accent-text:#16805e;
- --exito-soft:#e9f8ff; --exito-texto:#24708a; --exito-border:#8acfe2; --alerta-soft:#ffeaf2; --alerta-texto:#a8446b;
- --shadow-3d-panel:8px 8px 18px #b8e3d5,-8px -8px 18px #ffffff,inset 1px 1px 0 #65d6b1;
- --shadow-3d-inset:inset 4px 4px 8px #b8e3d5,inset -4px -4px 8px #ffffff;
- --shadow-card-materia:0 6px 0 #b8e3d5,4px 12px 22px #4bcda745;
-}
+        body { 
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
+            background-color: var(--bg-ceramic);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(236, 238, 243, 0.05) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(197, 160, 89, 0.05) 0px, transparent 50%);
+            padding: 30px 20px; 
+            margin: 0; 
+            color: var(--azul-marino);
+            -webkit-tap-highlight-color: transparent;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
 
-/* 06 — PLASMA */
-body.theme-plasma{
- --bg-ceramic:#f9efff; --panel-bg:#fff9ff; --card-bg:#ffffff; --header-bg:#fff9ff; --theme-bg:radial-gradient(circle at 8% 12%,#d93de935 0 7%,transparent 27%),radial-gradient(circle at 88% 18%,#e77cff32 0 8%,transparent 29%),radial-gradient(circle at 78% 88%,#d95cff28 0 10%,transparent 31%),linear-gradient(135deg,#f9efff,#ffffff00 55%);
- --panel-border:#d95cff; --input-bg:#fff; --input-border:#d95cff; --table-head:#f5e8ff;
- --azul-marino:#40265b; --azul-muted:#86629d; --oro-pulido:linear-gradient(135deg,#ff5ac8,#a66bff,#55cfff,#ff9b4a); --oro-flat:#d93de9; --oro-glow:#d93de955; --blanco-puro:#fff; --button-text:#ffffff; --accent-text:#8d2f8c;
- --exito-soft:#e6fbff; --exito-texto:#196a7a; --exito-border:#83d7e6; --alerta-soft:#ffe9df; --alerta-texto:#a54c27;
- --shadow-3d-panel:8px 8px 18px #dcc5ea,-8px -8px 18px #ffffff,inset 1px 1px 0 #d95cff;
- --shadow-3d-inset:inset 4px 4px 8px #dcc5ea,inset -4px -4px 8px #ffffff;
- --shadow-card-materia:0 6px 0 #dcc5ea,4px 12px 22px #d93de945;
-}
+        .workspace-frame { max-width: 1440px; margin: 0 auto; }
 
-/* 07 — TOKYO */
-body.theme-tokyo{
- --bg-ceramic:#fff0f7; --panel-bg:#fff8fb; --card-bg:#ffffff; --header-bg:#fff8fb; --theme-bg:radial-gradient(circle at 8% 12%,#ff4f9135 0 7%,transparent 27%),radial-gradient(circle at 88% 18%,#ff9d4d32 0 8%,transparent 29%),radial-gradient(circle at 78% 88%,#ff4f9128 0 10%,transparent 31%),linear-gradient(135deg,#fff0f7,#ffffff00 55%);
- --panel-border:#ff4f91; --input-bg:#fff; --input-border:#ff4f91; --table-head:#ffeaf4;
- --azul-marino:#41213d; --azul-muted:#91627f; --oro-pulido:linear-gradient(135deg,#ff4f91,#ff9d4d,#ffe066,#5ed8ff,#8f70ff); --oro-flat:#ff4f91; --oro-glow:#ff4f9155; --blanco-puro:#fff; --button-text:#ffffff; --accent-text:#a62b60;
- --exito-soft:#e8fbff; --exito-texto:#1c7182; --exito-border:#8bdce8; --alerta-soft:#fff0df; --alerta-texto:#9b4d20;
- --shadow-3d-panel:8px 8px 18px #f0bfd6,-8px -8px 18px #ffffff,inset 1px 1px 0 #ff4f91;
- --shadow-3d-inset:inset 4px 4px 8px #f0bfd6,inset -4px -4px 8px #ffffff;
- --shadow-card-materia:0 6px 0 #f0bfd6,4px 12px 22px #ff4f9145;
-}
+        header { 
+            background: var(--panel-bg);
+            padding: 26px 36px; 
+            border-radius: 28px; 
+            margin-bottom: 35px; 
+            border: 1px solid var(--panel-border);
+            box-shadow: var(--shadow-3d-panel);
+            position: relative;
+        }
+        
+        .header-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            align-items: center;
+            text-align: center;
+        }
 
-/* 08 — GALACTICO */
-body.theme-galactico{
- --bg-ceramic:#211b43; --panel-bg:#30265d; --card-bg:#493d7a; --header-bg:#30265d; --theme-bg:radial-gradient(circle at 8% 12%,#9d7cff35 0 7%,transparent 27%),radial-gradient(circle at 88% 18%,#ff72c632 0 8%,transparent 29%),radial-gradient(circle at 78% 88%,#ff76c828 0 10%,transparent 31%),linear-gradient(135deg,#211b43,#ffffff00 55%);
- --panel-border:#ff76c8; --input-bg:#fff; --input-border:#ff76c8; --table-head:#352a63;
- --azul-marino:#faf7ff; --azul-muted:#bfb5e6; --oro-pulido:linear-gradient(135deg,#7d6cff,#ff72c6,#62e7ff,#ffd166); --oro-flat:#9d7cff; --oro-glow:#9d7cff55; --blanco-puro:#fff; --button-text:#ffffff; --accent-text:#ffcf66;
- --exito-soft:#e8faff; --exito-texto:#24728a; --exito-border:#7adce8; --alerta-soft:#ffe7f2; --alerta-texto:#a13c6d;
- --shadow-3d-panel:8px 8px 18px #51457f,-8px -8px 18px #ffffff,inset 1px 1px 0 #ff76c8;
- --shadow-3d-inset:inset 4px 4px 8px #51457f,inset -4px -4px 8px #ffffff;
- --shadow-card-materia:0 6px 0 #51457f,4px 12px 22px #9d7cff45;
-}
+        @media (min-width: 768px) {
+            .header-layout { flex-direction: row; justify-content: space-between; text-align: left; }
+        }
 
-/* 09 — LAVA */
-body.theme-lava{
- --bg-ceramic:#fff0e8; --panel-bg:#fff8f1; --card-bg:#ffffff; --header-bg:#fff8f1; --theme-bg:radial-gradient(circle at 8% 12%,#ed4a2f35 0 7%,transparent 27%),radial-gradient(circle at 88% 18%,#ff9a3d32 0 8%,transparent 29%),radial-gradient(circle at 78% 88%,#f04b2f28 0 10%,transparent 31%),linear-gradient(135deg,#fff0e8,#ffffff00 55%);
- --panel-border:#f04b2f; --input-bg:#fff; --input-border:#f04b2f; --table-head:#ffe9df;
- --azul-marino:#4b2823; --azul-muted:#98665b; --oro-pulido:linear-gradient(135deg,#ef4931,#ff7a3d,#ffd166,#ff4f91,#9d5cff); --oro-flat:#ed4a2f; --oro-glow:#ed4a2f55; --blanco-puro:#fff; --button-text:#ffffff; --accent-text:#a23d27;
- --exito-soft:#fff4d8; --exito-texto:#8a5b12; --exito-border:#f0c76b; --alerta-soft:#ffe5ec; --alerta-texto:#a5325b;
- --shadow-3d-panel:8px 8px 18px #efc2ac,-8px -8px 18px #ffffff,inset 1px 1px 0 #f04b2f;
- --shadow-3d-inset:inset 4px 4px 8px #efc2ac,inset -4px -4px 8px #ffffff;
- --shadow-card-materia:0 6px 0 #efc2ac,4px 12px 22px #ed4a2f45;
-}
+        header h1 { 
+            margin: 0; font-size: 28px; font-weight: 800; letter-spacing: -0.5px;
+            text-transform: uppercase; color: var(--azul-marino);
+        }
 
-/* 10 — BOSQUE */
-body.theme-bosque{
- --bg-ceramic:#eefbea; --panel-bg:#f9fff6; --card-bg:#ffffff; --header-bg:#f9fff6; --theme-bg:radial-gradient(circle at 8% 12%,#4cae3a35 0 7%,transparent 27%),radial-gradient(circle at 88% 18%,#65c99b32 0 8%,transparent 29%),radial-gradient(circle at 78% 88%,#55a63a28 0 10%,transparent 31%),linear-gradient(135deg,#eefbea,#ffffff00 55%);
- --panel-border:#55a63a; --input-bg:#fff; --input-border:#55a63a; --table-head:#e8f5df;
- --azul-marino:#21432a; --azul-muted:#5d7f61; --oro-pulido:linear-gradient(135deg,#54b947,#a9d84b,#43c9a5,#55a7e8,#b77cff); --oro-flat:#4cae3a; --oro-glow:#4cae3a55; --blanco-puro:#fff; --button-text:#ffffff; --accent-text:#3c7d25;
- --exito-soft:#e5fff6; --exito-texto:#14705d; --exito-border:#83d8b9; --alerta-soft:#fff0e5; --alerta-texto:#9d4d28;
- --shadow-3d-panel:8px 8px 18px #bcd9b6,-8px -8px 18px #ffffff,inset 1px 1px 0 #55a63a;
- --shadow-3d-inset:inset 4px 4px 8px #bcd9b6,inset -4px -4px 8px #ffffff;
- --shadow-card-materia:0 6px 0 #bcd9b6,4px 12px 22px #4cae3a45;
-}
+        .nav-container {
+            display: flex; gap: 10px; background: var(--panel-bg); padding: 8px;
+            border-radius: 20px; box-shadow: var(--shadow-3d-inset); flex-wrap: wrap; justify-content: center;
+            align-items: center;
+        }
 
-/* 11 — SOLAR */
-body.theme-solar{
- --bg-ceramic:#fff9df; --panel-bg:#fffdf2; --card-bg:#ffffff; --header-bg:#fffdf2; --theme-bg:radial-gradient(circle at 8% 12%,#eea50035 0 7%,transparent 27%),radial-gradient(circle at 88% 18%,#ff704032 0 8%,transparent 29%),radial-gradient(circle at 78% 88%,#f5a40028 0 10%,transparent 31%),linear-gradient(135deg,#fff9df,#ffffff00 55%);
- --panel-border:#f5a400; --input-bg:#fff; --input-border:#f5a400; --table-head:#fff2c7;
- --azul-marino:#5a3c12; --azul-muted:#9b7435; --oro-pulido:linear-gradient(135deg,#ffcf33,#ff9f1c,#ff6b35,#ff4fa3,#8f7cff); --oro-flat:#eea500; --oro-glow:#eea50055; --blanco-puro:#fff; --button-text:#ffffff; --accent-text:#8a5a00;
- --exito-soft:#e8fff2; --exito-texto:#19734c; --exito-border:#91d6ad; --alerta-soft:#ffe5e5; --alerta-texto:#a43b3b;
- --shadow-3d-panel:8px 8px 18px #e8d29a,-8px -8px 18px #ffffff,inset 1px 1px 0 #f5a400;
- --shadow-3d-inset:inset 4px 4px 8px #e8d29a,inset -4px -4px 8px #ffffff;
- --shadow-card-materia:0 6px 0 #e8d29a,4px 12px 22px #eea50045;
-}
+        .btn-tab {
+            background: transparent; color: var(--azul-muted); border: none; padding: 10px 18px;
+            font-size: 12px; font-weight: 700; border-radius: 14px; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.25s;
+        }
+        .btn-tab:hover { color: var(--azul-marino); }
+        /* BOTÓN DE TEMA: integrado en la franja principal de navegación */
+        .btn-theme-nav {
+            background: var(--blanco-puro);
+            color: var(--azul-marino);
+            border: 1px solid rgba(165, 175, 190, 0.3);
+            padding: 10px 14px;
+            font-size: 12px;
+            font-weight: 800;
+            border-radius: 14px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.08);
+            transition: all 0.25s ease;
+            white-space: nowrap;
+        }
+        .btn-theme-nav:hover {
+            border-color: var(--oro-flat);
+            color: var(--azul-marino);
+            transform: translateY(-1px);
+            box-shadow: 3px 4px 9px rgba(0,0,0,0.12);
+        }
+        .btn-theme-nav:active {
+            transform: translateY(0);
+        }
 
-/* 12 — ACUARELA */
-body.theme-acuarela{
- --bg-ceramic:#eef8ff; --panel-bg:#fbfdff; --card-bg:#ffffff; --header-bg:#fbfdff; --theme-bg:radial-gradient(circle at 8% 12%,#6f83ee35 0 7%,transparent 27%),radial-gradient(circle at 88% 18%,#ff8fba32 0 8%,transparent 29%),radial-gradient(circle at 78% 88%,#6b8cff28 0 10%,transparent 31%),linear-gradient(135deg,#eef8ff,#ffffff00 55%);
- --panel-border:#6b8cff; --input-bg:#fff; --input-border:#6b8cff; --table-head:#e5f2ff;
- --azul-marino:#29415f; --azul-muted:#6480a0; --oro-pulido:linear-gradient(135deg,#7cc7ff,#a9e6ff,#ffb7d9,#c4b1ff,#a9f0ce); --oro-flat:#6f83ee; --oro-glow:#6f83ee55; --blanco-puro:#fff; --button-text:#ffffff; --accent-text:#315f9b;
- --exito-soft:#e8fff4; --exito-texto:#26715a; --exito-border:#8bd5b6; --alerta-soft:#ffeaf3; --alerta-texto:#a53c65;
- --shadow-3d-panel:8px 8px 18px #c3d7e8,-8px -8px 18px #ffffff,inset 1px 1px 0 #6b8cff;
- --shadow-3d-inset:inset 4px 4px 8px #c3d7e8,inset -4px -4px 8px #ffffff;
- --shadow-card-materia:0 6px 0 #c3d7e8,4px 12px 22px #6f83ee45;
-}
+        .btn-tab.active-tab {
+            background: var(--blanco-puro); color: var(--azul-marino);
+            box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.15), -2px -2px 6px var(--panel-border);
+            transform: translateY(-1px);
+        }
 
-/* 13 — RUBI */
-body.theme-rubi{
- --bg-ceramic:#fff0f3; --panel-bg:#fff8fa; --card-bg:#ffffff; --header-bg:#fff8fa; --theme-bg:radial-gradient(circle at 8% 12%,#d72c6135 0 7%,transparent 27%),radial-gradient(circle at 88% 18%,#ff6d9832 0 8%,transparent 29%),radial-gradient(circle at 78% 88%,#d92d6328 0 10%,transparent 31%),linear-gradient(135deg,#fff0f3,#ffffff00 55%);
- --panel-border:#d92d63; --input-bg:#fff; --input-border:#d92d63; --table-head:#ffe5ec;
- --azul-marino:#4a1e31; --azul-muted:#92586d; --oro-pulido:linear-gradient(135deg,#d91f55,#ff5c8a,#ffb84d,#9f70ff); --oro-flat:#d72c61; --oro-glow:#d72c6155; --blanco-puro:#fff; --button-text:#ffffff; --accent-text:#a3224d;
- --exito-soft:#eafff6; --exito-texto:#16735a; --exito-border:#86d9b8; --alerta-soft:#fff0df; --alerta-texto:#a34c21;
- --shadow-3d-panel:8px 8px 18px #e8b9c8,-8px -8px 18px #ffffff,inset 1px 1px 0 #d92d63;
- --shadow-3d-inset:inset 4px 4px 8px #e8b9c8,inset -4px -4px 8px #ffffff;
- --shadow-card-materia:0 6px 0 #e8b9c8,4px 12px 22px #d72c6145;
-}
+        .metrics-bar { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 16px; }
+        .metric-item { font-size: 14px; color: var(--azul-muted); font-weight: 600; }
+        .metric-item span { color: var(--oro-flat); font-weight: 800; }
 
-/* 14 — ABISAL */
-body.theme-abisal{
- --bg-ceramic:#e9fbff; --panel-bg:#f6feff; --card-bg:#ffffff; --header-bg:#f6feff; --theme-bg:radial-gradient(circle at 8% 12%,#119dbd35 0 7%,transparent 27%),radial-gradient(circle at 88% 18%,#35d8c832 0 8%,transparent 29%),radial-gradient(circle at 78% 88%,#1597b828 0 10%,transparent 31%),linear-gradient(135deg,#e9fbff,#ffffff00 55%);
- --panel-border:#1597b8; --input-bg:#fff; --input-border:#1597b8; --table-head:#e1f7fb;
- --azul-marino:#123d52; --azul-muted:#54849a; --oro-pulido:linear-gradient(135deg,#00a8c6,#36e0d0,#72b7ff,#8c7cff,#ff7fb8); --oro-flat:#119dbd; --oro-glow:#119dbd55; --blanco-puro:#fff; --button-text:#ffffff; --accent-text:#17657a;
- --exito-soft:#e3fff8; --exito-texto:#167361; --exito-border:#86ddc8; --alerta-soft:#ffe9f2; --alerta-texto:#a64269;
- --shadow-3d-panel:8px 8px 18px #b6dce5,-8px -8px 18px #ffffff,inset 1px 1px 0 #1597b8;
- --shadow-3d-inset:inset 4px 4px 8px #b6dce5,inset -4px -4px 8px #ffffff;
- --shadow-card-materia:0 6px 0 #b6dce5,4px 12px 22px #119dbd45;
-}
+        .progress-track { 
+            width: 220px; height: 14px; background: var(--panel-bg); 
+            border-radius: 999px; overflow: hidden; padding: 2px;
+            box-shadow: var(--shadow-3d-inset); box-sizing: border-box;
+        }
+        .progress-live { 
+            height: 100%; background: var(--oro-pulido); width: 0%; border-radius: 999px;
+            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1); 
+        }
 
-/* 15 — CANDY */
-body.theme-candy{
- --bg-ceramic:#fff0fb; --panel-bg:#fff9fd; --card-bg:#ffffff; --header-bg:#fff9fd; --theme-bg:radial-gradient(circle at 8% 12%,#d14fd835 0 7%,transparent 27%),radial-gradient(circle at 88% 18%,#ff8fbd32 0 8%,transparent 29%),radial-gradient(circle at 78% 88%,#c957d828 0 10%,transparent 31%),linear-gradient(135deg,#fff0fb,#ffffff00 55%);
- --panel-border:#c957d8; --input-bg:#fff; --input-border:#c957d8; --table-head:#ffe9f7;
- --azul-marino:#48264f; --azul-muted:#936a9b; --oro-pulido:linear-gradient(135deg,#ff79c8,#ffb86b,#ffe66d,#72e5c2,#7ca7ff); --oro-flat:#d14fd8; --oro-glow:#d14fd855; --blanco-puro:#fff; --button-text:#ffffff; --accent-text:#9b2f7f;
- --exito-soft:#e6fff7; --exito-texto:#18705d; --exito-border:#83d8bd; --alerta-soft:#e9edff; --alerta-texto:#4e55a2;
- --shadow-3d-panel:8px 8px 18px #e7bfdc,-8px -8px 18px #ffffff,inset 1px 1px 0 #c957d8;
- --shadow-3d-inset:inset 4px 4px 8px #e7bfdc,inset -4px -4px 8px #ffffff;
- --shadow-card-materia:0 6px 0 #e7bfdc,4px 12px 22px #d14fd845;
-}
+        .top-global-tools {
+            display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; justify-content: flex-end; align-items: center;
+        }
 
-/* 16 — SYNTHWAVE */
-body.theme-synthwave{
- --bg-ceramic:#1b1234; --panel-bg:#291b4a; --card-bg:#4b2d67; --header-bg:#291b4a; --theme-bg:radial-gradient(circle at 8% 12%,#ff4cae35 0 7%,transparent 27%),radial-gradient(circle at 88% 18%,#00dfff32 0 8%,transparent 29%),radial-gradient(circle at 78% 88%,#ff5cba28 0 10%,transparent 31%),linear-gradient(135deg,#1b1234,#ffffff00 55%);
- --panel-border:#ff5cba; --input-bg:#fff; --input-border:#ff5cba; --table-head:#351f54;
- --azul-marino:#fff4ff; --azul-muted:#c9aee0; --oro-pulido:linear-gradient(135deg,#ff3cac,#784cff,#00e5ff,#ffe600); --oro-flat:#ff4cae; --oro-glow:#ff4cae55; --blanco-puro:#fff; --button-text:#ffffff; --accent-text:#ffcf33;
- --exito-soft:#183f46; --exito-texto:#69f5e6; --exito-border:#2ac8b6; --alerta-soft:#4d183d; --alerta-texto:#ff93ca;
- --shadow-3d-panel:8px 8px 18px #543371,-8px -8px 18px #ffffff,inset 1px 1px 0 #ff5cba;
- --shadow-3d-inset:inset 4px 4px 8px #543371,inset -4px -4px 8px #ffffff;
- --shadow-card-materia:0 6px 0 #543371,4px 12px 22px #ff4cae45;
-}
+        .btn-tool-exec {
+            background: var(--blanco-puro); border: 1px solid rgba(165, 175, 190, 0.3);
+            color: var(--azul-marino); padding: 10px 16px; border-radius: 12px;
+            font-size: 12px; font-weight: 700; cursor: pointer; text-transform: uppercase;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1); transition: all 0.2s;
+        }
+        .btn-tool-exec:hover { border-color: var(--oro-flat); transform: translateY(-1px); }
 
-/* 17 — ESMERALDA */
-body.theme-esmeralda{
- --bg-ceramic:#e9fff4; --panel-bg:#f7fffb; --card-bg:#ffffff; --header-bg:#f7fffb; --theme-bg:radial-gradient(circle at 8% 12%,#15a87535 0 7%,transparent 27%),radial-gradient(circle at 88% 18%,#7bdc7032 0 8%,transparent 29%),radial-gradient(circle at 78% 88%,#159f7628 0 10%,transparent 31%),linear-gradient(135deg,#e9fff4,#ffffff00 55%);
- --panel-border:#159f76; --input-bg:#fff; --input-border:#159f76; --table-head:#e2f8eb;
- --azul-marino:#174536; --azul-muted:#5d8b79; --oro-pulido:linear-gradient(135deg,#19b77f,#68d96b,#f0d34f,#54b8e8,#8f75ff); --oro-flat:#15a875; --oro-glow:#15a87555; --blanco-puro:#fff; --button-text:#ffffff; --accent-text:#14704f;
- --exito-soft:#fff7d9; --exito-texto:#8a6508; --exito-border:#f0d36c; --alerta-soft:#ffe8e7; --alerta-texto:#a33c3c;
- --shadow-3d-panel:8px 8px 18px #b7dccb,-8px -8px 18px #ffffff,inset 1px 1px 0 #159f76;
- --shadow-3d-inset:inset 4px 4px 8px #b7dccb,inset -4px -4px 8px #ffffff;
- --shadow-card-materia:0 6px 0 #b7dccb,4px 12px 22px #15a87545;
-}
+        .view-block { display: none; }
+        .view-block.active-block { display: block; animation: smoothUp 0.5s cubic-bezier(0.25, 1, 0.5, 1); }
+        @keyframes smoothUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 
-/* 18 — COBRE */
-body.theme-cobre{
- --bg-ceramic:#fff2e7; --panel-bg:#fffaf5; --card-bg:#ffffff; --header-bg:#fffaf5; --theme-bg:radial-gradient(circle at 8% 12%,#c3653835 0 7%,transparent 27%),radial-gradient(circle at 88% 18%,#5bc7bd32 0 8%,transparent 29%),radial-gradient(circle at 78% 88%,#c56b3d28 0 10%,transparent 31%),linear-gradient(135deg,#fff2e7,#ffffff00 55%);
- --panel-border:#c56b3d; --input-bg:#fff; --input-border:#c56b3d; --table-head:#fbe9dc;
- --azul-marino:#4b3028; --azul-muted:#8e6a5a; --oro-pulido:linear-gradient(135deg,#c76b3c,#f0a45d,#f2d06b,#5dc8c1,#8b7cff); --oro-flat:#c36538; --oro-glow:#c3653855; --blanco-puro:#fff; --button-text:#ffffff; --accent-text:#93401e;
- --exito-soft:#e5fbf9; --exito-texto:#176c68; --exito-border:#83d8d1; --alerta-soft:#ffe9ef; --alerta-texto:#a23e5b;
- --shadow-3d-panel:8px 8px 18px #e5c1a7,-8px -8px 18px #ffffff,inset 1px 1px 0 #c56b3d;
- --shadow-3d-inset:inset 4px 4px 8px #e5c1a7,inset -4px -4px 8px #ffffff;
- --shadow-card-materia:0 6px 0 #e5c1a7,4px 12px 22px #c3653845;
-}
+        .grid-kardex { display: grid; grid-template-columns: 1fr; gap: 26px; }
+        @media (min-width: 600px) { .grid-kardex { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 950px) { .grid-kardex { grid-template-columns: repeat(3, 1fr); } }
+        @media (min-width: 1300px) { .grid-kardex { grid-template-columns: repeat(5, 1fr); } } 
+        
+        .column-semester { 
+            background: var(--panel-bg); border-radius: 24px; padding: 20px;
+            border: 1px solid var(--panel-border); display: flex; flex-direction: column;
+            gap: 16px; box-shadow: var(--shadow-3d-panel);
+        }
+        .column-semester.cursando-actual {
+            background: var(--blanco-puro);
+            border: 1px solid rgba(197, 160, 89, 0.5);
+        }
+        
+        .semester-top-row { display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 2px solid rgba(165, 175, 190, 0.2); }
+        .semester-title { color: var(--azul-marino); font-weight: 800; font-size: 13px; text-transform: uppercase; }
 
-/* 19 — ECLIPSE */
-body.theme-eclipse{
- --bg-ceramic:#25213f; --panel-bg:#342c55; --card-bg:#51456e; --header-bg:#342c55; --theme-bg:radial-gradient(circle at 8% 12%,#65e8ff35 0 7%,transparent 27%),radial-gradient(circle at 88% 18%,#ff77c932 0 8%,transparent 29%),radial-gradient(circle at 78% 88%,#7df0ff28 0 10%,transparent 31%),linear-gradient(135deg,#25213f,#ffffff00 55%);
- --panel-border:#7df0ff; --input-bg:#fff; --input-border:#7df0ff; --table-head:#3b315f;
- --azul-marino:#fbf7ff; --azul-muted:#c4bce1; --oro-pulido:linear-gradient(135deg,#62e7ff,#8f7cff,#ff72c5,#ffd166,#67e8a8); --oro-flat:#65e8ff; --oro-glow:#65e8ff55; --blanco-puro:#fff; --button-text:#ffffff; --accent-text:#ffd166;
- --exito-soft:#e7fff3; --exito-texto:#1d7053; --exito-border:#8ee0bc; --alerta-soft:#ffe8f1; --alerta-texto:#a43f67;
- --shadow-3d-panel:8px 8px 18px #594d77,-8px -8px 18px #ffffff,inset 1px 1px 0 #7df0ff;
- --shadow-3d-inset:inset 4px 4px 8px #594d77,inset -4px -4px 8px #ffffff;
- --shadow-card-materia:0 6px 0 #594d77,4px 12px 22px #65e8ff45;
-}
+        .btn-status-toggle {
+            background: var(--blanco-puro); border: none; color: var(--azul-muted);
+            cursor: pointer; font-size: 11px; font-weight: 700; padding: 6px 14px;
+            border-radius: 10px; text-transform: uppercase;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1); transition: all 0.2s;
+        }
+        .column-semester.cursando-actual .btn-status-toggle {
+            background: var(--oro-pulido); color: var(--blanco-puro); box-shadow: 2px 4px 8px var(--oro-glow);
+        }
+        
+        .card-materia { 
+            background: var(--blanco-puro); border: 1px solid rgba(255,255,255,0.05);
+            padding: 16px; position: relative; border-radius: 16px; display: flex; 
+            flex-direction: column; justify-content: space-between; min-height: 115px; 
+            box-sizing: border-box; box-shadow: var(--shadow-card-materia);
+            transform: translateY(-5px); transition: transform 0.2s;
+        }
+        .card-materia:hover { transform: translateY(-7px); }
+        .card-materia.en-curso { border-left: 4px solid var(--oro-flat); }
+        .card-materia.aprobada { 
+            background: var(--exito-soft);
+            border: 1px solid var(--exito-border);
+        }
+        .card-materia.aprobada .materia-name, .card-materia.aprobada .materia-code, .card-materia.aprobada .materia-credits { color: var(--exito-texto); }
 
-/* 20 — MIAMI */
-body.theme-miami{
- --bg-ceramic:#eaf7ff; --panel-bg:#fff9fb; --card-bg:#ffffff; --header-bg:#fff9fb; --theme-bg:radial-gradient(circle at 8% 12%,#ff5c9a35 0 7%,transparent 27%),radial-gradient(circle at 88% 18%,#ff9b6832 0 8%,transparent 29%),radial-gradient(circle at 78% 88%,#ff5c9a28 0 10%,transparent 31%),linear-gradient(135deg,#eaf7ff,#ffffff00 55%);
- --panel-border:#ff5c9a; --input-bg:#fff; --input-border:#ff5c9a; --table-head:#ffe8f2;
- --azul-marino:#3d2b54; --azul-muted:#6d668b; --oro-pulido:linear-gradient(135deg,#ff5c9a,#ff9f68,#ffe066,#4de1e1,#746cff); --oro-flat:#ff5c9a; --oro-glow:#ff5c9a55; --blanco-puro:#fff; --button-text:#ffffff; --accent-text:#a42c60;
- --exito-soft:#e7fff9; --exito-texto:#167166; --exito-border:#86d9c8; --alerta-soft:#fff0df; --alerta-texto:#a44d24;
- --shadow-3d-panel:8px 8px 18px #c4d7e9,-8px -8px 18px #ffffff,inset 1px 1px 0 #ff5c9a;
- --shadow-3d-inset:inset 4px 4px 8px #c4d7e9,inset -4px -4px 8px #ffffff;
- --shadow-card-materia:0 6px 0 #c4d7e9,4px 12px 22px #ff5c9a45;
-}
+        .materia-code { font-size: 10px; font-weight: 700; color: var(--azul-muted); }
+        .materia-name { 
+            font-size: 12px; font-weight: 700; line-height: 1.4; margin: 4px 0; color: var(--azul-marino);
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+        }
+        
+        .materia-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; }
+        .materia-credits { font-size: 10px; font-weight: 700; color: var(--azul-muted); }
+        .materia-indicator { position: absolute; top: 14px; right: 14px; font-size: 10px; cursor: pointer; }
 
+        .grade-input-container { display: flex; align-items: center; gap: 4px; }
+        .input-grade-num {
+            width: 45px; padding: 3px 6px; font-size: 11px; font-weight: 700; text-align: center;
+            border-radius: 8px; border: 1px solid var(--exito-border); background: var(--blanco-puro); color: var(--exito-texto); outline: none;
+        }
+        
+        .panel-workspace {
+            background: var(--panel-bg); border-radius: 28px; padding: 35px;
+            border: 1px solid var(--panel-border); box-shadow: var(--shadow-3d-panel);
+        }
 
-/* ============================================================
-   BARRA SUPERIOR Y ACCIONES INTEGRADAS EN LA NAVEGACION
-   ============================================================ */
-.top-global-tools{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    width:100%;
-    margin-bottom:14px;
-}
-.top-global-tools #global-search-input{
-    width:min(520px,90vw)!important;
-    background:var(--input-bg,#fff);
-    color:var(--azul-marino,#243047);
-    border:2px solid var(--panel-border,#d7dce5);
-    box-shadow:0 6px 18px rgba(40,60,90,.12);
-    outline:none;
-}
-.top-global-tools #global-search-input:focus{
-    border-color:var(--oro-flat,#b8894a);
-    box-shadow:0 0 0 4px var(--oro-glow,rgba(184,137,74,.18));
-}
-.nav-container{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:8px;
-}
-.nav-container .btn-action-nav{
-    background:var(--panel-bg,#fff)!important;
-    color:var(--azul-marino,#243047)!important;
-    border-color:var(--panel-border,#d7dce5)!important;
-    box-shadow:0 4px 10px rgba(40,60,90,.10)!important;
-}
-.nav-container .btn-action-nav:hover{
-    background:var(--oro-pulido,#b8894a)!important;
-    color:var(--button-text,#fff)!important;
-    border-color:transparent!important;
-    transform:translateY(-2px);
-}
-@media(max-width:900px){
-    .top-global-tools #global-search-input{width:min(460px,94vw)!important;}
-    .nav-container{gap:6px;}
-}
+        .row-controls { display: flex; gap: 16px; margin-bottom: 30px; flex-wrap: wrap; align-items: center; }
 
-</style>
+        select, input, textarea, button.btn-prime {
+            background: var(--blanco-puro); border: 1px solid rgba(165, 175, 190, 0.2);
+            color: var(--azul-marino); padding: 14px 18px; border-radius: 14px;
+            font-size: 13px; font-weight: 600; outline: none; box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+            transition: all 0.25s;
+        }
+        select:focus, input:focus, textarea:focus { border-color: var(--oro-flat); box-shadow: 0 0 10px var(--oro-glow); }
+
+        button.btn-prime {
+            background: var(--oro-pulido); color: var(--blanco-puro); font-weight: 700; border: none;
+            cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px;
+            box-shadow: 0 5px 15px var(--oro-glow);
+        }
+        button.btn-prime:hover { transform: translateY(-2px); box-shadow: 0 8px 20px var(--oro-glow); }
+
+        .scroll-wrapper {
+            overflow-x: auto; border-radius: 20px; background: var(--blanco-puro);
+            border: 1px solid rgba(165, 175, 190, 0.2); box-shadow: var(--shadow-3d-inset); padding: 6px;
+        }
+
+        .table-custom { width: 100%; border-collapse: collapse; min-width: 950px; text-align: center; }
+        .table-custom th, .table-custom td { border: 1px solid rgba(165,175,190,0.1); padding: 8px; font-size: 12px; height: 48px; }
+        .table-custom th { background: var(--panel-bg); color: var(--azul-marino); font-weight: 700; text-transform: uppercase; font-size: 11px; border-radius: 8px; }
+        .table-custom td input { width: 95%; height: 100%; background: transparent; border: none; text-align: center; color: var(--azul-marino); font-weight: 600; font-size: 12px; box-shadow: none; }
+
+        .section-title { color: var(--azul-marino); font-size: 20px; margin-top: 0; margin-bottom: 20px; font-weight: 800; text-transform: uppercase; }
+
+        .predictive-grid, .sim-grid, .notes-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+        @media(min-width: 768px) {
+            .predictive-grid, .sim-grid, .notes-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        .calc-card, .note-card {
+            background: var(--blanco-puro); padding: 24px; border-radius: 20px;
+            border: 1px solid rgba(165,175,190,0.2); box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.05);
+        }
+        .calc-result-box {
+            margin-top: 20px; background: var(--panel-bg); padding: 16px; border-radius: 14px;
+            font-weight: 700; text-align: center; color: var(--azul-marino); border: 1px dashed var(--oro-flat); line-height: 1.5;
+        }
+
+        .attendance-grid, .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+        .attendance-card, .resource-card {
+            background: var(--blanco-puro); border-radius: 20px; padding: 20px;
+            border: 1px solid rgba(165,175,190,0.2); box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.05); display: flex; flex-direction: column; gap: 12px;
+        }
+        .attendance-card h4, .resource-card h4, .note-card h4 { margin: 0; font-size: 14px; color: var(--azul-marino); font-weight: 800; }
+        .attendance-counters { display: flex; justify-content: space-between; font-size: 13px; font-weight: 700; color: var(--azul-muted); }
+        .attendance-actions { display: flex; gap: 8px; }
+        .btn-att { flex: 1; padding: 8px; border-radius: 10px; border: none; font-weight: 700; cursor: pointer; font-size: 11px; text-transform: uppercase; }
+        .btn-att-asis { background: var(--exito-soft); color: var(--exito-texto); border: 1px solid var(--exito-border); }
+        .btn-att-falta { background: var(--alerta-soft); color: var(--alerta-texto); border: 1px solid #f8b4b4; }
+
+        .resource-card input { width: 100%; box-sizing: border-box; padding: 10px 14px; font-size: 12px; }
+        .resource-links { display: flex; gap: 10px; margin-top: 4px; }
+        .btn-link-action {
+            flex: 1; text-align: center; padding: 8px; border-radius: 10px; background: var(--panel-bg);
+            color: var(--azul-marino); font-size: 11px; font-weight: 700; text-decoration: none; border: 1px solid rgba(165,175,190,0.3);
+        }
+        .btn-link-action:hover { background: var(--oro-pulido); color: white; }
+
+        .calendar-container { background: var(--blanco-puro); border-radius: 20px; padding: 20px; border: 1px solid rgba(165,175,190,0.2); box-shadow: var(--shadow-3d-inset); }
+        .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; text-align: center; }
+        .calendar-day-name { font-size: 11px; font-weight: 800; color: var(--azul-muted); text-transform: uppercase; padding: 8px 0; }
+        .calendar-cell {
+            background: var(--panel-bg); min-height: 80px; border-radius: 12px; padding: 6px;
+            font-size: 11px; font-weight: 700; color: var(--azul-marino); display: flex; flex-direction: column; align-items: flex-start;
+            border: 1px solid rgba(165,175,190,0.1); max-height: 90px; overflow-y: auto;
+        }
+        .calendar-cell.today { border: 2px solid var(--oro-flat); }
+        .cal-task-tag {
+            background: var(--oro-pulido); color: white; font-size: 9px; padding: 2px 4px;
+            border-radius: 4px; margin-top: 2px; width: 100%; text-align: left; box-sizing: border-box; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+
+        .table-tasks { width: 100%; border-collapse: collapse; margin-top: 20px; border-radius: 20px; overflow: hidden; border: 1px solid rgba(165, 175, 190, 0.2); }
+        .table-tasks th, .table-tasks td { padding: 16px; text-align: left; font-size: 13px; border-bottom: 1px solid rgba(165,175,190,0.1); }
+        .table-tasks th { background: var(--panel-bg); color: var(--azul-marino); font-weight: 700; text-transform: uppercase; font-size: 11px; }
+        .table-tasks td { background: var(--blanco-puro); }
+
+        .btn-action-delete {
+            background: var(--alerta-soft); color: var(--alerta-texto); border: 1px solid #f8b4b4;
+            padding: 8px 16px; border-radius: 10px; cursor: pointer; font-weight: 700; font-size: 11px; text-transform: uppercase;
+        }
+        .btn-action-delete:hover { background: #e11d48; color: white; border-color: #e11d48; }
+
+        .pomodoro-widget {
+            position: fixed; bottom: 25px; right: 25px; background: var(--panel-bg); border: 1px solid var(--panel-border);
+            padding: 18px; border-radius: 22px; box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), var(--shadow-3d-panel);
+            z-index: 800; display: flex; flex-direction: column; align-items: center; gap: 10px; width: 220px;
+        }
+        .pomodoro-title { font-size: 11px; font-weight: 800; color: var(--azul-marino); text-transform: uppercase; margin: 0; }
+        .pomodoro-timer { font-size: 26px; font-weight: 800; color: var(--oro-flat); font-variant-numeric: tabular-nums; }
+        .pomodoro-controls { display: flex; gap: 6px; width: 100%; }
+        .btn-pomodoro {
+            flex: 1; padding: 6px; font-size: 10px; font-weight: 700; border-radius: 10px; border: none;
+            cursor: pointer; text-transform: uppercase; background: var(--blanco-puro); color: var(--azul-marino); box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+        }
+        .btn-pomodoro:hover { background: var(--oro-pulido); color: white; }
+
+        #loading-screen {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: var(--bg-ceramic); color: var(--azul-marino); display: flex; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.6s ease, visibility 0.6s;
+        }
+        .holo-matrix-container { position: relative; width: 220px; height: 220px; margin-bottom: 40px; display: flex; justify-content: center; align-items: center; }
+        .holo-ring { position: absolute; border-radius: 50%; border: 4px solid transparent; border-top-color: var(--oro-flat); animation: spinCircle 2s linear infinite; }
+        .ring-1 { width: 180px; height: 180px; border-bottom-color: var(--azul-marino); }
+        .ring-2 { width: 130px; height: 130px; border-left-color: var(--oro-flat); animation-direction: reverse; animation-duration: 1.5s; }
+        .ring-3 { width: 80px; height: 80px; border-right-color: var(--azul-muted); animation-duration: 1s; }
+        @keyframes spinCircle { to { transform: rotate(360deg); } }
+
+        .frase-premium-box {
+            background: var(--panel-bg); border-radius: 24px; padding: 26px 40px; max-width: 600px; width: 80%;
+            display: flex; justify-content: center; align-items: center; text-align: center; border: 1px solid var(--panel-border); box-shadow: var(--shadow-3d-panel);
+        }
+        #loading-text { font-size: 16px; font-weight: 700; line-height: 1.6; transition: opacity 0.4s ease; color: var(--azul-marino); }
+
+        .universal-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.6); display: none; justify-content: center; align-items: center; z-index: 9000; backdrop-filter: blur(8px); padding: 15px; box-sizing: border-box;
+        }
+        .custom-modal {
+            background: var(--panel-bg); padding: 32px; border-radius: 28px; text-align: center; max-width: 420px; width: 100%;
+            border: 1px solid var(--panel-border); box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+        }
+        .custom-modal h2 { margin: 0 0 14px 0; color: var(--azul-marino); font-size: 22px; font-weight: 800; text-transform: uppercase; }
+        .custom-modal p { color: var(--azul-muted); font-size: 14px; line-height: 1.6; margin-bottom: 28px; font-weight: 600; }
+        .btn-modal {
+            background: var(--oro-pulido); color: var(--blanco-puro); border: none; padding: 14px; font-size: 13px; font-weight: 800;
+            border-radius: 14px; width: 100%; cursor: pointer; text-transform: uppercase; letter-spacing: 1px;
+        }
+    </style>
 </head>
 <body>
 
+
+            <input type="text" id="global-search-input" placeholder="🔍 Buscar materia o docente..." oninput="filtrarGlobalSistema()" style="padding: 10px 16px; border-radius: 12px; font-size: 12px; width: 220px;">
+            <button class="btn-tool-exec" onclick="exportarDatosJSON()">📤 Exportar</button>
+            <button class="btn-tool-exec" onclick="document.getElementById('import-file-input').click()">📥 Importar</button>
+            <input type="file" id="import-file-input" style="display: none;" accept=".json" onchange="importarDatosJSON(event)">
+        </div>
+
+        <div class="header-layout">
+            <div>
+                <h1 id="main-title">Estructura Curricular</h1>
+                <div class="metrics-bar">
+                    <div class="metric-item">Progreso General: <span id="porc">0%</span></div>
+                    <div class="progress-track"><div id="fill" class="progress-live"></div></div>
+                    <div class="metric-item">Créditos: <span id="cred">0</span> / <span id="total-cred-ui">260</span></div>
+                    <div class="metric-item">GPA / Promedio: <span id="gpa-val">0.0</span></div>
+                </div>
+            </div>
+            <div class="nav-container">
+                <button class="btn-tab active-tab" id="tab-kardex" onclick="cambiarVista('kardex')">📊 Plan de Estudios</button>
+                <button class="btn-tab" id="tab-horarios" onclick="cambiarVista('horarios')">📅 Agenda</button>
+                <button class="btn-tab" id="tab-predictivo" onclick="cambiarVista('predictivo')">📈 Kardex Predictivo</button>
+                <button class="btn-tab" id="tab-asistencias" onclick="cambiarVista('asistencias')">📉 Faltas</button>
+                <button class="btn-tab" id="tab-recursos" onclick="cambiarVista('recursos')">📂 Enlaces / Notas</button>
+                <button class="btn-theme-nav" onclick="ciclarTemas()" id="btn-theme-toggle" title="Cambiar tema visual" aria-label="Cambiar tema visual">🎨 Tema: Cerámico</button>
+            
 <div id="loading-screen">
     <div class="holo-matrix-container">
         <div class="holo-ring ring-1"></div>
@@ -367,31 +541,79 @@ body.theme-miami{
 <div class="workspace-frame">
     <header>
         <div class="top-global-tools">
-            <input type="text" id="global-search-input" placeholder="🔍 Buscar materia o docente..." oninput="filtrarGlobalSistema()" style="padding: 10px 16px; border-radius: 12px; font-size: 12px; width: 320px;">
-        </div>
+            <button class="btn-tool-exec" onclick="solicitarPermisoNotificaciones()">🔔 Activar Push</button>
+<div id="loading-screen">
+    <div class="holo-matrix-container">
+        <div class="holo-ring ring-1"></div>
+        <div class="holo-ring ring-2"></div>
+        <div class="holo-ring ring-3"></div>
+    </div>
+    <div class="frase-premium-box">
+        <div id="loading-text">Cargando Tablero Integrado...</div>
+    </div>
+</div>
 
-        <div class="header-layout">
-            <div>
-                <h1 id="main-title">Estructura Curricular</h1>
-                <div class="metrics-bar">
-                    <div class="metric-item">Progreso General: <span id="porc">0%</span></div>
-                    <div class="progress-track"><div id="fill" class="progress-live"></div></div>
-                    <div class="metric-item">Créditos: <span id="cred">0</span> / <span id="total-cred-ui">260</span></div>
-                    <div class="metric-item">GPA / Promedio: <span id="gpa-val">0.0</span></div>
-                </div>
-            </div>
-            <div class="nav-container">
-                <button class="btn-tab active-tab" id="tab-kardex" onclick="cambiarVista('kardex')">📊 Plan de Estudios</button>
-                <button class="btn-tab" id="tab-horarios" onclick="cambiarVista('horarios')">📅 Agenda</button>
-                <button class="btn-tab" id="tab-predictivo" onclick="cambiarVista('predictivo')">📈 Kardex Predictivo</button>
-                <button class="btn-tab" id="tab-asistencias" onclick="cambiarVista('asistencias')">📉 Faltas</button>
-                <button class="btn-tab" id="tab-recursos" onclick="cambiarVista('recursos')">📂 Enlaces / Notas</button>
-                <button class="btn-tab btn-action-nav" onclick="solicitarPermisoNotificaciones()">🔔 Activar Push</button>
-                <button class="btn-tab btn-action-nav" onclick="exportarDatosJSON()">📤 Exportar</button>
-                <button class="btn-tab btn-action-nav" onclick="document.getElementById('import-file-input').click()">📥 Importar</button>
-                <input type="file" id="import-file-input" style="display:none;" accept=".json" onchange="importarDatosJSON(event)">
-                <button class="btn-theme-nav" onclick="ciclarTemas()" id="btn-theme-toggle" title="Cambiar tema visual" aria-label="Cambiar tema visual">🎨 Tema: Cerámico</button>
-            </div>
+<div id="universal-overlay-container" class="universal-overlay">
+    <div class="custom-modal">
+        <h2 id="modal-title">Sistemas</h2>
+        <p id="modal-text">Mensaje del sistema corporativo.</p>
+        <button class="btn-modal" onclick="cerrarModal()">Acceder al Sistema</button>
+    </div>
+</div>
+
+<!-- WIDGET FLOTANTE POMODORO -->
+<div class="pomodoro-widget">
+    <p class="pomodoro-title">🍅 Pomodoro Enfoque</p>
+    <div class="pomodoro-timer" id="pomo-display">25:00</div>
+    <div class="pomodoro-controls">
+        <button class="btn-pomodoro" onclick="togglePomodoro()" id="pomo-btn-toggle">Iniciar</button>
+        <button class="btn-pomodoro" onclick="resetPomodoro()">Reiniciar</button>
+    </div>
+</div>
+
+<div class="workspace-frame">
+    <header>
+        <div class="top-global-tools">
+            <button class="btn-tool-exec" onclick="solicitarPermisoNotificaciones()">🔔 Activar Push</button>
+            <input type="text" id="global-search-input" placeholder="🔍 Buscar materia o docente..." oninput="filtrarGlobalSistema()" style="padding: 10px 16px; border-radius: 12px; font-size: 12px; width: 220px;">
+            <button class="btn-tool-exec" onclick="exportarDatosJSON()">📤 Exportar</button>
+<div id="loading-screen">
+    <div class="holo-matrix-container">
+        <div class="holo-ring ring-1"></div>
+        <div class="holo-ring ring-2"></div>
+        <div class="holo-ring ring-3"></div>
+    </div>
+    <div class="frase-premium-box">
+        <div id="loading-text">Cargando Tablero Integrado...</div>
+    </div>
+</div>
+
+<div id="universal-overlay-container" class="universal-overlay">
+    <div class="custom-modal">
+        <h2 id="modal-title">Sistemas</h2>
+        <p id="modal-text">Mensaje del sistema corporativo.</p>
+        <button class="btn-modal" onclick="cerrarModal()">Acceder al Sistema</button>
+    </div>
+</div>
+
+<!-- WIDGET FLOTANTE POMODORO -->
+<div class="pomodoro-widget">
+    <p class="pomodoro-title">🍅 Pomodoro Enfoque</p>
+    <div class="pomodoro-timer" id="pomo-display">25:00</div>
+    <div class="pomodoro-controls">
+        <button class="btn-pomodoro" onclick="togglePomodoro()" id="pomo-btn-toggle">Iniciar</button>
+        <button class="btn-pomodoro" onclick="resetPomodoro()">Reiniciar</button>
+    </div>
+</div>
+
+<div class="workspace-frame">
+    <header>
+        <div class="top-global-tools">
+            <button class="btn-tool-exec" onclick="solicitarPermisoNotificaciones()">🔔 Activar Push</button>
+            <input type="text" id="global-search-input" placeholder="🔍 Buscar materia o docente..." oninput="filtrarGlobalSistema()" style="padding: 10px 16px; border-radius: 12px; font-size: 12px; width: 220px;">
+            <button class="btn-tool-exec" onclick="exportarDatosJSON()">📤 Exportar</button>
+            <button class="btn-tool-exec" onclick="document.getElementById('import-file-input').click()">📥 Importar</button>
+</div>
         </div>
     </header>
 
@@ -559,30 +781,16 @@ body.theme-miami{
 
     // --- GESTIÓN DE TEMAS MÚLTIPLES ---
     const listaDeTemas = [
-        { clase: 'theme-ceramico', nombre: 'Cerámico' },
-        { clase: 'theme-glacial', nombre: 'Glacial' },
+        { clase: '', nombre: 'Cerámico' },
+        { clase: 'theme-obsidian', nombre: 'Obsidiano' },
         { clase: 'theme-cyberpunk', nombre: 'Cyberpunk' },
-        { clase: 'theme-obsidiana', nombre: 'Obsidiana' },
-        { clase: 'theme-aurora', nombre: 'Aurora Boreal' },
-        { clase: 'theme-plasma', nombre: 'Plasma' },
-        { clase: 'theme-tokyo', nombre: 'Neón Tokyo' },
-        { clase: 'theme-galactico', nombre: 'Galáctico' },
-        { clase: 'theme-lava', nombre: 'Lava' },
-        { clase: 'theme-bosque', nombre: 'Bosque Nocturno' },
-        { clase: 'theme-solar', nombre: 'Desierto Solar' },
-        { clase: 'theme-acuarela', nombre: 'Acuarela Ártica' },
-        { clase: 'theme-rubi', nombre: 'Rubí' },
-        { clase: 'theme-abisal', nombre: 'Océano Abisal' },
-        { clase: 'theme-candy', nombre: 'Candy Noir' },
-        { clase: 'theme-synthwave', nombre: 'Synthwave' },
-        { clase: 'theme-esmeralda', nombre: 'Esmeralda' },
-        { clase: 'theme-cobre', nombre: 'Cobre Industrial' },
-        { clase: 'theme-eclipse', nombre: 'Eclipse' },
-        { clase: 'theme-miami', nombre: 'Miami Vice' }
+        { clase: 'theme-emerald', nombre: 'Esmeralda' },
+        { clase: 'theme-magma', nombre: 'Magma' },
+        { clase: 'theme-glacial', nombre: 'Glacial' },
+        { clase: 'theme-lavender', nombre: 'Lavanda' }
     ];
 
     let indiceTemaActual = parseInt(localStorage.getItem('indice_tema_actual')) || 0;
-    if (indiceTemaActual < 0 || indiceTemaActual >= listaDeTemas.length) indiceTemaActual = 0;
     aplicarTemaActual();
 
     function ciclarTemas() {
