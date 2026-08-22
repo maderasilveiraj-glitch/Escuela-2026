@@ -833,7 +833,26 @@
             position: fixed; bottom: 25px; right: 25px; background: var(--panel-bg); border: 1px solid var(--panel-border);
             padding: 18px; border-radius: 22px; box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), var(--shadow-3d-panel);
             z-index: 800; display: flex; flex-direction: column; align-items: center; gap: 10px; width: 220px;
+            transition: width .25s ease, padding .25s ease, border-radius .25s ease, transform .25s ease;
         }
+        .pomodoro-header {
+            width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 8px;
+        }
+        .pomodoro-minimize {
+            border: 1px solid rgba(165,175,190,.35); background: var(--blanco-puro); color: var(--azul-marino);
+            width: 28px; height: 28px; border-radius: 9px; cursor: pointer; font-size: 16px; font-weight: 900;
+            display: grid; place-items: center; box-shadow: 2px 2px 5px rgba(0,0,0,.08);
+        }
+        .pomodoro-minimize:hover { transform: translateY(-1px); border-color: var(--oro-flat); }
+        .pomodoro-widget.minimized {
+            width: auto; min-width: 145px; padding: 9px 11px; border-radius: 16px;
+            flex-direction: row; gap: 8px;
+        }
+        .pomodoro-widget.minimized .pomodoro-body { display: none; }
+        .pomodoro-widget.minimized .pomodoro-header { width: auto; }
+        .pomodoro-widget.minimized .pomodoro-title { margin: 0; white-space: nowrap; }
+        .pomodoro-widget.minimized .pomodoro-minimize { width: 25px; height: 25px; }
+        .pomodoro-body { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 10px; }
         .pomodoro-title { font-size: 11px; font-weight: 800; color: var(--azul-marino); text-transform: uppercase; margin: 0; }
         .pomodoro-timer { font-size: 26px; font-weight: 800; color: var(--oro-flat); font-variant-numeric: tabular-nums; }
         .pomodoro-controls { display: flex; gap: 6px; width: 100%; }
@@ -899,12 +918,17 @@
 </div>
 
 <!-- WIDGET FLOTANTE POMODORO -->
-<div class="pomodoro-widget">
-    <p class="pomodoro-title">🍅 Pomodoro Enfoque</p>
-    <div class="pomodoro-timer" id="pomo-display">25:00</div>
-    <div class="pomodoro-controls">
-        <button class="btn-pomodoro" onclick="togglePomodoro()" id="pomo-btn-toggle">Iniciar</button>
-        <button class="btn-pomodoro" onclick="resetPomodoro()">Reiniciar</button>
+<div class="pomodoro-widget" id="pomodoro-widget">
+    <div class="pomodoro-header">
+        <p class="pomodoro-title">🍅 Pomodoro Enfoque</p>
+        <button class="pomodoro-minimize" onclick="togglePomodoroMinimizado()" id="pomo-minimize-btn" title="Minimizar Pomodoro">−</button>
+    </div>
+    <div class="pomodoro-body">
+        <div class="pomodoro-timer" id="pomo-display">25:00</div>
+        <div class="pomodoro-controls">
+            <button class="btn-pomodoro" onclick="togglePomodoro()" id="pomo-btn-toggle">Iniciar</button>
+            <button class="btn-pomodoro" onclick="resetPomodoro()">Reiniciar</button>
+        </div>
     </div>
 </div>
 
@@ -1019,17 +1043,17 @@
                     <h4 style="margin-top:0; color:var(--azul-marino);">Predictivo por Unidades (Mín. 70)</h4>
                     <div style="display:flex; flex-direction:column; gap:14px; margin-top:15px;">
                         <label style="font-size:12px; font-weight:700; color:var(--azul-muted);">Estructura:
-                            <select id="calc-total-unidades" style="width:100%; margin-top:6px; box-sizing:border-box;">
+                            <select id="calc-total-unidades" onchange="renderizarInputsUnidadesPredictivo()" style="width:100%; margin-top:6px; box-sizing:border-box;">
                                 <option value="4">4 Unidades</option><option value="6">6 Unidades</option>
                             </select>
                         </label>
-                        <label style="font-size:12px; font-weight:700; color:var(--azul-muted);">Unidades ya evaluadas:
-                            <input type="number" id="calc-unidades-cursadas" min="1" max="5" value="2" style="width:100%; margin-top:6px; box-sizing:border-box;">
-                        </label>
-                        <label style="font-size:12px; font-weight:700; color:var(--azul-muted);">Promedio actual (70 a 100):
-                            <input type="number" id="calc-promedio-actual" style="width:100%; margin-top:6px; box-sizing:border-box;" placeholder="Ej. 75" min="70" max="100">
-                        </label>
-                        <button class="btn-prime" onclick="calcularPredictivoUnidades()" style="margin-top:10px;">Calcular Restantes</button>
+                        <div>
+                            <label style="font-size:12px; font-weight:700; color:var(--azul-muted); display:block;">Calificaciones por unidad:
+                            </label>
+                            <div id="unidades-calificaciones" style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin-top:8px;"></div>
+                            <small style="display:block; margin-top:8px; color:var(--azul-muted); font-weight:600;">Captura las unidades que ya presentaste. Las demás se dejarán como pendientes.</small>
+                        </div>
+                        <button class="btn-prime" onclick="calcularPredictivoUnidades()" style="margin-top:10px;">🔮 Predecir unidades restantes</button>
                     </div>
                 </div>
                 <div class="calc-card" style="display:flex; flex-direction:column; justify-content:center;">
@@ -1731,6 +1755,29 @@
         document.getElementById('pomo-display').textContent = `${String(minutos).padStart(2, '0')}:${String(segundos).padStart(2, '0')}`;
     }
 
+    function togglePomodoroMinimizado() {
+        const widget = document.getElementById('pomodoro-widget');
+        const btn = document.getElementById('pomo-minimize-btn');
+        if (!widget) return;
+
+        const minimizado = widget.classList.toggle('minimized');
+        btn.textContent = minimizado ? '+' : '−';
+        btn.title = minimizado ? 'Expandir Pomodoro' : 'Minimizar Pomodoro';
+        localStorage.setItem('pomodoro_minimizado', minimizado ? '1' : '0');
+    }
+
+    function restaurarEstadoPomodoro() {
+        const widget = document.getElementById('pomodoro-widget');
+        const btn = document.getElementById('pomo-minimize-btn');
+        if (!widget || !btn) return;
+
+        if (localStorage.getItem('pomodoro_minimizado') === '1') {
+            widget.classList.add('minimized');
+            btn.textContent = '+';
+            btn.title = 'Expandir Pomodoro';
+        }
+    }
+
     function togglePomodoro() {
         const btnToggle = document.getElementById('pomo-btn-toggle');
         if (!pomoActivo) {
@@ -1763,25 +1810,94 @@
         actualizarDisplayPomodoro();
     }
 
-    function calcularPredictivoUnidades() {
-        const totalUnidades = parseInt(document.getElementById('calc-total-unidades').value);
-        const unidadesCursadas = parseInt(document.getElementById('calc-unidades-cursadas').value);
-        const promedioActual = parseFloat(document.getElementById('calc-promedio-actual').value);
-        const resultadoBox = document.getElementById('calc-resultado-text');
-        if (isNaN(unidadesCursadas) || isNaN(promedioActual)) { resultadoBox.innerHTML = "⚠️ Ingresa valores válidos."; return; }
-        if (unidadesCursadas >= totalUnidades) { resultadoBox.innerHTML = "⚠️ Las unidades cursadas deben ser menores al total."; return; }
+    function renderizarInputsUnidadesPredictivo() {
+        const total = parseInt(document.getElementById('calc-total-unidades').value) || 4;
+        const cont = document.getElementById('unidades-calificaciones');
+        if (!cont) return;
 
-        const unidadesRestantes = totalUnidades - unidadesCursadas;
-        const puntosFaltantes = (totalUnidades * 70) - (unidadesCursadas * promedioActual);
-        const notaNecesaria = puntosFaltantes / unidadesRestantes;
+        cont.innerHTML = Array.from({length: total}, (_, i) => {
+            const guardada = localStorage.getItem(`predictivo_unidad_${i + 1}`);
+            return `
+                <label style="font-size:11px; font-weight:800; color:var(--azul-marino);">
+                    Unidad ${i + 1}
+                    <input type="number"
+                        class="predictivo-unidad-input"
+                        data-unidad="${i + 1}"
+                        min="70" max="100" step="0.1"
+                        value="${guardada ?? ''}"
+                        placeholder="Pendiente"
+                        oninput="guardarUnidadPredictiva(${i + 1}, this.value)"
+                        style="width:100%; margin-top:5px; box-sizing:border-box;">
+                </label>`;
+        }).join('');
 
-        if (puntosFaltantes <= 0) {
-            resultadoBox.innerHTML = `🎉 ¡Ya aseguras aprobar la materia con al menos 70!`;
-        } else if (notaNecesaria > 100) {
-            resultadoBox.innerHTML = `⚠️ Situación Crítica: Requerirías un promedio de <strong>${notaNecesaria.toFixed(1)}</strong> en lo que resta (supera el 100).`;
-        } else {
-            resultadoBox.innerHTML = `🎯 Necesitas un promedio mínimo de <strong>${notaNecesaria.toFixed(1)}</strong> en las <strong>${unidadesRestantes} unidades restantes</strong>.`;
+        calcularPredictivoUnidades();
+    }
+
+    function guardarUnidadPredictiva(unidad, valor) {
+        if (valor === '') {
+            localStorage.removeItem(`predictivo_unidad_${unidad}`);
+            calcularPredictivoUnidades();
+            return;
         }
+
+        const n = parseFloat(valor);
+        if (!isNaN(n) && n >= 70 && n <= 100) {
+            localStorage.setItem(`predictivo_unidad_${unidad}`, n);
+        }
+        calcularPredictivoUnidades();
+    }
+
+    function calcularPredictivoUnidades() {
+        const totalUnidades = parseInt(document.getElementById('calc-total-unidades').value) || 4;
+        const resultadoBox = document.getElementById('calc-resultado-text');
+
+        const inputs = [...document.querySelectorAll('.predictivo-unidad-input')];
+        const calificaciones = inputs
+            .map(input => parseFloat(input.value))
+            .filter(n => !isNaN(n));
+
+        const evaluadas = calificaciones.length;
+        const restantes = totalUnidades - evaluadas;
+
+        if (evaluadas === 0) {
+            resultadoBox.innerHTML = `📝 Captura las calificaciones de las unidades que ya presentaste para generar una predicción.`;
+            return;
+        }
+
+        const promedioActual = calificaciones.reduce((a,b) => a+b, 0) / evaluadas;
+
+        // Predicción: usamos el rendimiento promedio real de las unidades ya evaluadas.
+        const prediccion = promedioActual;
+        const promedioProyectado = (
+            calificaciones.reduce((a,b) => a+b, 0) +
+            (restantes * prediccion)
+        ) / totalUnidades;
+
+        // Además calculamos cuánto se necesita realmente para cerrar con 70.
+        const puntosNecesarios = (totalUnidades * 70) - calificaciones.reduce((a,b) => a+b, 0);
+        const minimoRestantes = restantes > 0 ? puntosNecesarios / restantes : 0;
+
+        if (restantes === 0) {
+            resultadoBox.innerHTML = `
+                📊 <strong>Ya tienes las ${totalUnidades} unidades.</strong><br><br>
+                Promedio final: <strong>${promedioActual.toFixed(1)}</strong>.
+                ${promedioActual >= 70 ? ' 🎉 Materia aprobada.' : ' ⚠️ El promedio está por debajo de 70.'}
+            `;
+            return;
+        }
+
+        resultadoBox.innerHTML = `
+            📈 Has registrado <strong>${evaluadas} de ${totalUnidades}</strong> unidades.<br><br>
+            📊 Tu promedio actual es <strong>${promedioActual.toFixed(1)}</strong>.<br>
+            🔮 <strong>Predicción:</strong> si mantienes ese mismo rendimiento, se estima
+            <strong>${prediccion.toFixed(1)}</strong> en cada una de las
+            <strong>${restantes} unidades restantes</strong>.<br><br>
+            🎯 Tu promedio final proyectado sería de <strong>${promedioProyectado.toFixed(1)}</strong>.<br>
+            ${minimoRestantes <= 70
+                ? `✅ Para asegurar un promedio final de 70, con ${restantes} unidad(es) restantes necesitas al menos <strong>70.0</strong> de promedio.`
+                : `⚠️ Para cerrar con 70 necesitas al menos <strong>${minimoRestantes.toFixed(1)}</strong> de promedio en las unidades restantes.`}
+        `;
     }
 
     function simularWhatIfGPA() {
@@ -2001,6 +2117,13 @@
     actualizarEstilosSemestreActual();
     inicializarEstructuraHorario();
     cargarTablaActividades();
+
+
+    // Inicializar el predictor con una casilla independiente por unidad.
+    document.addEventListener('DOMContentLoaded', () => {
+        restaurarEstadoPomodoro();
+        renderizarInputsUnidadesPredictivo();
+    });
 </script>
 </body>
 </html>
