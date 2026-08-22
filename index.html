@@ -484,10 +484,39 @@
 </head>
 <body>
 
+<div id="loading-screen">
+    <div class="holo-matrix-container">
+        <div class="holo-ring ring-1"></div>
+        <div class="holo-ring ring-2"></div>
+        <div class="holo-ring ring-3"></div>
+    </div>
+    <div class="frase-premium-box">
+        <div id="loading-text">Cargando Tablero Integrado...</div>
+    </div>
+</div>
 
+<div id="universal-overlay-container" class="universal-overlay">
+    <div class="custom-modal">
+        <h2 id="modal-title">Sistemas</h2>
+        <p id="modal-text">Mensaje del sistema corporativo.</p>
+        <button class="btn-modal" onclick="cerrarModal()">Acceder al Sistema</button>
+    </div>
+</div>
+
+<!-- WIDGET FLOTANTE POMODORO -->
+<div class="pomodoro-widget">
+    <p class="pomodoro-title">🍅 Pomodoro Enfoque</p>
+    <div class="pomodoro-timer" id="pomo-display">25:00</div>
+    <div class="pomodoro-controls">
+        <button class="btn-pomodoro" onclick="togglePomodoro()" id="pomo-btn-toggle">Iniciar</button>
+        <button class="btn-pomodoro" onclick="resetPomodoro()">Reiniciar</button>
+    </div>
+</div>
+
+<div class="workspace-frame">
+    <header>
+        <div class="top-global-tools">
             <input type="text" id="global-search-input" placeholder="🔍 Buscar materia o docente..." oninput="filtrarGlobalSistema()" style="padding: 10px 16px; border-radius: 12px; font-size: 12px; width: 220px;">
-            <button class="btn-tool-exec" onclick="exportarDatosJSON()">📤 Exportar</button>
-            <button class="btn-tool-exec" onclick="document.getElementById('import-file-input').click()">📥 Importar</button>
             <input type="file" id="import-file-input" style="display: none;" accept=".json" onchange="importarDatosJSON(event)">
         </div>
 
@@ -507,113 +536,11 @@
                 <button class="btn-tab" id="tab-predictivo" onclick="cambiarVista('predictivo')">📈 Kardex Predictivo</button>
                 <button class="btn-tab" id="tab-asistencias" onclick="cambiarVista('asistencias')">📉 Faltas</button>
                 <button class="btn-tab" id="tab-recursos" onclick="cambiarVista('recursos')">📂 Enlaces / Notas</button>
+                <button class="btn-tool-exec" onclick="solicitarPermisoNotificaciones()">🔔 Activar Push</button>
+                <button class="btn-tool-exec" onclick="exportarDatosJSON()">📤 Exportar</button>
+                <button class="btn-tool-exec" onclick="document.getElementById('import-file-input').click()">📥 Importar</button>
                 <button class="btn-theme-nav" onclick="ciclarTemas()" id="btn-theme-toggle" title="Cambiar tema visual" aria-label="Cambiar tema visual">🎨 Tema: Cerámico</button>
-            
-<div id="loading-screen">
-    <div class="holo-matrix-container">
-        <div class="holo-ring ring-1"></div>
-        <div class="holo-ring ring-2"></div>
-        <div class="holo-ring ring-3"></div>
-    </div>
-    <div class="frase-premium-box">
-        <div id="loading-text">Cargando Tablero Integrado...</div>
-    </div>
-</div>
-
-<div id="universal-overlay-container" class="universal-overlay">
-    <div class="custom-modal">
-        <h2 id="modal-title">Sistemas</h2>
-        <p id="modal-text">Mensaje del sistema corporativo.</p>
-        <button class="btn-modal" onclick="cerrarModal()">Acceder al Sistema</button>
-    </div>
-</div>
-
-<!-- WIDGET FLOTANTE POMODORO -->
-<div class="pomodoro-widget">
-    <p class="pomodoro-title">🍅 Pomodoro Enfoque</p>
-    <div class="pomodoro-timer" id="pomo-display">25:00</div>
-    <div class="pomodoro-controls">
-        <button class="btn-pomodoro" onclick="togglePomodoro()" id="pomo-btn-toggle">Iniciar</button>
-        <button class="btn-pomodoro" onclick="resetPomodoro()">Reiniciar</button>
-    </div>
-</div>
-
-<div class="workspace-frame">
-    <header>
-        <div class="top-global-tools">
-            <button class="btn-tool-exec" onclick="solicitarPermisoNotificaciones()">🔔 Activar Push</button>
-<div id="loading-screen">
-    <div class="holo-matrix-container">
-        <div class="holo-ring ring-1"></div>
-        <div class="holo-ring ring-2"></div>
-        <div class="holo-ring ring-3"></div>
-    </div>
-    <div class="frase-premium-box">
-        <div id="loading-text">Cargando Tablero Integrado...</div>
-    </div>
-</div>
-
-<div id="universal-overlay-container" class="universal-overlay">
-    <div class="custom-modal">
-        <h2 id="modal-title">Sistemas</h2>
-        <p id="modal-text">Mensaje del sistema corporativo.</p>
-        <button class="btn-modal" onclick="cerrarModal()">Acceder al Sistema</button>
-    </div>
-</div>
-
-<!-- WIDGET FLOTANTE POMODORO -->
-<div class="pomodoro-widget">
-    <p class="pomodoro-title">🍅 Pomodoro Enfoque</p>
-    <div class="pomodoro-timer" id="pomo-display">25:00</div>
-    <div class="pomodoro-controls">
-        <button class="btn-pomodoro" onclick="togglePomodoro()" id="pomo-btn-toggle">Iniciar</button>
-        <button class="btn-pomodoro" onclick="resetPomodoro()">Reiniciar</button>
-    </div>
-</div>
-
-<div class="workspace-frame">
-    <header>
-        <div class="top-global-tools">
-            <button class="btn-tool-exec" onclick="solicitarPermisoNotificaciones()">🔔 Activar Push</button>
-            <input type="text" id="global-search-input" placeholder="🔍 Buscar materia o docente..." oninput="filtrarGlobalSistema()" style="padding: 10px 16px; border-radius: 12px; font-size: 12px; width: 220px;">
-            <button class="btn-tool-exec" onclick="exportarDatosJSON()">📤 Exportar</button>
-<div id="loading-screen">
-    <div class="holo-matrix-container">
-        <div class="holo-ring ring-1"></div>
-        <div class="holo-ring ring-2"></div>
-        <div class="holo-ring ring-3"></div>
-    </div>
-    <div class="frase-premium-box">
-        <div id="loading-text">Cargando Tablero Integrado...</div>
-    </div>
-</div>
-
-<div id="universal-overlay-container" class="universal-overlay">
-    <div class="custom-modal">
-        <h2 id="modal-title">Sistemas</h2>
-        <p id="modal-text">Mensaje del sistema corporativo.</p>
-        <button class="btn-modal" onclick="cerrarModal()">Acceder al Sistema</button>
-    </div>
-</div>
-
-<!-- WIDGET FLOTANTE POMODORO -->
-<div class="pomodoro-widget">
-    <p class="pomodoro-title">🍅 Pomodoro Enfoque</p>
-    <div class="pomodoro-timer" id="pomo-display">25:00</div>
-    <div class="pomodoro-controls">
-        <button class="btn-pomodoro" onclick="togglePomodoro()" id="pomo-btn-toggle">Iniciar</button>
-        <button class="btn-pomodoro" onclick="resetPomodoro()">Reiniciar</button>
-    </div>
-</div>
-
-<div class="workspace-frame">
-    <header>
-        <div class="top-global-tools">
-            <button class="btn-tool-exec" onclick="solicitarPermisoNotificaciones()">🔔 Activar Push</button>
-            <input type="text" id="global-search-input" placeholder="🔍 Buscar materia o docente..." oninput="filtrarGlobalSistema()" style="padding: 10px 16px; border-radius: 12px; font-size: 12px; width: 220px;">
-            <button class="btn-tool-exec" onclick="exportarDatosJSON()">📤 Exportar</button>
-            <button class="btn-tool-exec" onclick="document.getElementById('import-file-input').click()">📥 Importar</button>
-</div>
+            </div>
         </div>
     </header>
 
@@ -1598,3 +1525,4 @@
 </script>
 </body>
 </html>
+   
