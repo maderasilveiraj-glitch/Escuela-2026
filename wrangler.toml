@@ -1,6 +1,0 @@
-name = "core-academico-gemini-proxy"
-main = "worker.js"
-compatibility_date = "2026-08-27"
-
-# Configure the secret with:
-# npx wrangler secret put GEMINI_API_KEY
