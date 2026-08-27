@@ -3,47 +3,141 @@ name: Build Android APK - Core Académico
 on:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   build-android:
     name: Generar APK
     runs-on: ubuntu-latest
 
     steps:
+
+      # 1. Descargar el proyecto
       - name: Descargar código
         uses: actions/checkout@v4
 
+      # 2. Configurar Node.js
       - name: Configurar Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
 
-      - name: Instalar dependencias
-        run: npm install
-
-      - name: Preparar archivos web
-        run: npm run web:prepare
-
-      - name: Verificar Capacitor
-        run: npx cap --version
-
-      - name: Sincronizar Capacitor
-        run: npx cap sync android
-
+      # 3. Configurar Java
       - name: Configurar Java
         uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '21'
 
-      - name: Configurar Android SDK
-        uses: android-actions/setup-android@v3
+      # 4. Instalar dependencias
+      # No usamos cache porque tu proyecto todavía no tiene package-lock.json
+      - name: Instalar dependencias
+        run: npm install
 
+      # 5. Asegurar que TypeScript esté disponible
+      - name: Instalar TypeScript
+        run: npm install --save-dev typescript
+
+      # 6. Instalar Capacitor Android
+      - name: Instalar Capacitor Android
+        run: npm install @capacitor/android
+
+      # 7. Crear carpeta www para Capacitor
+      - name: Preparar archivos web
+        shell: bash
+        run: |
+          rm -rf www
+          mkdir -p www
+
+          # Archivos principales de Core Académico
+          [ -f index.html ] && cp index.html www/
+          [ -f main.js ] && cp main.js www/
+          [ -f preload.js ] && cp preload.js www/
+          [ -f manifest.webmanifest ] && cp manifest.webmanifest www/
+          [ -f manifest.json ] && cp manifest.json www/
+          [ -f sw.js ] && cp sw.js www/
+
+          # Hojas de estilo
+          find . -maxdepth 2 -type f -name "*.css" \
+            -not -path "./node_modules/*" \
+            -not -path "./android/*" \
+            -not -path "./www/*" \
+            -exec cp --parents {} www/ \;
+
+          # Imágenes, iconos y otros recursos
+          if [ -d icons ]; then
+            cp -r icons www/
+          fi
+
+          if [ -d assets ]; then
+            cp -r assets www/
+          fi
+
+          if [ -d img ]; then
+            cp -r img www/
+          fi
+
+          if [ -d images ]; then
+            cp -r images www/
+          fi
+
+          echo "Contenido de www:"
+          find www -maxdepth 3 -type f
+
+      # 8. Crear configuración de Capacitor si no existe
+      - name: Verificar configuración de Capacitor
+        shell: bash
+        run: |
+          if [ ! -f capacitor.config.ts ] && [ ! -f capacitor.config.json ]; then
+            cat > capacitor.config.json <<'EOF'
+          {
+            "appId": "com.coreacademico.app",
+            "appName": "Core Académico",
+            "webDir": "www",
+            "bundledWebRuntime": false
+          }
+          EOF
+          fi
+
+      # 9. Agregar Android solamente si todavía no existe
+      - name: Agregar plataforma Android
+        shell: bash
+        run: |
+          if [ ! -d android ]; then
+            npx cap add android
+          else
+            echo "La plataforma Android ya existe."
+          fi
+
+      # 10. Sincronizar Capacitor
+      - name: Sincronizar Capacitor
+        run: npx cap sync android
+
+      # 11. Dar permisos al Gradle Wrapper
+      - name: Preparar Gradle
+        run: chmod +x android/gradlew
+
+      # 12. Generar APK
       - name: Generar APK
         working-directory: android
-        run: ./gradlew assembleDebug
+        run: ./gradlew assembleDebug --no-daemon
 
+      # 13. Renombrar APK
+      - name: Preparar APK
+        shell: bash
+        run: |
+          mkdir -p release
+
+          cp android/app/build/outputs/apk/debug/app-debug.apk \
+            release/Core-Academico.apk
+
+          ls -lh release/Core-Academico.apk
+
+      # 14. Subir APK como Artifact
       - name: Subir APK
         uses: actions/upload-artifact@v4
         with:
           name: Core-Academico-APK
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+          path: release/Core-Academico.apk
+          if-no-files-found: error
