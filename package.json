@@ -16,7 +16,8 @@
     "electron": "^38.1.0",
     "electron-builder": "^26.0.12",
     "@capacitor/cli": "^7.4.0",
-    "@capacitor/android": "^7.4.0"
+    "@capacitor/android": "^7.4.0",
+    "typescript": "^5.9.2"
   },
   "build": {
     "appId": "com.coreacademico.app",
@@ -62,5 +63,3 @@
     "@capacitor/core": "^7.4.0"
   }
 }
-    
- 
