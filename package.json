@@ -1,6 +1,6 @@
 {
   "name": "core-academico",
-  "version": "4.23.0",
+  "version": "4.26.0",
   "description": "Core Académico con Gemini, calculadoras, notas rápidas y herramientas académicas",
   "main": "main.js",
   "author": "Core Académico",
@@ -62,3 +62,5 @@
     "@capacitor/core": "^7.4.0"
   }
 }
+    
+ 
