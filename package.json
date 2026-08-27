@@ -1,0 +1,66 @@
+{
+  "name": "core-academico",
+  "version": "4.16.0",
+  "description": "Core Académico con Gemini, calculadoras, notas rápidas y herramientas académicas",
+  "main": "main.js",
+  "author": "Core Académico",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win --x64",
+    "android:init": "npx cap add android",
+    "android:sync": "npx cap sync android",
+    "android:debug": "npx cap open android",
+    "dist:android": "npx cap sync android && cd android && ./gradlew assembleDebug"
+  },
+  "devDependencies": {
+    "electron": "^38.1.0",
+    "electron-builder": "^26.0.12",
+    "@capacitor/cli": "^7.4.3"
+  },
+  "build": {
+    "appId": "com.coreacademico.app",
+    "productName": "Core Académico",
+    "asar": true,
+    "files": [
+      "index.html",
+      "main.js",
+      "preload.js",
+      "manifest.webmanifest",
+      "sw.js",
+      "icons/**/*"
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "icons/icon-512.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Core Académico"
+    }
+  },
+  "dependencies": {
+    "@capacitor/core": "^7.4.3",
+    "@capacitor/android": "^7.4.3"
+  }
+}
