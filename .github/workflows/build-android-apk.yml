@@ -1,70 +1,62 @@
-name: 📱 Build Android APK - Core Académico
+name: Build Android APK - Core Académico
 
 on:
   workflow_dispatch:
-  push:
-    tags:
-      - "v*"
 
 jobs:
   build-android:
+    name: Generar APK
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
+
     steps:
-      - name: 📥 Checkout
+      - name: Descargar código
         uses: actions/checkout@v4
 
-      - name: ☕ Java 21
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: "21"
-
-      - name: 🟢 Node.js
+      - name: Configurar Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "22"
-          cache: npm
+          node-version: 24
 
-      - name: 📦 Instalar dependencias
+      - name: Instalar dependencias
         run: npm install
 
-      - name: 📁 Preparar archivos web para Android
+      - name: Verificar Capacitor
+        run: npx cap --version
+
+      - name: Crear plataforma Android si no existe
+        shell: bash
         run: |
-          mkdir -p www/icons
-          cp index.html manifest.webmanifest sw.js www/
-          cp -r icons/* www/icons/
+          if [ ! -d "android" ]; then
+            npx cap add android
+          else
+            echo "La plataforma Android ya existe."
+          fi
 
-      - name: 🤖 Crear proyecto Android Capacitor
-        run: npx cap add android
-
-      - name: 🔄 Sincronizar aplicación
+      - name: Sincronizar Capacitor
         run: npx cap sync android
 
-      - name: 🏗️ Compilar APK debug
+      - name: Configurar Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Dar permisos a Gradle
+        run: chmod +x android/gradlew
+
+      - name: Compilar APK
         working-directory: android
-        run: ./gradlew assembleDebug --no-daemon
+        run: ./gradlew assembleDebug
 
-      - name: 📦 Crear ZIP para el celular
+      - name: Preparar APK
+        shell: bash
         run: |
-          mkdir -p release
-          cp android/app/build/outputs/apk/debug/app-debug.apk release/Core-Academico.apk
-          printf "Core Académico - Android\n\nInstala Core-Academico.apk en tu teléfono Android.\n" > release/LEEME.txt
-          cd release
-          zip -r ../Core-Academico-Android.zip .
+          mkdir -p apk-output
+          cp android/app/build/outputs/apk/debug/app-debug.apk apk-output/Core-Academico.apk
 
-      - name: ⬆️ Subir ZIP como Artifact
+      - name: Subir APK
         uses: actions/upload-artifact@v4
         with:
-          name: Core-Academico-Android-ZIP
-          path: Core-Academico-Android.zip
+          name: Core-Academico-APK
+          path: apk-output/Core-Academico.apk
           if-no-files-found: error
-
-      - name: 🚀 Publicar Release si es una etiqueta
-        if: startsWith(github.ref, 'refs/tags/')
-        uses: softprops/action-gh-release@v2
-        with:
-          files: Core-Academico-Android.zip
-          generate_release_notes: true
-
