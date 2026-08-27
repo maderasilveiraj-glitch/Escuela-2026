@@ -1117,7 +1117,7 @@
         { s: 2, m: [["AEB1082",5,"SOFT. APLIC. EJEC."],["ACF0902",5,"CALCULO INTEGRAL"],["GED0903",5,"CONT. ORIENTADA NEG."],["AEC1014",4,"DINAMICA SOCIAL"],["ACH2307",4,"TALLER DE ETICA"],["GEE0918",4,"LEGISLACION LABORAL"]] },
         { s: 3, m: [["AEC1078",4,"MARCO LEGAL ORGS."],["GED0921",5,"PROB. Y EST. DESC."],["GED0904",5,"COSTOS EMPRESARIALES"],["GEC0913",4,"HAB. DIRECTIVAS I"],["AEF1071",5,"ECONOMIA EMP."],["ACF0903",5,"ALGEBRA LINEAL"]] },
         { s: 4, m: [["GEF0916",5,"ING. ECONOMICA"],["GEG0907",6,"EST. INFERENCIAL I"],["GED0917",5,"INST. PRESUP. EMP."],["GEC0914",4,"HAB. DIRECTIVAS II"],["GEF0906",5,"ENT. MACROECONOMICO"],["AEF1076",5,"INV. OPERACIONES"]] },
-        { s: 5, m: [["AEF1073",5,"FINANZAS ORGS"],["GEG0908",6,"EST. INFERENCIAL II"],["GEF0915",5,"ING. PROCESOS"],["AEG1075",6,"GESTION CAPITAL HUM."],["ACA0909",4,"TALLER INV. I"],["GEF0919",5,"MERCadOTECNIA"]] },
+        { s: 5, m: [["AEF1073",5,"FINANZAS ORGS"],["GEG0908",6,"EST. INFERENCIAL II"],["GEF0915",5,"ING. PROCESOS"],["AEG1075",6,"GESTION CAPITAL HUM."],["ACA0909",4,"TALLER INV. I"],["GEF0919",5,"MERCADOTECNIA"]] },
         { s: 6, m: [["GEF0901",5,"ADMIN. SAL. SEG. OC."],["AED1072",5,"EMPREND. INNOVAC."],["GEC0911",4,"GESTION PROD. I"],["AED1015",5,"DISEÑO ORG."],["ACA0910",4,"TALLER INV. II"],["GED0922",5,"SIST. INFO. MERC."],["AC0950",5,"ACTIV. COMPLEM."]] },
         { s: 7, m: [["AED1069",5,"CALIDAD G. EMP."],["GED0920",5,"PLAN NEGOCIOS"],["GEC0912",4,"GESTION PROD. II"],["AED1035",5,"GESTION ESTRATEGICA"],["ACD0908",5,"DES. SUSTENTABLE"],["AEB1045",5,"MERC. ELECTRONICA"]] },
         { s: 8, m: [["GEF0902",5,"CAD. SUMINISTROS"],["GEA0950",10,"SERVICIO SOCIAL"]] },
@@ -1167,7 +1167,6 @@
     }
 
     function aplicarTemaActual() {
-        // Remover todas las clases de temas previos
         listaDeTemas.forEach(t => {
             if (t.clase) document.body.classList.remove(t.clase);
         });
@@ -1211,7 +1210,7 @@
             screen.style.opacity = '0';
             screen.style.visibility = 'hidden';
             verificarNotificacionesProximas();
-        }, 8000); 
+        }, 3000); 
     });
 
     function solicitarPermisoNotificaciones() {
@@ -1231,7 +1230,7 @@
 
     function dispararNotificacionPush(titulo, cuerpo) {
         if ("Notification" in window && Notification.permission === "granted") {
-            new Notification(titulo, { body: cuerpo, icon: "" });
+            new Notification(titulo, { body: cuerpo });
         }
     }
 
@@ -1247,10 +1246,12 @@
             document.getElementById('view-horarios').classList.add('active-block');
             document.getElementById('tab-horarios').classList.add('active-tab');
             document.getElementById('main-title').textContent = "Módulo de Agenda";
+            cargarDatosSemestreCompleto();
         } else if(vista === 'predictivo') {
             document.getElementById('view-predictivo').classList.add('active-block');
             document.getElementById('tab-predictivo').classList.add('active-tab');
             document.getElementById('main-title').textContent = "Kardex Predictivo y Simulador";
+            renderizarInputsUnidadesPredictivo();
             renderizarSimuladorWhatIf();
         } else if(vista === 'asistencias') {
             document.getElementById('view-asistencias').classList.add('active-block');
@@ -1298,7 +1299,6 @@
         const gradeContainer = document.getElementById(`container-grade-${semNum}-${indexMat}`);
         const gradeInput = document.getElementById(`grade-${semNum}-${indexMat}`);
 
-        // El campo de promedio siempre está disponible para captura manual.
         gradeContainer.style.display = 'flex';
 
         if(localStorage.getItem(id)) { 
@@ -1315,21 +1315,17 @@
         const card = document.getElementById(cardId);
         const indicator = card.querySelector('.materia-indicator');
         const gradeContainer = document.getElementById(`container-grade-${semNum}-${indexMat}`);
-        const gradeInput = document.getElementById(`grade-${semNum}-${indexMat}`);
 
         if(!card.classList.contains('aprobada')) {
             card.classList.add('aprobada'); 
             indicator.textContent = "🟢"; 
             gradeContainer.style.display = 'flex';
             localStorage.setItem(cardId, '1');
-            // El promedio ahora es completamente manual.
-            // No se asigna automáticamente ninguna calificación.
             evaluarEstatusYAlertas(semNum, true);
         } else {
             card.classList.remove('aprobada'); 
             indicator.textContent = "⚫"; 
             gradeContainer.style.display = 'flex';
-            // El promedio manual se conserva aunque se quite el estado de aprobada.
             localStorage.removeItem(cardId);
             evaluarEstatusYAlertas(semNum, false);
         }
@@ -1340,8 +1336,6 @@
         const gradeInput = document.getElementById(`grade-${semNum}-${indexMat}`);
         let valor = parseFloat(gradeInput.value);
 
-        // El usuario captura manualmente el promedio de cada materia.
-        // Se permite cualquier valor de 0 a 100 y se conserva vacío si no hay registro.
         if (!isNaN(valor)) {
             valor = Math.min(100, Math.max(0, valor));
             gradeInput.value = valor;
@@ -1361,7 +1355,6 @@
         }
         actualizarEstilosSemestreActual();
 
-        // Si el usuario está viendo Faltas, actualizar inmediatamente las materias.
         if (document.getElementById('view-asistencias')?.classList.contains('active-block')) {
             renderizarAsistencias();
         }
@@ -1450,778 +1443,506 @@
         "2": {
             "cell-12-Lunes": "Cálculo Integral", "cell-13-Lunes": "Cálculo Integral", "cell-14-Lunes": "Legislación Laboral", "cell-15-Lunes": "Legislación Laboral", "cell-18-Lunes": "Cont. Orientada Neg.",
             "cell-9-Martes": "Dinámica Social", "cell-10-Martes": "Dinámica Social", "cell-11-Martes": "Taller de Ética", "cell-12-Martes": "Taller de Ética", "cell-14-Martes": "Soft. Aplic. Ejec.", "cell-15-Martes": "Soft. Aplic. Ejec.", "cell-16-Martes": "Soft. Aplic. Ejec.", "cell-17-Martes": "Cont. Orientada Neg.", "cell-18-Martes": "Cont. Orientada Neg.",
-            "cell-9-Miercoles": "Dinámica Social", "cell-10-Miercoles": "Dinámica Social", "cell-11-Miercoles": "Cálculo Integral", "cell-12-Miercoles": "Cálculo Integral", "cell-13-Miercoles": "Cálculo Integral", "cell-16-Miercoles": "Cont. Orientada Neg.", "cell-17-Miercoles": "Cont. Orientada Neg.",
-            "cell-12-Jueves": "Taller de Ética", "cell-13-Jueves": "Taller de Ética", "cell-14-Jueves": "Legislación Laboral", "cell-15-Jueves": "Legislación Laboral", "cell-16-Jueves": "Soft. Aplic. Ejec.", "cell-17-Jueves": "Soft. Aplic. Ejec."
+            "cell-9-Miercoles": "Dinámica Social", "cell-10-Miercoles": "Dinámica Social", "cell-11-Miercoles": "Cálculo Integral", "cell-12-Miercoles": "Cálculo Integral", "cell-13-Miercoles": "Cálculo Integral", "cell-16-Miercoles": "Soft. Aplic. Ejec.", "cell-17-Miercoles": "Soft. Aplic. Ejec.",
+            "cell-11-Jueves": "Taller de Ética", "cell-12-Jueves": "Taller de Ética", "cell-14-Jueves": "Legislación Laboral", "cell-15-Jueves": "Legislación Laboral", "cell-17-Jueves": "Cont. Orientada Neg.", "cell-18-Jueves": "Cont. Orientada Neg."
         },
         "3": {
-            "cell-7-Lunes": "Prob. y Est. Desc.", "cell-8-Lunes": "Prob. y Est. Desc.", "cell-9-Lunes": "Hab. Directivas I", "cell-10-Lunes": "Hab. Directivas I", "cell-11-Lunes": "Economía Emp.", "cell-12-Lunes": "Economía Emp.",
-            "cell-9-Martes": "Álgebra Lineal", "cell-10-Martes": "Álgebra Lineal", "cell-11-Martes": "Costos Empresariales", "cell-12-Martes": "Costos Empresariales",
-            "cell-7-Miercoles": "Álgebra Lineal", "cell-8-Miercoles": "Álgebra Lineal", "cell-9-Miercoles": "Álgebra Lineal", "cell-10-Miercoles": "Prob. y Est. Desc.", "cell-11-Miercoles": "Costos Empresariales", "cell-12-Miercoles": "Costos Empresariales", "cell-13-Miercoles": "Costos Empresariales",
-            "cell-7-Jueves": "Marco Legal Orgs.", "cell-8-Jueves": "Marco Legal Orgs.", "cell-9-Jueves": "Hab. Directivas I", "cell-10-Jueves": "Hab. Directivas I", "cell-11-Jueves": "Economía Emp.", "cell-12-Jueves": "Economía Emp.", "cell-13-Jueves": "Economía Emp.",
-            "cell-7-Viernes": "Prob. y Est. Desc.", "cell-8-Viernes": "Prob. y Est. Desc.", "cell-9-Viernes": "Marco Legal Orgs.", "cell-10-Viernes": "Marco Legal Orgs."
-        },
-        "4": {
-            "cell-8-Lunes": "Inv. Operaciones", "cell-9-Lunes": "Inv. Operaciones", "cell-10-Lunes": "Ent. Macroeconómico", "cell-11-Lunes": "Ent. Macroeconómico",
-            "cell-8-Martes": "Est. Inferencial I", "cell-9-Martes": "Est. Inferencial I", "cell-10-Martes": "Inst. Presup. Emp.", "cell-11-Martes": "Inst. Presup. Emp.",
-            "cell-8-Miercoles": "Ing. Económica", "cell-9-Miercoles": "Ing. Económica", "cell-10-Miercoles": "Hab. Directivas II", "cell-11-Miercoles": "Hab. Directivas II",
-            "cell-8-Jueves": "Inv. Operaciones", "cell-9-Jueves": "Inv. Operaciones", "cell-10-Jueves": "Est. Inferencial I", "cell-11-Jueves": "Est. Inferencial I",
-            "cell-8-Viernes": "Ing. Económica", "cell-9-Viernes": "Ing. Económica", "cell-10-Viernes": "Ent. Macroeconómico"
-        },
-        "5": {
-            "cell-7-Lunes": "Finanzas Orgs.", "cell-8-Lunes": "Finanzas Orgs.", "cell-9-Lunes": "Ing. Procesos", "cell-10-Lunes": "Ing. Procesos",
-            "cell-7-Martes": "Est. Inferencial II", "cell-8-Martes": "Est. Inferencial II", "cell-9-Martes": "Gestión Capital Hum.", "cell-10-Martes": "Gestión Capital Hum.",
-            "cell-7-Miercoles": "Taller Inv. I", "cell-8-Miercoles": "Taller Inv. I", "cell-9-Miercoles": "Mercadotecnia", "cell-10-Miercoles": "Mercadotecnia",
-            "cell-7-Jueves": "Finanzas Orgs.", "cell-8-Jueves": "Finanzas Orgs.", "cell-9-Jueves": "Est. Inferencial II", "cell-10-Jueves": "Est. Inferencial II",
-            "cell-7-Viernes": "Ing. Procesos", "cell-8-Viernes": "Gestión Capital Hum."
-        },
-        "6": {
-            "cell-13-Lunes": "Gestión Prod. I", "cell-14-Lunes": "Gestión Prod. I", "cell-15-Lunes": "Diseño Org.", "cell-16-Lunes": "Diseño Org.",
-            "cell-13-Martes": "Emprend. Innovac.", "cell-14-Martes": "Emprend. Innovac.", "cell-15-Martes": "Sist. Info. Merc.", "cell-16-Martes": "Sist. Info. Merc.",
-            "cell-13-Miercoles": "Admin. Sal. Seg. Oc.", "cell-14-Miercoles": "Admin. Sal. Seg. Oc.", "cell-15-Miercoles": "Taller Inv. II", "cell-16-Miercoles": "Taller Inv. II",
-            "cell-13-Jueves": "Gestión Prod. I", "cell-14-Jueves": "Emprend. Innovac.", "cell-15-Jueves": "Diseño Org.",
-            "cell-13-Viernes": "Activ. Complem."
-        },
-        "7": {
-            "cell-10-Lunes": "Calidad G. Emp.", "cell-11-Lunes": "Calidad G. Emp.", "cell-12-Lunes": "Gestión Prod. II", "cell-13-Lunes": "Gestión Prod. II",
-            "cell-10-Martes": "Plan Negocios", "cell-11-Martes": "Plan Negocios", "cell-12-Martes": "Gestión Estratégica", "cell-13-Martes": "Gestión Estratégica",
-            "cell-10-Miercoles": "Des. Sustentable", "cell-11-Miercoles": "Des. Sustentable", "cell-12-Miercoles": "Merc. Electrónica", "cell-13-Miercoles": "Merc. Electrónica",
-            "cell-10-Jueves": "Calidad G. Emp.", "cell-11-Jueves": "Plan Negocios", "cell-12-Jueves": "Gestión Estratégica",
-            "cell-10-Viernes": "Des. Sustentable"
-        },
-        "8": {
-            "cell-8-Lunes": "Cad. Suministros", "cell-9-Lunes": "Cad. Suministros", "cell-10-Lunes": "Cad. Suministros",
-            "cell-8-Martes": "Servicio Social", "cell-9-Martes": "Servicio Social",
-            "cell-8-Miercoles": "Servicio Social", "cell-9-Miercoles": "Servicio Social",
-            "cell-8-Jueves": "Servicio Social",
-            "cell-8-Viernes": "Servicio Social"
-        },
-        "9": {
-            "cell-8-Lunes": "Residencia Prof.", "cell-9-Lunes": "Residencia Prof.", "cell-10-Lunes": "Residencia Prof.", "cell-11-Lunes": "Residencia Prof.", "cell-12-Lunes": "Residencia Prof.",
-            "cell-8-Martes": "Residencia Prof.", "cell-9-Martes": "Residencia Prof.", "cell-10-Martes": "Residencia Prof.",
-            "cell-8-Miercoles": "Residencia Prof.", "cell-9-Miercoles": "Residencia Prof.",
-            "cell-8-Jueves": "Residencia Prof.",
-            "cell-8-Viernes": "Residencia Prof."
+            "cell-7-Lunes": "Prob. y Est. Desc.", "cell-8-Lunes": "Prob. y Est. Desc.", "cell-9-Lunes": "Marco Legal Orgs.", "cell-10-Lunes": "Marco Legal Orgs.", "cell-11-Lunes": "Álgebra Lineal", "cell-12-Lunes": "Álgebra Lineal",
+            "cell-7-Martes": "Costos Empresariales", "cell-8-Martes": "Costos Empresariales", "cell-9-Martes": "Economía Emp.", "cell-10-Martes": "Economía Emp.", "cell-11-Martes": "Hab. Directivas I", "cell-12-Martes": "Hab. Directivas I",
+            "cell-7-Miercoles": "Prob. y Est. Desc.", "cell-8-Miercoles": "Prob. y Est. Desc.", "cell-9-Miercoles": "Prob. y Est. Desc.", "cell-10-Miercoles": "Marco Legal Orgs.", "cell-11-Miercoles": "Marco Legal Orgs.",
+            "cell-7-Jueves": "Costos Empresariales", "cell-8-Jueves": "Costos Empresariales", "cell-9-Jueves": "Costos Empresariales", "cell-10-Jueves": "Economía Emp.", "cell-11-Jueves": "Economía Emp.", "cell-12-Jueves": "Economía Emp.",
+            "cell-9-Viernes": "Álgebra Lineal", "cell-10-Viernes": "Álgebra Lineal", "cell-11-Viernes": "Álgebra Lineal", "cell-12-Viernes": "Hab. Directivas I", "cell-13-Viernes": "Hab. Directivas I"
         }
     };
 
-    const profesoresSemestres = {
-        "1": [
-            { materia: "FUND. DE GESTION", docente: "Kalinka Navarro", salon: "CP25" },
-            { materia: "FUND. DE QUIMICA", docente: "Martha Calderón", salon: "CP25" },
-            { materia: "DESARROLLO HUMANO", docente: "Dawn López", salon: "CP25" },
-            { materia: "FUND. INVESTIGACION", docente: "Armando Martínez", salon: "CP25" },
-            { materia: "FUND. DE FISICA", docente: "Jorge de Jesús", salon: "CP25" },
-            { materia: "CALCULO DIFERENCIAL", docente: "Alejandro Herrera", salon: "CP25" }
-        ],
-        "2": [
-            { materia: "CALCULO INTEGRAL", docente: "Alejandro Herrera", salon: "CP25" },
-            { materia: "LEGISLACION LABORAL", docente: "Elizabeth Rodríguez", salon: "CP25" },
-            { materia: "CONT. ORIENTADA NEG.", docente: "Mario Castro", salon: "CP25" },
-            { materia: "DINAMICA SOCIAL", docente: "Drisdel Pat Reyes", salon: "CP25" },
-            { materia: "TALLER DE ETICA", docente: "Germán León", salon: "CP25" },
-            { materia: "SOFT. APLIC. EJEC.", docente: "Yolanda Paredes", salon: "CP25" }
-        ],
-        "3": [
-            { materia: "ALGEBRA LINEAL", docente: "Ramón Alberto Cupul y Díaz", salon: "BP1" },
-            { materia: "MARCO LEGAL ORGS.", docente: "Carmen María Rodríguez", salon: "BP1" },
-            { materia: "ECONOMIA EMP.", docente: "Fernando Antonio Solís Díaz", salon: "BP1" },
-            { materia: "HAB. DIRECTIVAS I", docente: "Gabriela del Socorro Herrera", salon: "BP1" },
-            { materia: "COSTOS EMPRESARIALES", docente: "Virginia del Carmen May", salon: "BP1" },
-            { materia: "PROB. Y EST. DESC.", docente: "Raúl Alvar Rodríguez Sánchez", salon: "BP1" }
-        ],
-        "4": [
-            { materia: "ING. ECONOMICA", docente: "Sofía Medina", salon: "Aula 201" },
-            { materia: "EST. INFERENCIAL I", docente: "Héctor Gómez", salon: "Aula 202" },
-            { materia: "INST. PRESUP. EMP.", docente: "Beatriz Adriana Chan", salon: "Aula 201" },
-            { materia: "HAB. DIRECTIVAS II", docente: "Gabriela del Socorro Herrera", salon: "Aula 203" },
-            { materia: "ENT. MACROECONOMICO", docente: "Julio César Puc", salon: "Aula 202" },
-            { materia: "INV. OPERACIONES", docente: "Manuel Jesús Pech", salon: "Lab Computo 3" }
-        ],
-        "5": [
-            { materia: "FINANZAS ORGS.", docente: "Virginia del Carmen May", salon: "Aula 301" },
-            { materia: "EST. INFERENCIAL II", docente: "Héctor Gómez", salon: "Aula 302" },
-            { materia: "ING. PROCESOS", docente: "Carlos Alberto Dzib", salon: "Lab Industrial" },
-            { materia: "GESTION CAPITAL HUM.", docente: "Rosa María Tun", salon: "Aula 301" },
-            { materia: "TALLER INV. I", docente: "Armando Martínez", salon: "Aula 303" },
-            { materia: "MERCADOTECNIA", docente: "Diana Laura Zepeda", salon: "Aula 302" }
-        ],
-        "6": [
-            { materia: "ADMIN. SAL. SEG. OC.", docente: "Elizabeth Rodríguez", salon: "Aula 401" },
-            { materia: "EMPREND. INNOVAC.", docente: "Mario Castro", salon: "Aula 402" },
-            { materia: "GESTION PROD. I", docente: "Felipe de Jesús Ek", salon: "Lab Industrial" },
-            { materia: "DISEÑO ORG.", docente: "Rosa María Tun", salon: "Aula 401" },
-            { materia: "TALLER INV. II", docente: "Armando Martínez", salon: "Aula 403" },
-            { materia: "SIST. INFO. MERC.", docente: "Diana Laura Zepeda", salon: "Lab Computo 2" },
-            { materia: "ACTIV. COMPLEM.", docente: "Coordinación Académica", salon: "Auditorio" }
-        ],
-        "7": [
-            { materia: "CALIDAD G. EMP.", docente: "Felipe de Jesús Ek", salon: "Aula 501" },
-            { materia: "PLAN NEGOCIOS", docente: "Mario Castro", salon: "Aula 502" },
-            { materia: "GESTION PROD. II", docente: "Felipe de Jesús Ek", salon: "Lab Industrial" },
-            { materia: "GESTION ESTRATEGICA", docente: "Fernando Antonio Solís Díaz", salon: "Aula 501" },
-            { materia: "DES. SUSTENTABLE", docente: "Martha Calderón", salon: "Aula 503" },
-            { materia: "MERC. ELECTRONICA", docente: "Yolanda Paredes", salon: "Lab Computo 1" }
-        ],
-        "8": [
-            { materia: "CAD. SUMINISTROS", docente: "Carlos Alberto Dzib", salon: "Aula 601" },
-            { materia: "SERVICIO SOCIAL", docente: "Comité de Vinculación", salon: "Vinculación" }
-        ],
-        "9": [
-            { materia: "RESIDENCIA PROF.", docente: "Comité de Residencias Profesionales", salon: "Empresa Asignada" }
-        ]
-    };
-
-    function inicializarEstructuraHorario() {
-        const body = document.getElementById('schedule-body');
-        let htmlRows = "";
-        for (let h = 7; h <= 21; h++) {
-            let startPeriod = h < 12 ? "a.m." : "p.m.";
-            let endPeriod = (h + 1) < 12 ? "a.m." : "p.m.";
-            let labelHora = `${h}:00 ${startPeriod} a ${h + 1}:00 ${endPeriod}`;
-            htmlRows += `<tr>
-                <td style="font-weight:700; background: var(--panel-bg); color: var(--azul-marino); font-size:11.5px; white-space: nowrap;">${labelHora}</td>
-                ${dias.map(d => `<td><input type="text" id="cell-${h}-${d}" placeholder="—"></td>`).join('')}
-            </tr>`;
-        }
-        body.innerHTML = htmlRows;
-        for (let sKey in horariosPredefinidos) {
-            if(!localStorage.getItem(`horario_semestre_${sKey}`)) {
-                localStorage.setItem(`horario_semestre_${sKey}`, JSON.stringify(horariosPredefinidos[sKey]));
-            }
-        }
-        cargarDatosSemestreCompleto();
-    }
-
-    function obtenerSemestreSeleccionado() { return document.getElementById('select-semestre-horario').value; }
-
-    function obtenerCreditosMateria(nombreMateria, semNum) {
-        const semestreObj = data.find(s => s.s == semNum);
-        if (!semestreObj) return 5; 
-        const encontrada = semestreObj.m.find(m => m[2].trim().toUpperCase() === nombreMateria.trim().toUpperCase());
-        return encontrada ? encontrada[1] : 5;
-    }
-
-    function actualizarMateriasEntregables() {
-        const sem = obtenerSemestreSeleccionado();
-        const semestreObj = data.find(s => s.s == sem);
-        const selectTask = document.getElementById('task-materia');
-        if (!semestreObj) { selectTask.innerHTML = '<option value="">Sin materias</option>'; return; }
-        selectTask.innerHTML = semestreObj.m.map(mat => `<option value="${mat[2]}">${mat[2]}</option>`).join('');
-    }
-
+    // --- MÓDULO DE AGENDA Y HORARIOS ---
     function cargarDatosSemestreCompleto() {
-        const sem = obtenerSemestreSeleccionado();
-        for (let h = 7; h <= 21; h++) {
-            dias.forEach(d => { document.getElementById(`cell-${h}-${d}`).value = ""; });
-        }
-        const horarioGuardado = localStorage.getItem(`horario_semestre_${sem}`);
-        if (horarioGuardado) {
-            const mapaCeldas = JSON.parse(horarioGuardado);
-            for (const idCaja in mapaCeldas) {
-                const elementoInput = document.getElementById(idCaja);
-                if (elementoInput) elementoInput.value = mapaCeldas[idCaja];
-            }
-        }
-        actualizarMateriasEntregables();
+        const sem = document.getElementById('select-semestre-horario').value;
+        const body = document.getElementById('schedule-body');
+        body.innerHTML = '';
 
-        const profBody = document.getElementById('profesores-body');
-        const listaProfs = profesoresSemestres[sem] || [];
-        if(listaProfs.length === 0) {
-            profBody.innerHTML = `<tr><td colspan="4" style="text-align:center; color: var(--azul-muted); padding:16px;">Sin profesores registrados.</td></tr>`;
-        } else {
-            profBody.innerHTML = listaProfs.map(p => {
-                const creditosMat = obtenerCreditosMateria(p.materia, sem);
-                return `<tr>
-                    <td style="font-weight:800; color: var(--oro-flat); text-align: left; padding-left: 15px;">${escapeHtml(p.materia)}</td>
-                    <td style="font-weight:600; color: var(--azul-marino); text-align: left; padding-left: 15px;">${escapeHtml(p.docente)}</td>
-                    <td style="font-weight:700; color: var(--azul-marino); text-align: center;">${creditosMat} CR</td>
-                    <td style="font-weight:700; color: var(--azul-muted); text-align: center;">${escapeHtml(p.salon)}</td>
-                </tr>`;
-            }).join('');
+        const horarioGuardado = JSON.parse(localStorage.getItem(`horario_sem_${sem}`)) || horariosPredefinidos[sem] || {};
+
+        for(let h = 7; h <= 20; h++) {
+            let tr = document.createElement('tr');
+            let horaLabel = `${h}:00 - ${h+1}:00`;
+            tr.innerHTML = `<td style="font-weight:700; background:var(--panel-bg);">${horaLabel}</td>`;
+            
+            dias.forEach(d => {
+                let cellId = `cell-${h}-${d}`;
+                let val = horarioGuardado[cellId] || "";
+                tr.innerHTML += `<td><input type="text" id="${cellId}" value="${val}" placeholder="..."></td>`;
+            });
+            body.appendChild(tr);
         }
+
+        renderizarDirectorioDocentes(sem);
+        renderizarSelectMateriasTareas(sem);
+        renderizarCalendarioExamenes();
+        renderizarTareas();
     }
 
     function guardarHorarioActual() {
-        const sem = obtenerSemestreSeleccionado();
-        const mapaCeldas = {};
-        for (let h = 7; h <= 21; h++) {
+        const sem = document.getElementById('select-semestre-horario').value;
+        const horarioGuardado = {};
+        for(let h = 7; h <= 20; h++) {
             dias.forEach(d => {
-                const idCaja = `cell-${h}-${d}`;
-                const val = document.getElementById(idCaja).value.trim();
-                if(val) mapaCeldas[idCaja] = val;
+                let cellId = `cell-${h}-${d}`;
+                let input = document.getElementById(cellId);
+                if(input && input.value.trim() !== "") {
+                    horarioGuardado[cellId] = input.value.trim();
+                }
             });
         }
-        localStorage.setItem(`horario_semestre_${sem}`, JSON.stringify(mapaCeldas));
-        lanzarModal("💾 Registro Guardado", `La agenda para el periodo seleccionado se sincronizó con éxito.`);
+        localStorage.setItem(`horario_sem_${sem}`, JSON.stringify(horarioGuardado));
+        lanzarModal("💾 Horario Guardado", `El calendario semanal del Semestre ${sem} se guardó exitosamente.`);
     }
 
-    function cargarTablaActividades() {
-        const body = document.getElementById('tasks-body');
-        let listaActividades = JSON.parse(localStorage.getItem('actividades_para_realizar')) || [];
-        if(listaActividades.length === 0) {
-            body.innerHTML = `<tr><td colspan="4" style="text-align:center; color: var(--azul-muted); padding:24px; font-weight:600;">No hay entregables pendientes.</td></tr>`;
-            renderizarCalendarioMensual([]);
-            return;
-        }
-        body.innerHTML = listaActividades.map((act, index) => `
-            <tr>
-                <td style="font-weight:800; color: var(--oro-flat);">${escapeHtml(act.materia)}</td>
-                <td style="font-weight:600; color: var(--azul-marino);">${escapeHtml(act.descripcion)}</td>
-                <td style="color: var(--azul-muted); font-weight: 700;">${act.fecha ? act.fecha : 'Abierta'}</td>
-                <td style="text-align:center;"><button class="btn-action-delete" onclick="eliminarActividad(${index})">Completar</button></td>
-            </tr>
-        `).join('');
-        renderizarCalendarioMensual(listaActividades);
+    function renderizarDirectorioDocentes(sem) {
+        const profesoresBody = document.getElementById('profesores-body');
+        profesoresBody.innerHTML = '';
+        const semestreObj = data.find(item => item.s == sem);
+        if(!semestreObj) return;
+
+        semestreObj.m.forEach((mat, idx) => {
+            const claveProfesor = `docente_${sem}_${idx}`;
+            const claveAula = `aula_${sem}_${idx}`;
+            const profGuardado = localStorage.getItem(claveProfesor) || "";
+            const aulaGuardada = localStorage.getItem(claveAula) || "";
+
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td style="font-weight:700; text-align:left; padding-left:15px;">${mat[2]} <br><small style="color:var(--azul-muted);">${mat[0]}</small></td>
+                <td><input type="text" value="${profGuardado}" placeholder="Nombre del docente..." onchange="localStorage.setItem('${claveProfesor}', this.value)" style="width:90%;"></td>
+                <td style="font-weight:800;">${mat[1]} CR</td>
+                <td><input type="text" value="${aulaGuardada}" placeholder="Salón/Edificio" onchange="localStorage.setItem('${claveAula}', this.value)" style="width:80%;"></td>
+            `;
+            profesoresBody.appendChild(tr);
+        });
     }
 
+    function renderizarSelectMateriasTareas(sem) {
+        const selectTask = document.getElementById('task-materia');
+        selectTask.innerHTML = '';
+        const semestreObj = data.find(item => item.s == sem);
+        if(!semestreObj) return;
+
+        semestreObj.m.forEach(mat => {
+            let opt = document.createElement('option');
+            opt.value = mat[2];
+            opt.textContent = mat[2];
+            selectTask.appendChild(opt);
+        });
+    }
+
+    // --- ENTREGABLES Y CALENDARIO ---
     function agregarActividad() {
-        const matSelect = document.getElementById('task-materia');
-        const descInput = document.getElementById('task-desc');
-        const dateInput = document.getElementById('task-date');
-        if(!matSelect.value.trim() || !descInput.value.trim()) {
-            lanzarModal("⚠️ Validación", "Por favor complete los campos requeridos.");
+        const materia = document.getElementById('task-materia').value;
+        const desc = document.getElementById('task-desc').value.trim();
+        const date = document.getElementById('task-date').value;
+
+        if(!desc || !date) {
+            lanzarModal("⚠️ Datos Incompletos", "Por favor ingresa una descripción y una fecha límite válida.");
             return;
         }
-        let listaActividades = JSON.parse(localStorage.getItem('actividades_para_realizar')) || [];
-        listaActividades.push({ materia: matSelect.value.trim(), descripcion: descInput.value.trim(), fecha: dateInput.value });
-        localStorage.setItem('actividades_para_realizar', JSON.stringify(listaActividades));
-        descInput.value = ""; dateInput.value = "";
-        cargarTablaActividades();
-        verificarNotificacionesProximas();
+
+        const tareas = JSON.parse(localStorage.getItem('tareas_academicas')) || [];
+        tareas.push({ id: Date.now(), materia, desc, date, estatus: 'Pendiente' });
+        localStorage.setItem('tareas_academicas', JSON.stringify(tareas));
+
+        document.getElementById('task-desc').value = '';
+        document.getElementById('task-date').value = '';
+        
+        renderizarTareas();
+        renderizarCalendarioExamenes();
+        dispararNotificacionPush("📋 Actividad Registrada", `${materia}: ${desc}`);
     }
 
-    function eliminarActividad(index) {
-        let listaActividades = JSON.parse(localStorage.getItem('actividades_para_realizar')) || [];
-        listaActividades.splice(index, 1);
-        localStorage.setItem('actividades_para_realizar', JSON.stringify(listaActividades));
-        cargarTablaActividades();
+    function borrarTarea(id) {
+        let tareas = JSON.parse(localStorage.getItem('tareas_academicas')) || [];
+        tareas = tareas.filter(t => t.id !== id);
+        localStorage.setItem('tareas_academicas', JSON.stringify(tareas));
+        renderizarTareas();
+        renderizarCalendarioExamenes();
     }
 
-    function exportarDatosJSON() {
-        const datosBackup = {};
-        for (let i = 0; i < localStorage.length; i++) {
-            const key = localStorage.key(i);
-            datosBackup[key] = localStorage.getItem(key);
-        }
-        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(datosBackup, null, 2));
-        const downloadAnchor = document.createElement('a');
-        downloadAnchor.setAttribute("href", dataStr);
-        downloadAnchor.setAttribute("download", `backup_core_academico_${new Date().toISOString().split('T')[0]}.json`);
-        document.body.appendChild(downloadAnchor);
-        downloadAnchor.click();
-        downloadAnchor.remove();
-    }
+    function renderizarTareas() {
+        const tasksBody = document.getElementById('tasks-body');
+        tasksBody.innerHTML = '';
+        const tareas = JSON.parse(localStorage.getItem('tareas_academicas')) || [];
 
-    function importarDatosJSON(event) {
-        const file = event.target.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            try {
-                const datosRestaurados = JSON.parse(e.target.result);
-                localStorage.clear();
-                for (const key in datosRestaurados) { localStorage.setItem(key, datosRestaurados[key]); }
-                lanzarModal("📥 Datos Restaurados", "El respaldo se cargó con éxito. Se recargará el entorno.");
-                setTimeout(() => location.reload(), 2000);
-            } catch (err) {
-                lanzarModal("⚠️ Error", "Archivo JSON inválido.");
-            }
-        };
-        reader.readAsText(file);
-    }
-
-    function filtrarGlobalSistema() {
-        const query = document.getElementById('global-search-input').value.toLowerCase().trim();
-        document.querySelectorAll('#profesores-body tr').forEach(fila => {
-            fila.style.display = (!query || fila.textContent.toLowerCase().includes(query)) ? "" : "none";
-        });
-        document.querySelectorAll('.card-materia').forEach(card => {
-            const textCard = card.textContent.toLowerCase();
-            card.style.opacity = (!query || textCard.includes(query)) ? "1" : "0.2";
+        tareas.forEach(t => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td style="font-weight:700; color:var(--azul-marino);">${t.materia}</td>
+                <td>${t.desc}</td>
+                <td style="font-weight:700;">${t.date}</td>
+                <td style="text-align:center;">
+                    <button class="btn-action-delete" onclick="borrarTarea(${t.id})">Eliminar</button>
+                </td>
+            `;
+            tasksBody.appendChild(tr);
         });
     }
 
-    let pomoTiempoRestante = 25 * 60;
-    let pomoIntervalo = null;
-    let pomoActivo = false;
+    function renderizarCalendarioExamenes() {
+        const daysGrid = document.getElementById('calendar-days-grid');
+        daysGrid.innerHTML = '';
+        const hoy = new Date();
+        const year = hoy.getFullYear();
+        const month = hoy.getMonth();
 
-    function actualizarDisplayPomodoro() {
-        const minutos = Math.floor(pomoTiempoRestante / 60);
-        const segundos = pomoTiempoRestante % 60;
-        document.getElementById('pomo-display').textContent = `${String(minutos).padStart(2, '0')}:${String(segundos).padStart(2, '0')}`;
-    }
+        const primerDia = new Date(year, month, 1);
+        const ultimoDia = new Date(year, month + 1, 0);
+        
+        document.getElementById('calendar-month-title').textContent = hoy.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' }).toUpperCase();
 
-    function togglePomodoroMinimizado() {
-        const widget = document.getElementById('pomodoro-widget');
-        const btn = document.getElementById('pomo-minimize-btn');
-        if (!widget) return;
+        let offsetInicial = primerDia.getDay() - 1;
+        if (offsetInicial === -1) offsetInicial = 6;
 
-        const minimizado = widget.classList.toggle('minimized');
-        btn.textContent = minimizado ? '+' : '−';
-        btn.title = minimizado ? 'Expandir Pomodoro' : 'Minimizar Pomodoro';
-        localStorage.setItem('pomodoro_minimizado', minimizado ? '1' : '0');
-    }
+        for (let i = 0; i < offsetInicial; i++) {
+            let emptyCell = document.createElement('div');
+            emptyCell.className = 'calendar-cell';
+            emptyCell.style.opacity = '0.3';
+            daysGrid.appendChild(emptyCell);
+        }
 
-    function restaurarEstadoPomodoro() {
-        const widget = document.getElementById('pomodoro-widget');
-        const btn = document.getElementById('pomo-minimize-btn');
-        if (!widget || !btn) return;
+        const tareas = JSON.parse(localStorage.getItem('tareas_academicas')) || [];
 
-        if (localStorage.getItem('pomodoro_minimizado') === '1') {
-            widget.classList.add('minimized');
-            btn.textContent = '+';
-            btn.title = 'Expandir Pomodoro';
+        for (let d = 1; d <= ultimoDia.getDate(); d++) {
+            let cell = document.createElement('div');
+            cell.className = 'calendar-cell';
+            if (d === hoy.getDate()) cell.classList.add('today');
+
+            let num = document.createElement('span');
+            num.textContent = d;
+            cell.appendChild(num);
+
+            let fechaFormatted = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+            let tareasDelDia = tareas.filter(t => t.date === fechaFormatted);
+
+            tareasDelDia.forEach(t => {
+                let tag = document.createElement('div');
+                tag.className = 'cal-task-tag';
+                tag.title = `${t.materia}: ${t.desc}`;
+                tag.textContent = t.desc;
+                cell.appendChild(tag);
+            });
+
+            daysGrid.appendChild(cell);
         }
     }
 
-    function togglePomodoro() {
-        const btnToggle = document.getElementById('pomo-btn-toggle');
-        if (!pomoActivo) {
-            pomoActivo = true;
-            btnToggle.textContent = "Pausar";
-            pomoIntervalo = setInterval(() => {
-                if (pomoTiempoRestante > 0) {
-                    pomoTiempoRestante--;
-                    actualizarDisplayPomodoro();
-                } else {
-                    clearInterval(pomoIntervalo);
-                    pomoActivo = false;
-                    btnToggle.textContent = "Iniciar";
-                    lanzarModal("🍅 ¡Pomodoro Concluido!", "Excelente sesión de estudio. Tómate 5 minutos.");
-                    dispararNotificacionPush("Pomodoro Finalizado", "Tómate 5 minutos de descanso.");
-                }
-            }, 1000);
-        } else {
-            pomoActivo = false;
-            clearInterval(pomoIntervalo);
-            btnToggle.textContent = "Reanudar";
+    function verificarNotificacionesProximas() {
+        const tareas = JSON.parse(localStorage.getItem('tareas_academicas')) || [];
+        const hoyStr = new Date().toISOString().split('T')[0];
+        const tareasHoy = tareas.filter(t => t.date === hoyStr);
+        if(tareasHoy.length > 0) {
+            dispararNotificacionPush("⏰ Recordatorio de Entregas", `Tienes ${tareasHoy.length} entrega(s) programada(s) para el día de hoy.`);
         }
     }
 
-    function resetPomodoro() {
-        clearInterval(pomoIntervalo);
-        pomoActivo = false;
-        pomoTiempoRestante = 25 * 60;
-        document.getElementById('pomo-btn-toggle').textContent = "Iniciar";
-        actualizarDisplayPomodoro();
-    }
-
+    // --- KARDEX PREDICTIVO & WHAT-IF ---
     function renderizarInputsUnidadesPredictivo() {
-        const total = parseInt(document.getElementById('calc-total-unidades').value) || 4;
-        const cont = document.getElementById('unidades-calificaciones');
-        if (!cont) return;
-
-        cont.innerHTML = Array.from({length: total}, (_, i) => {
-            const guardada = localStorage.getItem(`predictivo_unidad_${i + 1}`);
-            return `
-                <label style="font-size:11px; font-weight:800; color:var(--azul-marino);">
-                    Unidad ${i + 1}
-                    <input type="number"
-                        class="predictivo-unidad-input"
-                        data-unidad="${i + 1}"
-                        min="70" max="100" step="0.1"
-                        value="${guardada ?? ''}"
-                        placeholder="Pendiente"
-                        oninput="guardarUnidadPredictiva(${i + 1}, this.value)"
-                        style="width:100%; margin-top:5px; box-sizing:border-box;">
-                </label>`;
-        }).join('');
-
-        calcularPredictivoUnidades();
-    }
-
-    function guardarUnidadPredictiva(unidad, valor) {
-        if (valor === '') {
-            localStorage.removeItem(`predictivo_unidad_${unidad}`);
-            calcularPredictivoUnidades();
-            return;
+        const total = parseInt(document.getElementById('calc-total-unidades').value);
+        const container = document.getElementById('unidades-calificaciones');
+        container.innerHTML = '';
+        for (let i = 1; i <= total; i++) {
+            container.innerHTML += `
+                <label style="font-size:11px; font-weight:700;">U${i}:
+                    <input type="number" min="0" max="100" class="input-pred-u" id="pred-u-${i}" placeholder="Pendiente" style="width:100%; box-sizing:border-box; margin-top:3px; padding:6px;">
+                </label>
+            `;
         }
-
-        const n = parseFloat(valor);
-        if (!isNaN(n) && n >= 70 && n <= 100) {
-            localStorage.setItem(`predictivo_unidad_${unidad}`, n);
-        }
-        calcularPredictivoUnidades();
     }
 
     function calcularPredictivoUnidades() {
-        const totalUnidades = parseInt(document.getElementById('calc-total-unidades').value) || 4;
-        const resultadoBox = document.getElementById('calc-resultado-text');
+        const total = parseInt(document.getElementById('calc-total-unidades').value);
+        let evaluadas = 0;
+        let suma = 0;
 
-        const inputs = [...document.querySelectorAll('.predictivo-unidad-input')];
-        const calificaciones = inputs
-            .map(input => parseFloat(input.value))
-            .filter(n => !isNaN(n));
+        for (let i = 1; i <= total; i++) {
+            let val = parseFloat(document.getElementById(`pred-u-${i}`).value);
+            if (!isNaN(val)) {
+                suma += val;
+                evaluadas++;
+            }
+        }
 
-        const evaluadas = calificaciones.length;
-        const restantes = totalUnidades - evaluadas;
+        const faltantes = total - evaluadas;
+        const targetGlobal = 70 * total;
+        const resBox = document.getElementById('calc-resultado-text');
 
-        if (evaluadas === 0) {
-            resultadoBox.innerHTML = `📝 Captura las calificaciones de las unidades que ya presentaste para generar una predicción.`;
+        if (faltantes === 0) {
+            let promedioFinal = suma / total;
+            resBox.innerHTML = `Todas las unidades capturadas. <br> Promedio Final: <strong>${promedioFinal.toFixed(1)}</strong> ${promedioFinal >= 70 ? '🟢 (Aprobado)' : '🔴 (Reprobado)'}`;
             return;
         }
 
-        const promedioActual = calificaciones.reduce((a,b) => a+b, 0) / evaluadas;
+        let requeridoTotal = targetGlobal - suma;
+        let requeridaPorUnidad = requeridoTotal / faltantes;
 
-        // Predicción: usamos el rendimiento promedio real de las unidades ya evaluadas.
-        const prediccion = promedioActual;
-        const promedioProyectado = (
-            calificaciones.reduce((a,b) => a+b, 0) +
-            (restantes * prediccion)
-        ) / totalUnidades;
-
-        // Además calculamos cuánto se necesita realmente para cerrar con 70.
-        const puntosNecesarios = (totalUnidades * 70) - calificaciones.reduce((a,b) => a+b, 0);
-        const minimoRestantes = restantes > 0 ? puntosNecesarios / restantes : 0;
-
-        if (restantes === 0) {
-            resultadoBox.innerHTML = `
-                📊 <strong>Ya tienes las ${totalUnidades} unidades.</strong><br><br>
-                Promedio final: <strong>${promedioActual.toFixed(1)}</strong>.
-                ${promedioActual >= 70 ? ' 🎉 Materia aprobada.' : ' ⚠️ El promedio está por debajo de 70.'}
-            `;
-            return;
+        if (requeridaPorUnidad <= 0) {
+            resBox.innerHTML = `🎉 ¡Ya has asegurado la materia! <br>Incluso sacando 0 en las <strong>${faltantes}</strong> unidad(es) restantes mantendrás un promedio ≥ 70.`;
+        } else if (requeridaPorUnidad > 100) {
+            resBox.innerHTML = `🔴 <strong>Atención:</strong> Necesitas promediar <strong>${requeridaPorUnidad.toFixed(1)}</strong> en las ${faltantes} unidad(es) restantes. Se superó el máximo de 100 puntos.`;
+        } else {
+            resBox.innerHTML = `🎯 Necesitas un promedio mínimo de <strong>${requeridaPorUnidad.toFixed(1)}</strong> en cada una de las <strong>${faltantes}</strong> unidad(es) pendientes para aprobar con 70.`;
         }
-
-        resultadoBox.innerHTML = `
-            📈 Has registrado <strong>${evaluadas} de ${totalUnidades}</strong> unidades.<br><br>
-            📊 Tu promedio actual es <strong>${promedioActual.toFixed(1)}</strong>.<br>
-            🔮 <strong>Predicción:</strong> si mantienes ese mismo rendimiento, se estima
-            <strong>${prediccion.toFixed(1)}</strong> en cada una de las
-            <strong>${restantes} unidades restantes</strong>.<br><br>
-            🎯 Tu promedio final proyectado sería de <strong>${promedioProyectado.toFixed(1)}</strong>.<br>
-            ${minimoRestantes <= 70
-                ? `✅ Para asegurar un promedio final de 70, con ${restantes} unidad(es) restantes necesitas al menos <strong>70.0</strong> de promedio.`
-                : `⚠️ Para cerrar con 70 necesitas al menos <strong>${minimoRestantes.toFixed(1)}</strong> de promedio en las unidades restantes.`}
-        `;
     }
 
     function renderizarSimuladorWhatIf() {
         const semActual = localStorage.getItem('semestre_actual_cursando');
         const info = document.getElementById('whatif-semestre-info');
         const container = document.getElementById('whatif-materias-container');
-        const resBox = document.getElementById('whatif-result-text');
+        container.innerHTML = '';
 
         if (!semActual) {
-            if (info) info.innerHTML = "⚠️ No hay semestre seleccionado como <strong>Cursando</strong>.";
-            if (container) container.innerHTML = '';
-            if (resBox) resBox.innerHTML = "Ve a <strong>Plan de Estudios</strong> y marca el semestre que estás cursando.";
+            info.textContent = "No hay ningún semestre marcado en curso.";
             return;
         }
 
-        const semestreObj = data.find(s => s.s == semActual);
-        if (!semestreObj) return;
+        info.textContent = `Simulando para materias en curso: Semestre 0${semActual}`;
+        const semObj = data.find(item => item.s == semActual);
+        if (!semObj) return;
 
-        info.innerHTML = `📚 Semestre <strong>0${semActual}</strong> — captura las calificaciones hipotéticas de <strong>${semestreObj.m.length} materia(s)</strong>.`;
-
-        const saved = JSON.parse(localStorage.getItem(`whatif_semestre_${semActual}`) || '{}');
-        container.innerHTML = semestreObj.m.map((mat, i) => `
-            <div style="padding:14px; border:1px solid var(--panel-border); border-radius:14px; background:var(--panel-bg); box-shadow:var(--shadow-3d-inset);">
-                <div style="font-size:11px; font-weight:800; color:var(--azul-muted);">${mat[0]} · ${mat[1]} CR</div>
-                <div style="font-size:13px; font-weight:900; color:var(--azul-marino); margin:5px 0 10px;">${mat[2]}</div>
-                <input type="number" min="0" max="100" step="0.01" id="whatif-${semActual}-${i}" placeholder="Calificación (0-100)" value="${saved[i] ?? ''}" style="width:100%; box-sizing:border-box;" oninput="guardarSimulacionWhatIf()">
-            </div>
-        `).join('');
-    }
-
-    function guardarSimulacionWhatIf() {
-        const semActual = localStorage.getItem('semestre_actual_cursando');
-        if (!semActual) return;
-        const semestreObj = data.find(s => s.s == semActual);
-        if (!semestreObj) return;
-
-        const valores = {};
-        semestreObj.m.forEach((_, i) => {
-            const input = document.getElementById(`whatif-${semActual}-${i}`);
-            if (input && input.value !== '') valores[i] = input.value;
+        semObj.m.forEach((mat, idx) => {
+            container.innerHTML += `
+                <div style="background:var(--panel-bg); padding:10px; border-radius:12px; border:1px solid rgba(165,175,190,0.2);">
+                    <div style="font-size:11px; font-weight:800; color:var(--azul-marino); margin-bottom:4px;">${mat[2]}</div>
+                    <input type="number" min="0" max="100" class="input-whatif-sim" data-cred="${mat[1]}" placeholder="Nota proyectada" style="width:100%; box-sizing:border-box; padding:6px; font-size:12px;">
+                </div>
+            `;
         });
-        localStorage.setItem(`whatif_semestre_${semActual}`, JSON.stringify(valores));
-    }
-
-    function limpiarSimuladorWhatIf() {
-        const semActual = localStorage.getItem('semestre_actual_cursando');
-        if (semActual) localStorage.removeItem(`whatif_semestre_${semActual}`);
-        renderizarSimuladorWhatIf();
-        const resBox = document.getElementById('whatif-result-text');
-        if (resBox) resBox.innerHTML = "Simulación limpia. Captura las notas hipotéticas para comenzar.";
     }
 
     function simularWhatIfGPA() {
+        const inputs = document.querySelectorAll('.input-whatif-sim');
+        let sumaProyectada = 0;
+        let creditosSim = 0;
+
+        inputs.forEach(inp => {
+            let val = parseFloat(inp.value);
+            let cred = parseInt(inp.dataset.cred);
+            if (!isNaN(val)) {
+                sumaProyectada += (val * cred);
+                creditosSim += cred;
+            }
+        });
+
         const resBox = document.getElementById('whatif-result-text');
-        const semActual = localStorage.getItem('semestre_actual_cursando');
-
-        if (!semActual) {
-            resBox.innerHTML = "⚠️ Primero marca un semestre como <strong>Cursando</strong> en Plan de Estudios.";
+        if (creditosSim === 0) {
+            resBox.textContent = "Por favor ingresa al menos una calificación hipotética.";
             return;
         }
 
-        const semestreObj = data.find(s => s.s == semActual);
-        if (!semestreObj) return;
-
-        const simulaciones = [];
-        for (let i = 0; i < semestreObj.m.length; i++) {
-            const input = document.getElementById(`whatif-${semActual}-${i}`);
-            const valor = parseFloat(input?.value);
-            if (isNaN(valor) || valor < 0 || valor > 100) {
-                resBox.innerHTML = `⚠️ Captura una calificación válida de <strong>0 a 100</strong> en <strong>${semestreObj.m[i][2]}</strong>.`;
-                input?.focus();
-                return;
-            }
-            simulaciones.push(valor);
-        }
-
-        guardarSimulacionWhatIf();
-
-        // GPA histórico: toma las materias aprobadas, excluyendo el semestre
-        // que estamos simulando para no duplicar sus créditos.
-        let creditosHistoricos = 0;
-        let sumaHistorica = 0;
-
-        document.querySelectorAll('.card-materia.aprobada').forEach(c => {
-            const [, sN, iM] = c.id.split('-');
-            if (String(sN) === String(semActual)) return;
-
-            const creditos = parseInt(c.dataset.c) || 0;
-            const input = document.getElementById(`grade-${sN}-${iM}`);
-            const cal = parseFloat(input?.value);
-
-            if (!isNaN(cal)) {
-                creditosHistoricos += creditos;
-                sumaHistorica += cal * creditos;
-            }
-        });
-
-        let creditosSemestre = 0;
-        let sumaSemestre = 0;
-        let detalle = '';
-
-        semestreObj.m.forEach((mat, i) => {
-            const creditos = mat[1];
-            const cal = simulaciones[i];
-            creditosSemestre += creditos;
-            sumaSemestre += cal * creditos;
-            detalle += `<div style="display:flex; justify-content:space-between; gap:10px; padding:6px 0; border-bottom:1px solid var(--panel-border);"><span>${mat[2]}</span><strong>${cal.toFixed(2)}</strong></div>`;
-        });
-
-        const promedioSemestre = sumaSemestre / creditosSemestre;
-        const creditosProyectados = creditosHistoricos + creditosSemestre;
-        const sumaProyectada = sumaHistorica + sumaSemestre;
-        const gpaProyectado = creditosProyectados > 0 ? sumaProyectada / creditosProyectados : promedioSemestre;
-        const gpaActual = creditosHistoricos > 0 ? sumaHistorica / creditosHistoricos : 0;
-        const impacto = creditosHistoricos > 0 ? gpaProyectado - gpaActual : 0;
-
-        resBox.innerHTML = `
-            <div style="font-size:15px; line-height:1.65;">
-                📚 <strong>Simulación del Semestre 0${semActual}</strong><br>
-                📊 Promedio ponderado del semestre: <strong>${promedioSemestre.toFixed(2)}</strong><br>
-                ${creditosHistoricos > 0 ? `🎓 GPA actual antes del semestre: <strong>${gpaActual.toFixed(2)}</strong><br>` : ''}
-                🚀 <strong>GPA general proyectado: ${gpaProyectado.toFixed(2)}</strong><br>
-                ${creditosHistoricos > 0 ? `📈 Impacto en tu GPA: <strong>${impacto >= 0 ? '+' : ''}${impacto.toFixed(2)}</strong><br>` : ''}
-                <div style="margin-top:12px; padding-top:10px;">
-                    <strong>Calificaciones simuladas:</strong>
-                    ${detalle}
-                </div>
-            </div>`;
+        let promedioSimuladoSemestre = sumaProyectada / creditosSim;
+        resBox.innerHTML = `Promedio Proyectado del Semestre: <strong>${promedioSimuladoSemestre.toFixed(2)}</strong> pts.`;
     }
 
+    function limpiarSimuladorWhatIf() {
+        document.querySelectorAll('.input-whatif-sim').forEach(i => i.value = '');
+        document.getElementById('whatif-result-text').textContent = "Simulación reiniciada.";
+    }
+
+    // --- ASISTENCIAS ---
     function renderizarAsistencias() {
-        // Las asistencias siempre corresponden al semestre marcado como "Cursando"
-        // en la página principal.
-        const semActual = localStorage.getItem('semestre_actual_cursando');
-        const containerAtt = document.getElementById('attendance-container');
-        const infoSemestre = document.getElementById('attendance-semestre-info');
+        const semActual = localStorage.getItem('semestre_actual_cursando') || "3";
+        document.getElementById('attendance-semestre-info').textContent = `Mostrando asignaturas del Semestre 0${semActual}`;
+        const container = document.getElementById('attendance-container');
+        container.innerHTML = '';
 
-        if (!semActual) {
-            if (infoSemestre) infoSemestre.innerHTML = "⚠️ Marca primero un semestre como <strong>Cursando</strong> en el Plan de Estudios.";
-            if (containerAtt) {
-                containerAtt.innerHTML = `
-                    <div class="calc-result-box" style="grid-column:1/-1;">
-                        No hay semestre seleccionado como cursando. Ve a <strong>Plan de Estudios</strong> y pulsa <strong>Cursando</strong> en el semestre que estás llevando.
-                    </div>`;
-            }
-            return;
-        }
+        const semObj = data.find(item => item.s == semActual);
+        if (!semObj) return;
 
-        const semestreObj = data.find(s => s.s == semActual);
-        if (!semestreObj) return;
+        semObj.m.forEach((mat, idx) => {
+            let keyAsis = `asis_${semActual}_${idx}`;
+            let keyFalta = `falta_${semActual}_${idx}`;
 
-        if (infoSemestre) {
-            infoSemestre.innerHTML = `📚 Semestre activo para asistencias: <strong>Semestre 0${semActual}</strong>`;
-        }
+            let asisCount = parseInt(localStorage.getItem(keyAsis)) || 0;
+            let faltaCount = parseInt(localStorage.getItem(keyFalta)) || 0;
+            let totalClases = asisCount + faltaCount;
+            let porcFaltas = totalClases > 0 ? ((faltaCount / totalClases) * 100).toFixed(1) : "0.0";
 
-        let asistenciasData = JSON.parse(localStorage.getItem('registro_asistencias_materias')) || {};
+            let alertaStyle = parseFloat(porcFaltas) >= 20 ? "color:var(--alerta-texto); font-weight:800;" : "color:var(--azul-muted);";
 
-        containerAtt.innerHTML = semestreObj.m.map(mat => {
-            const key = `mat_${semActual}_${mat[0]}`;
-            const info = asistenciasData[key] || { asistidas: 0, faltas: 0 };
-            const totalClases = info.asistidas + info.faltas;
-            const porcentajeFaltas = totalClases > 0 ? (info.faltas / totalClases) * 100 : 0;
-            const enRiesgo = porcentajeFaltas > 20 && totalClases >= 5;
-
-            return `<div class="attendance-card" style="${enRiesgo ? 'border: 2px solid #e11d48;' : ''}">
-                <h4>${escapeHtml(mat[2])}</h4>
-                <div class="attendance-counters">
-                    <span>Asistencias: <strong style="color:var(--exito-texto);">${info.asistidas}</strong></span>
-                    <span>Faltas: <strong style="color:var(--alerta-texto);">${info.faltas}</strong></span>
+            container.innerHTML += `
+                <div class="attendance-card">
+                    <h4>${mat[2]}</h4>
+                    <div class="attendance-counters">
+                        <span>Asistencias: <strong>${asisCount}</strong></span>
+                        <span>Faltas: <strong style="${alertaStyle}">${faltaCount} (${porcFaltas}%)</strong></span>
+                    </div>
+                    <div class="attendance-actions">
+                        <button class="btn-att btn-att-asis" onclick="registrarAsistencia('${keyAsis}')">+ Asistencia</button>
+                        <button class="btn-att btn-att-falta" onclick="registrarAsistencia('${keyFalta}')">+ Falta</button>
+                    </div>
                 </div>
-                <div style="font-size:11px; color:var(--azul-muted); font-weight:700; margin:8px 0;">
-                    Total de clases: ${totalClases}${totalClases > 0 ? ` · ${porcentajeFaltas.toFixed(1)}% de faltas` : ''}
-                </div>
-                ${enRiesgo ? '<div style="font-size:10px; color:#e11d48; font-weight:800; text-transform:uppercase;">⚠️ Riesgo de Extraordinario (>20%)</div>' : ''}
-                <div class="attendance-actions">
-                    <button class="btn-att btn-att-asis" onclick="modificarAsistencia('${key}', 'asistida')">✓ Asistió</button>
-                    <button class="btn-att btn-att-falta" onclick="modificarAsistencia('${key}', 'falta')">✕ Faltó</button>
-                    <button class="btn-att" onclick="reiniciarAsistenciaMateria('${key}')">↺ Reiniciar</button>
-                </div>
-            </div>`;
-        }).join('');
+            `;
+        });
     }
 
-    function modificarAsistencia(key, tipo) {
-        let asistenciasData = JSON.parse(localStorage.getItem('registro_asistencias_materias')) || {};
-        if (!asistenciasData[key]) asistenciasData[key] = { asistidas: 0, faltas: 0 };
-
-        if (tipo === 'asistida') asistenciasData[key].asistidas++;
-        else asistenciasData[key].faltas++;
-
-        localStorage.setItem('registro_asistencias_materias', JSON.stringify(asistenciasData));
-        renderizarAsistencias();
-    }
-
-    function reiniciarAsistenciaMateria(key) {
-        let asistenciasData = JSON.parse(localStorage.getItem('registro_asistencias_materias')) || {};
-        delete asistenciasData[key];
-        localStorage.setItem('registro_asistencias_materias', JSON.stringify(asistenciasData));
+    function registrarAsistencia(key) {
+        let actual = parseInt(localStorage.getItem(key)) || 0;
+        localStorage.setItem(key, actual + 1);
         renderizarAsistencias();
     }
 
     function reiniciarTodasAsistencias() {
-        if (!confirm('¿Quieres borrar TODO el registro de asistencias e inasistencias? Esta acción no se puede deshacer.')) return;
-        localStorage.removeItem('registro_asistencias_materias');
-        renderizarAsistencias();
+        if(confirm("¿Deseas reiniciar el contador de asistencias para todas las materias?")) {
+            for(let key in localStorage) {
+                if(key.startsWith('asis_') || key.startsWith('falta_')) {
+                    localStorage.removeItem(key);
+                }
+            }
+            renderizarAsistencias();
+        }
     }
 
+    // --- RECURSOS Y BLOC DE NOTAS ---
     function renderizarRecursos() {
-        const sem = obtenerSemestreSeleccionado();
-        const semestreObj = data.find(s => s.s == sem);
-        const containerRes = document.getElementById('resources-container');
-        if (!semestreObj) return;
-        let recursosData = JSON.parse(localStorage.getItem('recursos_materias_core')) || {};
+        const semActual = localStorage.getItem('semestre_actual_cursando') || "3";
+        const container = document.getElementById('resources-container');
+        container.innerHTML = '';
+        const semObj = data.find(item => item.s == semActual);
+        if (!semObj) return;
 
-        containerRes.innerHTML = semestreObj.m.map(mat => {
-            const key = `rec_${sem}_${mat[0]}`;
-            const info = recursosData[key] || { drive: '', clase: '', silabo: '' };
-            return `<div class="resource-card">
-                <h4>${escapeHtml(mat[2])}</h4>
-                <label style="font-size:11px; font-weight:700; color:var(--azul-muted);">Drive / Carpeta:
-                    <input type="text" id="drive-${key}" value="${info.drive}" placeholder="https://drive.google.com/..." oninput="guardarRecurso('${key}')">
-                </label>
-                <label style="font-size:11px; font-weight:700; color:var(--azul-muted);">Clase Online (Meet/Zoom):
-                    <input type="text" id="clase-${key}" value="${info.clase}" placeholder="https://meet.google.com/..." oninput="guardarRecurso('${key}')">
-                </label>
-                <label style="font-size:11px; font-weight:700; color:var(--azul-muted);">Sílabo / Programa:
-                    <input type="text" id="silabo-${key}" value="${info.silabo}" placeholder="Link al PDF..." oninput="guardarRecurso('${key}')">
-                </label>
-                <div class="resource-links">
-                    ${info.drive ? `<a href="${info.drive}" target="_blank" class="btn-link-action">📁 Drive</a>` : ''}
-                    ${info.clase ? `<a href="${info.clase}" target="_blank" class="btn-link-action">💻 Online</a>` : ''}
-                    ${info.silabo ? `<a href="${info.silabo}" target="_blank" class="btn-link-action">📄 Sílabo</a>` : ''}
+        semObj.m.forEach((mat, idx) => {
+            let keyLink = `link_drive_${semActual}_${idx}`;
+            let linkGuardado = localStorage.getItem(keyLink) || "";
+
+            container.innerHTML += `
+                <div class="resource-card">
+                    <h4>${mat[2]}</h4>
+                    <input type="url" value="${linkGuardado}" placeholder="https://drive.google.com/..." onchange="localStorage.setItem('${keyLink}', this.value)" id="inp-${keyLink}">
+                    <div class="resource-links">
+                        <a href="${linkGuardado || '#'}" target="_blank" class="btn-link-action">🔗 Abrir Enlace</a>
+                    </div>
                 </div>
-            </div>`;
-        }).join('');
-    }
-
-    function guardarRecurso(key) {
-        let recursosData = JSON.parse(localStorage.getItem('recursos_materias_core')) || {};
-        recursosData[key] = {
-            drive: document.getElementById(`drive-${key}`).value.trim(),
-            clase: document.getElementById(`clase-${key}`).value.trim(),
-            silabo: document.getElementById(`silabo-${key}`).value.trim()
-        };
-        localStorage.setItem('recursos_materias_core', JSON.stringify(recursosData));
+            `;
+        });
     }
 
     function renderizarBlocNotas() {
-        const sem = obtenerSemestreSeleccionado();
-        const semestreObj = data.find(s => s.s == sem);
-        const containerNotes = document.getElementById('notes-container');
-        if (!semestreObj) return;
-        let notasData = JSON.parse(localStorage.getItem('bloc_notas_materias_core')) || {};
+        const semActual = localStorage.getItem('semestre_actual_cursando') || "3";
+        const container = document.getElementById('notes-container');
+        container.innerHTML = '';
+        const semObj = data.find(item => item.s == semActual);
+        if (!semObj) return;
 
-        containerNotes.innerHTML = semestreObj.m.map(mat => {
-            const key = `note_${sem}_${mat[0]}`;
-            const notaVal = notasData[key] || '';
-            return `<div class="note-card">
-                <h4>📝 ${escapeHtml(mat[2])}</h4>
-                <textarea id="${key}" placeholder="Apuntes rápidos, contraseñas o fórmulas clave..." style="width:100%; height:80px; box-sizing:border-box; margin-top:8px; border-radius:12px; padding:10px; font-size:12px; resize:vertical;" oninput="guardarNotaRapida('${key}')">${escapeHtml(notaVal)}</textarea>
-            </div>`;
-        }).join('');
+        semObj.m.forEach((mat, idx) => {
+            let keyNota = `nota_rapida_${semActual}_${idx}`;
+            let notaGuardada = localStorage.getItem(keyNota) || "";
+
+            container.innerHTML += `
+                <div class="note-card">
+                    <h4 style="margin-bottom:10px;">${mat[2]}</h4>
+                    <textarea rows="4" style="width:100%; box-sizing:border-box; resize:vertical;" placeholder="Anotaciones, tareas pendientes, entregas..." onchange="localStorage.setItem('${keyNota}', this.value)">${notaGuardada}</textarea>
+                </div>
+            `;
+        });
     }
 
-    function guardarNotaRapida(key) {
-        let notasData = JSON.parse(localStorage.getItem('bloc_notas_materias_core')) || {};
-        notasData[key] = document.getElementById(key).value;
-        localStorage.setItem('bloc_notas_materias_core', JSON.stringify(notasData));
+    // --- FILTRO GLOBAL DE BÚSQUEDA ---
+    function filtrarGlobalSistema() {
+        const query = document.getElementById('global-search-input').value.toLowerCase().trim();
+        document.querySelectorAll('.card-materia').forEach(card => {
+            const texto = card.textContent.toLowerCase();
+            if(texto.includes(query)) {
+                card.style.display = 'flex';
+            } else {
+                card.style.display = 'none';
+            }
+        });
     }
 
-    function renderizarCalendarioMensual(listaActividades) {
-        const grid = document.getElementById('calendar-days-grid');
-        const titleMonth = document.getElementById('calendar-month-title');
-        const ahora = new Date();
-        const año = ahora.getFullYear();
-        const mes = ahora.getMonth();
-        const nombresMeses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-        titleMonth.textContent = `${nombresMeses[mes]} ${año}`;
+    // --- CONTROL POMODORO WIDGET ---
+    let pomoTiempo = 25 * 60;
+    let pomoIntervalo = null;
+    let pomoCorriendo = false;
 
-        const primerDiaMes = new Date(año, mes, 1).getDay();
-        const totalDiasMes = new Date(año, mes + 1, 0).getDate();
-        let offset = primerDiaMes === 0 ? 6 : primerDiaMes - 1;
-
-        let htmlCells = "";
-        for (let i = 0; i < offset; i++) {
-            htmlCells += `<div class="calendar-cell" style="background:transparent; border:none;"></div>`;
-        }
-        for (let dia = 1; dia <= totalDiasMes; dia++) {
-            let fechaStr = `${año}-${String(mes + 1).padStart(2, '0')}-${String(dia).padStart(2, '0')}`;
-            let esHoy = dia === ahora.getDate();
-            let tareasDia = listaActividades.filter(act => act.fecha === fechaStr);
-
-            htmlCells += `<div class="calendar-cell ${esHoy ? 'today' : ''}">
-                <span style="font-size:11px; font-weight:800;">${dia}</span>
-                ${tareasDia.map(t => `<div class="cal-task-tag" title="${escapeHtml(t.materia)}">${escapeHtml(t.materia)}</div>`).join('')}
-            </div>`;
-        }
-        grid.innerHTML = htmlCells;
-    }
-
-    function verificarNotificacionesProximas() {
-        let listaActividades = JSON.parse(localStorage.getItem('actividades_para_realizar')) || [];
-        if (listaActividades.length === 0) return;
-        const hoyStr = new Date().toISOString().split('T')[0];
-        const tareasHoy = listaActividades.filter(act => act.fecha === hoyStr);
-
-        if (tareasHoy.length > 0) {
-            const descripciones = tareasHoy.map(t => `• ${t.materia}: ${t.descripcion}`).join('\n');
-            lanzarModal("🔔 ¡Entregas para Hoy!", `Tienes tareas o exámenes programados para el día de hoy:<br><br>${descripciones.replace(/\n/g, '<br>')}`);
-            dispararNotificacionPush("Entregas Pendientes", "Tienes actividades programadas para el día de hoy.");
+    function togglePomodoro() {
+        const btn = document.getElementById('pomo-btn-toggle');
+        if (pomoCorriendo) {
+            clearInterval(pomoIntervalo);
+            pomoCorriendo = false;
+            btn.textContent = "Iniciar";
+        } else {
+            pomoCorriendo = true;
+            btn.textContent = "Pausar";
+            pomoIntervalo = setInterval(() => {
+                pomoTiempo--;
+                actualizarPomodoroDisplay();
+                if(pomoTiempo <= 0) {
+                    clearInterval(pomoIntervalo);
+                    pomoCorriendo = false;
+                    btn.textContent = "Iniciar";
+                    pomoTiempo = 25 * 60;
+                    dispararNotificacionPush("🍅 Pomodoro Finalizado", "¡Tiempo de tomar un descanso!");
+                    lanzarModal("🍅 Pomodoro Terminado", "¡Has completado tu bloque de enfoque! Tómate un respiro.");
+                }
+            }, 1000);
         }
     }
 
-    function escapeHtml(text) {
-        return text ? text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") : '';
+    function resetPomodoro() {
+        clearInterval(pomoIntervalo);
+        pomoCorriendo = false;
+        pomoTiempo = 25 * 60;
+        document.getElementById('pomo-btn-toggle').textContent = "Iniciar";
+        actualizarPomodoroDisplay();
     }
 
-    calc();
+    function actualizarPomodoroDisplay() {
+        const min = Math.floor(pomoTiempo / 60);
+        const seg = pomoTiempo % 60;
+        document.getElementById('pomo-display').textContent = `${String(min).padStart(2,'0')}:${String(seg).padStart(2,'0')}`;
+    }
+
+    function togglePomodoroMinimizado() {
+        const widget = document.getElementById('pomodoro-widget');
+        const btn = document.getElementById('pomo-minimize-btn');
+        widget.classList.toggle('minimized');
+        btn.textContent = widget.classList.contains('minimized') ? '+' : '−';
+    }
+
+    // --- IMPORTACIÓN Y EXPORTACIÓN ---
+    function exportarDatosJSON() {
+        const estadoCompleto = {};
+        for(let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            estadoCompleto[key] = localStorage.getItem(key);
+        }
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(estadoCompleto));
+        const downloadAnchor = document.createElement('a');
+        downloadAnchor.setAttribute("href", dataStr);
+        downloadAnchor.setAttribute("download", `kardex_backup_${new Date().toISOString().split('T')[0]}.json`);
+        document.body.appendChild(downloadAnchor);
+        downloadAnchor.click();
+        downloadAnchor.remove();
+    }
+
+    function importarDatosJSON(event) {
+        const fileReader = new FileReader();
+        fileReader.onload = function(e) {
+            try {
+                const contenido = JSON.parse(e.target.result);
+                localStorage.clear();
+                for(let k in contenido) {
+                    localStorage.setItem(k, contenido[k]);
+                }
+                lanzarModal("📥 Importación exitosa", "Tus datos han sido restaurados. La página se recargará ahora.");
+                setTimeout(() => location.reload(), 2000);
+            } catch(err) {
+                lanzarModal("⚠️ Error", "Archivo JSON no válido.");
+            }
+        };
+        fileReader.readAsText(event.target.files[0]);
+    }
+
+    // --- INICIALIZACIÓN GLOBAL ---
     actualizarEstilosSemestreActual();
-    inicializarEstructuraHorario();
-    cargarTablaActividades();
-
-
-    // Inicializar el predictor con una casilla independiente por unidad.
-    document.addEventListener('DOMContentLoaded', () => {
-        restaurarEstadoPomodoro();
-        renderizarInputsUnidadesPredictivo();
-    });
+    calc();
 </script>
 </body>
 </html>
