@@ -1,70 +1,15 @@
-# Core Académico v4.16
+# Proxy seguro de Gemini
 
-Suite académica para Windows con calculadoras, notas rápidas, herramientas de estudio y asistencia con Gemini.
+Este Worker evita guardar la API key de Gemini dentro del repositorio, Electron o APK.
 
-## Funciones principales
+## Cloudflare Workers
+1. Instala Wrangler: `npm install -g wrangler`
+2. Entra: `wrangler login`
+3. Edita `ALLOWED_ORIGINS` en `worker.js` con tu dominio de GitHub Pages.
+4. Publica: `wrangler deploy`
+5. Guarda la clave como secreto, nunca en Git:
+   `npx wrangler secret put GEMINI_API_KEY`
 
-- Calculadoras de álgebra, cálculo, trigonometría y álgebra lineal.
-- Resolución desde imágenes y seguimiento del método mostrado.
-- Notas rápidas tipo post-it con colores.
-- Temas visuales.
-- Materias, tareas, exámenes y calendario.
-- Pomodoro y seguimiento de sesiones.
-- Graficador de funciones.
-- Generador de ejercicios y prácticas.
-- Biblioteca y respaldos locales.
-- Gemini multimodal para texto e imágenes.
-- Monitor local de uso de Gemini y detección de errores de cuota.
+Luego copia la URL del Worker en Core Académico → Configuración → Gemini → Proxy seguro.
 
-## Ejecutar localmente
-
-Requiere Node.js 20+.
-
-```bash
-npm install
-npm start
-```
-
-## Generar Windows
-
-```bash
-npm run dist
-```
-
-Los instaladores aparecen en `dist/`.
-
-## GitHub Actions
-
-El workflow `.github/workflows/build-windows.yml` compila automáticamente para Windows cuando:
-
-- ejecutas el workflow manualmente desde **Actions**, o
-- publicas un tag con formato `v4.16.0`, `v4.16.1`, etc.
-
-Cuando se publica un tag `v*.*.*`, GitHub crea un **Release** y adjunta el instalador NSIS y la versión portable `.exe`.
-
-### Para crear una versión nueva
-
-```bash
-git add .
-git commit -m "Nueva versión"
-git tag v4.16.1
-git push origin main --tags
-```
-
-## Gemini
-
-La API key no está incluida en el repositorio. Cada usuario debe configurar su propia clave desde la aplicación. No subas una API key a GitHub.
-
-## Licencia
-
-MIT
-
-## 🔐 Seguridad de Gemini
-
-Esta versión **no guarda una API key de Gemini en el repositorio, Electron ni APK**. La app se conecta a un proxy HTTPS que tú despliegas y cuya `GEMINI_API_KEY` vive como secreto del servidor.
-
-### Configurar el proxy
-Consulta `proxy/README.md`. Después abre Core Académico → IA con Gemini → **Configurar Gemini seguro** y pega la URL HTTPS del Worker.
-
-### Si el repositorio es público
-No subas `.env`, API keys, tokens ni secretos. Usa secretos del proveedor del servidor (Cloudflare Worker, etc.). Si una clave ya fue expuesta, revócala y genera otra.
+> El endpoint sigue siendo público. Para una aplicación distribuida masivamente, añade autenticación/rate limiting en el Worker (por ejemplo Cloudflare Turnstile, Durable Objects o un sistema de cuentas). Nunca pongas una segunda clave secreta dentro del APK.
