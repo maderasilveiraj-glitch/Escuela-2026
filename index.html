@@ -3743,168 +3743,390 @@ window.addEventListener('load',()=>setTimeout(actualizarEstadoIA,300));
 </script>
 
 
+<style id="core-academico-mobile-gestures">
+/* Gestos móviles: conserva el scroll vertical y permite detectar swipes horizontales. */
+@media (max-width: 820px) {
+    html, body {
+        overscroll-behavior-x: none;
+    }
+    .reference-sidebar {
+        touch-action: pan-y;
+    }
+    .sidebar-scrim {
+        touch-action: pan-y;
+    }
+}
+</style>
+
 <script id="core-academico-touch-navigation">
 /*
- * Navegación táctil:
- * - Deslizar izquierda/derecha sobre la app cambia de módulo.
- * - Deslizar sobre un calendario cambia el mes.
- * - No interfiere con botones, campos, tablas ni desplazamiento vertical.
+ * Navegación táctil de Core Académico
+ * - Deslizar izquierda  -> siguiente módulo
+ * - Deslizar derecha    -> módulo anterior
+ * - En calendarios, el gesto cambia de mes
+ * - No roba gestos de botones, inputs, tablas ni contenedores con scroll
  */
-(function(){
-    let touchStartX = 0;
-    let touchStartY = 0;
-    let touchStartTime = 0;
-    let touchTarget = null;
+(function () {
+    'use strict';
 
-    const SWIPE_DISTANCE = 60;
-    const MAX_VERTICAL_DRIFT = 75;
+    const SWIPE_DISTANCE = 55;
+    const MAX_VERTICAL_DRIFT = 80;
     const MAX_SWIPE_TIME = 900;
+    const EDGE_IGNORE = 8;
 
-    function getViews(){
-        const buttons = Array.from(document.querySelectorAll('.nav-container [data-view]'));
-        return buttons
-            .map(button => ({
-                id: button.getAttribute('data-view'),
-                button,
-                view: document.getElementById('view-' + button.getAttribute('data-view'))
-            }))
-            .filter(item => item.id && item.view);
+    let startX = 0;
+    let startY = 0;
+    let startTime = 0;
+    let startTarget = null;
+    let tracking = false;
+
+    // Gestos del menú lateral en móvil.
+    let edgeTracking = false;
+    let edgeStartX = 0;
+    let edgeStartY = 0;
+    let edgeStartTime = 0;
+    let edgeMode = null; // 'open' o 'close'
+
+    function getNavigationButtons() {
+        // La navegación real de esta versión está en .sidebar-nav.
+        return Array.from(document.querySelectorAll('.sidebar-nav button[data-view]'))
+            .map(button => {
+                const id = button.getAttribute('data-view');
+                let viewId = 'view-' + id;
+
+                // "Materias" usa internamente la vista del kardex.
+                if (id === 'materias' && !document.getElementById(viewId)) {
+                    viewId = 'view-kardex';
+                }
+
+                return {
+                    id: id,
+                    button: button,
+                    view: document.getElementById(viewId)
+                };
+            })
+            .filter(item => item.view);
     }
 
-    function getCurrentViewIndex(views){
-        const active = views.findIndex(item =>
-            item.view.classList.contains('active-block') &&
-            getComputedStyle(item.view).display !== 'none'
+    function getCurrentIndex(items) {
+        const active = items.findIndex(item =>
+            item.view.classList.contains('active-block')
         );
-        if(active >= 0) return active;
 
-        const anyActive = document.querySelector('.view-block.active-block');
-        if(anyActive){
-            return views.findIndex(item => item.view === anyActive);
+        if (active !== -1) return active;
+
+        // Fallback para versiones antiguas de la app.
+        const activeView = document.querySelector('.view-block.active-block');
+        if (activeView) {
+            return items.findIndex(item => item.view === activeView);
         }
+
         return 0;
     }
 
-    function setViewDirect(item){
-        const views = getViews();
-        views.forEach(v => {
-            v.view.classList.remove('active-block');
-            v.button.classList.remove('active-tab');
+    function updateNavigationVisuals(item) {
+        document.querySelectorAll('.sidebar-nav button[data-view]').forEach(btn => {
+            btn.classList.toggle(
+                'active-tab',
+                btn.getAttribute('data-view') === item.id
+            );
+            btn.setAttribute(
+                'aria-current',
+                btn.getAttribute('data-view') === item.id ? 'page' : 'false'
+            );
+        });
+
+        // Mantener también los tabs antiguos si existen.
+        document.querySelectorAll('.btn-tab').forEach(btn => {
+            btn.classList.remove('active-tab');
+        });
+
+        const legacyTab = document.getElementById('tab-' + item.id);
+        if (legacyTab) legacyTab.classList.add('active-tab');
+    }
+
+    function setView(item) {
+        if (!item || !item.view) return;
+
+        // Usar la función original cuando exista y tenga soporte para esa vista.
+        // Para las vistas nuevas hacemos el cambio directamente.
+        const supportedByCambiarVista = new Set([
+            'horarios',
+            'tareas',
+            'metas',
+            'asistencias',
+            'recursos'
+        ]);
+
+        if (
+            typeof window.cambiarVista === 'function' &&
+            supportedByCambiarVista.has(item.id)
+        ) {
+            try {
+                window.cambiarVista(item.id);
+                updateNavigationVisuals(item);
+                return;
+            } catch (e) {
+                console.warn('Navegación original falló:', e);
+            }
+        }
+
+        document.querySelectorAll('.view-block').forEach(view => {
+            view.classList.remove('active-block');
         });
 
         item.view.classList.add('active-block');
-        item.button.classList.add('active-tab');
+        updateNavigationVisuals(item);
 
         const title = item.button.querySelector('span:last-child');
         const mainTitle = document.getElementById('main-title');
-        if(title && mainTitle) mainTitle.textContent = title.textContent.trim();
-
-        try{
-            if(item.id === 'calendario' && typeof renderizarCalendarioPrincipal === 'function'){
-                renderizarCalendarioPrincipal();
-            }
-        }catch(_){}
-    }
-
-    function goToView(index){
-        const views = getViews();
-        if(views.length < 2) return;
-
-        const current = getCurrentViewIndex(views);
-        let next = index;
-
-        if(next < 0) next = views.length - 1;
-        if(next >= views.length) next = 0;
-
-        const item = views[next];
-        if(!item) return;
-
-        /*
-         * Para las vistas antiguas usamos la función original porque
-         * además ejecuta sus rutinas de renderizado. Para las nuevas
-         * hacemos el cambio directamente.
-         */
-        const legacyViews = new Set([
-            'kardex','horarios','predictivo','asistencias',
-            'recursos','tareas','metas','analitica'
-        ]);
-
-        if(legacyViews.has(item.id) && typeof cambiarVista === 'function'){
-            cambiarVista(item.id);
-        }else{
-            setViewDirect(item);
+        if (title && mainTitle) {
+            mainTitle.textContent = title.textContent.trim();
         }
+
+        // Ejecutar los renderizadores que necesitan refresco al entrar.
+        try {
+            switch (item.id) {
+                case 'horarios':
+                    if (typeof cargarDatosSemestreCompleto === 'function') {
+                        cargarDatosSemestreCompleto();
+                    }
+                    if (typeof renderizarCalendarioExamenes === 'function') {
+                        renderizarCalendarioExamenes();
+                    }
+                    break;
+                case 'asistencias':
+                    if (typeof renderizarAsistencias === 'function') {
+                        renderizarAsistencias();
+                    }
+                    break;
+                case 'recursos':
+                    if (typeof renderizarEnlaces === 'function') {
+                        renderizarEnlaces();
+                    }
+                    if (typeof renderizarNotasRapidas === 'function') {
+                        renderizarNotasRapidas();
+                    }
+                    break;
+                case 'tareas':
+                    if (typeof renderizarTareasModulo === 'function') {
+                        renderizarTareasModulo();
+                    }
+                    break;
+                case 'metas':
+                    if (typeof renderizarMetas === 'function') {
+                        renderizarMetas();
+                    }
+                    break;
+                case 'calendario':
+                    if (typeof renderizarCalendarioPrincipal === 'function') {
+                        renderizarCalendarioPrincipal();
+                    }
+                    break;
+            }
+        } catch (e) {
+            console.warn('No se pudo refrescar la vista:', e);
+        }
+
+        // Al cambiar de módulo, vuelve al inicio de la vista.
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function isInteractiveTarget(target){
-        if(!target || !target.closest) return false;
-        return !!target.closest(
-            'button,input,select,textarea,a,[contenteditable="true"],' +
-            '.scroll-wrapper,.table-tasks,.table-custom'
-        );
+    function goToRelative(direction) {
+        const items = getNavigationButtons();
+        if (items.length < 2) return;
+
+        let current = getCurrentIndex(items);
+        if (current < 0) current = 0;
+
+        let next = current + direction;
+
+        // Navegación circular: del último pasa al primero y viceversa.
+        if (next >= items.length) next = 0;
+        if (next < 0) next = items.length - 1;
+
+        setView(items[next]);
     }
 
-    function handleCalendarSwipe(dx, target){
-        if(!target || !target.closest) return false;
+    function handleCalendarSwipe(dx, target) {
+        if (!target || !target.closest) return false;
 
         const calendar = target.closest('.calendar-container');
-        if(!calendar) return false;
+        if (!calendar || Math.abs(dx) < SWIPE_DISTANCE) return false;
 
-        try{
-            if(calendar.querySelector('#calendar-main-grid')){
-                if(Math.abs(dx) >= SWIPE_DISTANCE){
-                    cambiarMesPrincipal(dx < 0 ? 1 : -1);
-                    return true;
-                }
+        try {
+            if (
+                calendar.querySelector('#calendar-main-grid') &&
+                typeof window.cambiarMesPrincipal === 'function'
+            ) {
+                window.cambiarMesPrincipal(dx < 0 ? 1 : -1);
+                return true;
             }
 
-            if(calendar.querySelector('#calendar-days-grid')){
-                if(Math.abs(dx) >= SWIPE_DISTANCE){
-                    cambiarMesCalendario(dx < 0 ? 1 : -1);
-                    return true;
-                }
+            if (
+                calendar.querySelector('#calendar-days-grid') &&
+                typeof window.cambiarMesCalendario === 'function'
+            ) {
+                window.cambiarMesCalendario(dx < 0 ? 1 : -1);
+                return true;
             }
-        }catch(_){}
+        } catch (e) {
+            console.warn('Error al cambiar mes:', e);
+        }
 
         return false;
     }
 
-    document.addEventListener('touchstart', function(event){
-        if(event.touches.length !== 1) return;
+    function isInteractiveTarget(target) {
+        if (!target || !target.closest) return false;
 
-        const t = event.touches[0];
-        touchStartX = t.clientX;
-        touchStartY = t.clientY;
-        touchStartTime = Date.now();
-        touchTarget = event.target;
-    }, {passive:true});
+        return !!target.closest(
+            'button,input,select,textarea,a,[contenteditable="true"],' +
+            '.scroll-wrapper,.table-tasks,.table-custom,' +
+            '.calendar-grid,.calendar-grid-reference-body'
+        );
+    }
 
-    document.addEventListener('touchend', function(event){
-        if(event.changedTouches.length !== 1) return;
+    document.addEventListener('touchstart', function (event) {
+        if (event.touches.length !== 1) {
+            tracking = false;
+            edgeTracking = false;
+            return;
+        }
 
-        const t = event.changedTouches[0];
-        const dx = t.clientX - touchStartX;
-        const dy = t.clientY - touchStartY;
-        const elapsed = Date.now() - touchStartTime;
+        const touch = event.touches[0];
+        const sidebar = document.getElementById('reference-sidebar');
+        const sidebarOpen = !!(sidebar && sidebar.classList.contains('open'));
+        const edgeZone = 42;
 
-        if(elapsed > MAX_SWIPE_TIME) return;
-        if(Math.abs(dx) < SWIPE_DISTANCE) return;
-        if(Math.abs(dy) > MAX_VERTICAL_DRIFT) return;
+        /*
+         * MENÚ LATERAL:
+         * - Con el menú cerrado: arrastrar desde el borde izquierdo hacia la derecha abre.
+         * - Con el menú abierto: arrastrar desde el menú hacia la izquierda lo cierra.
+         * - También aceptamos el borde derecho para cerrar si el menú está abierto.
+         */
+        const startedAtLeftEdge = touch.clientX <= edgeZone;
+        const startedAtRightEdge = touch.clientX >= window.innerWidth - edgeZone;
+        const startedInsideSidebar = !!(sidebar && sidebarOpen && touch.target.closest && touch.target.closest('#reference-sidebar'));
 
-        /* Primero intentamos el gesto propio del calendario. */
-        if(handleCalendarSwipe(dx, touchTarget)) return;
+        edgeTracking = false;
+        edgeMode = null;
 
-        /* Controles y tablas conservan su comportamiento táctil normal. */
-        if(isInteractiveTarget(touchTarget)) return;
+        if (!sidebarOpen && startedAtLeftEdge) {
+            edgeTracking = true;
+            edgeMode = 'open';
+            edgeStartX = touch.clientX;
+            edgeStartY = touch.clientY;
+            edgeStartTime = Date.now();
+            tracking = false;
+            return;
+        }
 
-        const views = getViews();
-        const current = getCurrentViewIndex(views);
-        if(current < 0) return;
+        if (sidebarOpen && (startedInsideSidebar || startedAtRightEdge)) {
+            edgeTracking = true;
+            edgeMode = 'close';
+            edgeStartX = touch.clientX;
+            edgeStartY = touch.clientY;
+            edgeStartTime = Date.now();
+            tracking = false;
+            return;
+        }
 
-        goToView(current + (dx < 0 ? 1 : -1));
-    }, {passive:true});
+        // Navegación entre módulos: no arrancarla exactamente en los bordes.
+        if (
+            touch.clientX <= EDGE_IGNORE ||
+            touch.clientX >= window.innerWidth - EDGE_IGNORE
+        ) {
+            tracking = false;
+            return;
+        }
+
+        startX = touch.clientX;
+        startY = touch.clientY;
+        startTime = Date.now();
+        startTarget = event.target;
+        tracking = true;
+    }, { passive: true });
+
+    document.addEventListener('touchend', function (event) {
+        if (event.changedTouches.length !== 1) return;
+
+        const touch = event.changedTouches[0];
+
+        // Resolver primero el gesto del menú lateral.
+        if (edgeTracking) {
+            edgeTracking = false;
+
+            const dx = touch.clientX - edgeStartX;
+            const dy = touch.clientY - edgeStartY;
+            const elapsed = Date.now() - edgeStartTime;
+
+            if (
+                elapsed <= MAX_SWIPE_TIME &&
+                Math.abs(dx) >= 65 &&
+                Math.abs(dx) > Math.abs(dy) * 1.2
+            ) {
+                if (edgeMode === 'open' && dx > 0) {
+                    if (typeof window.toggleSidebar === 'function') {
+                        window.toggleSidebar(true);
+                    } else if (typeof toggleSidebar === 'function') {
+                        toggleSidebar(true);
+                    }
+                } else if (edgeMode === 'close' && dx < 0) {
+                    if (typeof window.toggleSidebar === 'function') {
+                        window.toggleSidebar(false);
+                    } else if (typeof toggleSidebar === 'function') {
+                        toggleSidebar(false);
+                    }
+                }
+            }
+
+            edgeMode = null;
+            tracking = false;
+            return;
+        }
+
+        if (!tracking) return;
+        tracking = false;
+
+        const dx = touch.clientX - startX;
+        const dy = touch.clientY - startY;
+        const elapsed = Date.now() - startTime;
+
+        if (elapsed > MAX_SWIPE_TIME) return;
+        if (Math.abs(dx) < SWIPE_DISTANCE) return;
+
+        // Si hay demasiado movimiento vertical, es scroll normal.
+        if (Math.abs(dy) > MAX_VERTICAL_DRIFT) return;
+
+        // Si fue dentro de un calendario, primero cambia el mes.
+        if (handleCalendarSwipe(dx, startTarget)) return;
+
+        // No interferir con controles ni tablas desplazables.
+        if (isInteractiveTarget(startTarget)) return;
+
+        // Solo aceptar un gesto claramente horizontal.
+        if (Math.abs(dx) <= Math.abs(dy) * 1.15) return;
+
+        // Izquierda = siguiente / derecha = anterior.
+        goToRelative(dx < 0 ? 1 : -1);
+    }, { passive: true });
+
+    // Si el dedo sale de la pantalla/captura se cancela el gesto.
+    document.addEventListener('touchcancel', function () {
+        tracking = false;
+        edgeTracking = false;
+        edgeMode = null;
+    }, { passive: true });
+
+    // Exponer una función útil para probar la navegación desde consola.
+    window.coreAcademicoSwipe = {
+        next: function () { goToRelative(1); },
+        previous: function () { goToRelative(-1); }
+    };
 })();
 </script>
 
 </body>
 </html>
+  
