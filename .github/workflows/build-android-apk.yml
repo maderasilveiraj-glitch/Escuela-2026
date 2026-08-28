@@ -15,66 +15,122 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1. Descargar el repositorio
       - name: Descargar codigo
         uses: actions/checkout@v4
 
+      # 2. Configurar Node.js
       - name: Configurar Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-          package-manager-cache: false
+          cache: npm
+          cache-dependency-path: package.json
 
+      # 3. Configurar Java 21
+      # IMPORTANTE: no usamos cache: gradle aqui porque al principio
+      # del workflow todavia puede no existir la carpeta android/gradle.
       - name: Configurar Java 21
         uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '21'
-          cache: gradle
 
+      # 4. Instalar dependencias
       - name: Instalar dependencias
-        run: npm install --no-audit --no-fund
-
-      - name: Verificar TypeScript y Capacitor
+        shell: bash
         run: |
+          npm install --no-audit --no-fund
+
+      # 5. Asegurar TypeScript y Capacitor
+      - name: Asegurar herramientas de Capacitor
+        shell: bash
+        run: |
+          npm install --save-dev typescript --no-audit --no-fund
+          npm install @capacitor/cli @capacitor/core @capacitor/android --no-audit --no-fund
+
+          echo "TypeScript:"
           npx tsc --version
+
+          echo "Capacitor:"
           npx cap --version
 
+      # 6. Preparar la carpeta www
       - name: Preparar archivos web
         shell: bash
         run: |
           rm -rf www
-          mkdir -p www/icons
+          mkdir -p www
 
-          cp index.html www/
-          cp manifest.webmanifest www/
-          cp sw.js www/
-
-          if [ -d icons ]; then
-            cp -r icons/* www/icons/
-          fi
+          # Copiar el contenido web principal.
+          # Se excluyen carpetas que no deben entrar dentro de la app.
+          rsync -av \
+            --exclude='.git/' \
+            --exclude='.github/' \
+            --exclude='node_modules/' \
+            --exclude='android/' \
+            --exclude='www/' \
+            --exclude='release/' \
+            --exclude='scripts/' \
+            --exclude='package-lock.json' \
+            ./ www/
 
           echo "Contenido de www:"
-          find www -maxdepth 3 -type f -print
+          find www -maxdepth 3 -type f -print | sort
 
+          if [ ! -f www/index.html ]; then
+            echo "ERROR: no existe www/index.html"
+            exit 1
+          fi
+
+      # 7. Comprobar la configuracion de Capacitor
+      - name: Verificar configuracion de Capacitor
+        shell: bash
+        run: |
+          if [ ! -f capacitor.config.ts ] && [ ! -f capacitor.config.json ]; then
+            echo "No existe capacitor.config.ts ni capacitor.config.json"
+            exit 1
+          fi
+
+          echo "Configuracion de Capacitor encontrada."
+
+      # 8. Crear Android si no existe
       - name: Crear plataforma Android
         shell: bash
         run: |
           if [ ! -d android ]; then
+            echo "Agregando plataforma Android..."
             npx cap add android
           else
             echo "La plataforma Android ya existe."
           fi
 
+      # 9. Sincronizar Capacitor
       - name: Sincronizar Capacitor
-        run: npx cap sync android
+        shell: bash
+        run: |
+          npx cap sync android
 
+      # 10. Preparar Gradle
       - name: Preparar Gradle
-        run: chmod +x android/gradlew
+        shell: bash
+        run: |
+          if [ ! -f android/gradlew ]; then
+            echo "ERROR: no se encontro android/gradlew"
+            find android -maxdepth 3 -type f | sort || true
+            exit 1
+          fi
 
+          chmod +x android/gradlew
+
+      # 11. Generar APK Debug
       - name: Generar APK Debug
         working-directory: android
-        run: ./gradlew assembleDebug --no-daemon --stacktrace
+        shell: bash
+        run: |
+          ./gradlew assembleDebug --no-daemon --stacktrace
 
+      # 12. Localizar y preparar APK
       - name: Preparar APK
         shell: bash
         run: |
@@ -83,17 +139,25 @@ jobs:
           APK="android/app/build/outputs/apk/debug/app-debug.apk"
 
           if [ ! -f "$APK" ]; then
-            echo "No se encontro el APK esperado:"
-            find android/app/build/outputs -type f -name "*.apk" -print || true
+            echo "ERROR: no se encontro el APK esperado."
+            echo "APKs encontrados:"
+            find android -type f -name "*.apk" -print || true
             exit 1
           fi
 
           cp "$APK" release/Core-Academico.apk
 
-          printf '%s\n'             'Core Academico - Android'             ''             'Instala Core-Academico.apk en tu telefono Android.'             > release/LEEME.txt
+          printf '%s\n' \
+            'Core Academico - Android' \
+            '' \
+            'Archivo generado automaticamente por GitHub Actions.' \
+            'Instala Core-Academico.apk en tu telefono Android.' \
+            > release/LEEME.txt
 
+          echo "Archivos finales:"
           ls -lh release/
 
+      # 13. Subir APK como Artifact
       - name: Subir APK como Artifact
         uses: actions/upload-artifact@v4
         with:
@@ -102,6 +166,7 @@ jobs:
           if-no-files-found: error
           retention-days: 30
 
+      # 14. Subir paquete completo
       - name: Subir paquete Android
         uses: actions/upload-artifact@v4
         with:
@@ -110,6 +175,7 @@ jobs:
           if-no-files-found: error
           retention-days: 30
 
+      # 15. Publicar Release cuando se cree una etiqueta
       - name: Publicar Release para etiquetas
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
