@@ -1530,6 +1530,12 @@ body{
     touch-action:pan-x pan-y;
 }
 
+.attendance-grid{
+    touch-action:pan-x;
+    -webkit-overflow-scrolling:touch;
+    overscroll-behavior-x:contain;
+}
+
 /* Evita que botones y controles se sientan "arrastrables". */
 button,input,select,textarea,a,[contenteditable="true"]{
     -webkit-tap-highlight-color:transparent;
@@ -3983,7 +3989,7 @@ window.addEventListener('load',()=>setTimeout(actualizarEstadoIA,300));
         return !!target.closest(
             'button,input,select,textarea,a,[contenteditable="true"],' +
             '.scroll-wrapper,.table-tasks,.table-custom,' +
-            '.calendar-grid,.calendar-grid-reference-body'
+            '.calendar-grid,.calendar-grid-reference-body,.attendance-grid'
         );
     }
 
@@ -4129,4 +4135,3 @@ window.addEventListener('load',()=>setTimeout(actualizarEstadoIA,300));
 
 </body>
 </html>
-  
