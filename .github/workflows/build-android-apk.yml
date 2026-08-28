@@ -1,0 +1,118 @@
+name: Build Android APK - Core Academico
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  build-android:
+    name: Generar APK Android
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar codigo
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          package-manager-cache: false
+
+      - name: Configurar Java 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: gradle
+
+      - name: Instalar dependencias
+        run: npm install --no-audit --no-fund
+
+      - name: Verificar TypeScript y Capacitor
+        run: |
+          npx tsc --version
+          npx cap --version
+
+      - name: Preparar archivos web
+        shell: bash
+        run: |
+          rm -rf www
+          mkdir -p www/icons
+
+          cp index.html www/
+          cp manifest.webmanifest www/
+          cp sw.js www/
+
+          if [ -d icons ]; then
+            cp -r icons/* www/icons/
+          fi
+
+          echo "Contenido de www:"
+          find www -maxdepth 3 -type f -print
+
+      - name: Crear plataforma Android
+        shell: bash
+        run: |
+          if [ ! -d android ]; then
+            npx cap add android
+          else
+            echo "La plataforma Android ya existe."
+          fi
+
+      - name: Sincronizar Capacitor
+        run: npx cap sync android
+
+      - name: Preparar Gradle
+        run: chmod +x android/gradlew
+
+      - name: Generar APK Debug
+        working-directory: android
+        run: ./gradlew assembleDebug --no-daemon --stacktrace
+
+      - name: Preparar APK
+        shell: bash
+        run: |
+          mkdir -p release
+
+          APK="android/app/build/outputs/apk/debug/app-debug.apk"
+
+          if [ ! -f "$APK" ]; then
+            echo "No se encontro el APK esperado:"
+            find android/app/build/outputs -type f -name "*.apk" -print || true
+            exit 1
+          fi
+
+          cp "$APK" release/Core-Academico.apk
+
+          printf '%s\n'             'Core Academico - Android'             ''             'Instala Core-Academico.apk en tu telefono Android.'             > release/LEEME.txt
+
+          ls -lh release/
+
+      - name: Subir APK como Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Core-Academico-APK
+          path: release/Core-Academico.apk
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Subir paquete Android
+        uses: actions/upload-artifact@v4
+        with:
+          name: Core-Academico-Android
+          path: release/
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Publicar Release para etiquetas
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: release/Core-Academico.apk
+          generate_release_notes: true
