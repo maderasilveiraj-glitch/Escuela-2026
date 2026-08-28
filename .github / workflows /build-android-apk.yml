@@ -12,349 +12,175 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
-      # ============================================================
-      # 1. DESCARGAR EL PROYECTO
-      # ============================================================
       - name: Descargar código
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
-
-      # ============================================================
-      # 2. CONFIGURAR NODE.JS
-      # ============================================================
-      # IMPORTANTE:
-      # No usamos cache de npm porque tu repositorio inicialmente
-      # no tenía package-lock.json.
-      # ============================================================
       - name: Configurar Node.js
-        uses: actions/setup-node@v7
+        uses: actions/setup-node@v4
         with:
-          node-version: '24'
+          node-version: '20'
           package-manager-cache: false
 
-
-      # ============================================================
-      # 3. CONFIGURAR JAVA
-      # ============================================================
-      # Capacitor Android actual funciona con Java 21.
-      # ============================================================
       - name: Configurar Java
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
+          distribution: temurin
           java-version: '21'
+          cache: gradle
 
-
-      # ============================================================
-      # 4. MOSTRAR VERSIONES
-      # ============================================================
-      - name: Verificar entorno
+      - name: Verificar proyecto
         shell: bash
         run: |
-          echo "Node:"
-          node --version
-
-          echo "NPM:"
-          npm --version
-
-          echo "Java:"
+          set -e
+          echo "Node: $(node --version)"
+          echo "NPM: $(npm --version)"
           java -version
+          test -f index.html || { echo "ERROR: No existe index.html"; exit 1; }
+          test -f package.json || { echo "ERROR: No existe package.json"; exit 1; }
 
-          echo "Git:"
-          git --version
-
-
-      # ============================================================
-      # 5. INSTALAR DEPENDENCIAS
-      # ============================================================
-      # Usamos npm install y NO npm ci porque tu repositorio no
-      # tenía package-lock.json.
-      #
-      # npm install generará package-lock.json dentro del runner.
-      # ============================================================
       - name: Instalar dependencias
         shell: bash
         run: |
-          npm install --no-audit --no-fund
+          set -e
+          if [ -f package-lock.json ]; then
+            npm ci --no-audit --no-fund
+          else
+            npm install --no-audit --no-fund
+          fi
 
-
-      # ============================================================
-      # 6. ASEGURAR TYPESCRIPT
-      # ============================================================
-      # Esto corrige:
-      #
-      # Could not find installation of TypeScript.
-      # ============================================================
-      - name: Instalar TypeScript
+      - name: Instalar TypeScript y Capacitor
         shell: bash
         run: |
-          npm install --save-dev typescript --no-audit --no-fund
+          set -e
+          npm install --save-dev typescript @capacitor/cli@^7.4.0 --no-audit --no-fund
+          npm install --save @capacitor/core@^7.4.0 @capacitor/android@^7.4.0 --no-audit --no-fund
 
-
-      # ============================================================
-      # 7. ASEGURAR CAPACITOR CLI
-      # ============================================================
-      - name: Instalar Capacitor CLI
-        shell: bash
-        run: |
-          npm install --save-dev @capacitor/cli@^7.4.0 --no-audit --no-fund
-
-
-      # ============================================================
-      # 8. INSTALAR CAPACITOR ANDROID
-      # ============================================================
-      - name: Instalar Capacitor Android
-        shell: bash
-        run: |
-          npm install @capacitor/android@^7.4.0 --save --no-audit --no-fund
-
-
-      # ============================================================
-      # 9. PREPARAR CARPETA WWW
-      # ============================================================
-      # Capacitor necesita:
-      #
-      # ./www/index.html
-      #
-      # para poder sincronizar Android.
-      # ============================================================
-      - name: Preparar archivos web
+      - name: Preparar carpeta www
         shell: bash
         run: |
           set -e
 
-          echo "Preparando carpeta www..."
-
           rm -rf www
           mkdir -p www
 
-          # --------------------------------------------------------
-          # Archivo principal
-          # --------------------------------------------------------
-          if [ -f "index.html" ]; then
-            cp "index.html" "www/index.html"
-          else
-            echo "ERROR: No existe index.html"
-            exit 1
-          fi
+          cp index.html www/index.html
 
-          # --------------------------------------------------------
-          # JavaScript principal
-          # --------------------------------------------------------
-          if [ -f "main.js" ]; then
-            cp "main.js" "www/main.js"
-          fi
+          for file in main.js preload.js sw.js manifest.webmanifest; do
+            if [ -f "$file" ]; then
+              cp "$file" "www/$file"
+            fi
+          done
 
-          if [ -f "preload.js" ]; then
-            cp "preload.js" "www/preload.js"
-          fi
+          for dir in icons assets img images css; do
+            if [ -d "$dir" ]; then
+              cp -R "$dir" "www/"
+            fi
+          done
 
-          if [ -f "sw.js" ]; then
-            cp "sw.js" "www/sw.js"
-          fi
-
-          # --------------------------------------------------------
-          # Manifest
-          # --------------------------------------------------------
-          if [ -f "manifest.webmanifest" ]; then
-            cp "manifest.webmanifest" "www/manifest.webmanifest"
-          fi
-
-          # --------------------------------------------------------
-          # Carpetas de recursos
-          # --------------------------------------------------------
-          if [ -d "icons" ]; then
-            cp -R "icons" "www/"
-          fi
-
-          if [ -d "assets" ]; then
-            cp -R "assets" "www/"
-          fi
-
-          if [ -d "img" ]; then
-            cp -R "img" "www/"
-          fi
-
-          if [ -d "images" ]; then
-            cp -R "images" "www/"
-          fi
-
-          # --------------------------------------------------------
-          # Copiar archivos CSS del proyecto
-          # --------------------------------------------------------
-          find . \
-            -maxdepth 3 \
-            -type f \
-            -name "*.css" \
-            -not -path "./node_modules/*" \
-            -not -path "./android/*" \
-            -not -path "./www/*" \
-            -exec cp --parents "{}" www/ \; 2>/dev/null || true
-
-          echo ""
           echo "Contenido de www:"
-          find www -maxdepth 4 -type f | sort
+          find www -maxdepth 5 -type f | sort
 
-
-      # ============================================================
-      # 10. VERIFICAR CAPACITOR
-      # ============================================================
-      - name: Verificar Capacitor
+      - name: Verificar configuración de Capacitor
         shell: bash
         run: |
-          npx cap --version
+          set -e
 
-
-      # ============================================================
-      # 11. VERIFICAR CONFIGURACIÓN DE CAPACITOR
-      # ============================================================
-      - name: Verificar configuración Capacitor
-        shell: bash
-        run: |
-          if [ -f "capacitor.config.ts" ]; then
+          if [ -f capacitor.config.ts ]; then
             echo "Encontrado capacitor.config.ts"
             cat capacitor.config.ts
-          elif [ -f "capacitor.config.json" ]; then
+          elif [ -f capacitor.config.js ]; then
+            echo "Encontrado capacitor.config.js"
+            cat capacitor.config.js
+          elif [ -f capacitor.config.json ]; then
             echo "Encontrado capacitor.config.json"
             cat capacitor.config.json
           else
-            echo "No existe configuración de Capacitor."
-            echo "Creando capacitor.config.json..."
+            echo "No existe configuración de Capacitor. Creando capacitor.config.json..."
 
             cat > capacitor.config.json <<'EOF'
-          {
-            "appId": "com.coreacademico.app",
-            "appName": "Core Académico",
-            "webDir": "www",
-            "bundledWebRuntime": false
-          }
-          EOF
+{
+  "appId": "com.coreacademico.app",
+  "appName": "Core Académico",
+  "webDir": "www",
+  "bundledWebRuntime": false
+}
+EOF
 
             cat capacitor.config.json
           fi
 
+      - name: Comprobar Capacitor
+        shell: bash
+        run: |
+          set -e
+          npx cap --version
+          npx cap doctor || true
 
-      # ============================================================
-      # 12. ELIMINAR ANDROID ANTERIOR SI EXISTE
-      # ============================================================
-      # En tu repositorio actual no aparece la carpeta android.
-      # La eliminamos en el runner para garantizar una plataforma
-      # limpia y evitar errores de sincronización.
-      # ============================================================
       - name: Preparar plataforma Android
         shell: bash
         run: |
+          set -e
           rm -rf android
-
-
-      # ============================================================
-      # 13. AGREGAR ANDROID
-      # ============================================================
-      # Esto corrige:
-      #
-      # android platform has not been added yet.
-      # ============================================================
-      - name: Agregar plataforma Android
-        shell: bash
-        run: |
           npx cap add android
 
-
-      # ============================================================
-      # 14. SINCRONIZAR CAPACITOR
-      # ============================================================
       - name: Sincronizar Capacitor
         shell: bash
         run: |
+          set -e
           npx cap sync android
 
-
-      # ============================================================
-      # 15. VERIFICAR PROYECTO ANDROID
-      # ============================================================
       - name: Verificar proyecto Android
         shell: bash
         run: |
-          echo "Contenido de android:"
+          set -e
+          test -f android/gradlew || {
+            echo "ERROR: No se generó android/gradlew"
+            exit 1
+          }
+          ls -la android/gradlew
           find android -maxdepth 2 -type f | sort | head -200
 
-          echo ""
-          echo "Gradle wrapper:"
-          ls -la android/gradlew
-
-
-      # ============================================================
-      # 16. DAR PERMISOS AL GRADLE WRAPPER
-      # ============================================================
       - name: Preparar Gradle
         shell: bash
         run: |
           chmod +x android/gradlew
 
-
-      # ============================================================
-      # 17. LIMPIAR GRADLE
-      # ============================================================
       - name: Limpiar proyecto Android
         working-directory: android
         shell: bash
         run: |
           ./gradlew clean --no-daemon
 
-
-      # ============================================================
-      # 18. GENERAR APK DEBUG
-      # ============================================================
-      - name: Generar APK
+      - name: Generar APK Debug
         working-directory: android
         shell: bash
         run: |
           ./gradlew assembleDebug --no-daemon --stacktrace
 
-
-      # ============================================================
-      # 19. COMPROBAR QUE EL APK EXISTE
-      # ============================================================
-      - name: Verificar APK generado
-        shell: bash
-        run: |
-          echo "Buscando APK..."
-
-          find android/app/build/outputs/apk -type f -name "*.apk" -print
-
-          if ! find android/app/build/outputs/apk -type f -name "*.apk" | grep -q ".apk"; then
-            echo "ERROR: No se encontró ningún APK."
-            exit 1
-          fi
-
-
-      # ============================================================
-      # 20. PREPARAR APK FINAL
-      # ============================================================
-      - name: Preparar APK
+      - name: Verificar y preparar APK
         shell: bash
         run: |
           set -e
 
-          mkdir -p release
+          echo "Buscando APK..."
+          find android/app/build/outputs/apk -type f -name "*.apk" -print
 
           APK=$(find android/app/build/outputs/apk -type f -name "*.apk" | head -n 1)
 
-          echo "APK encontrado:"
-          echo "$APK"
+          if [ -z "$APK" ]; then
+            echo "ERROR: No se encontró ningún APK."
+            echo "Contenido de outputs:"
+            find android/app/build/outputs -type f -print || true
+            exit 1
+          fi
 
-          cp "$APK" "release/Core-Academico.apk"
+          mkdir -p release
+          cp "$APK" release/Core-Academico.apk
 
-          echo ""
           echo "APK final:"
           ls -lh release/Core-Academico.apk
 
-
-      # ============================================================
-      # 21. SUBIR APK COMO ARTIFACT
-      # ============================================================
-      - name: Subir APK
+      - name: Subir APK como Artifact
         uses: actions/upload-artifact@v4
         with:
           name: Core-Academico-APK
